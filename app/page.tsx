@@ -386,6 +386,69 @@ function ResearchJourney({ onOpen }: { onOpen: (figure: Figure) => void }) {
   );
 }
 
+function ClosingChapter({ audience }: { audience: Audience }) {
+  const research = audience === "research";
+  const emailHref = "mailto:tu6788688@gmail.com?subject=SCN5A%20R104Q%20bench%20collaboration";
+  return (
+    <section className={`closing-chapter era ${research ? "closing-research" : "closing-novice"}`} data-era="NEXT · THE OPEN INVITATION">
+      <div className="closing-intro">
+        <p className={research ? "mono-label" : "overline"}>The work now leaves the screen</p>
+        <h2>If you can run the experiment, this letter is for you.</h2>
+        <p>{research
+          ? "The computational package is complete enough to be falsified. We are looking for a cardiac ion-channel, trafficking, electrophysiology, or iPSC laboratory willing to run the gating experiment and, only if it clears, the controlled rescue panel."
+          : "We have taken this question as far as a computer can. Now we are looking for a laboratory that can put the real protein in real cells, measure what happens, and tell us whether the idea survives."}</p>
+      </div>
+
+      <article className="open-letter">
+        <div className="letter-meta"><span>OPEN LETTER</span><span>TO A BENCH LAB</span></div>
+        <h3>To anyone who can help answer the next honest question—</h3>
+        <p>My name is Ethan Bradley. I live with Brugada syndrome and carry <em>SCN5A</em> R104Q. The same variant is silent in my father, which makes this both a molecular question and a small natural experiment in why one genetic change can affect two people differently.</p>
+        <p>We have built an auditable computational case for an orphaned-charge lesion at D84, a D84N suppressor hypothesis, and two unusually strong cation-clip nominations. None of that proves rescue. It earns one carefully controlled experiment.</p>
+        <div className="letter-ask">
+          <span>THE FIRST ASK</span>
+          <strong>Express WT, R104Q, and WT + R104Q at 1:1.</strong>
+          <p>Measure surface-to-total Naᵥ1.5 and peak sodium current. Resolve haploinsufficiency versus dominant-negative behavior before exposing cells to any nominated compound.</p>
+        </div>
+        <p>If that gate supports rescue, the next panel is already pre-registered: the confirmed winner, the conditional second candidate, an agmatine comparison, a D84N anchor, and a scaffold-negative control. A clean negative result is welcome. It would close the hypothesis honestly and save everyone from chasing the wrong mechanism.</p>
+        <p className="letter-signoff">If your lab can run this—or can introduce us to one that can—we would be grateful to hear from you.<br /><b>Ethan Bradley</b></p>
+        <div className="letter-actions"><a className="primary-contact" href={emailHref}>Discuss a bench collaboration ↗</a><a href="/downloads/open-letter-to-a-bench-lab.md">Read or share the full letter</a><a href="/downloads/wetlab-assay-package.md">Open the bench-ready protocol</a></div>
+      </article>
+
+      <div className="handoff-package">
+        <div className="package-heading">
+          <p className="mono-label">THE CLINICIAN HANDOFF</p>
+          <h3>What we are sending to Dr. Prince Kannankeril.</h3>
+          <p>Not a treatment request. A patient-led, recommendation-first package asking him to be the clinical champion and bridge to the people who can run the study.</p>
+        </div>
+        <div className="package-stack">
+          <article><span>01 · THE NOTE</span><b>The human case</b><p>The fever-triggered diagnosis, the ICD as established protection, and the discordant father–son pair as a research question in penetrance.</p></article>
+          <article><span>02 · THE ASK</span><b>Experiment Zero first</b><p>WT versus R104Q versus 1:1 co-expression. Determine whether rescue is a sensible direction before spending the lab’s time on candidates.</p></article>
+          <article><span>03 · THE EVIDENCE</span><b>The audited package</b><p>Six-stage gauntlet, two nominated grippers, complete controls, honest convergence limits, manuscript, scoreboard, dossiers, and provenance.</p></article>
+        </div>
+        <div className="package-downloads">
+          <a href="/downloads/canonical-facts.md"><span>Source of truth</span><b>Canonical facts ↗</b></a>
+          <a href="/downloads/manuscript-r104q-v1.md"><span>Full account</span><b>Manuscript v1 ↗</b></a>
+          <a href="/downloads/master-scoreboard.md"><span>All seven PMF verdicts</span><b>Master scoreboard ↗</b></a>
+          <a href="/downloads/dossier-zinc000004286767.md"><span>Confirmed · n=3</span><b>Winner dossier ↗</b></a>
+          <a href="/downloads/dossier-zinc000016526277.md"><span>Conditional · n=2</span><b>Candidate dossier ↗</b></a>
+          <a href="/downloads/wetlab-assay-package.md"><span>Bench execution</span><b>Assay package ↗</b></a>
+        </div>
+      </div>
+
+      <div className="future-aims">
+        <div className="future-heading"><p className={research ? "mono-label" : "overline"}>Future aims · gated by evidence</p><h3>The next result chooses the next road.</h3><p>Nothing expands just because it is interesting. Each stage begins only when the stage before it earns the cost.</p></div>
+        <div className="aims-track">
+          <article><span>NOW</span><b>Resolve dominance</b><p>Experiment Zero: surface expression and current for WT, R104Q, and the 1:1 condition.</p></article>
+          <article><span>IF CLEARED</span><b>Test rescue</b><p>Run the two-compound panel with the D84N, agmatine, and scaffold-negative controls.</p></article>
+          <article><span>IF A SIGNAL SURVIVES</span><b>Deepen the mechanism</b><p>Move into full-length Naᵥ1.5, confirm function by patch clamp, and quantify the D84N suppressor.</p></article>
+          <article><span>IF REPRODUCIBLE</span><b>Build beyond one variant</b><p>Diversify the validated chemotype and test whether this variant-to-mechanism pipeline generalizes.</p></article>
+        </div>
+        <div className="closing-contact"><div><span>CAN YOUR LAB ANSWER IT?</span><strong>Let the result be yes, no, or something better.</strong></div><a href={emailHref}>tu6788688@gmail.com <b>↗</b></a></div>
+      </div>
+    </section>
+  );
+}
+
 export default function Home() {
   const [audience, setAudience] = useState<Audience>("novice");
   const [progress, setProgress] = useState(0);
@@ -431,6 +494,7 @@ export default function Home() {
       </header>
       <div id="top" />
       {audience === "novice" ? <NoviceJourney onOpen={setActiveFigure} /> : <ResearchJourney onOpen={setActiveFigure} />}
+      <ClosingChapter audience={audience} />
       <footer><a className="wordmark" href="#top">brugada<span>.net</span></a><p>Patient-led research. Computation nominates; the bench decides.</p><span>Research only · not medical guidance</span></footer>
       {activeFigure && <FigureModal figure={activeFigure} onClose={() => setActiveFigure(null)} />}
     </main>
