@@ -100,22 +100,41 @@ function FigureModal({ figure, onClose }: { figure: Figure; onClose: () => void 
   );
 }
 
-function ClipToy() {
-  const [broken, setBroken] = useState(false);
+function MDFrameToy() {
+  const [frame, setFrame] = useState<"wt" | "r104q" | "d84n">("wt");
+  const copy = {
+    wt: ["Wild type", "The reference N-terminal domain after molecular dynamics."],
+    r104q: ["R104Q", "The variant final frame—the domain is measurably more mobile across the run."],
+    d84n: ["D84N rescue test", "Neutralizing D84 produced the most rigid final system in the three-way test."],
+  };
   return (
-    <div className={`clip-toy ${broken ? "is-broken" : ""}`}>
-      <div className="clip-controls" role="group" aria-label="Compare healthy and changed protein clip">
-        <button className={!broken ? "active" : ""} onClick={() => setBroken(false)}>Before the change</button>
-        <button className={broken ? "active" : ""} onClick={() => setBroken(true)}>After R104Q</button>
+    <div className="md-frame-toy">
+      <div className="clip-controls" role="group" aria-label="Compare molecular dynamics final frames">
+        <button className={frame === "wt" ? "active" : ""} onClick={() => setFrame("wt")}>Wild type</button>
+        <button className={frame === "r104q" ? "active" : ""} onClick={() => setFrame("r104q")}>R104Q</button>
+        <button className={frame === "d84n" ? "active" : ""} onClick={() => setFrame("d84n")}>D84N test</button>
       </div>
-      <div className="clip-world" aria-live="polite">
-        <div className="simple-residue positive"><b>{broken ? "Q104" : "R104"}</b><small>{broken ? "no charge" : "positive"}</small></div>
-        <div className="simple-bond"><i /><i /><i /></div>
-        <div className="simple-residue negative"><b>D84</b><small>negative</small></div>
-        <div className="wobble-ring" />
+      <div className={`md-frame-image ${frame}`} aria-live="polite">
+        <img src={`/figures/md-final-${frame}.png`} alt={`${copy[frame][0]} molecular dynamics final frame`} />
+        <div className="frame-data"><span>ACTUAL MD COORDINATES</span><b>{copy[frame][0]}</b><p>{copy[frame][1]}</p></div>
       </div>
-      <p>{broken ? "The positive half is gone. The negative half is trapped inside, alone—and the little room wobbles." : "Opposite charges hold each other. The little room stays packed and steady."}</p>
+      <p>Each line connects the protein backbone atoms in an actual final simulation frame—not a decorative molecule.</p>
     </div>
+  );
+}
+
+function HumanOrigin({ research = false }: { research?: boolean }) {
+  return (
+    <section className={`human-origin era ${research ? "research-origin" : ""}`} data-era="WHY THIS EXISTS">
+      <div className="origin-photo"><img src="/people/ethan.jpg" alt="Ethan Bradley, project author" /><span>ETHAN BRADLEY · PROJECT AUTHOR</span></div>
+      <div className="origin-copy">
+        <p className={research ? "mono-label" : "overline"}>The human reason</p>
+        <h2>This did not begin as an abstract protein problem.</h2>
+        <p>{research ? "After my own Brugada diagnosis and SCN5A R104Q result, I wanted a record that could move from phenotype to residue mechanism to a bench-ready experiment without pretending computation was treatment." : "I built this after Brugada syndrome and the R104Q result became part of my own life. I wanted to understand what had happened, follow the evidence all the way down to the atoms, and hand the next real question to people who can test it in cells."}</p>
+        <blockquote>“The goal was never to make a computer sound certain. It was to make the next experiment worth doing.”</blockquote>
+        <div className="origin-facts"><span><b>Patient-led</b>Scientific question</span><span><b>Self-funded</b>Computational campaign</span><span><b>Clinician handoff</b>The bench decides</span></div>
+      </div>
+    </section>
   );
 }
 
@@ -156,15 +175,18 @@ function NoviceJourney({ onOpen }: { onOpen: (figure: Figure) => void }) {
         <a className="scroll-cue" href="#novice-start"><span>Begin at the beginning</span><b>↓</b></a>
       </section>
 
+      <HumanOrigin />
+
       <section className="story-beat clinical-beat era" id="novice-start" data-era="04 MAR · THE EVENT">
         <div className="date-stamp"><span>04</span><small>MARCH<br />2026</small></div>
         <div className="beat-copy">
           <p className="overline">Before there was a project</p>
           <h2>A fever made an invisible problem visible.</h2>
           <p>During a fever, the heart’s electrical pattern revealed Brugada syndrome. Doctors put in an ICD—the real, proven protection—and later found a change in a gene called <em>SCN5A</em>.</p>
+          <div className="brugada-explainer"><span>So what is Brugada syndrome?</span><p>It is a disorder of the heart’s <strong>electrical wiring</strong>, not usually its muscle or shape. Sodium channels help an electrical wave race across the heart so each beat stays coordinated. In Brugada syndrome, that current can be reduced or altered—especially during fever—making dangerous rhythms more possible even when an echocardiogram looks normal.</p><div><b>Structure</b><small>can look normal</small><b>Electrical timing</b><small>can still be vulnerable</small></div></div>
           <details><summary>What is an ICD?</summary><p>A small implanted safety device. It watches the heartbeat and can act if a dangerous rhythm appears. Nothing on this website replaces it or changes medical care.</p></details>
         </div>
-        <div className="pulse-card" aria-label="Illustration of an electrical heartbeat"><div className="pulse-line"><i /><i /><i /><i /><i /></div><p>The heart runs on electricity.<br />SCN5A helps start each beat.</p></div>
+        <div className="pulse-card" aria-label="Illustration of an electrical heartbeat"><div className="pulse-grid" /><div className="ecg-trace"><i /><i /><i /><i /><i /><i /></div><p>The heart runs on electricity.<br />SCN5A helps start each beat.</p></div>
       </section>
 
       <section className="story-beat recipe-beat era" data-era="27 MAR · THE LETTER">
@@ -183,7 +205,7 @@ function NoviceJourney({ onOpen }: { onOpen: (figure: Figure) => void }) {
           <h2>The letter was part of a tiny clasp.</h2>
           <p>R104 normally carries a positive charge. It holds a negative piece named D84 inside a tightly packed room. The change removes that positive grip.</p>
         </div>
-        <ClipToy />
+        <MDFrameToy />
         <div className="learn-more-row"><FigureButton figure={figures.structure} label="See where this sits in the real protein" onOpen={onOpen} /><FigureButton figure={figures.threeway} label="See the computer test" onOpen={onOpen} /></div>
       </section>
 
@@ -222,11 +244,7 @@ function NoviceJourney({ onOpen }: { onOpen: (figure: Figure) => void }) {
           <h2>Five stayed shallow.<br />Two fell deep.</h2>
           <p>These are not medicines. They are two unusually strong computer signals worth carrying to a real cell experiment.</p>
         </div>
-        <div className="simple-split" aria-label="Two deep results separated from five shallow results">
-          <div className="deep-well"><i /><i /><span>2</span><small>deep signals</small></div>
-          <div className="empty-gap"><span>wide empty space</span></div>
-          <div className="shallow-pack"><i /><i /><i /><i /><i /><span>5</span><small>shallow signals</small></div>
-        </div>
+        <button className="novice-pmf-image" onClick={() => onOpen(figures.pmf)}><img src={figures.pmf.src} alt="PMF scoreboard showing two deep signals and five shallow signals" /><span><b>The real result</b> Two profiles sit far left, five stay near zero, and nothing occupies the space between them. <em>Open full figure ↗</em></span></button>
         <div className="honesty-card"><b>What we know</b><p>The two are far apart from the rest.</p><b>What we do not know</b><p>Whether either helps a living cell. The final energy numbers are also still being tightened.</p></div>
       </section>
 
@@ -268,6 +286,8 @@ function ResearchJourney({ onOpen }: { onOpen: (figure: Figure) => void }) {
         <div className="research-topline"><Metric value="200" label="designed" /><Metric value="121" label="gate-passed" /><Metric value="7" label="PMF-scored" /><Metric value="2" label="deep signals" accent /><Metric value="0" label="wet-lab validations" /></div>
       </section>
 
+      <HumanOrigin research />
+
       <section className="research-event era" data-era="04–27 MAR · PHENOTYPE">
         <aside><time>04–27 MAR</time><span>Clinical anchor</span></aside>
         <div className="event-body">
@@ -286,9 +306,9 @@ function ResearchJourney({ onOpen }: { onOpen: (figure: Figure) => void }) {
         <aside><time>01–02 JUL</time><span>Residue mechanism</span></aside>
         <div className="event-body">
           <div className="event-heading"><p className="mono-label">8VYJ · ISOLATED NTD MD</p><h2>The bridge breaks. The suppressor removes the charge.</h2></div>
-          <div className="residue-console">
+          <div className="residue-console md-console">
             <div className="console-tabs" role="tablist">{(["wt", "r104q", "d84n"] as const).map((key) => <button key={key} className={layer === key ? "active" : ""} onClick={() => setLayer(key)}>{metrics[key][2]}</button>)}</div>
-            <div className={`console-structure ${layer}`}><div className="atom a">{layer === "wt" ? "R104+" : "Q104"}</div><div className="atomic-link"><i /><i /><i /></div><div className="atom b">{layer === "d84n" ? "N84" : "D84−"}</div></div>
+            <div className={`console-structure real-frame ${layer}`}><img src={`/figures/md-final-${layer}.png`} alt={`${metrics[layer][2]} MD final frame`} /><span>FINAL COORDINATES · 100 ns</span></div>
             <div className="console-metrics"><div><span>bridge occupancy</span><strong>{metrics[layer][0]}</strong></div><div><span>core Cα RMSF · 55–85</span><strong>{metrics[layer][1]}</strong></div></div>
           </div>
           <div className="mechanism-proof"><p><strong>Discriminating observation:</strong> D84N has the lowest bridge occupancy and the lowest RMSF. Rigidity therefore tracks neutralization of the buried negative charge—not restoration of the original bridge.</p><p><strong>Scope:</strong> 3 × 100 ns means one 100 ns trajectory for each of three constructs, not three replicates per construct. Cα restraints and the isolated NTD constrain interpretation.</p></div>
@@ -411,7 +431,7 @@ export default function Home() {
       </header>
       <div id="top" />
       {audience === "novice" ? <NoviceJourney onOpen={setActiveFigure} /> : <ResearchJourney onOpen={setActiveFigure} />}
-      <footer><a className="wordmark" href="#top">brugada<span>.net</span></a><p>Built from the audited 20 July 2026 submission package.</p><span>SCN5A R104Q · computational research</span></footer>
+      <footer><a className="wordmark" href="#top">brugada<span>.net</span></a><p>Patient-led research. Computation nominates; the bench decides.</p><span>Research only · not medical guidance</span></footer>
       {activeFigure && <FigureModal figure={activeFigure} onClose={() => setActiveFigure(null)} />}
     </main>
   );
