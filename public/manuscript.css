@@ -1,0 +1,579 @@
+
+/* brugada.net design system
+   Register: a good lab notebook written by someone who is also a patient.
+   Reader 1 is frightened and may be reading at 2am, so dark mode is a first-class
+   case, type is large, and measure is short. Reader 2 wants numbers and sources,
+   so evidence state is a visible, consistent object rather than prose hedging. */
+
+:root {
+  --paper: #fbfbf9;
+  --raised: #ffffff;
+  --ink: #16171a;
+  --ink-soft: #4a4d55;
+  --muted: #6d717a;
+  --line: rgba(20, 22, 26, 0.13);
+  --line-soft: rgba(20, 22, 26, 0.07);
+
+  /* Evidence states. Meaning is carried by label text too, never colour alone. */
+  --known: #1d6b45;
+  --known-bg: rgba(29, 107, 69, 0.09);
+  --believed: #8a5a00;
+  --believed-bg: rgba(138, 90, 0, 0.09);
+  --unresolved: #1e5aa8;
+  --unresolved-bg: rgba(30, 90, 168, 0.09);
+  --dead: #8c2f39;
+  --dead-bg: rgba(140, 47, 57, 0.08);
+
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  --measure: 34rem;
+  --wide: 60rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #101114;
+    --raised: #16181c;
+    --ink: #eceef2;
+    --ink-soft: #b6bac3;
+    --muted: #8b909b;
+    --line: rgba(236, 238, 242, 0.16);
+    --line-soft: rgba(236, 238, 242, 0.08);
+    --known: #6ed6a0;
+    --known-bg: rgba(110, 214, 160, 0.12);
+    --believed: #f0c05a;
+    --believed-bg: rgba(240, 192, 90, 0.12);
+    --unresolved: #7fb2f0;
+    --unresolved-bg: rgba(127, 178, 240, 0.12);
+    --dead: #f08a95;
+    --dead-bg: rgba(240, 138, 149, 0.12);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--paper);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.125rem;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img { max-width: 100%; display: block; }
+h1, h2, h3 { text-wrap: balance; }
+
+/* Tailwind's preflight zeroes these, so the vertical rhythm is set here
+   explicitly rather than inheriting browser defaults. Without this every
+   paragraph runs into the next one. */
+p {
+  margin: 0 0 1.1rem;
+  text-wrap: pretty;
+}
+p:last-child { margin-bottom: 0; }
+ul, ol { margin: 0 0 1.1rem; }
+
+a {
+  color: inherit;
+  text-decoration-color: var(--line);
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 0.15s;
+}
+a:hover { text-decoration-color: currentColor; }
+
+:focus-visible {
+  outline: 3px solid var(--unresolved);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  padding: 0.75rem 1.25rem;
+  background: var(--raised);
+  border: 1px solid var(--line);
+  z-index: 999;
+}
+.skip:focus { left: 0.5rem; top: 0.5rem; }
+
+/* ---------- Shell ---------- */
+
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.masthead {
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--paper);
+}
+
+.masthead-inner {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 1.1rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  align-items: baseline;
+}
+
+.wordmark {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 640;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.15rem;
+  font-family: var(--sans);
+  font-size: 0.83rem;
+  letter-spacing: -0.005em;
+}
+.nav a { color: var(--muted); text-decoration: none; padding: 0.15rem 0; }
+.nav a:hover { color: var(--ink); }
+.nav a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--ink);
+}
+
+main { flex: 1; }
+
+/* The container matches the masthead so the text column starts under the
+   wordmark. Prose inside is held to a short measure; figures and tables are
+   allowed the full width. */
+.wrap {
+  max-width: var(--wide);
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 5rem;
+}
+.wrap > * { max-width: var(--measure); }
+.wrap > figure,
+.wrap > .tablewrap,
+.wrap > .readout { max-width: 46rem; }
+
+/* ---------- Type ---------- */
+
+.page-title {
+  font-size: clamp(2rem, 5.5vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
+  margin: 0 0 1.25rem;
+  font-weight: 600;
+}
+
+.standfirst {
+  font-size: 1.28rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: 0 0 2.5rem;
+}
+
+h2 {
+  font-family: var(--sans);
+  font-size: 1.02rem;
+  font-weight: 660;
+  letter-spacing: 0.005em;
+  line-height: 1.35;
+  margin: 3rem 0 0.9rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line-soft);
+}
+
+h3 {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 640;
+  margin: 2rem 0 0.6rem;
+}
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+
+.lede { font-size: 1.18rem; line-height: 1.55; }
+.small { font-size: 0.92rem; color: var(--muted); line-height: 1.55; }
+.mono { font-family: var(--mono); font-size: 0.86em; }
+
+/* ---------- Evidence states ---------- */
+
+.state {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.55rem;
+  border-radius: 3px;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.state-known { color: var(--known); background: var(--known-bg); }
+.state-believed { color: var(--believed); background: var(--believed-bg); }
+.state-unresolved { color: var(--unresolved); background: var(--unresolved-bg); }
+.state-dead { color: var(--dead); background: var(--dead-bg); }
+
+/* A claim carries its own evidence state and its own falsifier. */
+.claim {
+  margin: 1.75rem 0;
+  padding: 1.35rem 1.5rem;
+  background: var(--raised);
+  border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--line);
+  border-radius: 4px;
+}
+.claim.is-known { border-left-color: var(--known); }
+.claim.is-believed { border-left-color: var(--believed); }
+.claim.is-unresolved { border-left-color: var(--unresolved); }
+.claim.is-dead { border-left-color: var(--dead); }
+.claim > :first-child { margin-top: 0; }
+.claim > :last-child { margin-bottom: 0; }
+.claim p { margin: 0.7rem 0 0; }
+
+.falsifier {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px dashed var(--line);
+  font-size: 0.93rem;
+  color: var(--ink-soft);
+}
+.falsifier b {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+/* Inline source. Every number gets one. */
+.src {
+  font-family: var(--sans);
+  font-size: 0.78em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.src a { text-decoration-color: var(--line); }
+
+/* A glossed term, defined inline the first time it appears. */
+.gloss {
+  border-bottom: 1px dotted var(--muted);
+  cursor: help;
+}
+
+/* ---------- Figures for numbers ---------- */
+
+.readout {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--raised);
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+}
+.readout-value {
+  font-family: var(--sans);
+  font-size: clamp(2.4rem, 8vw, 3.4rem);
+  font-weight: 660;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  display: block;
+}
+.readout-label {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin: 0.7rem 0 0;
+}
+
+/* The gap bar: 50 percent expected against 34.1 percent measured. */
+.gapbar { margin: 1.5rem 0 0; }
+.gapbar-track {
+  position: relative;
+  height: 2.6rem;
+  background: var(--line-soft);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.gapbar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--unresolved-bg);
+  border-right: 2px solid var(--unresolved);
+}
+.gapbar-mark {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-left: 2px dashed var(--muted);
+}
+.gapbar-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin-top: 0.65rem;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ---------- Lists and tables ---------- */
+
+.route {
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--line-soft);
+}
+.route:last-child { border-bottom: 1px solid var(--line-soft); }
+.route-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.route-name {
+  font-family: var(--sans);
+  font-size: 1.05rem;
+  font-weight: 640;
+  margin: 0;
+}
+.route-blocker {
+  margin: 0.7rem 0 0;
+  font-size: 1rem;
+  color: var(--ink);
+}
+.route-blocker b {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.route-detail { margin: 0.7rem 0 0; font-size: 0.97rem; color: var(--ink-soft); }
+
+.paper {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line-soft);
+}
+.paper:last-child { border-bottom: 1px solid var(--line-soft); }
+.paper-n {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+.paper-title {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 620;
+  line-height: 1.4;
+  margin: 0.4rem 0 0.6rem;
+}
+.paper-plain { margin: 0; font-size: 1rem; color: var(--ink-soft); }
+.paper-meta {
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  align-items: center;
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.tablewrap { overflow-x: auto; margin: 1.5rem 0; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+}
+th, td {
+  text-align: left;
+  padding: 0.7rem 0.9rem 0.7rem 0;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+th {
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+ul.plain { padding-left: 1.15rem; }
+ul.plain li { margin: 0.6rem 0; }
+
+.ask {
+  margin: 0.9rem 0;
+  padding: 1rem 1.2rem;
+  background: var(--raised);
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  font-size: 1.02rem;
+}
+
+/* ---------- Notices ---------- */
+
+.notice {
+  margin: 2rem 0;
+  padding: 1.15rem 1.35rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.97rem;
+  color: var(--ink-soft);
+  background: var(--raised);
+}
+.notice b { color: var(--ink); }
+
+.pending {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--believed);
+  background: var(--believed-bg);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+}
+
+/* ---------- Next links ---------- */
+
+.next {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+}
+.next a { font-weight: 560; }
+
+/* ---------- Footer ---------- */
+
+.foot {
+  border-top: 1px solid var(--line-soft);
+  padding: 2.5rem 1.5rem 3.5rem;
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+.foot-inner { max-width: var(--wide); margin: 0 auto; }
+.foot p { margin: 0.5rem 0; max-width: 46rem; }
+.foot-rule {
+  margin: 1.5rem 0;
+  border: 0;
+  border-top: 1px solid var(--line-soft);
+}
+
+@media (max-width: 40rem) {
+  body { font-size: 1.08rem; }
+  .wrap { padding: 2.5rem 1.25rem 4rem; }
+  .masthead-inner { padding: 1rem 1.25rem; }
+}
+
+@media print {
+  .masthead, .next { display: none; }
+  body { background: #fff; color: #000; font-size: 11pt; }
+}
+
+
+/* ---------- Manuscript pages ---------- */
+/* These are standalone HTML, so they carry the base resets Tailwind would
+   otherwise have supplied. */
+* { box-sizing: border-box; }
+body { margin: 0; }
+.wrap h1 {
+  font-size: clamp(1.7rem, 4.5vw, 2.3rem);
+  line-height: 1.15;
+  letter-spacing: -0.022em;
+  font-weight: 600;
+  margin: 0 0 1.5rem;
+  max-width: var(--measure);
+}
+.wrap h2 { max-width: var(--measure); }
+.wrap h3, .wrap h4 {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 640;
+  margin: 2rem 0 0.6rem;
+  max-width: var(--measure);
+}
+.wrap p, .wrap ul, .wrap ol, .wrap blockquote { max-width: var(--measure); }
+.wrap li { margin: 0.45rem 0; }
+.wrap blockquote {
+  margin: 1.5rem 0;
+  padding: 0.2rem 0 0.2rem 1.15rem;
+  border-left: 3px solid var(--line);
+  color: var(--ink-soft);
+}
+.wrap table {
+  width: auto;
+  min-width: 60%;
+  max-width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+}
+.wrap th, .wrap td {
+  padding: 0.55rem 1rem 0.55rem 0;
+  border-bottom: 1px solid var(--line-soft);
+  text-align: left;
+  vertical-align: top;
+}
+.wrap code {
+  font-family: var(--mono);
+  font-size: 0.84em;
+  padding: 0.1em 0.35em;
+  border-radius: 3px;
+  background: var(--line-soft);
+  overflow-wrap: anywhere;
+}
+.wrap pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  background: var(--raised);
+}
+.wrap pre code { background: none; padding: 0; }
+.wrap hr { margin: 2.5rem 0; border: 0; border-top: 1px solid var(--line-soft); }
+.wrap img { margin: 1.5rem 0; }
+.backlink { margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line-soft); font-family: var(--sans); font-size: 0.92rem; }
+/* Tables can exceed the prose measure; let them use the full container. */
+.wrap > table { max-width: 100%; }

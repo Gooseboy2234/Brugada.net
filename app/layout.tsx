@@ -22,9 +22,11 @@ export const metadata: Metadata = {
       "SCN5A R104Q: what is known, what is not, and the routes that are still open",
     description:
       "A public research record for the SCN5A R104Q variant. Ten preprints, including the negative results.",
+    images: [{ url: "/og.png", width: 1200, height: 630 }],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
+    images: ["/og.png"],
     title: "SCN5A R104Q research record",
     description:
       "What has been measured, what remains unresolved, and which routes are closed.",
@@ -117,6 +119,15 @@ export default function RootLayout({
                 None of this work has been peer reviewed. Preprints are posted
                 publicly before review by design, so that the reasoning and the
                 errors are both visible.
+              </p>
+              <hr className="foot-rule" />
+              <p>
+                <b>Contact.</b>{" "}
+                <a href={`mailto:${SITE.contact}`}>{SITE.contact}</a>. If you
+                could put {SITE.domain} to better use than I am, whether you are
+                a patient group, a clinician or a research team, say so and I
+                will hand it over. The papers and data stay published under my
+                name regardless.
               </p>
               <p className="small">Last updated {SITE.updated}.</p>
             </div>

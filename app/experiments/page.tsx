@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { EXPERIMENTS } from "../content";
+import { EXPERIMENTS, SITE } from "../content";
 
 export const metadata: Metadata = {
   title: "Experiments",
@@ -143,7 +143,9 @@ export default function Experiments() {
 
       <p>
         The full protocols, including every line item, the power calculation and
-        the decision rules, are available on request.
+        the decision rules, are yours on request. Write to{" "}
+        <a href={`mailto:${SITE.contact}`}>{SITE.contact}</a>. A correction is
+        as welcome as an offer to run something.
       </p>
 
       <div className="next">

@@ -34,8 +34,8 @@ export default function Papers() {
         deliberate: it puts the reasoning and any errors in the open. Treat every
         claim as provisional until other people have checked it.
         <p style={{ margin: "0.7rem 0 0" }}>
-          Each manuscript is readable in full below, as plain text, until it is
-          posted to a preprint server and receives a permanent identifier.
+          Each manuscript is readable in full here, until it is posted to a
+          preprint server and receives a permanent identifier.
         </p>
       </div>
 
@@ -60,7 +60,7 @@ export default function Papers() {
             )}
             <p className="paper-meta">
               <span className={`state ${l.cls}`}>{l.text}</span>
-              <a href={`/papers/${paper.slug}.md`}>Read the manuscript</a>
+              <a href={`/m/${paper.slug}.html`}>Read the manuscript</a>
               <span>{paper.venue}</span>
               <span className="pending">DOI pending</span>
             </p>
@@ -100,6 +100,11 @@ export default function Papers() {
         <a href={SITE.orcidUrl}>{SITE.orcid}</a>. Once each preprint is posted it
         receives a permanent identifier, and this page will carry it. Until then
         the identifiers are marked pending rather than estimated.
+      </p>
+
+      <p>
+        If you find an error in any of them, I would rather hear it than not:{" "}
+        <a href={`mailto:${SITE.contact}`}>{SITE.contact}</a>.
       </p>
 
       <div className="next">

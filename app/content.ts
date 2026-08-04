@@ -20,6 +20,8 @@ export const SITE = {
   author: "Ethan Bradley",
   orcid: "0009-0008-8925-7975",
   orcidUrl: "https://orcid.org/0009-0008-8925-7975",
+  // Public already, via the ORCID record above.
+  contact: "ethan@brugada.net",
   updated: "2026-08-04",
 };
 

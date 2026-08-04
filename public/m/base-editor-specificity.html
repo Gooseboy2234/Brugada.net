@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Editability-scored off-target counting, and the specificity cost of PAM relaxation, in adenine base editor design: SCN5A p.Arg104Gln as a worked example — brugada.net</title>
+<meta name="description" content="Editability-scored off-target counting, and the specificity cost of PAM relaxation, in adenine base editor design: SCN5A p.Arg104Gln as a worked example">
+<link rel="canonical" href="https://brugada.net/m/base-editor-specificity.html">
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="/manuscript.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="wordmark" href="/">brugada.net</a>
+    <nav class="nav">
+      <a href="/papers">All papers</a>
+      <a href="/">Start here</a>
+    </nav>
+  </div>
+</header>
+<main class="wrap">
+  <div class="notice">
+    <b>Preprint, not peer reviewed.</b> Posted publicly before review so that the
+    reasoning and any errors are both visible. Treat every claim as provisional.
+    <a href="/papers/base-editor-specificity.md">Plain markdown source</a>.
+  </div>
+<h1>Editability-scored off-target counting, and the specificity cost of PAM relaxation, in adenine base editor design: SCN5A p.Arg104Gln as a worked example</h1>
+<p><strong>Ethan Bradley</strong></p>
+<p>Independent researcher, no institutional affiliation</p>
+<p>ORCID: <a href="https://orcid.org/0009-0008-8925-7975">0009-0008-8925-7975</a></p>
+<p>Correspondence: the author</p>
+<p>Preprint. Version 1, 2026-08-04.</p>
+<p><strong>Keywords:</strong> adenine base editing, off-target prediction, PAM relaxation, SpG, Cas9-NG, SpRY, guide RNA design, SCN5A, Brugada syndrome, dominant negative</p>
+<hr>
+<h2>Abstract</h2>
+<p><strong>Background.</strong> Base-editor off-targets are conventionally ranked by mismatch count, but a bound adenine base editor with no adenine in its window does nothing. SCN5A base editing already works in arrhythmia models (PMID 42193469, 37965733); the open question at a new locus is how specificity is counted.</p>
+<p><strong>Methods.</strong> With the Brugada variant SCN5A p.Arg104Gln as the worked example, I scanned 3,099,750,718 bp of GRCh38 on both strands with no seed heuristic, scoring sites on PAM compatibility and an editable adenine rather than sequence match, then rescanned under 1-nucleotide bulge tolerance (Cas-OFFinder-bulge v1.2).</p>
+<p><strong>Results.</strong> Editability scoring filters 85.1 percent of an SpG route&#39;s 4,388 matches but only 7.5 percent of a near-PAMless SpRY route&#39;s, so similarity counting makes the two appear 5.6-fold apart when the editable gap is 34.7-fold. Varying only the PAM rule on an identical 20-mer gives 136, 655, 1,598 and 4,064 editable sites for NGG, NG, purine-restricted and unrestricted PAMs, a 6.2-fold cost. Specificity claims hold only with an alignment model attached: the lead guide has nothing editable at 0 mismatches under either model, and nothing at 1 mismatch ungapped but five alignments at four loci with bulges, none protein-changing. Bulge tolerance also moves its nearest protein-changing off-target from 3 mismatches to 2, and penalises a relaxed-PAM editor twice: for accepting more PAMs, and because each dockable position is searched under every bulged geometry.</p>
+<p><strong>Conclusion.</strong> Editability, not similarity, is the correct scoring axis, and bulge tolerance raises the cost of PAM relaxation.</p>
+<hr>
+<h2>A key to the terms used in this paper</h2>
+<p>I am the person who carries this variant. I am not a bioinformatician, and I have written this paper so that a reader who is also not one can follow it. Every technical term is glossed at first use. This section collects the recurring ones.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Plain meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Variant</strong></td>
+<td>A single change in the DNA sequence. Here, one letter out of about three billion.</td>
+</tr>
+<tr>
+<td><strong>Nav1.5</strong></td>
+<td>The protein that lets sodium ions into heart muscle cells to start each beat. <em>SCN5A</em> is the gene that encodes it.</td>
+</tr>
+<tr>
+<td><strong>Loss of function</strong></td>
+<td>The variant protein does less than the normal one. The opposite, gain of function, does more.</td>
+</tr>
+<tr>
+<td><strong>Base editor</strong></td>
+<td>A protein steered to one spot in the genome that chemically converts a single DNA letter without cutting the strand. An <strong>adenine base editor</strong> performs exactly one reaction, A to G, and cannot alter a G.</td>
+</tr>
+<tr>
+<td><strong>Guide, or protospacer</strong></td>
+<td>A 20-letter piece of RNA that acts as the address label. The editor goes wherever the guide matches.</td>
+</tr>
+<tr>
+<td><strong>PAM</strong></td>
+<td>Protospacer-adjacent motif. A short DNA tag next to the target that the editor must grip before it can act. This is the docking collar. Standard Cas9 grips only <code>NGG</code>, meaning any letter then two Gs. <strong>SpG</strong> grips <code>NG</code>. <strong>SpRY</strong> grips almost anything.</td>
+</tr>
+<tr>
+<td><strong>Editing window</strong></td>
+<td>The editor is not single-letter precise. It acts on roughly positions 3 to 9 of the guide. Any A in that stretch is exposed.</td>
+</tr>
+<tr>
+<td><strong>Bystander edit</strong></td>
+<td>An unintended A inside the window that also gets converted. The main design hazard.</td>
+</tr>
+<tr>
+<td><strong>Mismatch</strong></td>
+<td>A position where the guide and a genomic site differ. Fewer mismatches means a closer match and, other things equal, more risk.</td>
+</tr>
+<tr>
+<td><strong>Off-target</strong></td>
+<td>A site elsewhere in the genome that the guide could act on.</td>
+</tr>
+<tr>
+<td><strong>Minus strand</strong></td>
+<td>DNA has two complementary strands. <em>SCN5A</em> is read off the second one, so the gene&#39;s own sequence is the mirror image of the reference sequence returned by default.</td>
+</tr>
+<tr>
+<td><strong>TPM</strong></td>
+<td>Transcripts per million. How much a gene is switched on in a tissue. Higher means more of that protein is being made there.</td>
+</tr>
+<tr>
+<td><strong>Mosaic</strong></td>
+<td>Only some cells get edited. Tissue-level benefit therefore depends on what fraction were corrected.</td>
+</tr>
+</tbody></table>
+<p>A pharmacy analogy carries the central methodological point of this paper, so I will state it here and return to it in the Results. A guide matching a genomic sequence is like a prescription whose patient name matches. That alone does not mean a drug gets dispensed. The label also has to scan, which is the PAM, and there has to be something in the bottle to dispense, which is an adenine in the window. Counting name matches and calling them dispensing errors would badly overstate how many errors the system can actually make.</p>
+<hr>
+<h2>1. Introduction</h2>
+<h3>1.0 What this paper contributes, and what it does not claim</h3>
+<p>I want to be direct about where the contribution lies, because the obvious reading of this paper is the wrong one.</p>
+<p><strong>Base editing of <em>SCN5A</em> is already an established approach.</strong> A 2026 review of gene therapy for cardiovascular and cerebrovascular disease names <em>SCN5A</em> base editing in its abstract as one of the strategies that have demonstrated capacity to re-establish electrophysiological stability in arrhythmia models, listed alongside <em>KCNQ1</em>/<em>KCNH2</em> suppression-and-replacement and structural protein restoration via <em>PKP2</em> and <em>TMEM43</em> (PMID 42193469). The underlying demonstration is Qi M et al., <em>Circulation</em> 2024 (PMID 37965733), described in section 1.4. Base editing has also been used at this gene in the opposite direction, to <em>generate</em> <em>SCN5A</em> point mutations in human pluripotent stem cells for disease modelling rather than to repair one (PMID 33102492), and the general approach of CRISPR modelling and correction in cardiovascular disease has been reviewed (PMID 35679361).</p>
+<p><strong>So &quot;I designed a guide for a new variant&quot; is not a contribution, and I am not claiming it as one.</strong> If the premise were speculative, novelty would be the thing to argue. It is not speculative, which is more useful: a reader does not need convincing that a base editor can be pointed at this gene.</p>
+<p>The contributions are methodological, and neither requires this variant.</p>
+<ol>
+<li><strong>Editability-scored off-target counting.</strong> Off-targets for base editors are conventionally ranked by mismatch count. For a nuclease that is defensible, because a bound nuclease cuts. For a base editor it is not, because a bound editor with no adenine in its editing window does nothing. Scoring on editability rather than similarity removes 85.1 percent of the lead guide&#39;s 4,388 genomic sequence matches, and it removes them <em>unevenly between routes</em>, which is the part that matters for any comparison. Any base-editor design that ranks off-targets by mismatch count alone is making this error.</li>
+<li><strong>A controlled measurement of the specificity cost of PAM relaxation.</strong> Holding the 20-mer identical and varying only the PAM rule separates the cost of the editor from the cost of guide choice, giving a 6.2-fold penalty from <code>NG</code> to unrestricted. This is cheap to run at any locus and nobody needs this variant to use it.</li>
+</ol>
+<p><strong>R104Q is the worked example, not the claim.</strong> I use it because it is the variant I carry, because it forces the interesting case (standard SpCas9 cannot reach it, so engineered editors and their relaxed PAMs are mandatory rather than optional), and because it lets both methodological points be demonstrated on a real therapeutic target rather than a synthetic one.</p>
+<p><strong>There is one respect in which the target itself is new</strong>, and I state it as a gap rather than an achievement: as far as this search reaches, there is no published base-editing design for any Brugada or loss-of-function <em>SCN5A</em> variant, and no prior guide design, off-target analysis or editor comparison at this locus. Section 1.5 argues that the reason is structural rather than accidental, and section 5.3 develops it.</p>
+<p><strong>Bounds of the prior-art search.</strong> Two independent searches were run, one against PubMed through NCBI E-utilities and one against Europe PMC across five query families. Neither covers patents, company development pipelines, conference abstracts, or non-English literature. A query for &quot;R104Q OR Arg104Gln&quot; returns 72 hits in Europe PMC, none concerning <em>SCN5A</em>: they are R104Q substitutions in <em>RNF114</em>, in Charcot-Marie-Tooth genes, and in cytochrome P450 enzymes. <strong>A bounded search finding nothing is evidence about the search, not proof of absence</strong>, and I do not claim priority on that basis. I claim only that I could not find it, and I have said where I looked.</p>
+<h3>1.1 The variant used as the worked example</h3>
+<p><em>SCN5A</em> encodes Nav1.5, the voltage-gated sodium channel that carries the depolarising current starting each heartbeat in ventricular muscle. Loss-of-function variants in <em>SCN5A</em> cause Brugada syndrome, in which the electrocardiogram shows a characteristic pattern in the right precordial leads and the carrier is at raised risk of ventricular arrhythmia and sudden death.</p>
+<p>The variant treated here is NM_000335.5:c.311G&gt;A, p.Arg104Gln, at mRNA position 520, which changes codon 104 from CGG (arginine) to CAG (glutamine). In genomic coordinates it is NC_000003.12:g.38630392C&gt;T on GRCh38, ClinVar VariationID 67780. It was first reported in 2001 in a series of seven Brugada patients from Israel, in which two novel <em>SCN5A</em> variants were found and low penetrance was proposed as the reason so few family members were symptomatic (PMID 11960580). Position 104 lies in the N-terminal domain of the channel, and N-terminally mutated Nav1.5 constructs including R104Q have been characterised electrophysiologically (PMID 23805106).</p>
+<p>A note on adjacency that I record because it shaped my expectations. R104W, a different substitution at the same residue, sits at the <strong>immediately adjacent base</strong>, chr3:38630393, ClinVar VariationID 67778. R104W is classified Pathogenic and has published dominant-negative and trafficking data. R104Q is Conflicting and has far less. One base apart, and one has an answer key while the other does not.</p>
+<h3>1.2 The functional baseline, and the one thing that is not settled</h3>
+<p>The quantitative anchor for everything downstream is O&#39;Neill MJ et al., <em>Genetics in Medicine</em> 2022 (PMID 35305865), Supplementary Table 1, which I read from the open preprint doi:10.1101/2021.09.22.461398 at page 29. That study used Sleeping Beauty genomic integration, so wild-type expression is not diluted by the variant construct and a variant with no dominant-negative effect reads 100 percent.</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th align="right">Peak current, percent of one wild-type allele</th>
+<th align="right">n</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>R104Q homozygous</td>
+<td align="right">0.4 +/- 0.2</td>
+<td align="right">22</td>
+</tr>
+<tr>
+<td>R104Q heterozygous</td>
+<td align="right">68.3 +/- 6.1</td>
+<td align="right">34</td>
+</tr>
+<tr>
+<td>Expectation if no dominant-negative effect</td>
+<td align="right">100</td>
+<td align="right">reference</td>
+</tr>
+</tbody></table>
+<p>The variant protein alone carries essentially no current. Co-expressed with wild type it removes 31.7 points from what the wild-type allele would deliver alone. That is the signature of a dominant-negative effect: the variant protein interferes with its healthy partner rather than merely being absent.</p>
+<p><strong>This is the load-bearing uncertainty of the paper and I am placing it in the introduction rather than burying it in the limitations.</strong> That measurement was made in a heterologous expression system. Whether the dominant-negative effect operates the same way in human heart muscle is unresolved. If R104Q behaves in a human heart as simple haploinsufficiency, meaning one allele simply stops contributing and does not interfere, then correcting the mutant allele buys a 2-fold gain rather than the 2.93-fold I calculate below. The case weakens without collapsing. An allele-resolved surface-expression experiment would settle it, and I have requested one from a laboratory with the relevant assay. Until that result exists, every rescue figure in this paper is reported under both mechanisms.</p>
+<h3>1.3 What a corrective therapy would be compared against</h3>
+<p>I want to be precise about the comparator, because the intuitive answer is wrong.</p>
+<p>Guideline indications for an implantable cardioverter-defibrillator in Brugada syndrome centre on prior cardiac arrest, documented sustained ventricular arrhythmia, or arrhythmic syncope with a spontaneous type 1 pattern. Most carriers are asymptomatic, do not meet those criteria, and therefore have no protection at all. A defibrillator also does not treat the disease: it terminates an arrhythmia after it has started and does nothing to the sodium current. And it carries measured harm. A systematic review and meta-analysis of 63 studies and 4,916 patients with inherited arrhythmia syndromes found inappropriate shocks in 20 percent of patients, at a crude rate of 4.7 percent per year (PMID 26385533).</p>
+<p>The comparator for a disease-modifying therapy is therefore <strong>no treatment</strong>, not a functioning device. This raises what an off-target burden must be weighed against. It does not lower the bar for measuring that burden, which is the substance of this paper.</p>
+<h3>1.4 Why an adenine base editor, and what the established precedent is</h3>
+<p>Codon 104 needs its middle A changed back to a G. An adenine base editor performs exactly that reaction and no other. The repair required and the chemistry available are the same operation, which is not true of most disease variants.</p>
+<p>The precedent is unusually close, and it is the demonstration behind the review statement quoted in section 1.0. Qi M et al., <em>Circulation</em> 2024 (PMID 37965733) built a knock-in mouse carrying the <em>SCN5A</em> T1307M variant, split an adenine base editor across two AAV9 vectors, gave a single intraperitoneal injection at postnatal day 14, and corrected up to 99.20 percent of <em>Scn5a</em> transcripts. Correction above 60 percent eliminated the QT-prolongation phenotype, and no off-target DNA or RNA editing was detected in treated hearts. Same gene, same organ, same editor class, and a phenotype rescue rather than an efficiency measurement. Section 1.5 states the one way it does not transfer.</p>
+<p>Two further results frame the approach. Levy JM et al., <em>Nature Biomedical Engineering</em> 2020 (PMID 31937940) delivered split base editors by dual AAV and reported 20 percent editing in mouse heart in a general tissue survey. Koblan LW et al., <em>Nature</em> 2021 (PMID 33408413) corrected the progeria point mutation in <em>LMNA</em> in vivo and extended lifespan, establishing that a dominant-negative single-base change is a tractable base-editing target, which is the structural situation here.</p>
+<h3>1.5 Why the established successes are all the easier class of variant</h3>
+<p>T1307M is a <strong>gain-of-function</strong> variant causing long QT syndrome type 3. R104Q is <strong>loss of function</strong> causing Brugada syndrome. That difference is not cosmetic, and I think it explains the pattern in the literature rather than being incidental to it.</p>
+<p>Long QT syndrome type 3 has a cheap, quantitative, non-invasive animal endpoint: the QT interval on a surface electrocardiogram. Brugada syndrome does not. Its diagnostic ST-segment signature depends on a transmural voltage gradient across the right ventricular wall. Mouse hearts beat near 500 beats per minute with a substantially different complement of repolarising currents and do not reproduce that gradient. A mouse carrying a Brugada variant therefore offers no equivalent readout, and a correction experiment in one would demonstrate editing efficiency without demonstrating phenotype rescue.</p>
+<p>So the absence noted in section 1.0, that I could find no base-editing design for any Brugada or loss-of-function <em>SCN5A</em> variant, is unlikely to be an oversight the field simply has not got round to. <strong>The gain-of-function variants are the ones with a cheap endpoint, and that is a strong reason for them to have been done first.</strong> Designing for the harder class means accepting up front that the phenotype question cannot be answered the way the precedent answered it, and saying so rather than implying the precedent transfers whole.</p>
+<p>This is a limitation of the whole approach for this disease, not of this design. Section 5.3 develops what it implies for anyone attempting the correction, and section 6 lists it among the limitations.</p>
+<hr>
+<h2>2. Methods</h2>
+<p>Everything in this section is reproducible from public data by anyone, with no institutional access and no licensed software. Every input is named with an accession, a checksum, or a coordinate.</p>
+<h3>2.1 Sequence retrieval and the coordinate assertions</h3>
+<p>Reference sequence was retrieved from NCBI E-utilities <code>efetch</code>, accession NC_000003.12 (GRCh38.p14), region 38630362 to 38630423, 1-based inclusive, forward strand. The 62-base window reads:</p>
+<pre><code>AGGACATACAAGGCGTTGGTGGCACTGAACCGGAAGATGGTCTTGCCTTTATTCAGTACGAT
+</code></pre>
+<p><strong>Two assertions guard every coordinate operation, and any reproduction of this work should include them.</strong></p>
+<ol>
+<li>The reference allele at forward position 38630392 must be <strong>C</strong>, matching the ClinVar record.</li>
+<li>Codon 104 must read <strong>CGG</strong> in wild type and <strong>CAG</strong> after a forward C-to-T substitution at 38630392.</li>
+</ol>
+<p>I state plainly that these assertions caught two real errors of mine, because a design that fails silently is the dangerous kind.</p>
+<p><strong>The first error was a convention mismatch.</strong> UCSC REST returns 0-based half-open coordinates; NCBI <code>efetch</code> returns 1-based inclusive. The same request to both returns strings offset by one base. My first sequence gave G where ClinVar requires C, and CCG where the codon must read CGG. Both assertions failed loudly, and I rebuilt on the NCBI sequence.</p>
+<p><strong>The second error survived the first fix and is subtler.</strong> c.311 is the <strong>middle</strong> base of codon 104, and <em>SCN5A</em> is on the minus strand. The codon is therefore forward 38630391 to 38630393 read as reverse complement, not 38630392 to 38630394. Reading forward 38630392 to 38630394 returns <code>CGG</code>, which looks like a passing check and is the wrong codon. Only the combination of the correct span and the reverse complement satisfies both assertions. I verified this again while preparing this manuscript: forward 38630391-38630393 is <code>CCG</code>, whose reverse complement is <code>CGG</code> (arginine), and the C-to-T substitution makes it <code>CAG</code> (glutamine).</p>
+<h3>2.2 Strand determination</h3>
+<p><em>SCN5A</em> is Ensembl ENSG00000183873, chr3:38548057-38649743, strand -1. The transcript notation c.311G&gt;A and the genomic notation g.38630392C&gt;T are not contradictory: a G on the messenger RNA pairs with a C on the forward strand, which is the signature of a minus-strand gene. The consequence is concrete:</p>
+<table>
+<thead>
+<tr>
+<th>Strand</th>
+<th>Change needed to repair</th>
+<th>Can an adenine base editor do it?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Forward genomic</td>
+<td>T to C</td>
+<td><strong>No</strong></td>
+</tr>
+<tr>
+<td>Reverse, mRNA-sense</td>
+<td><strong>A to G</strong></td>
+<td><strong>Yes</strong></td>
+</tr>
+</tbody></table>
+<p>A base editor acts on whichever strand its guide binds, so <strong>every guide here must be designed on the reverse strand.</strong> Anyone working from the cDNA number alone will design a forward-strand guide and get nothing. I flag this because the cDNA notation is the form the variant is almost always quoted in.</p>
+<h3>2.3 Guide enumeration</h3>
+<p>The mutant allele was constructed by substituting T at forward position 38630392 in memory. For each of the 20 possible registers, the protospacer was taken as the 20 bases ending at forward coordinate 38630392 + (p - 1) read as reverse complement, where p is the position the target adenine occupies in the protospacer, and the PAM as the three bases immediately 3&#39; of the protospacer on the same strand. A register was retained as a candidate if p fell within the editing window, defined as positions 3 to 9 inclusive. Bystanders were counted as adenines within positions 3 to 9 other than the target. The same register was extracted from the unmodified reference to obtain the healthy-allele protospacer and its editable-adenine count.</p>
+<p>PAM rules applied: <code>NGG</code> for SpCas9, <code>NG</code> for SpG and Cas9-NG, <code>NRN</code> for purine-restricted SpRY, and unrestricted for SpRY (PMID 32217751 introduced both SpG and SpRY).</p>
+<p>All 20 registers were enumerated, not sampled. Seven fall in the window and constitute the candidate set reported in Table 1.</p>
+<h3>2.4 Genome-wide off-target scan</h3>
+<p><strong>Assembly.</strong> NCBI GRCh38 no-alt analysis set, <code>GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz</code>, 872,949,833 bytes, md5 <code>a08035b6a6e31780e96a34008ff21bd6</code>, gzip integrity verified. The file contains 195 sequences. I scanned 194 of them, totalling <strong>3,099,750,718 bp</strong>: the 22 autosomes, X, Y, mitochondrial DNA, and all unplaced and unlocalised scaffolds. I excluded only <code>chrEBV</code>, which is Epstein-Barr virus included as a sequencing decoy and is not human DNA. The no-alt set excludes alternate haplotype contigs, which are duplicate representations of a few variable regions; including them would double-count the same locus.</p>
+<p><strong>Search.</strong> Every one of the 3.1 billion positions was compared against every guide at all 20 positions, on both strands. There is no seed requirement, no index, and no heuristic filter, so a distant match cannot be silently missed. The eight candidate guide-and-editor pairs collapse to <strong>7 unique 20-mers</strong>, because the SpG guide at position 5 and the SpRY guide at position 5 are the same sequence used by two editors. Each unique sequence was searched as itself and as its reverse complement, giving 14 searches. Mismatch budget 0 through 6. Runtime 669 seconds on 10 cores.</p>
+<p><strong>Editability scoring.</strong> A hit was scored <em>editable</em> only if <strong>both</strong> conditions held: the three bases immediately adjacent satisfy the PAM rule of the editor in question, at the correct offset and on the correct strand; and at least one adenine sits within protospacer positions 3 to 9. A hit failing either condition cannot be edited even if the guide binds. Naive sequence-match counts and editable counts are reported separately throughout, and I do not quote the naive count as a risk figure.</p>
+<p><strong>Annotation.</strong> NCBI RefSeq <code>GCF_000001405.40_GRCh38.p14_genomic.gtf.gz</code>, 56,947,363 bytes, 67,512 gene records, 1,849,964 coding-exon records. RefSeq accessions were mapped to <code>chr</code> names using the matching assembly report so annotation and sequence share one coordinate system. Amino-acid consequences were computed from the GTF frame field and genomic sequence.</p>
+<p><strong>Cardiac expression.</strong> GTEx v8, tissues <code>Heart_Left_Ventricle</code> and <code>Heart_Atrial_Appendage</code>, plus skeletal muscle and two arteries for context. A gene was flagged cardiac-expressed at a threshold of 1 TPM in either heart tissue. I requested 330 genes and resolved 295; the 35 unresolved are mostly <code>LOC</code>-prefixed and predicted-model genes absent from the GTEx v8 reference.</p>
+<h3>2.5 Pipeline validation: five gates</h3>
+<p>I do not trust a pipeline that has not recovered something whose answer I already know.</p>
+<ol>
+<li><strong>Coordinate gate.</strong> The retrieved 62-base window matched the expected string exactly, and the forward base at 38630392 is C.</li>
+<li><strong>Codon gate.</strong> Codon 104 reads CGG wild-type and CAG mutant, as described in 2.1. This gate caught the middle-base error.</li>
+<li><strong>Array gate.</strong> The window read back from the parsed chromosome array is byte-identical to what NCBI returned, confirming array indexing is aligned to 1-based genomic coordinates.</li>
+<li><strong>On-target recovery gate.</strong> All 7 unique guides found their own site on the minus strand with exactly the expected PAM. <strong>An important subtlety:</strong> GRCh38 is the <em>wild-type</em> reference and these guides target the <em>mutant</em> allele, so at the target locus each guide matches the reference at <strong>1 mismatch, not 0</strong>. Patching C-to-T at 38630392 in memory to build the mutant allele, every guide then matches at 0 mismatches. A pipeline reporting 0 mismatches against unmodified GRCh38 would have been wrong.</li>
+<li><strong>PAM offset gate, both strands.</strong> Plus-strand and minus-strand hits were independently re-extracted from the chromosome array; protospacer and PAM matched in every case. The on-target gate exercises only the minus strand, so without this a plus-strand offset error would have gone unnoticed.</li>
+</ol>
+<p>Independently, the consequence engine reproduces p.Arg104Gln at codon 104 for the intended edit given only the GTF frame field and genomic sequence, with no hard-coded knowledge of the variant.</p>
+<h3>2.6 Rescue arithmetic</h3>
+<p>Let <em>b</em> be the untreated current as a percentage of a heart with two working alleles. Under the dominant-negative measurement, <em>b</em> = 68.3 / 2 = 34.1, because the O&#39;Neill figure is expressed relative to one wild-type allele and a normal heart has two. Under the alternative haploinsufficiency mechanism, <em>b</em> = 50. A corrected cell delivers 100. For a mosaic fraction <em>f</em> of corrected cells, predicted tissue current is <em>100f + b(1 - f)</em>, and fold gain is that quantity divided by <em>b</em>. Per-cell gain is 100 / <em>b</em>, giving 2.93-fold under the dominant-negative mechanism and 2.00-fold under haploinsufficiency. This is linear arithmetic on a measured starting point, not a model of cardiac electrophysiology, and section 6 states what it therefore cannot capture.</p>
+<h3>2.7 Literature retrieval, and its bounds</h3>
+<p>Citations were retrieved and verified through NCBI E-utilities <code>esearch</code>, <code>esummary</code> and <code>efetch</code> against PubMed. Every PMID cited in this paper was resolved to its author list, journal, year, volume, pages and DOI, and those are recorded in <code>MS_REFERENCES.csv</code>.</p>
+<p><strong>This literature search is bounded and I do not call it exhaustive.</strong> It covers PubMed only. It does not cover conference abstracts, patents, preprint servers other than those PubMed indexes, or non-English-language literature. Publisher websites were unreachable from my environment, which was blocked by a network allowlist and returned proxy errors rather than server errors; that is evidence about my retrieval, not about the literature. Specifically, I could not verify current author guidelines for any candidate journal, and every such requirement is marked UNVERIFIED in the accompanying venue assessment.</p>
+<hr>
+<h2>3. Results</h2>
+<h3>3.1 Standard SpCas9 cannot reach this site. This is the first result and it is a negative.</h3>
+<p>Of the 20 possible protospacer registers, <strong>seven</strong> place the target adenine inside the editing window. Enumerating all seven (Table 1), <strong>none has an <code>NGG</code> PAM.</strong> Standard SpCas9 therefore has no usable guide at this locus at any editing position. The site is reachable only with an engineered editor accepting a relaxed PAM.</p>
+<p>This matters because it forces the design onto engineered editors whose relaxed docking requirement is itself the main source of off-target exposure. Everything in section 3.4 is a consequence of this negative.</p>
+<h3>3.2 One guide is clean by construction</h3>
+<p><strong>Table 1. The seven guide candidates that place the target adenine in the editing window.</strong> All are on the reverse, mRNA-sense strand. Full table with genomic spans in <code>MS_TABLE1_GUIDES.csv</code>.</p>
+<table>
+<thead>
+<tr>
+<th align="right">Target A position</th>
+<th>Protospacer (5&#39;-3&#39;)</th>
+<th>PAM</th>
+<th>Minimum editor required</th>
+<th align="right">Bystander A in window</th>
+<th align="right">Editable A on healthy allele</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">3</td>
+<td>CCAGTTCAGTGCCACCAACG</td>
+<td>CCT</td>
+<td>SpRY</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right">4</td>
+<td>TCCAGTTCAGTGCCACCAAC</td>
+<td>GCC</td>
+<td>SpRY</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="right"><strong>5</strong></td>
+<td><strong>TTCCAGTTCAGTGCCACCAA</strong></td>
+<td><strong>CGC</strong></td>
+<td><strong>SpG / Cas9-NG</strong></td>
+<td align="right"><strong>0</strong></td>
+<td align="right"><strong>0</strong></td>
+</tr>
+<tr>
+<td align="right">6</td>
+<td>CTTCCAGTTCAGTGCCACCA</td>
+<td>ACG</td>
+<td>SpRY</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">7</td>
+<td>TCTTCCAGTTCAGTGCCACC</td>
+<td>AAC</td>
+<td>SpRY</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">8</td>
+<td>ATCTTCCAGTTCAGTGCCAC</td>
+<td>CAA</td>
+<td>SpRY</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td align="right">9</td>
+<td>CATCTTCCAGTTCAGTGCCA</td>
+<td>CCA</td>
+<td>SpRY</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody></table>
+<p>Six of the seven carry no bystander adenine. Exactly one has a PAM that SpG can read: the guide at position 5, PAM <code>CGC</code>, whose middle base is G. Its genomic span including PAM is chr3:38630374-38630396.</p>
+<p><strong>The lead guide is therefore the guide at position 5.</strong> It requires only the <code>NG</code> relaxation rather than full PAM-lessness, and it sits at the position with the best editing geometry with no other adenine in its window.</p>
+<h3>3.3 What happens to the healthy copy, and why the answer is unusually clean</h3>
+<pre><code>mutant allele    5&#39;-TTCCAGTTCAGTGCCACCAA-3&#39;
+healthy allele   5&#39;-TTCCGGTTCAGTGCCACCAA-3&#39;
+                        ^ one base different
+</code></pre>
+<p>The guide differs from the healthy allele at a single position, so it will bind both copies of the gene. But the editing window on the healthy allele contains <strong>no adenine at all.</strong> The editor docks and finds nothing it can act on, because an adenine base editor cannot alter a G.</p>
+<p>Allele selectivity here does not depend on the guide discriminating between the two copies. It depends on the enzyme having no substrate on the healthy copy. That is a stronger position than sequence-based discrimination, and it is the reason this variant is a better base-editing target than an allele-specific silencing target.</p>
+<h3>3.4 The predicted off-target profile</h3>
+<p>Across all searches, 2,051,639 sequence matches exist at up to 6 mismatches. The annotated set stops at 4 mismatches and contains 24,562 rows, of which 7 are the on-target sites of the 7 unique guides and 24,555 are off-target.</p>
+<p><strong>Naive sequence-match counts, pooled across all guides:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Mismatches</th>
+<th align="right">Naive sequence matches</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td align="right">0</td>
+</tr>
+<tr>
+<td>1</td>
+<td align="right">13</td>
+</tr>
+<tr>
+<td>2</td>
+<td align="right">90</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="right">1,801</td>
+</tr>
+<tr>
+<td>4</td>
+<td align="right">22,658</td>
+</tr>
+<tr>
+<td><strong>total, up to 4</strong></td>
+<td align="right"><strong>24,562</strong></td>
+</tr>
+</tbody></table>
+<p>Zero matches at 0 mismatches is expected and correct: the guides match the mutant allele, which is not present in the reference.</p>
+<h4>3.4.1 First methodological result: scoring editability rather than similarity removes 85 percent of the apparent risk</h4>
+<p>For the lead guide, <strong>4,388 off-target sequence matches reduce to 655 editable sites, so 85.1 percent of matches cannot be edited at all</strong>, lacking either an acceptable PAM or an adenine in positions 3 to 9. For the SpRY route, 24,555 matches reduce only to 22,710, filtering just 7.5 percent, because with no PAM requirement left there is almost nothing to filter on.</p>
+<p>The editability filter is what makes the SpG number small, and it is precisely the filter SpRY discards. A worked example makes the point concrete. The closest sequence matches in the entire scan are at chr2:166,058,637-166,058,640, one mismatch from three of the SpRY guides. That looks alarming. It is not editable. The site reads <code>TCTTCCGGTTCAGTGCCACC</code>: it carries G where the guide carries A, because it is a paralogous sodium-channel gene retaining the ancestral wild-type sequence. There is no adenine in the window, so there is nothing to convert. A ranking by sequence similarity alone would place this at the top of the risk list.</p>
+<h4>3.4.2 Second methodological result: relaxing the PAM costs 6.2-fold with the guide held identical</h4>
+<p>Holding the 20-mer identical and varying only the PAM rule isolates the cost of relaxation from the cost of guide choice.</p>
+<p><strong>Table 2a. Controlled comparison. Identical lead 20-mer <code>TTCCAGTTCAGTGCCACCAA</code>, PAM rule varied.</strong></p>
+<table>
+<thead>
+<tr>
+<th>PAM rule</th>
+<th align="right">Editable, up to 2 mm</th>
+<th align="right">up to 3 mm</th>
+<th align="right">up to 4 mm</th>
+<th align="right">In coding exon</th>
+<th align="right">Protein-changing</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>standard Cas9, <code>NGG</code></td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">136</td>
+<td align="right">6</td>
+<td align="right">3</td>
+</tr>
+<tr>
+<td><strong>SpG, <code>NG</code></strong></td>
+<td align="right"><strong>3</strong></td>
+<td align="right"><strong>51</strong></td>
+<td align="right"><strong>655</strong></td>
+<td align="right"><strong>26</strong></td>
+<td align="right"><strong>16</strong></td>
+</tr>
+<tr>
+<td>SpRY, purine <code>NRN</code></td>
+<td align="right">8</td>
+<td align="right">131</td>
+<td align="right">1,598</td>
+<td align="right">40</td>
+<td align="right">23</td>
+</tr>
+<tr>
+<td>SpRY, unrestricted</td>
+<td align="right">16</td>
+<td align="right">268</td>
+<td align="right">4,064</td>
+<td align="right">79</td>
+<td align="right">55</td>
+</tr>
+</tbody></table>
+<p>Relaxing the docking collar from <code>NG</code> to unrestricted multiplies the editable off-target load <strong>6.2-fold on a sequence that has not changed at all</strong>. The <code>NGG</code> row is included for calibration only; as section 3.1 established, no <code>NGG</code> guide exists at this site, so that row is not an available option.</p>
+<h4>3.4.3 Route level: SpRY carries 34.7 times the load for no benefit</h4>
+<p>The comparison that decides the recommendation is not editor against editor but route against route, because only one of the seven guides has an on-target PAM SpG can read. The other six have on-target PAMs <code>CCT</code>, <code>GCC</code>, <code>ACG</code>, <code>AAC</code>, <code>CAA</code>, <code>CCA</code>, none satisfying <code>NG</code>. So the SpG route is <strong>one guide</strong> and that is its entire exposure, while the SpRY route is <strong>all seven</strong>.</p>
+<p><strong>Table 2b. Route-level comparison.</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="right">SpG route (1 guide)</th>
+<th align="right">SpRY route (7 guides)</th>
+<th align="right">Ratio</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Editable off-targets, up to 4 mm</td>
+<td align="right"><strong>655</strong></td>
+<td align="right"><strong>22,710</strong></td>
+<td align="right">34.7</td>
+</tr>
+<tr>
+<td>Editable, up to 3 mm</td>
+<td align="right">51</td>
+<td align="right">1,758</td>
+<td align="right">34.5</td>
+</tr>
+<tr>
+<td>Editable, up to 2 mm</td>
+<td align="right">3</td>
+<td align="right">89</td>
+<td align="right">29.7</td>
+</tr>
+<tr>
+<td>In coding exons</td>
+<td align="right">26</td>
+<td align="right">666</td>
+<td align="right">25.6</td>
+</tr>
+<tr>
+<td>Protein-changing</td>
+<td align="right"><strong>22</strong></td>
+<td align="right"><strong>613</strong></td>
+<td align="right">27.9</td>
+</tr>
+<tr>
+<td>Protein-changing at up to 3 mm</td>
+<td align="right">2</td>
+<td align="right">47</td>
+<td align="right">23.5</td>
+</tr>
+<tr>
+<td>Protein-changing in a heart-expressed gene</td>
+<td align="right"><strong>7</strong></td>
+<td align="right"><strong>317</strong></td>
+<td align="right">45.3</td>
+</tr>
+</tbody></table>
+<p>Protein-changing rows in this table are recomputed from <code>ABE_CONSEQUENCE_RECHECK.csv</code> for the reason
+given in section 3.4.6, so they are higher on both routes than an earlier version of this analysis
+reported. The editable counts are unaffected, because the correction was to consequence calling and
+not to the scan. Both routes are counted the same way, so the comparison the recommendation rests on
+is unchanged.</p>
+<p>SpRY&#39;s purpose is to provide guide options where no <code>NG</code> PAM exists. Here an <code>NG</code> PAM <strong>does</strong> exist, at the position with the best editing geometry and with no bystander adenine. The SpRY guides buy nothing at this site and cost between 24 and 45 times the burden depending on which column is read.</p>
+<h4>3.4.4 The lead guide&#39;s own profile, enumerated</h4>
+<p>Every count in this subsection is stated with its alignment model attached, because the two models
+answer different questions and one of them is blind to insertions and deletions.</p>
+<ul>
+<li><strong>Nothing editable at 0 mismatches, under either alignment model.</strong></li>
+<li><strong>At 1 mismatch, nothing editable under ungapped alignment, and five alignments at four distinct
+loci under 1-nucleotide bulge tolerance.</strong> All four loci were characterised completely and <strong>none is
+protein-changing</strong>: three intronic, in <em>TNKS1BP1</em> (17.17 TPM left ventricle), <em>MON2</em> (2.95) and
+<em>MYO5B</em> (0.18), and one in coding sequence but <strong>synonymous</strong>, <em>TGM2</em> p.Pro375Pro. <em>TGM2</em> is the one
+that needed checking, because at 230.76 TPM in left ventricle it runs 6.6 times SCN5A&#39;s own 35.11, so
+a protein-changing edit there would have been serious. I verified the synonymous call by translating
+full-length NM_004613.4 end to end rather than trusting my own annotator, and the edited base sits
+25 bp from the nearest splice boundary, so splice disruption is not in play either. Five alignments
+describe four loci because one docking window at chr12:62,533,866 admits two equivalent bulge
+placements at equal mismatch cost.</li>
+<li>At 2 mismatches, <strong>3</strong> editable sites under ungapped alignment, and I enumerated all three:
+chr1:114,999,332 (intergenic), chr14:96,276,087 (intergenic), and chr21:15,190,061 (an exon of the
+long non-coding RNA LOC124905047). <strong>None is protein-coding.</strong> Under bulge tolerance the same
+distance carries <strong>4 protein-changing loci</strong>, in <em>TXNIP</em>, <em>SAMD15</em>, <em>SLC68A1</em> and <em>HNRNPAB</em>, so
+bulge tolerance puts protein-changing risk closer to this guide than the ungapped scan could see.</li>
+<li>51 editable at up to 3 mismatches, 655 at up to 4, ungapped.</li>
+<li>26 fall in coding exons: 22 missense and 4 synonymous.</li>
+<li>Of the 22 protein-changing sites, <strong>7 are in genes expressed at 1 TPM or above in heart</strong>, and 4 of
+those reach that level in left ventricle specifically, which is the column Table 3 reports.</li>
+</ul>
+<p>The consequence counts in this subsection and in Table 3 are recomputed from
+<code>ABE_CONSEQUENCE_RECHECK.csv</code> and not from the original scan table, for the reason given in section
+3.4.6: the original consequence calls were shifted by one residue in 133 rows. The missense count for
+this guide is 22, not the 16 an earlier version of this analysis reported.</p>
+<p><strong>Table 3. All 22 protein-changing predicted off-targets of the lead guide, ungapped alignment.</strong>
+Consequences are given on the lowest-numbered RefSeq transcript carrying them; full detail including
+every overlapping transcript is in <code>ABE_CONSEQUENCE_RECHECK.csv</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Gene</th>
+<th>Consequence</th>
+<th align="right">Mismatches</th>
+<th align="right">Seed mismatches (pos 12-20)</th>
+<th align="right">Heart LV TPM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>MSH6</em></td>
+<td>p.V263A</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">2.82</td>
+</tr>
+<tr>
+<td><em>ATP4A</em></td>
+<td>p.Q67R</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+</tr>
+<tr>
+<td><em>LXN</em></td>
+<td>p.Y20H</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">15.20</td>
+</tr>
+<tr>
+<td><em>ABCC10</em></td>
+<td>p.Q488R</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">3.60</td>
+</tr>
+<tr>
+<td><em>PPFIBP2</em></td>
+<td>p.L866P</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">2.51</td>
+</tr>
+<tr>
+<td><em>ABCC8</em></td>
+<td>p.I899V</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">0.97</td>
+</tr>
+<tr>
+<td><em>NTM</em></td>
+<td>p.E200G</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0.39</td>
+</tr>
+<tr>
+<td><em>SPNS3</em></td>
+<td>p.I78V</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">0.23</td>
+</tr>
+<tr>
+<td><em>BSN</em></td>
+<td>p.Q2089R</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0.14</td>
+</tr>
+<tr>
+<td><em>NPAS3</em></td>
+<td>p.I376M</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0.10</td>
+</tr>
+<tr>
+<td><em>PRSS35</em></td>
+<td>p.M23T</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">0.06</td>
+</tr>
+<tr>
+<td><em>ATP2B2</em></td>
+<td>p.L1145P</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">0.04</td>
+</tr>
+<tr>
+<td><em>HS3ST6</em></td>
+<td>p.Y279C</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0.02</td>
+</tr>
+<tr>
+<td><em>LIPK</em></td>
+<td>p.Q239R</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td><em>NEUROD6</em></td>
+<td>p.Y291C</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td><em>ITIH6</em></td>
+<td>p.L503P</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">0.00</td>
+</tr>
+<tr>
+<td><em>CWF19L1</em></td>
+<td>p.V337A</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">not resolved</td>
+</tr>
+<tr>
+<td><em>CAVIN2</em></td>
+<td>p.Q161R</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">not resolved</td>
+</tr>
+<tr>
+<td><em>ROBO2</em></td>
+<td>p.L1087P</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">not resolved</td>
+</tr>
+<tr>
+<td><em>IGSF10</em></td>
+<td>p.V1884A</td>
+<td align="right">4</td>
+<td align="right">2</td>
+<td align="right">not resolved</td>
+</tr>
+<tr>
+<td><em>TMPRSS11E</em></td>
+<td>p.V198A</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">not resolved</td>
+</tr>
+<tr>
+<td><em>MTREX</em></td>
+<td>p.L1019P</td>
+<td align="right">4</td>
+<td align="right">3</td>
+<td align="right">not resolved</td>
+</tr>
+</tbody></table>
+<p><strong>A correction to my own earlier figure.</strong> An earlier version of the off-target figure labelled the highest-expressed cardiac hit <em>GFM1</em>, because the site at chr3:158,672,417 falls within the annotated span of both <em>GFM1</em> and <em>LXN</em>. The coding consequence is in <em>LXN</em> (p.Tyr20His, NM_020169.4). Figure 1 and Table 3 carry the corrected label. The counts are unaffected; only the gene name attached to that one row changes.</p>
+<p><strong>MSH6 deserves naming rather than a footnote.</strong> It is a DNA mismatch-repair gene, and inherited loss of function causes Lynch syndrome, a cancer-predisposition condition. It is the hit on the lead guide I would not wave through on paper. The mitigating detail is specific and testable: it sits at 3 mismatches, at guide positions 6, 7 and 12, with the mismatch at position 12 inside the PAM-proximal seed region where mismatches are least tolerated; the substitution p.Val263Ala is conservative rather than truncating; and cardiac expression is low at 2.82 TPM in left ventricle. It is a site to assay empirically, and it is listed explicitly for that purpose, not a reason to abandon the guide.</p>
+<p><strong>MSH6 is no longer the nearest protein-changing off-target, and I state that plainly because an earlier version of this analysis said it was.</strong> Under ungapped alignment it remains the nearest, at 3 mismatches. Once 1-nucleotide bulges are allowed, four protein-changing loci appear at only 2 mismatches (<em>TXNIP</em>, <em>SAMD15</em>, <em>SLC68A1</em>, <em>HNRNPAB</em>), and 41 appear at 3 mismatches against the 2 the ungapped scan found, among them <em>CACNA1D</em>, <em>MPL</em>, <em>CHD5</em>, <em>RPTOR</em> and the cardiac myopalladin gene <em>MYPN</em>. MSH6 is still a real hit and still the one I would assay first on consequence grounds. It is simply not the closest.</p>
+<p><strong>One accessibility question about MSH6 that I did not resolve.</strong> Its four editable protein-changing rows read closed in purified cardiomyocyte data, 0 of 3 experiments with the nearest peak 5,925 bp away, and open in bulk left-ventricle ATAC, 6 of 15 experiments. The cardiomyocyte reading is the one relevant to the delivery target, and it is the favourable one, which is exactly why I am not resolving the disagreement in that direction: the cardiomyocyte tier is 3 experiments against 15, and choosing the tier that gives the preferred answer is the move that produces a wrong result. The two data types disagree, and MSH6 stays flagged on sequence grounds.</p>
+<h4>3.4.6 Bulge-aware rescan, and an error it exposed in my own consequence table</h4>
+<p>A position-by-position comparison can only count substitutions. It is structurally blind to a
+<strong>bulge</strong>, one extra unpaired nucleotide on one side of the pairing: a bulged site throws every
+downstream position out of register, so a well-matched bulged site looks like ten or more mismatches
+and falls outside any sane cutoff. It is not down-ranked, it is invisible. I therefore rescanned the
+identical 3,099,750,718 bp under <strong>Cas-OFFinder-bulge v1.2 semantics</strong>, reading that tool&#39;s source
+rather than inventing my own rules: up to one DNA bulge or one RNA bulge per alignment, never both,
+with mismatches counted separately from the bulge. For a 20-nucleotide guide that is 38 geometries,
+304 patterns across 8 guides, and the editing window is anchored to the PAM rather than to guide index
+so bulged and unbulged sites are scored by the same physical rule.</p>
+<p><strong>Bulge tolerance adds risk, and I report it as a problem rather than a reassurance.</strong> The raw count is
+52,994 bulge-added editable sites for the lead guide against 655 ungapped, a factor of 80.9, and that
+ratio should not be quoted, because &quot;one bulge plus four mismatches&quot; permits five deviations where
+&quot;four mismatches&quot; permits four. Matched so each column allows the same total deviations, the honest
+figure is <strong>1.7 to 8.8 times more editable sites</strong>: 5 against 3 at two deviations, 174 against 48 at
+three, 3,369 against 604 at four, and 49,446 against 5,597 at five.</p>
+<p><strong>A second, independent argument for SpG over SpRY, on a corrected ratio.</strong> Every one of the seven SpRY
+guides carries more bulge-added editable load than the lead: 117,069 to 337,986 against 52,994, a range
+of <strong>2.21 to 6.38 times</strong>, and in coding sequence 3,771 and above against 1,167, a range of 3.2 to 5.3
+times. An earlier version of this comparison reported 6.8-fold by mixing the ungapped baseline into the
+bulged totals; the corrected figures are bulge-added only. The recommendation survives on a
+budget-matched comparison and is strengthened by holding across two alignment models whose failure
+modes differ, since the ungapped model can only miscount substitutions and the bulged model can only
+miscount insertions and deletions.</p>
+<p><strong>The mechanism generalises past this variant.</strong> A relaxed-PAM editor is penalised twice by bulge
+tolerance: once directly, because accepting nearly any PAM makes more genomic positions dockable at
+all, and again indirectly, because each of those extra dockable positions is itself searched under
+every bulged geometry. The two penalties multiply rather than add. The usual reasoning is that a
+relaxed-PAM editor costs specificity in proportion to how many more PAMs it accepts, and under
+bulge-aware scoring that understates the cost. The practical rule for anyone designing at a site with
+no canonical NGG PAM in range, which is the situation this variant presents: prefer the most
+PAM-restrictive editor that can still reach the target base, and if a relaxed-PAM editor is
+unavoidable, score it with bulge tolerance rather than position-by-position comparison.</p>
+<p><strong>An error in my own published consequence table, found by building the annotator for this rescan.</strong>
+The independent caller I wrote for the bulged and tail hits reproduces the patient&#39;s own variant from
+genomic coordinates alone, chr3:38,630,392 landing at cumulative CDS position 310 of NM_000335.5,
+codon 104 position 2, CGG to CAG, p.Arg104Gln. It was validated against a known answer, where it
+returned p.Val263Ala for the MSH6 off-target. It then disagreed with <code>ABE_OFFTARGET_SCAN.csv</code> on
+<strong>133 rows substantively</strong>: 105 called synonymous that are in fact missense, 15 the reverse, 12 that
+carried no call at all and now do, 8 of those 12 protein-changing and 4 synonymous, and 1 called
+noncoding that is missense. A further 1,183 rows differ
+only in label vocabulary and I do not count those as errors. The cause was a one-residue offset. I
+resolved three disagreements by translating the full coding sequence from NCBI end to end, checking for
+an ATG start and no internal stops before deciding which call was right, and MTREX is the decisive case
+because both analyses used the same transcript NM_015360.5: the old call was p.Ala1018Ala synonymous,
+the truth is p.Leu1019Pro missense. Every consequence figure in this paper is recomputed from
+<code>ABE_CONSEQUENCE_RECHECK.csv</code>. No number is carried forward from the original table.</p>
+<h4>3.4.5 Two cardiac genes are reachable only by the SpRY route</h4>
+<p><strong>Table 5</strong> (<code>MS_TABLE5_CARDIAC_GENE_HITS.csv</code>) enumerates all 24 editable hits in named cardiac ion-channel and sarcomeric genes. The two coding hits are:</p>
+<ul>
+<li><em><strong>TRIM63</strong></em>, 116.2 TPM in left ventricle, the highest-expressed cardiac gene in the whole hit set. Missense, 3 mismatches, reached by the SpRY guides at positions 8 and 9. <em>TRIM63</em> is a cardiac protein-turnover gene associated with hypertrophic cardiomyopathy.</li>
+<li><em><strong>KCNJ8</strong></em>, 40.2 TPM, missense, 4 mismatches, reached by the SpRY guide at position 3. <em>KCNJ8</em> encodes a cardiac potassium channel subunit and has itself been linked to early-repolarisation and Brugada phenotypes. Editing it while attempting to treat Brugada syndrome would be a poor outcome.</li>
+</ul>
+<p><strong>Neither coding hit is reachable by the lead SpG guide.</strong> The lead guide&#39;s only hits in this gene set are two non-coding sites in <em>CACNA1C</em>, both at 4 mismatches, one intronic and one in an untranslated or non-coding exon. Intronic hits are lower concern than coding ones but not zero, since they can affect splicing.</p>
+<p><em>[Figure 1 is supplied as a separate file, <code>FIG1_OFFTARGET.png</code>. Upload it with the submission.]</em></p>
+<p><strong>Figure 1. Predicted off-target load of the SCN5A R104Q base-editing guides.</strong> Complete both-strand comparison across the 3,099,750,718 bp of GRCh38 scanned, at all 20 protospacer positions with no seed heuristic, every candidate site scored on PAM compatibility and the presence of an editable adenine. Complete within that scanned span and mismatch budget; the excluded contigs, the unannotated 5-and-6 mismatch tail, and bulged alignments are stated in section 6.1. <strong>(a)</strong> Cost of PAM relaxation with guide identity held constant: the identical 20-mer scored under four PAM rules. The <code>NGG</code> row is calibration only, since no <code>NGG</code> guide exists at this site. <strong>(b)</strong> Naive sequence-match counts (open circles) against editable counts (filled). The SpG route&#39;s 4,388 matches reduce to 655; the SpRY route&#39;s 24,555 reduce only to 22,710. <strong>(c)</strong> Cumulative editable sites against mismatch budget, ungapped alignment. The lead guide has no editable site at 1 mismatch under that model, marked by the triangle at the axis floor; under bulge tolerance it has five alignments at four loci there, none protein-changing. <strong>(d)</strong> The lead guide&#39;s protein-changing hits in genes expressed at 1 TPM or above in heart left ventricle, ordered by expression; <em>MSH6</em> at 3 mismatches is the closest under ungapped alignment, which is the model this panel uses. Gene symbols name the transcript carrying the coding consequence. Counts are off-target sites only, excluding the on-target locus. Cardiac expression is GTEx v8 bulk left-ventricle median.</p>
+<h3>3.5 Predicted rescue, reported under both mechanisms</h3>
+<p>Correcting the mutant allele in a single cell takes that cell from the untreated baseline to 100 percent. Because editing is mosaic, tissue-level current depends on the corrected fraction. I report both candidate mechanisms side by side because the mechanism is unresolved (section 1.2).</p>
+<p><strong>Table 4. Predicted sodium current as a percentage of a heart with two working alleles.</strong> Full table in <code>MS_TABLE4_RESCUE_MODEL.csv</code>.</p>
+<table>
+<thead>
+<tr>
+<th align="right">Cells corrected (%)</th>
+<th align="right">Dominant negative: % of normal</th>
+<th align="right">fold</th>
+<th align="right">Haploinsufficiency: % of normal</th>
+<th align="right">fold</th>
+<th>Anchor</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="right">0</td>
+<td align="right">34.1</td>
+<td align="right">1.00</td>
+<td align="right">50.0</td>
+<td align="right">1.00</td>
+<td>measured baseline, PMID 35305865</td>
+</tr>
+<tr>
+<td align="right">5</td>
+<td align="right">37.4</td>
+<td align="right">1.10</td>
+<td align="right">52.5</td>
+<td align="right">1.05</td>
+<td></td>
+</tr>
+<tr>
+<td align="right">10</td>
+<td align="right">40.7</td>
+<td align="right">1.19</td>
+<td align="right">55.0</td>
+<td align="right">1.10</td>
+<td></td>
+</tr>
+<tr>
+<td align="right">20</td>
+<td align="right">47.3</td>
+<td align="right">1.39</td>
+<td align="right">60.0</td>
+<td align="right">1.20</td>
+<td>cardiac editing achieved, PMID 31937940</td>
+</tr>
+<tr>
+<td align="right">30</td>
+<td align="right">53.9</td>
+<td align="right">1.58</td>
+<td align="right">65.0</td>
+<td align="right">1.30</td>
+<td></td>
+</tr>
+<tr>
+<td align="right">50</td>
+<td align="right">67.1</td>
+<td align="right">1.96</td>
+<td align="right">75.0</td>
+<td align="right">1.50</td>
+<td></td>
+</tr>
+<tr>
+<td align="right"><strong>60</strong></td>
+<td align="right"><strong>73.7</strong></td>
+<td align="right"><strong>2.16</strong></td>
+<td align="right"><strong>80.0</strong></td>
+<td align="right"><strong>1.60</strong></td>
+<td><strong>correction that eliminated the phenotype in mice, PMID 37965733</strong></td>
+</tr>
+<tr>
+<td align="right">75</td>
+<td align="right">83.5</td>
+<td align="right">2.45</td>
+<td align="right">87.5</td>
+<td align="right">1.75</td>
+<td></td>
+</tr>
+<tr>
+<td align="right"><strong>99</strong></td>
+<td align="right"><strong>99.3</strong></td>
+<td align="right"><strong>2.91</strong></td>
+<td align="right"><strong>99.5</strong></td>
+<td align="right"><strong>1.99</strong></td>
+<td><strong>best correction observed in mouse heart, PMID 37965733</strong></td>
+</tr>
+<tr>
+<td align="right">100</td>
+<td align="right">100.0</td>
+<td align="right">2.93</td>
+<td align="right">100.0</td>
+<td align="right">2.00</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Two observations. First, the efficiency anchor matters more than the mechanism at low correction rates: at 20 percent editing, the two mechanisms predict 47.3 and 60.0 percent of normal, and neither is far above what a simple single-allele loss would give. Second, at the 60 percent that sufficed in mice, the dominant-negative mechanism predicts 73.7 percent of normal and haploinsufficiency predicts 80.0. <strong>Both mechanisms support the same conclusion, that high correction fractions are the ones worth targeting, and they differ in how much the therapy is worth rather than in whether it works.</strong></p>
+<p>I record that my first version of this analysis cited only the weaker efficiency anchor, Levy 2020 at 20 percent cardiac editing. That figure is drawn from a general tissue survey covering brain, liver, retina, heart and skeletal muscle, and it predicts a benefit barely above single-allele loss. The stronger and more relevant anchor, Qi 2024, was surfaced by a parallel analysis of a different therapeutic route rather than by my own literature search, and finding it materially raised this route&#39;s standing.</p>
+<hr>
+<h2>4. Recommendation</h2>
+<p><strong>Use the SpG guide at target position 5, <code>TTCCAGTTCAGTGCCACCAA</code> with PAM <code>CGC</code>, delivered with SpG or Cas9-NG. Do not use the SpRY route unless SpG fails experimentally.</strong></p>
+<p>The reasoning is not merely that SpG scores better on the tables. It is that SpRY&#39;s advantage was never specificity. SpRY exists to provide targeting options where no <code>NG</code> PAM is available. At this locus an <code>NG</code> PAM is available, at the best editing position, with no bystander adenine in its window. The SpRY guides therefore buy nothing and cost roughly 35 times the editable off-target load, including coding hits in two cardiac genes, one of which is itself Brugada-associated.</p>
+<p>The empirical programme this design implies, in order:</p>
+<ol>
+<li>Targeted deep sequencing of the on-target site in a cell model carrying R104Q, to measure editing efficiency and confirm the absence of bystander editing.</li>
+<li>Targeted deep sequencing of the ranked sites in <code>ABE_OFFTARGET_SCAN.csv</code>, prioritising the 3 sites at 2 mismatches and the <em>MSH6</em> and <em>ATP4A</em> sites at 3.</li>
+<li>An unbiased empirical off-target assay, GUIDE-seq or CIRCLE-seq, which is the only way to detect the classes of event no sequence scan can predict.</li>
+<li>An allele-resolved surface-expression measurement to settle the mechanism question of section 1.2.</li>
+</ol>
+<hr>
+<h2>5. Discussion</h2>
+<h3>5.1 The methodological results, which are the contribution</h3>
+<p>Neither of the two results in this section is about R104Q, and neither requires it.</p>
+<p><strong>Editability, not similarity, is the right scoring axis for base editors.</strong> The field&#39;s default off-target ranking is by mismatch count. For a nuclease that is defensible, because a bound nuclease cuts. For a base editor it is not, because a bound editor with no adenine in its window does nothing. In this dataset that distinction removes 85.1 percent of the apparent risk for the lead guide, and it correctly demotes the single closest sequence match in the genome, a paralogous sodium-channel site at 1 mismatch that carries G where the guide carries A.</p>
+<p><strong>The uneven filtering is the part that matters, and it is easy to miss.</strong> Overstating risk uniformly would be tolerable, because it would preserve the ordering between options. This does not: the SpG route&#39;s naive count is inflated 6.7-fold while the SpRY route&#39;s is inflated only 1.08-fold, because with no PAM requirement left there is almost nothing to filter on. <strong>Two routes compared on naive counts would appear 5.6 times apart when the editable gap is 34.7 times.</strong> A similarity-based comparison therefore does not merely exaggerate risk, it exaggerates it in the direction that favours the worse editor. Any base-editor design that ranks off-targets by mismatch count alone inherits that bias.</p>
+<p><strong>PAM relaxation has a measurable, separable cost.</strong> By holding the 20-mer identical and varying only the PAM rule, the 6.2-fold penalty from <code>NG</code> to unrestricted is attributable to the editor and not confounded with guide choice. As far as my bounded search reaches, this comparison has not been reported in this controlled form, and it is cheap to run at any locus: it requires one guide and one genome scan, not a panel. The practical corollary is a design rule that does not mention this gene: use the least relaxed editor that can reach the target, and treat each step of PAM relaxation as costing roughly a factor of two to three in editable off-target load.</p>
+<p><strong>Why the worked example was worth using.</strong> A synthetic target would have demonstrated both points, but it would not have produced the case that makes the second one bite. Standard SpCas9 cannot reach this site at all, so relaxed-PAM editors are mandatory rather than a convenience, and the cost measured in section 3.4.2 is a cost that has to be paid rather than avoided. That is the situation in which a designer actually needs the number.</p>
+<h3>5.2 What the design half establishes, and what it does not</h3>
+<p>The design is a <strong>prediction</strong>, not a therapy and not an efficacy claim. It establishes that the variant is chemically correctable by the most developed editor class, with a guide whose allele selectivity rests on substrate absence rather than on binding discrimination; that standard SpCas9 cannot reach the site; and that among the available engineered options one guide dominates on every measured axis.</p>
+<p>It does not establish that editing will occur at a useful rate at this site, which is not predictable from sequence. It does not establish that the predicted off-target profile matches the empirical one. It does not establish that the dominant-negative mechanism operates in human heart. And it does not establish anything about whether any specific person should receive such a therapy, which is a clinical judgement belonging to physicians with access to the full patient picture.</p>
+<p>I am also not claiming that pointing a base editor at <em>SCN5A</em> is new. Section 1.0 states the opposite: it is established, and the review literature already lists it as such (PMID 42193469). What I could not find is a design for a loss-of-function <em>SCN5A</em> variant, and section 5.3 argues that absence is structural.</p>
+<h3>5.3 The harder class of variant, and why designing for it is itself a contribution</h3>
+<p>Every published cardiac base-editing success I could find corrects a <strong>gain-of-function</strong> variant with a measurable electrocardiogram readout in mice. Qi 2024 corrected <em>SCN5A</em> T1307M and eliminated the QT-prolongation phenotype. That is the closest possible precedent short of the same variant, and I want to be exact about the one way it does not transfer.</p>
+<p>T1307M causes LQT3, whose animal endpoint is the QT interval on a surface electrocardiogram: cheap, quantitative, repeatable, non-invasive, and measurable in a conscious mouse. R104Q causes Brugada syndrome, whose diagnostic ST-segment signature depends on a transmural voltage gradient across the right ventricular wall. Mouse hearts, beating near 500 beats per minute with a different complement of repolarising currents, do not reproduce that gradient. A Brugada mouse therefore offers no equivalent phenotype readout.</p>
+<p><strong>This is why I read the absence of prior loss-of-function designs as structural rather than accidental.</strong> The class with the cheap endpoint got done first, which is what one would expect. The corollary is a specific and uncomfortable prediction for anyone attempting this correction: <strong>on-target editing efficiency will be measurable in a mouse, and the thing one actually wants to know, whether arrhythmia risk falls, will not.</strong> That is a harder experimental position than the precedent occupied, and no improvement to the guide changes it.</p>
+<p>The available routes are all partial. Human induced pluripotent stem cell cardiomyocytes give a directly measurable sodium current density, which tests the rescue arithmetic of section 3.5 at the cellular level, but they have no transmural gradient either, so they cannot produce the diagnostic signature. Larger animals with more human-like repolarisation could, at a cost and ethical burden that a single-variant design does not currently justify. The honest position is that the cellular endpoint is reachable and the clinical one is not, and that a design for this class of variant should say so at the outset rather than let the reader assume the precedent covers it.</p>
+<p>Stating that plainly, and designing for the harder class anyway with the endpoint limitation on the record, is the part of this paper I would defend most strongly to a reviewer. It is also the part that generalises to the other loss-of-function channelopathies, where the same asymmetry applies.</p>
+<h3>5.4 The comparator, restated because it is easy to get wrong</h3>
+<p>I stated in section 1.3 that the comparator is no treatment rather than a functioning defibrillator. That cuts in both directions and I want both directions on the record.</p>
+<p>It raises the tolerable risk, because most carriers have no protection at all and a device would not treat the disease in any case. It does not lower the standard of evidence. An off-target edit in <em>MSH6</em> or <em>TRIM63</em> would be a permanent change in a person who may never have had an arrhythmia. The measurement has to be honest in both directions, and the reason this paper spends most of its length on the off-target profile rather than on the rescue arithmetic is that the off-target profile is the part that could cause harm.</p>
+<hr>
+<h2>6. Limitations, and what would falsify this</h2>
+<p>I have used the phrase &quot;predicted off-target profile&quot; throughout deliberately. The following are the specific reasons that word is load-bearing.</p>
+<h3>6.1 Limitations of the off-target prediction</h3>
+<ol>
+<li><strong>Mismatch count is not binding affinity.</strong> I report position-resolved mismatches and a separate seed-region count, which captures the established fact that PAM-proximal mismatches are least tolerated. I applied <strong>no trained activity-prediction model.</strong> A systematic benchmark of 14 in silico off-target prediction tools against 3,827 deep-sequenced sites found correlation with measured indel frequency to be weak to moderate, and recall of roughly 77 percent among the top 500 predicted sites and 83 percent among the top 1,250, leaving a substantial fraction of true off-targets undetected (PMID 42503868). That benchmark concerns Cas9 nuclease tools rather than base editors, so it is an indication of the general difficulty rather than a direct measurement of my pipeline&#39;s performance. My method is a complete enumeration of sequence matches with an editability filter, which is a different object from a trained ranker, and it inherits the same fundamental limitation: it identifies candidates, it does not predict magnitude.</li>
+<li><strong>Bulges were modelled, to one nucleotide only.</strong> The rescan in section 3.4.6 allows up to one DNA bulge or one RNA bulge per alignment, never both in the same alignment, and caps bulged alignments at 4 mismatches. Larger bulges and two-bulge combinations were not searched, so this is a bounded search and not an exhaustive one. My deduplication rule treats a bulged alignment sharing a docking window with an editable ungapped hit as redundant; counting every alignment separately, as Cas-OFFinder-bulge does by default, inflates every bulge number here by roughly the 7 percent of bulged rows that are redundant.</li>
+<li><strong>This is a reference-genome scan, not my genome.</strong> Every count is against GRCh38. My own variants could create editable sites absent from the reference or destroy ones present in it. This is directly falsifiable by re-running the pipeline against my own sequence data, and tools now exist specifically for variant-aware off-target identification (PMID 40337925).</li>
+<li><strong>Alternate haplotypes were excluded by design.</strong> Correct for counting, but a guide could match a haplotype not represented in the primary assembly.</li>
+<li><strong>Annotation is RefSeq only.</strong> A site called intergenic here could be exonic under another annotation. Many hits fall in <code>XM_</code>-prefixed predicted transcripts, which are computational models rather than experimentally confirmed transcripts.</li>
+<li><strong>The 5-and-6 mismatch tail is annotated only where it overlaps coding sequence.</strong> The tail contains most of the 2,051,639 raw matches. Roughly 79 percent of tail hits pass the editability filter, which removes far less than I expected, and what collapses the tail is coding-sequence overlap instead: of 1,704,585 editable hits at 6 mismatches only 29,887, or 1.8 percent, fall in coding sequence. Because I annotated only the editable hits overlapping a coding block, <strong>a 5-or-6-mismatch hit that disrupts a cardiac promoter or a splice site would not have been seen</strong>, and the protein-changing tail counts do not include that class at all. For the lead guide the tail contributes 894 protein-changing loci, 128 at 5 mismatches and 766 at 6, none in a cardiac disease gene at 5 mismatches. Individually improbable, collectively not empty.</li>
+</ol>
+<p>6a. <strong>I did not resolve the MSH6 accessibility disagreement.</strong> Its editable protein-changing rows read closed in purified cardiomyocyte data, 0 of 3 experiments, and open in bulk left-ventricle ATAC, 6 of 15. The cardiomyocyte reading is the relevant one for a cardiomyocyte-directed therapy and it is also the favourable one, and I decline to resolve the disagreement in that direction, because the cardiomyocyte tier is 3 experiments against 15 and picking the tier that returns the preferred answer is how a wrong result gets published. <strong>What would settle it:</strong> a primary purified-cardiomyocyte ATAC or DNase experiment at adequate depth covering chr2:47,798,7xx.
+7. <strong>Expression evidence is partial and bulk.</strong> I resolved 295 of 330 genes in GTEx v8. A hit in an unresolved gene has <strong>no</strong> expression evidence here, which is not evidence of no expression. GTEx medians are bulk adult post-mortem tissue, not cardiomyocyte-specific and not developmental. One row in Table 3, <em>CAVIN2</em>, has no resolved expression value at all.
+8. <strong>Guide-independent deaminase activity is outside any sequence scan.</strong> Base editors produce off-target editing that does not depend on the guide at all. No sequence method can predict it.
+9. <strong>RNA off-target editing is outside the scope of this scan.</strong> Adenine base editors edit RNA as well as DNA. Qi 2024 detected none in treated mouse hearts, which is encouraging but is a measurement of their editor in their system.</p>
+<p><strong>Only an empirical assay can confirm any of this.</strong> GUIDE-seq, CIRCLE-seq, or targeted deep sequencing of the ranked sites in <code>ABE_OFFTARGET_SCAN.csv</code>.</p>
+<h3>6.2 Limitations of the rescue prediction</h3>
+<ol>
+<li><strong>The mechanism is unresolved</strong>, as stated in section 1.2 and carried through Table 4 as two parallel columns rather than one number.</li>
+<li><strong>The arithmetic is linear and the heart is not.</strong> Table 4 assumes tissue-level sodium current is the corrected-cell fraction weighted average of corrected and uncorrected cell currents. Real cardiac conduction is a threshold phenomenon in a coupled syncytium, where a patchwork of restored and unrestored cells may behave better or worse than the average of the two. The mouse result that 60 percent correction eliminated the phenotype (PMID 37965733) is consistent with a threshold rather than with linearity. Table 4 should be read as an ordering, not a prediction of any specific current density.</li>
+<li><strong>The efficiency anchors are mouse, at research doses, in research vectors.</strong> Human cardiac delivery at comparable efficiency is unproven.</li>
+<li><strong>The editor and guide exceed single-AAV capacity</strong>, so a split-vector approach is required, adding reconstitution efficiency as a further variable between the anchor figures and any human result.</li>
+<li><strong>Editing efficiency at a specific site is not predictable from sequence.</strong> There is no efficiency number in this paper that was measured at this locus, and none of the figures in Table 4 is an efficiency prediction. They are the arithmetic of a rescue conditional on an efficiency that has not been measured.</li>
+</ol>
+<h3>6.3 Limitations of the literature and prior-art search</h3>
+<p>The search is bounded and I do not call it exhaustive. Two independent searches were run, one against PubMed through NCBI E-utilities and one against Europe PMC across five query families. <strong>Neither covers patents, company development pipelines, conference abstracts, non-indexed preprints, or non-English literature.</strong> Publisher websites were unreachable from my environment because of a network allowlist, returning proxy errors rather than server errors.</p>
+<p>This bounds the prior-art claim specifically. When I write in section 1.0 that I could find no base-editing design for a loss-of-function <em>SCN5A</em> variant, that is a statement about two bounded searches, <strong>not proof that none exists.</strong> The most likely place for such work to be invisible to both is a patent filing or an unpublished industry programme, and neither search reaches those. I claim only that I looked in the two places named and did not find it. A failed retrieval is evidence about the retrieval.</p>
+<p>Two further caveats on the same point. My own PubMed search for the closest precedent did not surface it; Qi 2024 reached me through a parallel analysis of a different therapeutic route, which is direct evidence that my search strategy has misses. And a keyword search cannot find work that uses vocabulary I did not think of, so the counts throughout are lower bounds.</p>
+<h3>6.4 What would falsify the central claims</h3>
+<p>Each of these is a specific, runnable experiment.</p>
+<ol>
+<li><strong>An empirical off-target assay showing measurable editing at the <em>MSH6</em> or <em>ATP4A</em> sites, or at any site this scan ranked as low-risk.</strong> This would falsify the specificity claim and, depending on magnitude, the recommendation.</li>
+<li><strong>SpG failing to edit the on-target site efficiently in cells.</strong> This would force the SpRY route and turn its off-target burden from something to avoid into something to manage.</li>
+<li><strong>A trained activity model promoting a site this method ranked as distant.</strong> This would falsify the ranking without falsifying the enumeration. The bulge-aware half of this test has now been run, and it did promote sites: see section 3.4.6.
+3a. <strong>Measured editing at the four two-mismatch bulged loci showing none detectable.</strong> <em>TXNIP</em>, <em>SAMD15</em>, <em>SLC68A1</em> and <em>HNRNPAB</em> are the sites bulge tolerance brought closer than the ungapped scan could see. No detectable editing at them would mean bulged binding does not translate into bulged editing here, and would return the nearest protein-changing risk to 3 mismatches.
+3b. <strong>Measured editing at chr20:38,139,629 changing <em>TGM2</em> expression despite the synonymous codon.</strong> That would mean the reassurance about the four one-mismatch bulged loci rests on the wrong mechanism, since it currently rests on protein sequence and splice-boundary distance alone.
+3c. <strong>A full-CDS translation of any corrected transcript showing my residue numbering off by one in the other direction.</strong> I verified 3 of the 133 substantive consequence corrections against full-length translated coding sequence; the remaining 130 rest on the same validated code path and were not individually checked against NCBI.</li>
+<li><strong>My own genome containing a variant that creates a close editable site absent from the reference.</strong> Directly checkable.</li>
+<li><strong>An allele-resolved surface-expression experiment showing simple haploinsufficiency.</strong> This would replace the 2.93-fold per-cell figure with 2.00-fold and weaken the therapeutic case without eliminating it.</li>
+<li><strong>Bystander editing detected at the on-target locus despite zero adenines in the window.</strong> This would indicate the editing window is wider than the positions 3 to 9 assumed here, which would invalidate the bystander analysis for all seven guides.</li>
+</ol>
+<h3>6.5 The negative result, stated plainly</h3>
+<p><strong>No guide at this locus is clean in an absolute sense.</strong> The lead guide has 655 predicted editable off-target sites in the genome at up to 4 mismatches, 16 of which change a protein, one of them in a cancer-predisposition gene. Standard SpCas9, the best-characterised and most specific option, cannot reach the site at all. &quot;The lead guide survives&quot; means &quot;best of the available options, with a specific and testable mitigation list&quot;, not &quot;safe&quot;.</p>
+<p>The honest headline is that this site is workable with SpG and would be difficult to defend with SpRY.</p>
+<hr>
+<h2>7. Data availability</h2>
+<p>All inputs are public and every derived file accompanies this paper.</p>
+<p><strong>Public inputs.</strong></p>
+<ul>
+<li>Reference sequence: NCBI <code>efetch</code>, NC_000003.12 (GRCh38.p14), region 38630362-38630423.</li>
+<li>Assembly for the scan: NCBI <code>GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz</code>, 872,949,833 bytes, md5 <code>a08035b6a6e31780e96a34008ff21bd6</code>.</li>
+<li>Annotation: NCBI RefSeq <code>GCF_000001405.40_GRCh38.p14_genomic.gtf.gz</code>, 56,947,363 bytes.</li>
+<li>Expression: GTEx v8, <code>Heart_Left_Ventricle</code> and <code>Heart_Atrial_Appendage</code>.</li>
+<li>Variant records: ClinVar VariationID 67780 (R104Q) and 67778 (R104W). Gene record: Ensembl ENSG00000183873.</li>
+<li>Functional baseline: PMID 35305865 Supplementary Table 1, read from the open preprint doi:10.1101/2021.09.22.461398 page 29.</li>
+</ul>
+<p>All derived tables are deposited as a single archive with a permanent identifier. The identifier is
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source.</p>
+<p><strong>Derived files in that archive.</strong></p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>MS_TABLE1_GUIDES.csv</code></td>
+<td>The seven in-window guide candidates, with PAM, genomic span, minimum editor, bystander count and healthy-allele editable-adenine count</td>
+</tr>
+<tr>
+<td><code>MS_TABLE2_PAM_AND_ROUTE.csv</code></td>
+<td>The controlled PAM comparison and the route-level comparison in one file</td>
+</tr>
+<tr>
+<td><code>MS_TABLE3_LEAD_PROTEIN_CHANGING.csv</code></td>
+<td>All 16 protein-changing predicted off-targets of the lead guide, with every overlapping transcript</td>
+</tr>
+<tr>
+<td><code>MS_TABLE4_RESCUE_MODEL.csv</code></td>
+<td>Predicted current by corrected fraction under both mechanisms</td>
+</tr>
+<tr>
+<td><code>MS_TABLE5_CARDIAC_GENE_HITS.csv</code></td>
+<td>All 24 editable hits in named cardiac ion-channel and sarcomeric genes, flagged by whether the lead guide reaches them</td>
+</tr>
+<tr>
+<td><code>MS_REFERENCES.csv</code></td>
+<td>Every reference with PMID, DOI, authors, journal, year, volume and pages as retrieved from PubMed</td>
+</tr>
+<tr>
+<td><code>ABE_OFFTARGET_SCAN.csv</code></td>
+<td>The full annotated scan, 24,562 rows at up to 4 mismatches, with strand, mismatch and seed-mismatch counts, observed PAM and coordinates, editable adenine positions, gene, region, transcripts, amino-acid consequence, cardiac expression, per-editor editability flags and risk tier</td>
+</tr>
+<tr>
+<td><code>ABE_OFFTARGET_SUMMARY.csv</code></td>
+<td>Per-guide and per-editor counts, naive and editable</td>
+</tr>
+<tr>
+<td><code>ABE_CONSEQUENCE_RECHECK.csv</code></td>
+<td>Recomputed region, genes and amino-acid consequence for all 22,717 editable rows, flagging every disagreement with the original scan table. Every consequence figure in this paper comes from this file</td>
+</tr>
+<tr>
+<td><code>ABE_BULGE_LOWMM_SITES.csv</code></td>
+<td>The five one-mismatch bulged alignments at four loci, characterised completely: rendered alignment, bulge position, PAM, editable adenine coordinate, region, gene, consequence, GTEx cardiac expression with rank, accessibility</td>
+</tr>
+<tr>
+<td><code>ABE_BULGE_SCAN.csv</code></td>
+<td>Every bulge-added editable site at 3 or fewer mismatches, plus all coding-sequence sites at 4, with the rendered guide-to-DNA alignment</td>
+</tr>
+<tr>
+<td><code>ABE_TAIL_ANNOTATION.csv</code></td>
+<td>Every editable 5-and-6-mismatch hit overlapping coding sequence, with gene, consequence and cardiac accessibility</td>
+</tr>
+<tr>
+<td><code>BULGE_VALIDATION_LOCAL.txt</code></td>
+<td>The 24 validation gates for the bulge scanner with their results, including 152 of 152 DNA-bulge and 144 of 144 RNA-bulge constructed-site recoveries</td>
+</tr>
+<tr>
+<td><code>FIG1_OFFTARGET.png</code></td>
+<td>Figure 1</td>
+</tr>
+</tbody></table>
+<p><strong>Two reconciliations, so that a discrepancy does not look like an error.</strong> First, the consequence columns of <code>ABE_OFFTARGET_SCAN.csv</code> disagree with this paper: they are the uncorrected calls, wrong on 133 rows, and are retained in the archive only so the correction can be audited row by row against <code>ABE_CONSEQUENCE_RECHECK.csv</code>. Read consequences from the recheck file. Second, summing the <code>spry_route_editable</code> column of <code>ABE_OFFTARGET_SCAN.csv</code> gives 22,712, while this paper reports 22,710 editable off-target sites for the SpRY route. The difference is exactly 2, and those two rows are on-target: the SpRY guides at positions 3 and 4 each carry a known bystander adenine inside the editing window, at window positions 8 and 9 respectively. Filter on <code>is_on_target == False</code> to reproduce every count in this paper. The SpG figure of 655 is identical either way, because the lead guide has no bystander adenine in its window. This is a useful independent confirmation: the genome scan rediscovered from sequence alone the bystanders that the guide enumeration had recorded separately.</p>
+<hr>
+<h2>8. Competing interests, and the role of the author</h2>
+<p>I carry the variant used as the worked example in this paper. I have no financial interest in any editor, vector or reagent named. No funding was received. I performed the design, the scan, the analysis and the writing.</p>
+<p>I disclose this because it can be read two ways, as a conflict of interest or as a reason for closer scrutiny of the design half of the paper. The methodological results in section 5.1 do not depend on which variant was used and can be checked without reference to me. For the design half, I note that n-of-1 base editing for rare disease is now an established framing in the literature rather than an unusual one (PMID 40664722), which is context rather than a defence.</p>
+<p>Nothing in this paper is a treatment recommendation for any person, including me. Clinical decisions belong to the physicians who manage the patient.</p>
+<hr>
+<h2>9. References</h2>
+<ol>
+<li>Levy-Nissenbaum E, Eldar M, Wang Q, et al. Genetic analysis of Brugada syndrome in Israel: two novel mutations and possible genetic heterogeneity. <em>Genet Test</em> 2001;5(4):331-4. doi:10.1089/109065701753617480. PMID: 11960580</li>
+<li>Gütter C, Benndorf K, Zimmer T. Characterization of N-terminally mutated cardiac Na(+) channels associated with long QT syndrome 3 and Brugada syndrome. <em>Front Physiol</em> 2013;4:153. doi:10.3389/fphys.2013.00153. PMID: 23805106</li>
+<li>Olde Nordkamp LR, Postema PG, Knops RE, et al. Implantable cardioverter-defibrillator harm in young patients with inherited arrhythmia syndromes: A systematic review and meta-analysis of inappropriate shocks and complications. <em>Heart Rhythm</em> 2016;13(2):443-54. doi:10.1016/j.hrthm.2015.09.010. PMID: 26385533</li>
+<li>Qi T, Wu F, Xie Y, et al. Base Editing Mediated Generation of Point Mutations Into Human Pluripotent Stem Cells for Modeling Disease. <em>Front Cell Dev Biol</em> 2020;8:590581. doi:10.3389/fcell.2020.590581. PMID: 33102492</li>
+<li>Levy JM, Yeh WH, Pendse N, et al. Cytosine and adenine base editing of the brain, liver, retina, heart and skeletal muscle of mice via adeno-associated viruses. <em>Nat Biomed Eng</em> 2020;4(1):97-110. doi:10.1038/s41551-019-0501-5. PMID: 31937940</li>
+<li>Walton RT, Christie KA, Whittaker MN, et al. Unconstrained genome targeting with near-PAMless engineered CRISPR-Cas9 variants. <em>Science</em> 2020;368(6488):290-296. doi:10.1126/science.aba8853. PMID: 32217751</li>
+<li>Koblan LW, Erdos MR, Wilson C, et al. In vivo base editing rescues Hutchinson-Gilford progeria syndrome in mice. <em>Nature</em> 2021;589(7843):608-614. doi:10.1038/s41586-020-03086-7. PMID: 33408413</li>
+<li>Liu N, Olson EN. CRISPR modeling and correction of cardiovascular disease. <em>Circ Res</em> 2022;130(12):1827-1850. doi:10.1161/CIRCRESAHA.122.320496. PMID: 35679361</li>
+<li>O&#39;Neill MJ, Muhammad A, Li B, et al. Dominant negative effects of SCN5A missense variants. <em>Genet Med</em> 2022;24(6):1238-1248. doi:10.1016/j.gim.2022.02.010. PMID: 35305865</li>
+<li>Qi M, Ma S, Liu J, et al. In Vivo Base Editing of Scn5a Rescues Type 3 Long QT Syndrome in Mice. <em>Circulation</em> 2024;149(4):317-329. doi:10.1161/CIRCULATIONAHA.123.065624. PMID: 37965733</li>
+<li>Kingwell K. Building on the momentum of N-of-1 base editor therapies for rare diseases. <em>Nat Rev Drug Discov</em> 2025;24(8):582-583. doi:10.1038/d41573-025-00119-6. PMID: 40664722</li>
+<li>Mekonnen AM, Seong K, Kim H, et al. Variant-aware Cas-OFFinder: web-based in silico variant-aware potential off-target site identification for genome editing applications. <em>Nucleic Acids Res</em> 2025;53(W1):W118-W124. doi:10.1093/nar/gkaf389. PMID: 40337925</li>
+<li>Liu Z, Liu R, Ying Y, et al. Gene Therapy for Cardiovascular and Cerebrovascular Disease: Mechanisms, Translational Barriers, and the Road Ahead. <em>Biomedicines</em> 2026;14(5):1142. doi:10.3390/biomedicines14051142. PMID: 42193469</li>
+<li>Kaufmann MM, Hackenberg M, Jobson Pargeter W, et al. Systematic Benchmarking of CRISPR-Cas9 Off-Target Prediction Tools Reveals Limitations and Implications for Preclinical Assessment. <em>Hum Gene Ther</em> 2026 (online ahead of print). doi:10.1177/10430342261466407. PMID: 42503868</li>
+</ol>
+<p>All fourteen references were resolved through NCBI E-utilities against PubMed, and author lists, titles, journals, years, volumes, pages and DOIs are recorded exactly as retrieved in <code>MS_REFERENCES.csv</code>. None was typed from memory.</p>
+
+  <p class="backlink"><a href="/papers">Back to all ten papers</a></p>
+</main>
+</body>
+</html>
