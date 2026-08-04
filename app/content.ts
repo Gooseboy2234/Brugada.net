@@ -452,13 +452,16 @@ export const PAPERS: Paper[] = [
 ];
 
 export const NAV = [
-  { href: "/", label: "Start here" },
+  // Ordered by reader journey: no vocabulary, then a fresh diagnosis, then the
+  // science, then what was done with it, then the record and its limits.
+  { href: "/new-here", label: "New here" },
+  { href: "/for-carriers", label: "For carriers" },
   { href: "/science", label: "The science" },
   { href: "/routes", label: "Routes" },
+  { href: "/experiments", label: "Experiments" },
   { href: "/papers", label: "Papers" },
   { href: "/census", label: "Census" },
-  { href: "/experiments", label: "Experiments" },
   { href: "/data", label: "Data" },
-  { href: "/for-carriers", label: "For carriers" },
+  { href: "/history", label: "History" },
   { href: "/limitations", label: "Limitations" },
 ];

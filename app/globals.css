@@ -445,6 +445,49 @@ ul.plain li { margin: 0.6rem 0; }
   font-size: 1.02rem;
 }
 
+/* ---------- History timeline ---------- */
+
+.beat {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--line-soft);
+}
+.beat:last-of-type { border-bottom: 1px solid var(--line-soft); }
+.beat-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+.beat-date {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 600;
+}
+.beat-line { margin: 0 0 0.8rem; font-size: 1rem; }
+.beat-line b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-bottom: 0.2rem;
+}
+.beat-self {
+  margin: 0.9rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--line);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
 /* ---------- Notices ---------- */
 
 .notice {

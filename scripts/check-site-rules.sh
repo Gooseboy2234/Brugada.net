@@ -41,8 +41,9 @@ report "Checking for retired campaign vocabulary"
 # Case-insensitive terms, plus \bREUS\b matched case-sensitively so that the
 # ordinary word "reuse" does not trip it.
 RETIRED='cation.clip|pharmacochaperone|orphaned charge|Experiment Zero|gauntlet|ZINC0000|agmatine|clip.gripper|D84N suppressor'
+# app/history/ is exempt: describing retired work as retired is its purpose.
 if hits=$( { grep -rniE "$RETIRED" app/ 2>/dev/null; grep -rnE '\bREUS\b' app/ 2>/dev/null; } \
-    | grep -v '\.old-backup' | sort -u); then
+    | grep -v '\.old-backup' | grep -v '^app/history/' | sort -u); then
   echo "$hits"
   echo "FAIL: retired vocabulary found in live site copy"
   fail=1
@@ -75,7 +76,7 @@ check_absent '[Ff]ive of the ten|5 of the ten' "the negative-result count is sev
 # --- Rule: every nav entry resolves to a real page. ---
 report "Checking nav targets exist"
 nav_fail=0
-for route in "" science routes papers experiments data for-carriers limitations; do
+for route in "" new-here for-carriers science routes experiments papers census data history limitations; do
   if [ -z "$route" ]; then
     [ -f app/page.tsx ] || { echo "  MISSING /"; nav_fail=1; }
   elif [ ! -f "app/$route/page.tsx" ]; then
