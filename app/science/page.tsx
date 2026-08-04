@@ -4,7 +4,7 @@ import { MEASUREMENT, VARIANT } from "../content";
 export const metadata: Metadata = {
   title: "The science",
   description:
-    "The structural argument for how SCN5A R104Q breaks the cardiac sodium channel, and the one question that gates every therapeutic route: whether the broken copy simply fails, or interferes with the healthy one.",
+    "How SCN5A R104Q reduces the current that starts each heartbeat, and the single question that gates every therapeutic route: whether the broken copy simply fails, or interferes with the healthy one.",
   alternates: { canonical: "/science" },
 };
 
@@ -14,74 +14,65 @@ export default function Science() {
       <p className="eyebrow">The science</p>
 
       <h1 className="page-title">
-        The structural argument, and the question nobody has answered.
+        The measurement, and the question nobody has answered.
       </h1>
 
       <p className="standfirst">
-        The mechanism is reasonably well supported. What happens next, in a
-        heart rather than a dish, is not. That gap is the honest centre of this
-        project and it gates every route on the site.
+        The starting number is solid. What it means inside a human heart is not.
+        That gap is the honest centre of this project, and it gates every route
+        on the site.
       </p>
 
       <h2>Where the variant sits</h2>
 
       <p>
         The sodium channel is a large protein threaded through the surface of a
-        heart cell. Before the part that spans the membrane begins, there is a
-        stretch that hangs inside the cell called the{" "}
-        <span className="gloss" title="The first section of the protein, which sits inside the cell rather than in the membrane.">
+        heart cell. Before the part that spans the membrane begins, a stretch of
+        it hangs inside the cell, called the{" "}
+        <span
+          className="gloss"
+          title="The first section of the protein, which sits inside the cell rather than in the membrane."
+        >
           N-terminal domain
         </span>
-        . Position 104 is in that stretch.
+        . Position 104 is in that stretch, and it sits against a negatively
+        charged neighbour at position 84.
       </p>
 
       <p>
-        In the deposited structure, arginine 104 sits against aspartate 84.
-        Arginine carries a positive charge and aspartate carries a negative one,
-        so the two attract in what is called a{" "}
-        <span className="gloss" title="An attraction between a positively charged and a negatively charged part of a protein.">
-          salt bridge
+        Replacing arginine with glutamine removes a positive charge from a
+        position that is buried inside the folded protein rather than exposed at
+        its surface, and that is where the structural argument starts. It comes
+        from an experimentally determined structure rather than a computational
+        model.{" "}
+        <span className="src">
+          <a href="https://www.rcsb.org/structure/8VYJ">
+            RCSB 8VYJ, cryo-electron microscopy
+          </a>
         </span>
-        . Both are buried inside the folded protein rather than exposed at its
-        surface. Replacing arginine with glutamine removes the positive charge
-        and leaves the negative one without its partner.
       </p>
 
-      <div className="claim is-known">
-        <span className="state state-known">From deposited coordinates</span>
-        <p>
-          This comes from an experimentally determined structure, not a
-          computational model: cryo-electron microscopy entry{" "}
-          <span className="mono">{VARIANT.structure}</span>, which resolves this
-          region.{" "}
-          <span className="src">
-            <a href={VARIANT.structureUrl}>RCSB {VARIANT.structure}</a>
-          </span>
-        </p>
-        <p className="small">
-          The contact measures 3.79 angstroms between the closest atoms. It is
-          better described as a weak salt bridge than a strong one, and the
-          arrangement is a backbone hydrogen bond together with a single-sided
-          rather than double-sided charge contact.
-        </p>
-        <div className="falsifier">
-          <b>What would overturn this</b>
-          A higher-resolution structure placing the two residues out of contact,
-          or showing the region is disordered rather than packed.
-        </div>
+      <div className="notice">
+        <b>A caution about this section.</b> Five separate analyses in this
+        project have measured how buried that position is, and they disagree with
+        each other depending on the method and on whether the domain is measured
+        alone or inside the whole channel. No single percentage is quoted here
+        for that reason. Two candidate explanations for why the position matters,
+        local strain and exposed water-repelling surface, were each tested and
+        eliminated when a variant known to be harmless scored just as badly.
       </div>
 
       <h2>The open question</h2>
 
       <p>
         A person with this variant has one working copy of the gene and one
-        broken copy. There are two very different things the broken copy could
-        be doing, and they lead to different conclusions about treatment.
+        broken copy. There are two very different things the broken copy could be
+        doing, and they lead to different conclusions about treatment.
       </p>
 
       <ul className="plain">
         <li>
-          <b>It simply fails.</b> The broken copy never reaches the cell
+          <b>It simply sits out.</b> The broken copy never reaches the cell
           surface, the working copy carries on normally, and the total is about
           half of normal.
         </li>
@@ -96,85 +87,85 @@ export default function Science() {
         question rather than a theoretical one.
       </p>
 
-      <div className="readout">
-        <span className="readout-value">{MEASUREMENT.rescaledPercent}%</span>
-        <p className="readout-label">
-          of the current a normal two-copy heart would produce, rescaled from
-          the laboratory measurement. Simple failure of one copy would give{" "}
-          {MEASUREMENT.simpleLossPercent} percent.{" "}
+      <figure style={{ margin: "2rem 0" }}>
+        <img
+          src="/figures/FIG_EXPERIMENT_DESIGN.png"
+          alt="Panel a: bar chart showing 100 percent for two working alleles, 50 percent if one allele is silent, and 34.1 percent measured for R104Q. Panel b: two overlapping distributions showing that single cells overlap heavily so group means are the readout. Panel c: sample size required against assumed cell-to-cell variability."
+          width={2152}
+          height={1891}
+        />
+        <figcaption className="small" style={{ marginTop: "0.75rem" }}>
+          The two hypotheses, the overlap between individual cells, and the
+          number of cells needed to tell them apart.{" "}
           <span className="src">
             <a href={MEASUREMENT.pmidUrl}>
-              {MEASUREMENT.source}, PMID {MEASUREMENT.pmid}
+              Baseline from {MEASUREMENT.source}, PMID {MEASUREMENT.pmid}
             </a>
           </span>
-        </p>
+        </figcaption>
+      </figure>
 
-        <div className="gapbar" aria-hidden="true">
-          <div className="gapbar-track">
-            <div
-              className="gapbar-fill"
-              style={{ width: `${MEASUREMENT.rescaledPercent}%` }}
-            />
-            <div
-              className="gapbar-mark"
-              style={{ left: `${MEASUREMENT.simpleLossPercent}%` }}
-            />
-          </div>
-          <div className="gapbar-key">
-            <span>Measured {MEASUREMENT.rescaledPercent}%</span>
-            <span>Expected if it simply fails {MEASUREMENT.simpleLossPercent}%</span>
-            <span>Unexplained gap about {MEASUREMENT.gapPoints} points</span>
-          </div>
-        </div>
+      <div className="readout">
+        <span className="readout-value">{MEASUREMENT.rescaled}%</span>
+        <p className="readout-label">
+          of the current a normal two-copy heart would produce, rescaled from the
+          laboratory measurement. Simple failure of one copy would give{" "}
+          {MEASUREMENT.simpleLoss} percent, so about{" "}
+          {Math.round(MEASUREMENT.gapPoints)} percentage points are unexplained.
+        </p>
       </div>
 
       <div className="claim is-unresolved">
         <span className="state state-unresolved">Unresolved</span>
         <p>
-          That gap of roughly {Math.round(MEASUREMENT.gapPoints)} percentage
-          points is the entire question. Nobody has measured it in a human heart
-          cell, and the standard assay cannot resolve it even in principle:
-          the two competing explanations are algebraically degenerate, meaning
-          they predict the same current. Measuring harder with the same method
-          cannot separate them.
+          That gap is the entire question, and the standard assay cannot resolve
+          it even in principle. The two competing explanations are algebraically
+          degenerate, meaning they predict the same current. Measuring harder
+          with the same method cannot separate them, which is a property of the
+          measurement itself rather than a shortcoming of the studies that used
+          it.
         </p>
         <div className="falsifier">
           <b>What would settle it</b>
           An assay that resolves each copy separately rather than measuring only
-          the total, described on the{" "}
-          <a href="/experiments">experiments page</a>.
+          the total. The design is on{" "}
+          <a href="/experiments">the experiments page</a>, and its internal
+          control is stated in advance.
         </div>
       </div>
 
       <p>
-        This is stated plainly because it matters. If the broken copy interferes
-        with the working one, then any approach that helps more broken protein
-        reach the surface could make things worse rather than better. That is
-        why one route on this site is marked closed rather than promising.
+        This matters beyond one variant. If the broken copy interferes with the
+        working one, the target is not this variant but the whole class of
+        changes in this gene that suppress their healthy partner, which is a
+        fifth to a third of Brugada patients who have an identified gene. If it
+        simply sits out, that class does not exist and several routes on this
+        site lose their rationale.
       </p>
 
-      <h2>What was eliminated along the way</h2>
+      <h2>Why a single number is not the whole story</h2>
 
       <p>
-        Two other explanations for why this position matters were tested and
-        ruled out: that the substitution strains the local structure, and that
-        it exposes a water-repelling surface that should stay buried. Neither
-        holds. What survives is that arginine 104 anchors an acidic pocket that
-        is unchanged across species.
+        The {MEASUREMENT.heterozygous} percent figure comes from a cell that is
+        not a heart cell, engineered to make this protein. Those cells lack the
+        partner proteins and the alternative forms of the protein that a real
+        heart muscle cell has. The authors of the closest methodological work say
+        so themselves. Whether the interference operates in a human heart cell is
+        the thing that has not been tested.
       </p>
 
       <p>
-        A third idea, that folding-stability prediction could identify which
-        variants in this region break the channel, failed its own test. Given
-        four variants already known to break it, the method caught one. That
-        result is published rather than buried, because it is the result that
-        closed a route this project had been pursuing.
+        There is also direct evidence that the two systems can disagree. For one
+        variant, the same measurement gave a 33 to 46 percent current reduction
+        in heart cells grown from a patient against 50 percent in an engineered
+        line, with additional differences that the engineered system did not show
+        at all.
       </p>
 
       <div className="next">
-        <a href="/routes">What this means for treatment routes</a>
+        <a href="/routes">What this means for the nine routes</a>
         <a href="/experiments">The experiment that would settle it</a>
-        <a href="/papers">The papers behind each claim</a>
+        <a href="/limitations">What none of this establishes</a>
       </div>
     </div>
   );

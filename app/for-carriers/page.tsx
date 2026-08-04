@@ -95,6 +95,32 @@ export default function ForCarriers() {
         being withheld from you.
       </p>
 
+      <h2>If you were told you do not need a device</h2>
+
+      <p>
+        Many people who carry a variant like this are told they do not meet the
+        criteria for an implanted defibrillator, and are offered monitoring
+        instead. That can feel like being handed a frightening piece of news and
+        then nothing to do about it.
+      </p>
+
+      <p>
+        Two things are worth saying plainly. That decision follows the current
+        guidelines and is not a judgement that your situation does not matter.
+        And a device is not a treatment for the condition in any case: it
+        interrupts a dangerous rhythm once it has already begun, and does nothing
+        to the underlying channel.
+      </p>
+
+      <p>
+        That gap is the reason the research on this site exists. Every route
+        described here would act on the cause rather than the emergency, and the
+        people it would be developed for are largely the people who do not
+        qualify for a device. None of it is close to a treatment today, and{" "}
+        <a href="/limitations">the limitations page</a> is honest about how far
+        away it is.
+      </p>
+
       <h2>What to ask an electrophysiologist</h2>
 
       <p>

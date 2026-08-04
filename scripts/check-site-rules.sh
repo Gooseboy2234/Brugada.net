@@ -50,6 +50,28 @@ else
   echo "  ok"
 fi
 
+# --- Rule: superseded values must not reappear. ---
+# Each of these was corrected by a later analysis in WEBSITE_HANDOFF/, and each
+# still survives somewhere in the source material, which is exactly how a stale
+# number gets published.
+report "Checking for superseded values"
+sup_fail=0
+check_absent() { # pattern, explanation
+  if hits=$(grep -rnE "$1" app/ 2>/dev/null | grep -v '\.old-backup'); then
+    echo "  FAIL: $2"; echo "$hits"; sup_fail=1
+  fi
+}
+# 16 protein-changing off-targets was revised to 22 missense / 26 protein-changing.
+check_absent '16 protein.changing' "16 protein-changing is superseded by 22 missense / 26 protein-changing"
+# MSH6 is no longer the NEAREST protein-changing site once bulges are modelled.
+check_absent 'nearest protein.changing[^.]*3 mismatch|MSH6[^.]*nearest' "MSH6 is no longer the nearest protein-changing off-target"
+# Paper 1's abstract quotes an FEP value its own body says was never run.
+check_absent '3\.71' "the +3.71 FEP value is contradicted inside its own paper"
+# The negative-result count is seven, not five.
+check_absent '[Ff]ive of the ten|5 of the ten' "the negative-result count is seven of ten"
+[ $sup_fail -eq 0 ] && echo "  ok"
+[ $sup_fail -eq 1 ] && fail=1
+
 # --- Rule: every nav entry resolves to a real page. ---
 report "Checking nav targets exist"
 nav_fail=0

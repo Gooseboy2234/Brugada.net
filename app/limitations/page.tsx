@@ -62,6 +62,38 @@ export default function Limitations() {
         folding-stability method it had been relying on identified one.
       </p>
 
+      <h2>Where this project's own numbers disagree</h2>
+
+      <p>
+        Several quantities have been measured more than once here, by different
+        methods, and do not agree. Where that is true no single value is quoted
+        on this site.
+      </p>
+
+      <ul className="plain">
+        <li>
+          How buried position 104 is inside the assembled channel has five
+          different values across five analyses, depending on the method and on
+          whether the domain is measured alone or in the whole protein.
+        </li>
+        <li>
+          The count of protein-changing off-target sites for the lead editing
+          guide was revised upward when a more thorough search was run. The
+          revised figure is the one that stands, and the earlier one still
+          appears in places.
+        </li>
+        <li>
+          The nearest protein-changing off-target moved closer once alignments
+          with an inserted or deleted letter were modelled. The earlier statement
+          that the nearest sat at three mismatches is no longer true.
+        </li>
+      </ul>
+
+      <p>
+        These are listed rather than reconciled silently, because a project that
+        quietly harmonises its own disagreements is one you cannot check.
+      </p>
+
       <h2>Specific boundaries, by result</h2>
 
       <div className="tablewrap">

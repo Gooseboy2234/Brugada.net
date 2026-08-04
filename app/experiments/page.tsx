@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
+import { EXPERIMENTS } from "../content";
 
 export const metadata: Metadata = {
   title: "Experiments",
   description:
-    "Two costed, falsifiable protocols for any laboratory able to run them: an allele-resolved surface expression assay, and a base-editing validation in human cardiomyocytes.",
+    "Two costed, falsifiable protocols for any laboratory able to run them: a base-editing validation at 16,670 dollars over 26 weeks, and the mechanism experiment at 45,342 dollars over 42 weeks.",
   alternates: { canonical: "/experiments" },
 };
+
+const usd = (n: number) => n.toLocaleString("en-US");
 
 export default function Experiments() {
   return (
@@ -18,111 +21,134 @@ export default function Experiments() {
 
       <p className="standfirst">
         This is the page most likely to change something. Both experiments are
-        designed to be falsifiable, and a clean negative result from either one
-        is a useful outcome that would be published as readily as a positive.
+        designed to be falsifiable, and a clean negative result from either would
+        be published as readily as a positive one.
       </p>
 
       <div className="notice">
-        <b>This is not a request about my own care.</b> I am a patient, and my
-        treatment stays with my physicians. These protocols exist because the
+        <b>This is not a request about anyone&rsquo;s care.</b> I am a patient,
+        and my own treatment stays with my physicians. These exist because the
         questions they answer affect other people carrying variants in this
         region, several of whom do not know it yet.
       </div>
 
-      <h2>Experiment one: which copy reaches the surface</h2>
+      {EXPERIMENTS.map((x) => (
+        <section key={x.n}>
+          <h2>
+            Experiment {x.n}: {x.name}
+          </h2>
+
+          <p className="lede">{x.question}</p>
+
+          <div className="readout">
+            <span className="readout-value">{usd(x.costMin)}</span>
+            <p className="readout-label">
+              US dollars, {x.costNote}. {x.weeksNote}. Personnel salary is
+              excluded throughout, and for the mechanism experiment that
+              exclusion hides the largest real cost.
+            </p>
+          </div>
+
+          <h3>What it gates</h3>
+          <p>{x.gates}</p>
+
+          <h3>The design</h3>
+          <p>{x.design}</p>
+
+          <h3>How it resolves</h3>
+          <p>{x.resolves}</p>
+
+          <div className="claim is-dead">
+            <span className="state state-dead">Stated in advance</span>
+            <p>{x.kill}</p>
+          </div>
+
+          <h3>What it needs</h3>
+          <p>{x.needs}</p>
+        </section>
+      ))}
+
+      <h2>Which one to run first</h2>
 
       <p>
-        The question is the one that gates every route on this site: does the
-        broken copy simply fail, or does it interfere with the working copy?
+        They are not the same experiment and the trade is real. The editing proof
+        is roughly a third of the cost, needs no electrophysiologist, and reaches
+        an answer in half the time. The mechanism experiment is worth more
+        because it gates more: it decides the correction threshold for every
+        remaining route.
       </p>
 
       <p>
-        Measuring total current cannot answer it, because both explanations
-        predict the same total. The experiment has to resolve the two copies
-        separately: not how much channel reaches the cell surface altogether,
-        but how much of each copy gets there.
+        If a laboratory can run only one, the editing proof is the better first
+        favour to ask, because it is small, self-contained and fails fast. If a
+        laboratory already has a patch clamp rig and an electrophysiologist, the
+        mechanism experiment is the better use of that capability and nobody else
+        appears to be doing it. The two share a cell line, so running them
+        together saves roughly 8,000 dollars.
       </p>
 
-      <div className="claim is-unresolved">
-        <span className="state state-unresolved">The design</span>
-        <p>
-          Allele-resolved surface expression in the heterozygous condition,
-          which means both copies present together as they are in a person.
-          Read out per copy rather than in total, with the glycosylation state
-          distinguished so that protein stuck before the surface can be told
-          apart from protein that arrived.
-        </p>
-        <div className="falsifier">
-          <b>How it resolves either way</b>
-          If both copies arrive at the surface in normal proportion and current
-          is still down by a third, the defect is at the surface and the
-          interference model is wrong. If the broken copy is depleted, the
-          retention model survives and I am wrong.
-        </div>
+      <h2>The detail that would have cost a month</h2>
+
+      <p>
+        The mechanism experiment needs to count the broken protein and the
+        working protein separately at the cell surface, and no antibody can tell
+        them apart. The standard way to do this is to cut the protein into
+        fragments with an enzyme and weigh them.
+      </p>
+
+      <p>
+        The default enzyme cuts after arginine. Position 104{" "}
+        <b>is</b> an arginine, so it is itself a cutting site, and the variant
+        removes it. The working copy gives a fragment four building blocks long,
+        far too short to identify. The variant gives one twenty-one long. The two
+        cannot be compared as a ratio because the change destroys the very site
+        the method depends on.
+      </p>
+
+      <p>
+        A different enzyme, which cuts only after lysine, leaves position 104
+        untouched. Both copies then give the same twenty-six-block fragment,
+        differing by 28.04 in mass, which any modern instrument separates
+        easily. That was checked computationally before anyone was asked to run
+        it.
+      </p>
+
+      <h2>What I am asking for</h2>
+
+      <p>
+        Not that anyone takes the analysis on trust. Every number traces to a
+        named source with an identifier, and the working is public. The ask is
+        narrower than a collaboration:
+      </p>
+
+      <div className="ask">
+        Tell me if either experiment is wrong. If the three-line design has a
+        flaw, or the sample size is off, that correction is worth more to me than
+        a polite yes.
+      </div>
+      <div className="ask">
+        Tell me if the numbers are wrong, especially the sequencing quote and the
+        core facility rates. Several are placeholders rather than quotes, and
+        they are marked as such in the full protocol.
+      </div>
+      <div className="ask">
+        If you have a patch clamp rig and the interest, the mechanism experiment
+        appears to be unclaimed, and it would settle a question the field
+        currently leaves open.
+      </div>
+      <div className="ask">
+        If you have a molecular biology bench and a spare 17,000 dollars, the
+        editing proof is a contained project with a kill switch at week 12.
       </div>
 
-      <p className="small">
-        Approximately 16,670 US dollars and 26 weeks, with a pre-specified
-        stopping rule at week 12 so that the work can be halted early if the
-        readout is not separating.
-      </p>
-
-      <h2>Experiment two: does the correction work in a human heart cell</h2>
-
       <p>
-        Only worth running if the first experiment supports it. A base editor
-        changes a single DNA letter back without cutting the strand. A guide has
-        been designed for this variant and scanned against the whole genome for
-        places it might act by mistake, but nothing has been tested in a cell.
-      </p>
-
-      <div className="claim is-believed">
-        <span className="state state-believed">The design</span>
-        <p>
-          Editing in human induced pluripotent stem cell derived
-          cardiomyocytes, which are heart muscle cells grown from a
-          person&rsquo;s own reprogrammed cells, with current measured before
-          and after and the predicted off-target sites sequenced directly.
-        </p>
-        <div className="falsifier">
-          <b>How it resolves either way</b>
-          If current does not recover after confirmed correction, the mechanism
-          is wrong. If editing occurs at predicted off-target sites, the
-          specificity claim is wrong.
-        </div>
-      </div>
-
-      <p className="small">
-        Approximately 45,342 US dollars and 42 weeks.
-      </p>
-
-      <h2>What this cannot become</h2>
-
-      <p>
-        Neither experiment produces a therapy, and no result from either would
-        change anyone&rsquo;s treatment. The honest ceiling on both is
-        information: whether a mechanism is right, and whether a designed guide
-        behaves as predicted in a human cell.
-      </p>
-
-      <p>
-        Brugada syndrome also has no cheap animal test, for reasons set out on
-        the <a href="/routes">routes page</a>. That constraint does not go away
-        with either of these results.
-      </p>
-
-      <h2>If you can run one of these</h2>
-
-      <p>
-        The full protocols, including the cost breakdown and the stopping rule,
-        are available on request, and a clean negative result is welcome. It
-        would close a hypothesis honestly and save other people from pursuing
-        the wrong mechanism.
+        The full protocols, including every line item, the power calculation and
+        the decision rules, are available on request.
       </p>
 
       <div className="next">
         <a href="/science">Why the first question is unresolved</a>
-        <a href="/papers">The papers behind both designs</a>
+        <a href="/routes">What each result would unblock</a>
         <a href="/limitations">What neither experiment would establish</a>
       </div>
     </div>

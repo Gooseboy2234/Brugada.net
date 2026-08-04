@@ -1,8 +1,6 @@
-import { MEASUREMENT, PAPERS, VARIANT } from "./content";
+import { MEASUREMENT, NEGATIVE_COUNT, PAPERS, VARIANT } from "./content";
 
 export default function Home() {
-  const negatives = PAPERS.filter((p) => p.negative).length;
-
   return (
     <div className="wrap">
       <p className="eyebrow">
@@ -16,8 +14,8 @@ export default function Home() {
 
       <p className="standfirst">
         If you have just been given this variant name and you are frightened,
-        start here. This page says what has actually been measured, what has
-        not, and where the uncertainty really sits.
+        start here. This page says what has been measured, what has not, and
+        where the uncertainty actually sits.
       </p>
 
       <h2>What the name means</h2>
@@ -26,15 +24,15 @@ export default function Home() {
         <b>SCN5A</b> is a gene. It carries the instructions for building the
         sodium channel that starts the electrical signal for each heartbeat.
         Think of the channel as a gate in the surface of a heart cell that opens
-        to let the signal begin.
+        to let each beat begin.
       </p>
 
       <p>
-        A gene is written as a long sequence of chemical letters. This variant
-        changes one of them.{" "}
-        <span className="mono">{VARIANT.coding}</span> means that at position
-        311 in the gene, the letter G was replaced by an A. That single change
-        alters one building block in the finished protein, which is what{" "}
+        A gene is written as a long sequence of chemical letters, and this
+        variant changes one of them.{" "}
+        <span className="mono">{VARIANT.coding}</span> means that at position 311
+        in the gene, the letter G was replaced by an A. That single change alters
+        one building block in the finished protein, which is what{" "}
         <span className="mono">{VARIANT.protein}</span> records: at position 104,
         the building block arginine was replaced by glutamine. Arginine is
         abbreviated R and glutamine is abbreviated Q, which is where the short
@@ -52,9 +50,10 @@ export default function Home() {
         <span className="state state-known">Measured</span>
         <p>
           In a laboratory dish, cells carrying this variant alongside a working
-          copy produced <b>{MEASUREMENT.heterozygousPercent} percent</b> of the
-          current that a single working copy produces on its own. That was
-          measured in {MEASUREMENT.cells} cells.{" "}
+          copy produced <b>{MEASUREMENT.heterozygous} percent</b> of the current
+          a single working copy produces on its own, plus or minus{" "}
+          {MEASUREMENT.heterozygousSd}. That was measured in{" "}
+          {MEASUREMENT.cellsHet} cells.{" "}
           <span className="src">
             <a href={MEASUREMENT.pmidUrl}>
               {MEASUREMENT.source}, PMID {MEASUREMENT.pmid}
@@ -63,8 +62,9 @@ export default function Home() {
         </p>
         <div className="falsifier">
           <b>What would overturn this</b>
-          An independent measurement on a different platform finding current
-          indistinguishable from a working copy.
+          An independent measurement, on a different platform and by a group
+          with no shared authorship, finding no difference between this variant
+          and a working copy.
         </div>
       </div>
 
@@ -74,13 +74,14 @@ export default function Home() {
         <span className="state state-believed">Not established</span>
         <p>
           Whether that reduction behaves the same way in a living human heart.
-          Every number above comes from cells grown in a dish and engineered to
-          make this channel. A heart is not a dish, and no one has measured this
-          variant in human heart muscle.
+          Every functional number on this site comes from cells grown in a dish
+          and engineered to make this channel. A heart is not a dish, and nobody
+          has measured this variant in human heart muscle.
         </p>
         <div className="falsifier">
           <b>What would settle it</b>
-          A measurement in human heart muscle cells carrying the variant.
+          A measurement in human heart muscle cells carrying the variant, which
+          is <a href="/experiments">the first of two costed experiments</a>.
         </div>
       </div>
 
@@ -89,10 +90,10 @@ export default function Home() {
       <p>
         Most people who carry a variant like this one never have symptoms.
         Whether that is true for any particular person depends on far more than
-        the variant, and it is a judgement for an electrophysiologist who has
-        the whole picture: the rest of the genome, the medical history, the
-        family history, and an examination. A website cannot make it and this
-        one will not try.
+        the variant, and it is a judgement for an electrophysiologist who has the
+        whole picture: the rest of the genome, the medical history, the family
+        history, and an examination. A website cannot make that judgement and
+        this one will not try.
       </p>
 
       <p>
@@ -103,10 +104,11 @@ export default function Home() {
       <h2>The papers</h2>
 
       <p>
-        There are {PAPERS.length} of them, and {negatives} report results that
-        went against the hypothesis being tested, including one that closed a
-        route this project had spent months on. They are posted publicly as
-        preprints so that the reasoning can be checked.
+        There are {PAPERS.length}. {NEGATIVE_COUNT} of them report a negative
+        result, meaning the finding went against the idea being tested. One of
+        those closed a route this project had spent months on, and another found
+        that a method I had been relying on missed three of the four cases it
+        should have caught.
       </p>
 
       <p>
@@ -118,24 +120,24 @@ export default function Home() {
 
       <p>
         I am Ethan Bradley. I carry this variant. I am not a physician and
-        nothing here is medical advice. The work is computational, which means
-        it is done with databases, published measurements and simulations rather
+        nothing here is medical advice. The work is computational, which means it
+        is done with databases, published measurements and simulations rather
         than at a laboratory bench, and it nominates experiments rather than
-        performing them. I publish the reasoning so that anyone can check it,
-        and I publish the results that went against me alongside the ones that
-        did not.
+        performing them. I publish the reasoning so that anyone can check it, and
+        I publish the results that went against me alongside the ones that did
+        not.
       </p>
 
       <p>
         My own variant is why I went looking, but most of what came out of it is
-        not about me. Two variants in this same region carry strong functional
-        evidence of harm and have never been reported in a patient. Those belong
-        to other people who do not know yet.
+        not about me. Two variants in this same small region of the gene carry
+        strong laboratory evidence of harm and have never been reported in a
+        patient. Those belong to people who do not know yet.
       </p>
 
       <div className="next">
         <a href="/science">The mechanism, and the open question</a>
-        <a href="/routes">All six therapeutic routes</a>
+        <a href="/routes">All nine routes, including the dead ones</a>
         <a href="/limitations">What this work cannot tell you</a>
       </div>
     </div>
