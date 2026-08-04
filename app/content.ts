@@ -146,6 +146,8 @@ export type Route = {
   blocker: string;
   detail: string;
   falsifier?: string;
+  // A claim this site previously made and has since had to withdraw.
+  correction?: string;
   paper?: number;
 };
 
@@ -170,9 +172,11 @@ export const ROUTES: Route[] = [
     blocker:
       "Published cardiac efficiency is roughly nine times below the base-editing precedent, and far below the 60 percent that mattered.",
     detail:
-      "Prime editing writes the corrected letter from an RNA template rather than chemically converting it. At this site it is the better-designed option by a wide margin: it recovers a standard docking sequence that base editing cannot use at all, and after three independent filters not one off-target site survives anywhere in the genome for either standard guide. It loses on delivery, not on design.",
+      "Prime editing writes the corrected letter from an RNA template rather than chemically converting it. At this site it is the better-designed option: it recovers a standard docking sequence that base editing cannot use at all, and it has to satisfy three separate requirements at every wrong site rather than one, which removes the overwhelming majority of them. It loses on delivery, not on design.",
     falsifier:
       "Any peer-reviewed cardiac prime-editing result at or above 60 percent correction would flip this ranking.",
+    correction:
+      "An earlier version of this site said no off-target site survived anywhere in the genome. That was wrong, and allowing the alignment to bulge is what refuted it. The residual risk is one locus, in the closest related gene, and it now has to be sequenced in any experiment using this design.",
   },
   {
     rank: 3,
@@ -269,8 +273,8 @@ export const EXPERIMENTS: Experiment[] = [
     n: 2,
     name: "The editing proof",
     question: "Does the designed guide actually correct the letter?",
-    costMin: 16670,
-    costFull: 26152,
+    costMin: 17894,
+    costFull: 27976,
     costNote:
       "minimum viable, using an engineered cell line rather than patient cells",
     weeks: 26,

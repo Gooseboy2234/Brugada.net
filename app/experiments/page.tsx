@@ -4,7 +4,7 @@ import { EXPERIMENTS } from "../content";
 export const metadata: Metadata = {
   title: "Experiments",
   description:
-    "Two costed, falsifiable protocols for any laboratory able to run them: a base-editing validation at 16,670 dollars over 26 weeks, and the mechanism experiment at 45,342 dollars over 42 weeks.",
+    "Two costed, falsifiable protocols for any laboratory able to run them: a base-editing validation at 17,894 dollars over 26 weeks, and the mechanism experiment at 45,342 dollars over 42 weeks.",
   alternates: { canonical: "/experiments" },
 };
 

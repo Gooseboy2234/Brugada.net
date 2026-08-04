@@ -112,6 +112,13 @@ export default function Routes() {
               </div>
             )}
 
+            {route.correction && (
+              <div className="falsifier">
+                <b>Corrected since</b>
+                {route.correction}
+              </div>
+            )}
+
             {paper && (
               <p className="paper-meta">
                 <a href={`/papers#${paper.slug}`}>
@@ -194,6 +201,26 @@ export default function Routes() {
       <p>
         That is the difference between one paper and five years of work. No
         amount of funding removes it.
+      </p>
+
+      <h2>The collision that two separate analyses found</h2>
+
+      <p>
+        The gene this variant sits in has a close relative, and the region
+        around position 104 is similar enough between them that molecules
+        designed against one can reach the other. Two independent analyses
+        found this separately: one working on an RNA molecule, one on a DNA
+        one, sharing no code and no scoring method.
+      </p>
+
+      <p>
+        That makes it a property of the target sequence rather than of any one
+        design. Anyone attempting this position with a short molecule will meet
+        the same constraint. It does not close either editing route, because the
+        residual risk is concentrated at one named place rather than scattered,
+        and a concentrated risk at a named locus is a sequencing target rather
+        than an unknown hazard. It does mean that place has to be checked in
+        any experiment.
       </p>
 
       <h2>Two editors, and the trade between them</h2>
