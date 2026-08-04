@@ -55,7 +55,7 @@ const GROUPS: { heading: string; note: string; rows: [string, string][] }[] = [
     rows: [
       [
         "CLINVAR_CENSUS_BY_GENE",
-        "Genes carrying deposited functional evidence, with counts by classification status. Two generations of this table disagree and the counts are not quoted on the site until that is resolved.",
+        "Genes carrying deposited functional evidence, with counts by classification status. An earlier build of this table over-counted; the defect and its arithmetic are recorded in a companion note rather than the file being replaced silently.",
       ],
       [
         "CLINVAR_ACCESS_ROUTES",

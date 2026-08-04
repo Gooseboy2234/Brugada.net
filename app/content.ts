@@ -94,14 +94,33 @@ export const CONDITION = {
 // and the result on this site that generalises furthest beyond one variant.
 // From science/CLINVAR_CENSUS.md and paper 3.
 export const CENSUS = {
-  // Method, stable across both generations of the analysis.
+  // Method. One file, MD5 verified against NCBI's published checksum.
   releaseDate: "2026-06-27",
   releaseSizeGb: 5.82,
   recordsScanned: 4531457,
   runtimeMinutes: 53,
 
-  // Tool survey, from CENSUS_TOOL_ACCESS_ROUTES_V2.csv, which supersedes the
-  // earlier survey: the twelfth tool is now determined rather than unreachable.
+  // Records carrying deposited functional evidence, before any exclusion.
+  withFunctionalData: 270827,
+  functionalBlocks: 532132,
+
+  // The bulk depositor, excluded before anything is reported.
+  bulkAnywhere: 263596,
+
+  // The pool, on the paper's attribution rule: count a record if at least one
+  // functional block belongs to a laboratory other than the bulk depositor.
+  // Settled in supporting/CENSUS_DISCREPANCY_RESOLVED.md, which shows 8,142
+  // was never a real quantity and 8,157 was a file defect.
+  pool: 7661,
+  poolGenes: 622,
+  noConfident: 5359,
+  noConfidentPct: 70.0,
+  withAcmgCode: 1892,
+  withAcmgPct: 24.7,
+  ps3: 1110,
+  bs3: 1106,
+
+  // Tool survey, from CENSUS_TOOL_ACCESS_ROUTES_V2.csv.
   toolsSurveyed: 12,
   toolsDetermined: 11,
   toolsThatParseIt: 0,
@@ -110,13 +129,6 @@ export const CENSUS = {
   summaryChars: 3763,
   fullRecordChars: 21611,
   esummaryElements: 74,
-
-  // The pool counts are NOT quoted on the site. Two generations of the census
-  // disagree materially and neither is marked authoritative:
-  //   CLINVAR_CENSUS_BY_GENE.csv  791 genes, 8,155 variants, 2,573 with a code
-  //   CENSUS_BY_GENE_V2.csv       623 genes, 7,852 variants, 1,906 with a code
-  // Per the site rule, a contested value is marked pending, never estimated.
-  countsPending: true,
 };
 
 export type RouteState =

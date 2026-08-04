@@ -79,26 +79,48 @@ export default function Census() {
 
       <h2>How many variants this affects</h2>
 
-      <div className="notice">
-        <b>Not quoted here yet.</b>{" "}
-        <span className="pending">Pending reconciliation</span>
-        <p style={{ margin: "0.6rem 0 0" }}>
-          Two generations of this count exist and they disagree materially, on
-          the number of genes, the number of variants, and how many carry a
-          formal evidence code. Neither is marked as superseding the other.
-          Until that is resolved, no figure is published, because a contested
-          number stated confidently is worse than no number.
+      <div className="readout">
+        <span className="readout-value">{n(CENSUS.pool)}</span>
+        <p className="readout-label">
+          variants across {n(CENSUS.poolGenes)} genes carry functional evidence
+          deposited by a laboratory other than the one bulk depositor.
+        </p>
+      </div>
+
+      <div className="readout">
+        <span className="readout-value">{CENSUS.noConfidentPct}%</span>
+        <p className="readout-label">
+          of those, {n(CENSUS.noConfident)} variants, still have no confident
+          clinical classification.
         </p>
       </div>
 
       <p>
-        What is not in question is the shape of the finding. A large number of
-        variants carry deposited laboratory evidence, a majority of those still
-        have no confident clinical classification, and a substantial minority
-        carry a formal evidence code, meaning the depositing laboratory has
-        already stated how strong it considers its own measurement to be. This
-        is not raw data awaiting interpretation.
+        And this is not raw data waiting to be interpreted.{" "}
+        <b>
+          {n(CENSUS.withAcmgCode)} of them, {CENSUS.withAcmgPct} percent
+        </b>
+        , carry a formal evidence code in the deposit text, meaning the
+        laboratory that did the measuring has already stated how strong it
+        considers its own result to be. The most common are the codes for
+        functional evidence supporting a harmful reading, {n(CENSUS.ps3)}{" "}
+        times, and a harmless one, {n(CENSUS.bs3)} times.
       </p>
+
+      <div className="notice">
+        <b>These numbers were wrong once, and the correction is public.</b>
+        <p style={{ margin: "0.6rem 0 0" }}>
+          An earlier build of the data file reported a larger pool. The
+          exclusion filter for the bulk depositor was tested against a
+          shortened, four-name copy of each record&rsquo;s submitter list rather
+          than the real one, so records where that depositor sorted fifth or
+          later slipped through. That accounted for 911 records exactly, and a
+          second defect readmitted 15 more. Neither figure was a population of
+          anything. The paper&rsquo;s published numbers never depended on the
+          faulty file, and the full working is kept as a companion note rather
+          than the file being swapped out quietly.
+        </p>
+      </div>
 
       <h2>The correction that has to travel with any count</h2>
 

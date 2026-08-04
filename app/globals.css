@@ -72,8 +72,17 @@ body {
 }
 
 img { max-width: 100%; display: block; }
-p { text-wrap: pretty; }
 h1, h2, h3 { text-wrap: balance; }
+
+/* Tailwind's preflight zeroes these, so the vertical rhythm is set here
+   explicitly rather than inheriting browser defaults. Without this every
+   paragraph runs into the next one. */
+p {
+  margin: 0 0 1.1rem;
+  text-wrap: pretty;
+}
+p:last-child { margin-bottom: 0; }
+ul, ol { margin: 0 0 1.1rem; }
 
 a {
   color: inherit;
