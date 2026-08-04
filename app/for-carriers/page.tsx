@@ -28,6 +28,28 @@ export default function ForCarriers() {
         your whole picture and only a doctor who has it can judge.
       </div>
 
+      <h2>The condition, in one paragraph</h2>
+
+      <p>
+        Brugada syndrome affects the heart&rsquo;s electrical system, not its
+        structure. The heart beats because an electrical signal travels through
+        it in an organised wave, and in this condition that signal can be weaker
+        or slower in one region, which under some circumstances lets the rhythm
+        become disorganised. Because the fault is electrical, the heart usually
+        looks normal on a scan, and a normal echocardiogram does not rule it out.
+        It is identified from a specific pattern on an electrocardiogram, which
+        sometimes appears only during a fever or after a particular medication.
+      </p>
+
+      <p>
+        Two practical things follow, and both are worth raising with your own
+        doctor rather than acting on from a website. <b>Fever is a recognised
+        trigger</b>, so it is worth telling anyone treating you for an illness
+        that you carry this variant. And some medications are known to bring out
+        the pattern. Published lists exist and a specialist can check them
+        against anything you take.
+      </p>
+
       <h2>What the report is saying</h2>
 
       <p>

@@ -1,0 +1,9 @@
+protospacer,editor,target_positions,on_target_pam,naive_hits_mm0,naive_hits_mm1,naive_hits_mm2,naive_hits_mm3,naive_hits_mm4,naive_total_mm_le4,editable_mm_le2,editable_mm_le3,editable_total_mm_le4,exonic_CDS_editable,protein_changing_editable,protein_changing_mm_le3,protein_changing_mm_le2,protein_changing_cardiac,worst_cardiac_gene,seed_clean_editable_mm_le3,route
+TTCCAGTTCAGTGCCACCAA,SpG/Cas9-NG (NG),5;5,CGC,0,0,16,275,4097,4388,3,51,655,26,16,2,0,6,GFM1;LXN,7,SpG route (lead)
+TTCCAGTTCAGTGCCACCAA,SpRY (near-PAMless),5,CGC,0,0,16,275,4097,4388,16,268,4064,79,55,2,0,30,SF3B1,41,SpRY route
+CCAGTTCAGTGCCACCAACG,SpRY (near-PAMless),3,CCT,0,0,3,87,1432,1522,3,89,1511,73,65,5,0,42,AAMP,8,SpRY route
+TCCAGTTCAGTGCCACCAAC,SpRY (near-PAMless),4,GCC,0,0,6,221,3294,3521,6,225,3494,93,86,3,0,56,RPL3L,21,SpRY route
+CTTCCAGTTCAGTGCCACCA,SpRY (near-PAMless),6,ACG,0,3,20,311,4063,4397,20,306,3995,107,77,6,0,45,GSN,52,SpRY route
+TCTTCCAGTTCAGTGCCACC,SpRY (near-PAMless),7,AAC,0,1,13,287,3123,3424,13,267,3040,102,78,5,0,46,GSN,38,SpRY route
+ATCTTCCAGTTCAGTGCCAC,SpRY (near-PAMless),8,CAA,0,1,13,271,2927,3212,13,264,2937,88,62,7,0,38,NEBL,43,SpRY route
+CATCTTCCAGTTCAGTGCCA,SpRY (near-PAMless),9,CCA,0,1,19,349,3722,4091,18,339,3669,124,91,12,1,54,MYL12A,56,SpRY route

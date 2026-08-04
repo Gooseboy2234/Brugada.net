@@ -1,0 +1,5 @@
+measurement,group,method,n,median,q1,q3,p90,max,pooled_pct
+nonproductive_fraction_pct,SCN5A heart,junction,827,0.0,0.0,0.0,0.0,0.9346,0.0045
+nonproductive_fraction_pct,SCN1A brain cortex,junction,491,1.4028,0.759,2.2727,3.6424,10.1266,1.3881
+nonproductive_fraction_pct,SCN5A heart,transcript,879,4.8744,3.0453,8.439,12.9111,32.6733,5.3839
+nonproductive_fraction_pct,SCN1A brain cortex,transcript,528,40.5753,25.4675,52.6283,63.5647,90.836,45.0492

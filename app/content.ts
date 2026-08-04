@@ -83,6 +83,42 @@ export const PRECEDENT = {
   pmidUrl: "https://pubmed.ncbi.nlm.nih.gov/37965733/",
 };
 
+// What Brugada syndrome is, in the terms reader one needs.
+export const CONDITION = {
+  name: "Brugada syndrome",
+  triggerNote:
+    "Fever is a recognised trigger, which is why it is worth telling any doctor treating you for an illness that you carry this variant.",
+};
+
+// The ClinVar census. A measurement of a database rather than of any patient,
+// and the result on this site that generalises furthest beyond one variant.
+// From science/CLINVAR_CENSUS.md and paper 3.
+export const CENSUS = {
+  // Method, stable across both generations of the analysis.
+  releaseDate: "2026-06-27",
+  releaseSizeGb: 5.82,
+  recordsScanned: 4531457,
+  runtimeMinutes: 53,
+
+  // Tool survey, from CENSUS_TOOL_ACCESS_ROUTES_V2.csv, which supersedes the
+  // earlier survey: the twelfth tool is now determined rather than unreachable.
+  toolsSurveyed: 12,
+  toolsDetermined: 11,
+  toolsThatParseIt: 0,
+
+  // Per-variant retrieval sizes, from CLINVAR_ACCESS_ROUTES.csv.
+  summaryChars: 3763,
+  fullRecordChars: 21611,
+  esummaryElements: 74,
+
+  // The pool counts are NOT quoted on the site. Two generations of the census
+  // disagree materially and neither is marked authoritative:
+  //   CLINVAR_CENSUS_BY_GENE.csv  791 genes, 8,155 variants, 2,573 with a code
+  //   CENSUS_BY_GENE_V2.csv       623 genes, 7,852 variants, 1,906 with a code
+  // Per the site rule, a contested value is marked pending, never estimated.
+  countsPending: true,
+};
+
 export type RouteState =
   | "leading"
   | "conditional"
@@ -274,6 +310,8 @@ export type Paper = {
   result: Result;
   resultNote?: string;
   venue: "bioRxiv" | "medRxiv";
+  // The manuscript is served from public/papers/<slug>.md until a DOI exists.
+  bearsOn?: string;
 };
 
 export const NEGATIVE_COUNT = 7;
@@ -287,6 +325,7 @@ export const PAPERS: Paper[] = [
     plain:
       "The method I had been relying on to predict which variants break this channel only works when the cause is a buried charge. Given four variants already known to break it, the method caught one. This is the result that closed the route I most wanted to work.",
     result: "negative",
+    bearsOn: "Closed the folding-corrector route",
     venue: "bioRxiv",
   },
   {
@@ -299,6 +338,7 @@ export const PAPERS: Paper[] = [
     result: "mixed",
     resultNote:
       "The method is constructive. The finding that no guide at this site is clean in an absolute sense is not.",
+    bearsOn: "Underpins the base-editing route",
     venue: "bioRxiv",
   },
   {
@@ -309,6 +349,7 @@ export const PAPERS: Paper[] = [
     plain:
       "Laboratories deposit real measurements of what variants do into the public database. None of the eleven determinable interpretation tools reads that field, and most of them already have the full record on disk. The evidence is public and effectively invisible.",
     result: "negative",
+    bearsOn: "The database census, and the one result that is not about this variant",
     venue: "bioRxiv",
   },
   {
@@ -319,6 +360,7 @@ export const PAPERS: Paper[] = [
     plain:
       "Every design I tested for editing the message rather than the gene either changed neighbouring letters it should not have, or bound in too many other places. Separately, no molecule of this class has been shown to reach a human heart muscle cell at all.",
     result: "negative",
+    bearsOn: "Sets the ceiling on the RNA-editing route",
     venue: "bioRxiv",
   },
   {
@@ -329,6 +371,7 @@ export const PAPERS: Paper[] = [
     plain:
       "My variant is labelled Conflicting in the public database, which reads as genuine disagreement between laboratories. It is not. It rests on a single stale submission. Across every available assay it behaves the same as its neighbour, which is classified pathogenic.",
     result: "constructive",
+    bearsOn: "The reclassification argument",
     venue: "medRxiv",
   },
   {
@@ -339,6 +382,7 @@ export const PAPERS: Paper[] = [
     plain:
       "A therapy that boosts output from the healthy copy needs a reserve of wasted message to redirect. Across 827 heart samples that reserve is 0.0045 percent, about 300 times smaller than in the brain where the approach already works in children. This closes the route.",
     result: "negative",
+    bearsOn: "Closed the upregulation route",
     venue: "bioRxiv",
   },
   {
@@ -349,6 +393,7 @@ export const PAPERS: Paper[] = [
     plain:
       "The standard assay cannot tell apart two different ways a broken copy interferes with a healthy one, because the two explanations are algebraically degenerate: they predict the same number. Measuring harder with the same method cannot help. This paper names the experiment that would settle it.",
     result: "negative",
+    bearsOn: "Names the experiment that would settle the open question",
     venue: "bioRxiv",
   },
   {
@@ -359,6 +404,7 @@ export const PAPERS: Paper[] = [
     plain:
       "Two candidate explanations for why this position matters were tested and eliminated. What survives is that this residue anchors a buried acidic pocket unchanged across species. The paper also corrects several of my own earlier claims about the geometry.",
     result: "negative",
+    bearsOn: "Eliminates two explanations for the mechanism",
     venue: "bioRxiv",
   },
   {
@@ -371,6 +417,7 @@ export const PAPERS: Paper[] = [
     result: "mixed",
     resultNote:
       "A usable shortlist, built on top of the measured blind spot that makes a negative score meaningless.",
+    bearsOn: "Nominates seventeen other variants for testing",
     venue: "bioRxiv",
   },
   {
@@ -381,6 +428,7 @@ export const PAPERS: Paper[] = [
     plain:
       "Models that measure distance between the centres of residues miss about 9 percent of real atomic contacts, and disproportionately the long side-chain and salt-bridge ones. The contact at my own position is 3.79 angstroms atom to atom but 9.22 centre to centre, so a centre-distance model cannot see it at all.",
     result: "negative",
+    bearsOn: "A methods correction to a published penetrance model",
     venue: "bioRxiv",
   },
 ];
@@ -390,6 +438,7 @@ export const NAV = [
   { href: "/science", label: "The science" },
   { href: "/routes", label: "Routes" },
   { href: "/papers", label: "Papers" },
+  { href: "/census", label: "Census" },
   { href: "/experiments", label: "Experiments" },
   { href: "/data", label: "Data" },
   { href: "/for-carriers", label: "For carriers" },

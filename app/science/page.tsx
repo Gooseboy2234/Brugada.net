@@ -28,15 +28,10 @@ export default function Science() {
       <p>
         The sodium channel is a large protein threaded through the surface of a
         heart cell. Before the part that spans the membrane begins, a stretch of
-        it hangs inside the cell, called the{" "}
-        <span
-          className="gloss"
-          title="The first section of the protein, which sits inside the cell rather than in the membrane."
-        >
-          N-terminal domain
-        </span>
-        . Position 104 is in that stretch, and it sits against a negatively
-        charged neighbour at position 84.
+        it hangs inside the cell, called the N-terminal domain, meaning the
+        first section of the protein rather than the part embedded in the
+        membrane. Position 104 is in that stretch, and it sits against a
+        negatively charged neighbour at position 84.
       </p>
 
       <p>
@@ -91,8 +86,10 @@ export default function Science() {
         <img
           src="/figures/FIG_EXPERIMENT_DESIGN.png"
           alt="Panel a: bar chart showing 100 percent for two working alleles, 50 percent if one allele is silent, and 34.1 percent measured for R104Q. Panel b: two overlapping distributions showing that single cells overlap heavily so group means are the readout. Panel c: sample size required against assumed cell-to-cell variability."
-          width={2152}
-          height={1891}
+          width={1400}
+          height={1230}
+          loading="lazy"
+          decoding="async"
         />
         <figcaption className="small" style={{ marginTop: "0.75rem" }}>
           The two hypotheses, the overlap between individual cells, and the

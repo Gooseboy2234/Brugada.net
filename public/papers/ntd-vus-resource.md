@@ -1,0 +1,192 @@
+# A stability predictor with known blind spots nominates seventeen uncertain SCN5A N-terminal variants for testing
+
+**Ethan Bradley**
+
+Independent researcher, no institutional affiliation
+
+ORCID: [0009-0008-8925-7975](https://orcid.org/0009-0008-8925-7975)
+
+## Abstract
+
+Of 131 ClinVar variants of uncertain significance in the Nav1.5 (SCN5A) N-terminal domain that could be placed on structure 8VYJ, 17 score above a measured noise floor on the ThermoMPNN stability predictor, in two independently relaxed structure preparations, and I nominate them here for functional testing. This list can only work in one direction. In a companion analysis using the same predictor and the same domain, three of four known loss-of-function benchmark variants, R104W, R121W and Y87C, were predicted neutral or stabilizing (PMID 22739120, PMID 32815768), while a published ER-retained variant, A124D, was correctly flagged as strongly destabilizing (PMID 22529811). Positive predictions in this domain are therefore interpretable. Negative predictions are not, and the 114 variants that do not clear the floor of 0.79 kcal/mol are not thereby evidence of benign status. I group the 17 nominations into three evidence tiers by how closely each substitution matches the one demonstrated true positive, a buried charge introduction. A second, independent line of evidence, a nine-paralogue conservation analysis, flags 41 of 141 uncertain variants at positions as variable as both known benign controls, usable only as evidence against pathogenicity. No correction for multiple comparisons was applied to either list. Both are intended for a laboratory choosing which variants merit scarce patch-clamp or trafficking-assay time, not for clinical classification.
+
+## A key to the terms used here
+
+- **SCN5A** is the gene for the heart's main sodium channel; **Nav1.5** is the protein. The
+  **N-terminal domain** is its first stretch, the region scored here.
+- A **variant of uncertain significance**, or **VUS**, is a ClinVar classification meaning the evidence
+  does not establish whether a variant is harmful or harmless. It is not a mild finding, it is an
+  unanswered question, and reducing the number of them is the purpose of this list.
+- **ClinVar** is the public database of variants and laboratory interpretations.
+- **Folding stability** is how firmly a protein holds its shape. **ΔΔG** (delta-delta-G) is the
+  predicted change in that firmness when one amino acid is substituted, in kcal/mol, with positive
+  meaning less stable.
+- **ThermoMPNN** is the public program used to predict ΔΔG here.
+- A **noise floor** is the size of variation the method produces when nothing real is changing. A score
+  below it cannot be distinguished from measurement noise, so it carries no information. Measuring the
+  floor rather than assuming one is what lets a nomination mean something.
+- **Sensitivity** is the fraction of genuinely harmful variants a method flags. Poor sensitivity means
+  many are missed, so a low score is not reassurance. **Specificity** is the fraction of harmless ones
+  it correctly leaves alone.
+- A **false negative** is a harmful variant the method scored as harmless. Three known ones are used
+  here as a standing check on the method.
+- **Conservation** is how unchanged a position stays across related genes or species. **Paralogues** are
+  related genes arising from duplication within one organism.
+- **Cryo-EM** produces a 3D protein model; **8VYJ** is the one used, with **EMD-43662** its density map.
+- A **calibration gate** is a pass-or-fail check the pipeline must clear on known answers before its
+  output on unknowns is used at all.
+- **Dominant-negative** means a variant copy interferes with the working copy.
+
+## Why this list exists and what it cannot do
+
+The Nav1.5 N-terminal domain carries a large number of ClinVar variants of uncertain significance and almost no published functional data to resolve them. A laboratory with a patch-clamp rig has to choose where to start. I built this list to give that choice some structure, and I built it after first measuring, on the same domain, what folding-stability prediction can and cannot see.
+
+That earlier measurement is a negative result, and it sets every rule that follows. Three variants with published dominant-negative effects, R104W, R121W and Y87C, were predicted neutral or stabilizing by ThermoMPNN in this domain (PMID 22739120, PMID 32815768). One published ER-retained variant, A124D, was predicted strongly destabilizing, and both benign controls scored near zero (PMID 22529811). Put plainly: the method has a demonstrated true positive and no false positive among controls, and it has three demonstrated false negatives among the only benchmark variants available. Specificity looks usable. Sensitivity is poor, in the open, on known cases.
+
+A method with that profile cannot rank all 131 uncertain variants and call it a screen, because a ranking implies the low end means something, and here it does not. What survives is narrower: report only the variants that score positively, above the method's own measured error, in two independent structure preparations, and say nothing about the rest. That is a nomination list, not a classifier, and I have tried to write every sentence below in a way that keeps that distinction visible.
+
+## How the list was built
+
+### Structure and predictor
+
+Variants were scored against PDB entry 8VYJ, chain A, a cryo-EM structure at approximately 3.6 Å resolution with associated map EMD-43662. Stability changes were predicted with ThermoMPNN (Kuhlman Lab), using the tool's bundled default checkpoint. No separate version number for the checkpoint is recorded in the source material beyond its default label. Structures were relaxed by two independent protocols, Rosetta and OpenMM, before scoring; specific software version numbers for these relaxation runs are not recorded in the source material.
+
+### Variant set and filtering
+
+I started from 172 ClinVar missense records in residues 12 to 130. These were retrieved through NCBI E-utilities; the exact query string and the retrieval date are not recorded in the source material, and I state that plainly rather than guess at either. From the 172, I removed 9 nonsense or stop-gain records, since these are not a missense stability question, and 12 records at positions unmodelled in 8VYJ, an unresolved gap spanning residues 38 to 48. That leaves 151 scorable variants. Every one of the 151 wild-type residues was checked against the 8VYJ sequence directly, and all 151 matched, with zero mismatches. Of the 151, 131 are variants of uncertain significance and 20 already carry a ClinVar classification; the 20 were withheld entirely from the steps below and used only as an independent check, described later.
+
+### Scoring and the calibration gate
+
+Each of the 151 scorable variants was scored across 24 independently relaxed structures, 12 from the Rosetta preparation and 12 from the OpenMM preparation, for 3,576 individual predictions in total. A variant is nominated only if the mean score in each preparation, taken separately, clears the floor; a variant carried by one preparation alone does not qualify.
+
+Before any uncertain variant was scored, I ran a gate on seven variants with known status:
+
+| Variant | Class | Rosetta prep | OpenMM prep | Gate role |
+|---|---|---:|---:|---|
+| A124D | ER-retained (PMID 22529811) | +2.154 ± 0.014 | +2.389 ± 0.068 | must clear floor: PASS |
+| R104Q | proband's variant, functionally characterized | +1.427 ± 0.006 | +1.451 ± 0.254 | reference point only |
+| R104W | dominant-negative (PMID 22739120) | -0.015 ± 0.012 | +0.627 ± 0.178 | known false negative |
+| R121W | dominant-negative (PMID 22739120), contested classification (PMID 32815768) | -1.263 ± 0.021 | -0.427 ± 0.519 | known false negative |
+| Y87C | dominant-negative (PMID 32815768) | -0.030 ± 0.003 | -0.119 ± 0.055 | known false negative |
+| R34C | benign control (PMID 11960580) | -0.016 ± 0.024 | +0.028 ± 0.026 | must stay near zero: PASS |
+| V125L | benign control | -0.258 ± 0.014 | -0.197 ± 0.156 | must stay near zero: PASS |
+
+A124D clears the floor in both preparations, both benign controls stay within it, and A124D separates from the worst-scoring benign control by 2.17 kcal/mol in the Rosetta preparation and 2.36 kcal/mol in the OpenMM preparation. All seven values reproduce prior recorded results from this pipeline to within 0.001 kcal/mol, the strongest check available that the scoring run was rebuilt correctly. I also verified the sign convention independently, scoring the well-characterized cavity-creating variant p53 Y220C on structure 2OCJ: the raw output was +1.823 kcal/mol, confirming that the model reports destabilizing substitutions as positive and that no sign flip was applied anywhere in this analysis.
+
+### The floor was measured, not chosen
+
+The nomination threshold, 0.79 kcal/mol, is a measured property of the predictor, not a value tuned to produce a convenient count. I computed it myself: for 144 mutation pairs in soluble proteins unrelated to Nav1.5, ΔΔG(A to B) plus ΔΔG(B to A) should equal zero if the predictor is internally consistent, and instead it averages -0.79 ± 0.77 kcal/mol. A predicted value smaller in magnitude than the predictor's own systematic inconsistency is not a measurement of anything. Separately, on the Ssym benchmark, the predictor compresses dynamic range, with a predicted standard deviation of 0.90 against a true standard deviation of 1.54. For that reason every value in this list is used as rank order relative to the floor, never as an absolute folding free energy.
+
+The floor was fixed before any uncertain variant was scored. Its effect on the nomination count is not fragile:
+
+| Floor (kcal/mol) | VUS nominated | Benign controls falsely nominated |
+|---|---:|---:|
+| 0.50 | 30 | 0 |
+| 0.79 (used) | 17 | 0 |
+| 1.00 | 11 | 0 |
+| 1.25 | 7 | 0 |
+| 1.50 | 5 | 0 |
+| 2.00 | 1 | 0 |
+
+Zero benign controls are ever falsely nominated across this range, which is the specificity side of the scope rule holding at every reasonable threshold.
+
+Relative solvent accessibility, reported below for context, was computed with mkdssp (version not recorded in the source material) using the Tien et al. (2013) empirical maximum-accessibility scale. This reproduces prior values for R104 closely, 11.7% against a prior 11.6%, and for D82, 8.6% against a prior 8.5%, but differs for D84, 18.2% against a prior 16.0%. I report that discrepancy rather than harmonize it away. RSA is descriptive context only and was never used as a nomination criterion, so this discrepancy does not change any result below.
+
+## Seventeen variants clear the floor in both structure preparations
+
+Of the 131 scorable variants of uncertain significance, 17 score above the 0.79 kcal/mol floor in both structure preparations. The remaining 114 do not. Given three demonstrated false negatives among known loss-of-function benchmarks in this exact domain, that silence carries no information about whether those 114 are tolerated.
+
+The 17 fall into three evidence tiers, ordered by how closely each substitution matches the one substitution class this method has actually demonstrated it can detect: introduction of a buried charge.
+
+**Tier 1, matching the demonstrated true positive chemistry.**
+
+| Variant | ClinVar | Rosetta | OpenMM | RSA | Charge change |
+|---|---|---:|---:|---:|---:|
+| N97K | VCV002989748 | +1.652 | +1.504 | 13.4% | +1 |
+| A107D | VCV001371233 | +1.358 | +1.221 | 6.6% | -1 |
+
+Both introduce a charge at a buried site, the same chemistry as A124D. N97K is the strongest single nomination in the set, and it scores above R104Q in both preparations (+1.652 and +1.504 against +1.427 and +1.451), a variant with two independent functional demonstrations of severe loss of function. A107D sits three residues from R104, in the same buried acidic neighborhood.
+
+**Tier 2, clearing the floor with no backbone confound.**
+
+| Variant | ClinVar | Rosetta | OpenMM | RSA | All 24 frames? |
+|---|---|---:|---:|---:|---|
+| I120T | VCV000201430 | +1.260 | +1.153 | 43.6% | yes |
+| I102N | VCV004728778 | +1.015 | +1.834 | 9.2% | yes |
+| V95L | VCV000532111 | +0.966 | +1.207 | 0.0% | yes |
+| P116S | VCV003619346 | +1.030 | +0.929 | 25.3% | no, 22 of 24 |
+| M28T | VCV002758252 | +0.924 | +1.048 | 31.0% | yes |
+| P85T | VCV001518544 | +1.043 | +0.846 | 23.4% | no, 19 of 24 |
+| F117L | VCV001305580 | +0.829 | +0.855 | 25.4% | no, 19 of 24 |
+
+These rest on the general positive-prediction claim rather than the specific charge-introduction signature, so I treat them as a weaker tier. V95L sits at 0.0% relative solvent accessibility, completely buried, and the substitution adds 26.7 Å³ of side-chain volume with nowhere in the pocket to go. P85T is a direct neighbor of D84, the buried carboxylate that coordinates R104 in the wild-type channel; in an earlier, unpublished structural analysis of my own, the P85 backbone amide appeared as one of two residual hydrogen-bond donors to that carboxylate, a plausible route by which a substitution here perturbs the same site, though I have not independently confirmed that with an additional method.
+
+**Tier 3, proline or glycine substitutions, reported but not treated as chemically interpretable.**
+
+| Variant | ClinVar | Rosetta | OpenMM | RSA | All 24 frames? |
+|---|---|---:|---:|---:|---|
+| R104G | VCV000067777 | +2.018 | +2.081 | 11.7% | yes |
+| L128P | VCV000840382 | +1.895 | +2.351 | 6.8% | yes |
+| R104P | VCV003691438 | +1.682 | +2.279 | 11.7% | yes |
+| T101P | VCV000977688 | +1.905 | +1.653 | 17.8% | yes |
+| H118P | VCV002774498 | +1.402 | +1.361 | 42.1% | yes |
+| G77E | VCV004076452 | +1.293 | +1.285 | 34.0% | yes |
+| G77R | VCV000919345 | +1.164 | +1.409 | 34.0% | yes |
+| R121G | VCV003385973 | +0.896 | +1.528 | 11.3% | yes |
+
+ThermoMPNN models side-chain packing, not backbone conformational entropy, so a large positive value for a substitution into or out of proline or glycine can be right for reasons the model does not represent. An earlier position-104 correlation analysis of my own excluded proline and glycine substitutions for the same reason. R104G and R104P sit at the same residue already addressed by functional work in the author's related studies (see competing interests), and R121G sits at the R121W position, where a dominant-negative effect is documented though contested between the two cited sources.
+
+Fourteen of the 17 clear the floor in every one of the 24 relaxed frames. P116S, P85T and F117L clear it in only 22, 19 and 19 of 24 frames respectively, and I treat these three as the weakest of the set.
+
+The clinical picture at position 104 argues for caution in reading any of this as severity ranking. R104W is ClinVar Pathogenic or Likely pathogenic with nine submitters and no conflicts, and it is not nominated (Rosetta -0.015, OpenMM +0.627), while R104G and R104P at the same residue are. Folding stability does not order clinical severity here.
+
+A second illustration sits one residue away. Three variants of uncertain significance at D84, the buried carboxylate that accepts R104's contact in the wild-type structure, all score near zero: D84N (-0.344, -0.246), D84G (-0.067, -0.115), D84V (-0.067, +0.264). This is the same pocket, approached from the acceptor side rather than the donor side, and the predictor sees nothing there. I read this as a direct illustration of the sensitivity limit rather than as evidence that these three variants are benign.
+
+## A conservation-based filter that only points toward benign
+
+A second, independent analysis addresses the domain from the opposite direction: instead of asking which variants are predicted destabilizing, it asks which sit at positions tolerant of substitution across paralogues. The domain holds 172 classified missense variants, 141 of them uncertain, with published functional data for only four; the difference between this denominator and the 131 used above comes from filtering steps specific to each analysis, structural placement on 8VYJ for the stability score, no equivalent requirement for the conservation score.
+
+Conservation was scored from a nine-paralogue alignment using BLOSUM62, on a 0 to 9 scale (the alignment source and version are not recorded beyond this description). Known pathogenic and known benign positions separate cleanly by this measure (p = 0.027), but the split has poor specificity in the positive direction: 41% of the domain sits at highly conserved positions, so flagging conservation alone is not a usable triage. The direction that does work is the other one. Both known benign controls sit at unusually variable positions, R34C at 2 of 9 and V125L at 1 of 9, so low conservation is usable as a negative filter even where high conservation is not usable as a positive one.
+
+| Conservation band | VUS count | Interpretation |
+|---|---:|---|
+| 2 of 9 or lower | 41 | evidence against pathogenicity |
+| 3 to 7 of 9 | 41 | uninformative |
+| 8 of 9 or higher | 59 | flagged, but expected at a 41% base rate, not a triage |
+
+Forty-one of 141 uncertain variants sit at positions as variable as, or more variable than, either benign control.
+
+I checked whether this filter merely restates proximity to the disordered N-terminus, since low-conservation variants cluster early in the domain. Across residues 12 to 130, residue number and conservation correlate weakly and not significantly (Spearman ρ = 0.17, p = 0.065). Conservation varies substantially within every segment of the domain (residues 12 to 45, mean 4.74 of 9; 46 to 80, mean 5.09; 81 to 115, mean 7.00; 116 to 130, mean 5.93), and the low- and high-conservation variant groups overlap in position, spanning 15 to 125 and 17 to 126 respectively. I read this as evidence against a simple positional proxy.
+
+The 41 flagged variants are not thereby benign. A poorly conserved position can still host a pathogenic substitution: a new proline, a charge reversal in a binding contact, a splice-affecting change at the DNA level that conservation of the encoded residue says nothing about. Nor are the 59 conserved-position variants thereby suspicious; at a 41% base rate among the full uncertain set, that count is what chance alone predicts, and treating it as a signal would repeat the specificity error this filter exists to avoid. This filter is contributory evidence for a curation panel weighing frequency, segregation and functional data together. It is not a standalone reclassification tool, and I have not used it as one here.
+
+## An independent check the scoring pipeline never saw
+
+The 20 already-classified variants in the scorable set were withheld from every step of building the floor and the tiers. Because their ClinVar status played no role in producing the list, they serve as a check on the scope rule using data the pipeline never saw. Zero of three benign-leaning variants were nominated (R34C -0.016, Q90K +0.129, V125L -0.258): specificity held. Zero of three pathogenic-leaning variants were nominated (R104W -0.015, R121Q +0.598, R121W -1.263): sensitivity remained poor, in the open, on new data. This restates the companion negative result on an independent slice of the domain, and it is the reason I built this as a positive-only list rather than a ranked screen.
+
+## What would change my mind
+
+If future patch-clamp or trafficking assays showed several Tier 1 or Tier 2 nominations to be functionally neutral, at a rate clearly above chance, that would indicate the positive-prediction claim itself is miscalibrated in this domain, not merely imprecise, and would be the strongest single result that could overturn this list. If a fifth known loss-of-function variant in this exact domain were found to score positively where R104W, R121W and Y87C do not, that would partially rehabilitate sensitivity, though it would still not make the 114 non-nominated variants informative; a substantially larger benchmark of confirmed true positives and true negatives is the only thing that could actually calibrate sensitivity here, and none exists for this domain today. If a benign variant were confirmed at a highly conserved position, that would weaken the conservation filter, which currently rests on only two benign anchor points. No correction for multiple comparisons was applied to either the 131 stability tests or the 141 conservation tests, and at nominal thresholds some fraction of both the seventeen and the forty-one are expected by chance alone; that fraction has not been estimated here. The two structure preparations share the same trained model, so agreement between the Rosetta and OpenMM relaxations checks that the relaxation protocol is not driving the signal, and it is not an independent replication of the predictor itself.
+
+I want to restate the central limitation plainly, because it is the whole basis of this list. None of the 114 non-nominated stability variants, and none of the 100 conservation variants outside the low band, should be treated as benign on the strength of anything here. Three of four known loss-of-function benchmark variants in this domain score neutral or stabilizing under this predictor. A negative score from this method carries no information in this domain. The only framing this predictor survives is a positive-only nomination list, and it cannot support exclusion of anything.
+
+## Data availability
+
+Structural data: PDB entry 8VYJ, chain A, with associated cryo-EM map EMD-43662, both from public archives. PDB entry 2OCJ was used for the independent sign-convention check. Variant data: ClinVar accessions are listed by VCV number in the tables above; the domain was queried through NCBI E-utilities, but the exact query string and retrieval date are not recorded in the source material and I do not reconstruct them here. The predictor is ThermoMPNN (Kuhlman Lab), scored with its default bundled checkpoint. All derived tables are deposited as a single archive with a permanent identifier. The identifier is
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. They comprise the full 151-variant scoring run, the calibration gate, the tiered nomination list and the conservation filter.
+
+## Competing interests
+
+I disclose that I am a heterozygous carrier of the SCN5A variant p.Arg104Gln (R104Q), which appears as a reference point in the scoring above.
+
+## References
+
+1. Moreau A, et al. 2012. PMID 22529811.
+2. Clatot J, et al. 2012. PMID 22739120.
+3. Wang Y, et al. 2020. PMID 32815768.
+4. PMID 11960580 (cited in the source material by accession only, without author or year).
+5. Tien MZ, et al. 2013. Empirical maximum solvent-accessibility scale used for relative solvent accessibility calculations (no PMID recorded in the source material).
+6. Protein Data Bank entry 8VYJ, chain A.
+7. Electron Microscopy Data Bank entry EMD-43662.
+8. Protein Data Bank entry 2OCJ, used for the independent sign-convention check.
+9. ThermoMPNN, Kuhlman Lab (predictor tool, default checkpoint; no publication identifier recorded in the source material).

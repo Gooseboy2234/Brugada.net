@@ -33,6 +33,10 @@ export default function Papers() {
         <b>None of these has been peer reviewed.</b> Posting before review is
         deliberate: it puts the reasoning and any errors in the open. Treat every
         claim as provisional until other people have checked it.
+        <p style={{ margin: "0.7rem 0 0" }}>
+          Each manuscript is readable in full below, as plain text, until it is
+          posted to a preprint server and receives a permanent identifier.
+        </p>
       </div>
 
       {PAPERS.map((paper) => {
@@ -49,8 +53,14 @@ export default function Papers() {
                 {paper.resultNote}
               </p>
             )}
+            {paper.bearsOn && (
+              <p className="small" style={{ marginTop: "0.6rem" }}>
+                {paper.bearsOn}.
+              </p>
+            )}
             <p className="paper-meta">
               <span className={`state ${l.cls}`}>{l.text}</span>
+              <a href={`/papers/${paper.slug}.md`}>Read the manuscript</a>
               <span>{paper.venue}</span>
               <span className="pending">DOI pending</span>
             </p>

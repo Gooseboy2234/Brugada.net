@@ -1,0 +1,869 @@
+# Neither local strain nor exposed hydrophobic surface explains pathogenicity at SCN5A Arg104, and three further candidate mechanisms are ruled out
+
+**Ethan Bradley**
+
+Independent researcher, no institutional affiliation
+
+ORCID: [0009-0008-8925-7975](https://orcid.org/0009-0008-8925-7975)
+
+## Abstract
+
+Five candidate structural mechanisms for loss of function at SCN5A Arg104 were tested and four are
+refuted, in each case by a control that a plausible-looking positive result failed. Local energy
+redistribution on substitution is real but non-specific: it tracks side-chain volume (Spearman
++0.77) and produces its largest effect in the study on a benign control, V125L. Exposed apolar
+surface separates R104W from R104Q decisively (p = 1.7e-7), which I first read as support for a
+sticky-surface mechanism, until a cross-position control substituting tryptophan at seven
+N-terminal-domain positions put the benign control R34C first, gaining 2.3 times more apolar area
+than position 104, with the dominant-negative and benign split running the wrong way (Mann-Whitney
+p = 1.000). Two independent protocols reached that refutation and disagreed on absolute magnitude
+while agreeing on the ordering. A linear degradation or endoplasmic-reticulum retention motif is
+ruled out at Arg104 by sequence scan, while the pathogenic control R121W does lie in one. The
+N-terminal domain, residues 1 to 130 of NP_932173.1, contains no N-X-S/T glycosylation sequon, so no
+glycosylation-mediated mechanism is available to it. What the structure does establish is that Arg104
+anchors an invariant buried acidic pocket whose salt bridge to Asp84 is conserved across all nine
+human Nav paralogues. The observable that separates R104W from benign substitutions has not been
+identified, and the remaining candidates are ones a single-chain calculation cannot see.
+
+---
+
+
+## A key to the terms used here
+
+- **SCN5A** is the gene for the heart's main sodium channel; **Nav1.5** is the protein. **Arg104**, or
+  **R104**, is the arginine at protein position 104. **R104Q** replaces it with glutamine, **R104W**
+  with tryptophan. **R34C** and **V125L** are used as benign controls, variants not expected to cause
+  disease.
+- The **N-terminal domain** is the first stretch of the protein, residues 1 to 130 here.
+- A **mechanism** in this paper means a specific physical story for how a variant breaks the channel.
+  Each is tested separately and most are eliminated.
+- **Local strain** is stress introduced into the surrounding structure when one amino acid is swapped
+  for another that does not fit as well.
+- **Hydrophobic** means water-repelling. Proteins normally bury their hydrophobic parts inside.
+  **Exposed apolar surface** is water-repelling surface left on the outside, which can make a protein
+  sticky and get it flagged for disposal. **SASA** is the measured amount of that surface, in square
+  ångströms.
+- An **ångström**, Å, is a ten-billionth of a metre. A **REU** is Rosetta's internal energy unit.
+- **Repacking** means letting the computer rearrange nearby side chains after a substitution;
+  **minimisation** then relaxes the structure to relieve leftover stress. A **rotamer** is one of the
+  positions a side chain can adopt.
+- **N-glycosylation** is the cell's attachment of a sugar chain to a protein at a specific three-letter
+  pattern called a **sequon** (N-X-S/T). No sequon means no attachment site, so that mechanism is
+  unavailable.
+- A **degron** is a short sequence that marks a protein for destruction; a **retention motif** holds it
+  in the endoplasmic reticulum, the cell's assembly and inspection area. A protein failing inspection
+  is destroyed rather than shipped, which is why these motifs matter here.
+- A **salt bridge** is an attraction between a positively and a negatively charged side chain, such as
+  Arg104 to **Asp84** (aspartate at position 84). A **hydrogen-bond donor** is an atom offering a
+  hydrogen to such a contact.
+- **Paralogues** are related genes in the same organism arising from duplication; the nine human Nav
+  alpha subunits are paralogues of each other. **Conservation** is how unchanged a position stays
+  across them.
+- **Cryo-EM** yields a 3D protein model; **8VYJ** is the one used here, at **3.6 Å** resolution, fine
+  enough to place the backbone but not to fix every side chain.
+- **Cliff's δ** measures how completely two groups separate. A **confidence interval** that excludes
+  zero means the effect is distinguishable from no effect. **Spearman ρ** measures rank agreement.
+- A **control** is a case whose answer is known in advance. The controls do the real work in this paper:
+  each mechanism that looked supported was eliminated by a variant known to be harmless scoring as high.
+
+## Why eliminate mechanisms at all
+
+A folding-stability calculation says nothing about SCN5A Arg104: a companion analysis found that
+folding free energy misses three of four known loss-of-function variants in this domain. The natural
+next move is to ask what observable does separate them. This paper reports that search, and it is
+mostly a record of hypotheses that did not survive their controls. I report it because the controls
+are the useful part. Each refuted hypothesis here produced an encouraging first result, and each was
+killed by asking whether a variant known to be benign scored as high.
+
+# Part 1. Local strain and exposed hydrophobic surface
+
+## 1. What was computed
+
+Nine models per frame on **all 24 relaxed ensemble members** (12 Rosetta density-guided, 12
+restrained-OpenMM) × **3 independent repacker seeds** = **1008 models, 0 failures**. Position 104
+substitutions Q, W, K plus A/F/Y as a volume-and-aromaticity series; benign controls R34C and
+V125L at their own positions.
+
+Each model was scored in two tiers:
+
+| Tier | Protocol | What it measures |
+|---|---|---|
+| **1** | mutate + repack 8 Å shell, fixed backbone (ref2015) | strain with no relief available |
+| **2** | tier 1, then Cartesian minimisation of the shell (ref2015_cart, bb+chi free) | strain that survives local relaxation |
+
+**The control that makes this interpretable.** A wild-type pose keeps its input rotamer through
+`IncludeCurrent`; a mutant cannot. Comparing mutant-to-WT therefore charges every mutant for the
+repacker's inability to rediscover the input conformation. So every variant is compared against a
+**self-mutation control**,  `MutateResidue(104, "ARG")` on the wild-type pose, then the identical
+repack/minimise protocol. Arg→Arg is chemically null; everything it registers is method noise.
+All effect sizes below are frame- and seed-matched differences against that control, with 95%
+paired-bootstrap CIs (20 000 resamples) and Cliff's δ.
+
+Metrics: per-residue ref2015 energy for all 8 Å-shell residues (target excluded, its own energy
+changes trivially with residue type); Rosetta `HBondSet` donor counts and an independent geometric
+donor count at the Asp84/Asp82 carboxylates; `BuriedUnsatHbondFilter` (vsasa burial); FreeSASA
+side-chain and apolar SASA; `compute_residue_packing_scores` (packstat) for cavity formation; Cα
+displacement over the 82-92 loop and 100-110 strand; DSSP secondary structure over B78-115.
+
+---
+
+## 2. Result 1: local energy redistribution is real, and it is not specific
+
+Excess local |ΔE| over the 8 Å shell, relative to the matched self-mutation control
+(OpenMM prep, n = 36 models each):
+
+| Variant | Excess local \|ΔE\| (REU) | 95% CI | Cliff's δ | Above noise? |
+|---|---|---|---|---|
+| **R104W** | **+6.07** | +4.10, +7.93 | +0.73 | yes |
+| R104Y | +4.79 | +2.98, +6.50 | +0.61 | yes |
+| R104F | +4.60 | +2.94, +6.17 | +0.64 | yes |
+| **V125L (benign control)** | **+3.99** | +3.19, +4.81 | **+0.79** | **yes** |
+| R104A | +3.05 | +1.72, +4.29 | +0.45 | yes |
+| **R104Q** | **+2.70** | +0.81, +4.33 | +0.41 | yes |
+| R104K | +1.72 | -0.15, +3.39 | +0.25 | no |
+| R34C (benign control) | +0.66 | -0.10, +1.36 | +0.23 | no |
+
+R104W does rank first. But **V125L, a benign control with no ClinVar entry, correctly predicted
+neutral by the global method, ranks fourth of eight and has the single largest effect size in the
+table (δ = +0.79, and δ = +1.00 in the Rosetta prep).** A metric that fires this hard on a benign
+control cannot be the missing discriminator.
+
+**Hypothesis A's exact predicted signature appears in the wrong variant.** The prediction was
+"significant local redistribution with near-zero total energy." V125L delivers precisely that:
+local |ΔE| = +3.99 REU (CI excludes zero) while total energy change is +0.27 REU (CI -0.39 to
++1.09, includes zero). R104W's total is also indistinguishable from control (+1.75, CI -0.47 to
++4.06),  but so is a benign variant's. The signature is not diagnostic.
+
+**Ranking test, explicitly.** Local disruption at position 104 anti-correlates with global ΔΔG
+(Spearman ρ = -0.77, n = 6, p = 0.072) and correlates with side-chain volume at exactly the same
+magnitude (ρ = +0.77). The local ranking is W > Y > F > A > Q > K. Clinically, R104W is
+Pathogenic/Likely pathogenic and R104Q is Conflicting; R104Y and R104F have no ClinVar entries and
+no functional data, so **the local ranking places two uncharacterised variants above the one
+variant of clinical interest**. Volume, not pathogenicity, is what this axis measures.
+
+---
+
+## 3. Result 2: the fixed-backbone strain signal is repacker noise
+
+Tier 1 (no relaxation) appears to show a large R104W effect: local |ΔE| = 26.4 REU, total ΔE =
++38.0 REU, roughly 3× any other variant. **That signal has a standard deviation equal to its own
+mean** (SD 26.1 REU across 36 models; coefficient of variation 0.99, the highest of any variant,
+control included). Cartesian relaxation removes it: R104W's local |ΔE| falls from 26.4 to 12.4 REU
+and its total ΔE from +38.0 to +2.1 REU.
+
+This is the confound the task flagged, and it is quantitatively confirmed: **the apparent
+fixed-backbone strain of the bulkiest substitution is dominated by the repacker's failure to place
+a large side chain, not by physical strain.** Any local-strain claim built on fixed-backbone
+repacking alone would have been an error of method, not a finding. Reported here rather than debugged away.
+
+The self-mutation controls put a floor on everything: chemically-null Arg→Arg registers local
+|ΔE| = 6.37 ± 4.61 REU (OpenMM) and 0.72 ± 1.34 REU (Rosetta). The Rosetta ensemble's ~9× smaller
+noise floor is the conformational degeneracy already documented for that prep (SD 0.005 Å in
+side-chain distances); it makes the Rosetta prep look more precise without making it more
+informative, which is why OpenMM is the primary prep here.
+
+---
+
+## 4. Result 3: the acidic pocket is dismantled by every substitution
+
+H-bond donors within 3.5 Å of the Asp84 carboxylate (Rosetta `HBondSet`, tier 2):
+
+| | wild-type Arg | R104Q | R104W | R104K | R104A | R104F | R104Y |
+|---|---|---|---|---|---|---|---|
+| OpenMM | 1.67 | 0.31 | 0.33 | 0.97 | 0.33 | 0.31 | 0.36 |
+| Rosetta | 1.94 | 0.00 | 0.00 | 0.78 | 0.00 | 0.00 | 0.00 |
+
+Every substitution except lysine drops Asp84 to essentially zero donors (all CIs exclude zero,
+δ ≈ -0.76 to -1.00, both preps). **R104W and R104Q are indistinguishable on this metric**
+(paired W-Q difference +0.03 donors, p = 0.66). Only R104K retains partial coordination, 0.78-0.97
+donors, which is consistent with the prior finding that lysine cannot reach Asp84 but can still
+contribute at the pocket periphery.
+
+This reproduces the project's prior numbers (WT ~2.5 → R104Q ~1.0 by the older geometric count;
+the absolute values differ with detection method, the direction and magnitude do not) and confirms
+the microenvironment note's framing. But it also settles a question: **loss of Asp84 coordination
+cannot explain the R104W/R104Q clinical difference, because both lose it identically.**
+
+Buried-unsatisfied-polar counts inverted from expectation, and the reason is instructive: removing
+arginine *exposes* Asp84 to solvent rather than leaving it buried and unsatisfied. Shell-summed
+unsatisfied polars go **down** in every mutant (Δ = -0.3 to -2.6). The "orphaned buried charge"
+picture overstates the defect, as the microenvironment note already concluded from a different
+direction, because the carboxylate gains solvent access when its partner leaves.
+
+---
+
+## 5. Result 4: the backbone barely moves, and secondary structure never changes
+
+| Region | R104W | R104Q | control | V125L |
+|---|---|---|---|---|
+| 82-92 loop Cα RMSD (Å, OpenMM) | 0.17 | 0.14 | 0.12 | 0.00 |
+| 100-110 strand Cα RMSD (Å, OpenMM) | 0.12 | 0.08 | 0.06 | 0.04 |
+| 82-92 loop Cα RMSD (Å, Rosetta) | 0.28 | 0.12 | 0.02 | 0.00 |
+
+R104W's loop displacement exceeds control (+0.05 Å, CI +0.01 to +0.10) and exceeds R104Q
+(+0.03 Å, p = 0.019). These are **hundredths of an ångström**,  far below the ~3.6 Å resolution of
+the parent structure and below any threshold at which a backbone claim is meaningful. Statistical
+significance here reflects 36 matched replicates, not physical magnitude.
+
+**DSSP over B78-115 is identical to the matched wild-type in 100% of Rosetta models (all 396) and
+83-94% of OpenMM models.** The residual OpenMM variation is method noise, not mutation effect: the
+chemically-null Arg→Arg control scores 0.861,  *below* R104W's 0.944, and the lowest score of any
+variant belongs to the benign control V125L (0.833). The 101-106 β-strand and the 82-89 loop survive
+every substitution intact. No variant unzips the sheet. This is the expected result given the prior
+finding that R104 occupies the non-H-bonded cross-strand position, so its side chain is not
+load-bearing for sheet register, and it independently confirms that framing.
+
+Packstat detects no cavity: shell-averaged change is ≤0.05 for every variant in both preps,
+including the R104A "cavity-creating" case.
+
+---
+
+## 6. Result 5: what R104W actually does differently
+
+One metric separates R104W from R104Q decisively, and it is not strain. Exposed apolar side-chain
+surface, normalised to each residue's Gly-X-Gly extended-reference maximum (removing the trivial
+size dependence):
+
+| Variant | Relative apolar exposure (OpenMM) | Rosetta | vs control (OpenMM) |
+|---|---|---|---|
+| **R104W** | **0.276** | 0.285 | **+28.3 Å² absolute, δ = +0.95** |
+| wild-type Arg (control) | 0.227 | 0.219 | reference |
+| **R104Q** | **0.127** | 0.172 | **-12.9 Å² absolute, δ = -0.96** |
+| R104K | 0.258 | 0.356 | +4.7 Å² |
+| R104A | 0.392 | 0.585 | +3.5 Å² |
+| R104F | 0.366 | 0.312 | +32.1 Å² |
+| R104Y | 0.290 | 0.368 | +11.9 Å² |
+| V125L (benign) | 0.052 | 0.049 | **-1.1 Å²** |
+
+**R104W and R104Q move in opposite directions**, and this is the largest, most reproducible
+separation in the whole analysis: paired W-Q difference = +0.150 relative units, p = 1.7 × 10⁻⁷,
+consistent in both preps. R104W adds ~28 Å² of exposed apolar surface at a position that is
+11.6% solvent-accessible in the assembled channel; R104Q *removes* ~13 Å². Both benign controls
+move slightly negative (V125L -1.1 Å²) or, in R34C's case, positive at an already solvent-exposed
+position, R34 measures 52.4% RSA in this carve-out (V125 is 5.3%, R104 15.1%), so R34C adds apolar
+area to an already-wet surface rather than creating a buried hydrophobic patch. R34 sits three
+residues from a carve-out chain terminus, so its exposure is an upper bound.
+
+**This looked like hypothesis B, and I initially reported it as support for it. That was wrong,
+and the control that shows why is in §6a.** The observation itself stands: tryptophan at 104 presents
+an apolar face where arginine presented a polar one, without destabilising the fold. What it does not
+do is explain pathogenicity.
+
+## 6a. The control that refutes hypothesis B: a cross-position test
+
+The §6 comparison holds position fixed and varies the substitution. That design cannot detect a
+metric which is simply large wherever a big hydrophobic residue is introduced. The missing control is
+the transpose: **substitute tryptophan at seven different NTD positions and ask whether apolar gain
+tracks phenotype.** Same tier-2 protocol, same self-mutation controls, 24 OpenMM models per position:
+
+| Position | Native | Apolar gain on →Trp (Å²) | Relative exposure | Known phenotype |
+|---|---|---|---|---|
+| **34** | Arg | **+68.4 ± 27.5** | 0.66 | **R34C is a BENIGN control, seen in unrelated healthy individuals** |
+| 124 | Ala | +32.7 ± 11.6 | 0.18 | A124D, the ER-retained answer key |
+| **104** | Arg | **+30.0 ± 17.1** | 0.28 | R104W, dominant-negative, ClinVar P/LP, 9 submitters |
+| 87 | Tyr | +18.9 ± 12.0 | 0.52 | Y87C, demonstrated dominant-negative |
+| **121** | Arg | **+14.0 ± 5.7** | 0.11 | **R121W, demonstrated dominant-negative (Clatot 2012)** |
+| 84 | Asp | +9.1 ± 9.5 | 0.06 | D84N/G/V, all VUS |
+| 125 | Val | -3.2 ± 1.9 | 0.02 | V125L, benign control |
+
+**The benign control ranks first, gaining 2.3× more apolar area than position 104**, and position 104
+is third of seven. Splitting the phenotyped positions into dominant-negative (87, 104, 121) versus
+benign (34, 125) gives means of 21.0 vs 32.6 Å², the wrong direction, Mann-Whitney p = 1.000.
+R121W, a demonstrated dominant-negative, gains little.
+
+**Hypothesis B is therefore refuted as an explanation of pathogenicity.** An independent parallel
+analysis in this work (reported below) reached the same verdict via a
+different protocol, Bio.PDB ShrakeRupley, 10 Å shell, repack-plus-minimise, and reported position 34
+first and position 121 last on the same test. Two protocols, same refutation. My §6 numbers differ
+from theirs in absolute magnitude (+30.0 vs +13.7 Å² at position 104) because the shell definition,
+SASA implementation and reference state differ; **the ordering, which is what the claim rests on,
+agrees.**
+
+**What survives.** Two narrower statements, both still useful. (i) R104W and R104Q change the
+chemical character of the position-104 surface in *opposite* directions (p = 1.7 × 10⁻⁷), so
+whatever distinguishes them, it is not a shared surface property, they are candidates for
+mechanistically distinct variants at the same residue. (ii) A folding-ΔΔG method is blind to surface
+chemistry by construction, so the negative result is not evidence that R104W is structurally
+uneventful, only that it is thermodynamically uneventful. Neither statement licenses a
+hydrophobic-association mechanism.
+
+---
+
+## 7. Which hypothesis do the data support?
+
+**Not A.** Local perturbation is measurable but non-specific: it tracks side-chain volume
+(ρ = +0.77), fires with the largest effect size in the study on a benign control (V125L,
+δ = +0.79 to +1.00), and produces a ranking (W > Y > F > A > Q > K) that places two
+uncharacterised variants above the variant of clinical interest. R104W and R104Q are statistically
+indistinguishable on the Asp84 coordination loss that would have been hypothesis A's mechanism.
+Local strain is not the thing global ΔΔG was averaging away.
+
+**Not B either.** Exposed apolar surface is the one axis on which R104W and R104Q separate
+decisively (§6), and I initially read that as support for hypothesis B. The cross-position control
+(§6a) removes it: benign position 34 gains 2.3× more apolar area on tryptophan substitution than
+position 104 does, dominant-negative position 121 gains little, and the DN-versus-benign split runs
+in the wrong direction (p = 1.000). The metric measures "a large hydrophobic residue was introduced
+at a partly-exposed site", not pathogenicity. Both hypothesis A and hypothesis B are refuted by the
+same class of control, a benign variant that scores at or above the pathogenic one.
+
+**Not C.** Nothing here suggests the ΔΔG calculations were wrong. Both benign controls behave
+correctly, the two preps agree on every conclusion that clears its own noise floor, self-mutation
+controls are near-null where they should be, and the one metric that looked dramatic (tier-1
+strain) failed its own reproducibility check and was discarded rather than reported. The negative
+ΔΔG result stands as a true statement about folding stability, the mechanistic explanation is that
+folding stability is the wrong observable, not that it was measured badly.
+
+**Why the global ΔΔG method missed R104W, stated precisely and within what the data support:** the
+perturbation R104W causes is not a stability perturbation at all, not globally, and not locally. It
+leaves fold stability, secondary structure, backbone geometry, packing quality and carboxylate
+coordination in the same state a benign substitution does. Restricting the radius of a
+stability calculation therefore cannot recover it, and neither can the one surface observable tested
+here. **The observable that separates R104W from benign substitutions has not yet been identified in
+this work.** That is a weaker and more honest conclusion than either hypothesis A or B would have
+given, and it redirects effort: the remaining candidates are properties a monomer calculation cannot
+see at all, α-α interface geometry, glycosylation-state processing, or CaM-region effects, none of
+which is measurable in the assay this analysis used.
+
+---
+
+## 8. What would falsify this
+
+1. **A solvent-exposure measurement showing R104W does not add apolar surface in the assembled
+   channel.** The 28 Å² figure is measured on a multi-segment carve-out (NTD 49-140 plus chains
+   12-37, 166-192, 229-242, 422-433) that reproduces the local burial environment. A calculation on
+   the complete 1395-residue channel, or on a cryo-EM structure of R104W, could revise it. If
+   R104W's apolar surface is occluded in the full assembly, hypothesis B loses its structural basis
+   here.
+2. **A co-immunoprecipitation or FRET titration showing R104Q associates with wild-type Naᵥ1.5 as
+   avidly as R104W does.** Hypothesis B predicts R104W > R104Q in α-α association propensity, since
+   R104Q *reduces* exposed apolar surface. Equal association would break the link between apolar
+   exposure and the dominant-negative effect. Note the Iamshanova caveat: this must not be done in
+   an overexpression system.
+3. **A local-strain metric that separates V125L from R104W.** If some better-chosen local observable
+   cleanly ranks benign below pathogenic at these positions, hypothesis A returns. The specific
+   failure documented here is that energy redistribution, carboxylate coordination, backbone
+   displacement, packstat and buried-unsat all fail to do so.
+4. **A phenotype pattern that rescues apolar exposure.** The cross-position control (§6a) kills it on
+   two counts: benign position 34 ranks first and dominant-negative position 121 ranks fifth of seven.
+   If R34W were found to be pathogenic and R121W's dominant-negative status were overturned, Wang
+   2020 already disputes the latter, the control would weaken. Both would have to go the same way, which is unlikely but is the specific evidence that would reopen hypothesis B.
+
+---
+
+## 9. Honest limitations
+
+- **A repacked-and-minimised model is not a physical ensemble.** Every energy here is ref2015 on a
+  locally-relaxed model, with the confound the task named. The self-mutation control quantifies it
+  rather than removing it: the OpenMM noise floor is 6.4 REU of local |ΔE| for a chemically null
+  mutation, which is why R104Q's +2.70 REU excess is reported as above-noise-but-small and R104K's
+  +1.72 is reported as not resolved.
+- **No sampling of alternative backbone conformations.** Cartesian minimisation relaxes the shell
+  around the input backbone; it does not explore whether R104W would prefer a different local fold.
+  A short MD run per variant would test that and was not performed.
+- **The apolar-exposure result is a static-structure measurement.** It says a tryptophan at 104
+  presents apolar surface in this conformational ensemble. It does not measure association free
+  energy, does not model a second Naᵥ1.5 protomer, and cannot distinguish genuine interface
+  formation from non-specific stickiness, a distinction Iamshanova et al. show is experimentally
+  fraught in this exact protein.
+- **Gly-X-Gly normalisation is a convention.** Absolute Å² values are reported alongside the
+  normalised fractions so any other reference state can be substituted.
+- **The carve-out is not the full channel.** R104 reads 15.1% RSA in the ensemble carve-out versus
+  11.6% in the complete 1395-residue chain A, the DI-region segments retained (166-192, 229-242, 422-433) reproduce most but not all of the body-donated burial. Apolar exposure for R104W is
+  therefore a slight over-estimate in absolute terms; the W-vs-Q *direction*, which is the claim, is unaffected because both are measured in the same environment.
+- **R104F/R104Y/R104A have no clinical or functional data.** They are included as a chemical series
+  to separate volume from chemistry, and they succeed at that. They are not answer-key members and
+  are not treated as such.
+- **Statistical significance ≠ physical significance**, and this is load-bearing for the backbone
+  result. 36 matched replicates make a 0.03 Å Cα difference formally significant. It is not
+  structurally meaningful at 3.6 Å parent resolution and is not claimed to be.
+- **n = 6 for the position-104 rank correlations.** ρ = -0.77 has p = 0.072, i.e. not significant at
+  the conventional threshold. The claim rests on the benign-control failure (V125L) and the
+  volume correlation, which are independent of that correlation's significance.
+- **Single energy function.** All local energies are ref2015. The prior project finding that
+  ThermoMPNN and RaSP disagree on R104W's sign is a warning that method choice matters; a second
+  local-energy model was not run.
+
+---
+
+# Part 2. An independent test of the hydrophobic hypothesis, by a different protocol
+
+## Why this was worth testing
+
+Andrew Glazer, who measured R104Q's dominant-negative effect directly, described the mechanism as probably
+involving "multi-Nav1.5 complexes that are formed and deleterious interactions between wildtype and **misfolded**
+mutant Nav1.5's." That puts misfolding upstream of the interaction.
+
+My own data contradict that at this residue. **R104W is the least destabilising of all nineteen substitutions at
+position 104, and it is the one classified Pathogenic/Likely pathogenic with nine concordant ClinVar
+submitters.** R104Q is clearly destabilising and is only Conflicting.
+
+One reconciliation would have explained everything: what if tryptophan does not destabilise the fold, but instead
+**exposes a hydrophobic surface patch** that promotes subunit-to-subunit association? A dominant-negative effect
+with no misfolding required. The idea was independently plausible because Iamshanova et al. (Sci Rep 2026,
+PMID 42082654) document that overexpressed Nav1.5 is predisposed to hydrophobic stickiness that mimics genuine
+interaction.
+
+**A prediction was recorded before any measurement:** that the ring would *bury* rather than expose, filling the
+cavity the arginine vacated, and that the hypothesis would fail on that basis. That prediction was wrong. The
+hypothesis failed anyway, for a different and better reason.
+
+## Method
+
+Twelve OpenMM-relaxed frames of 8VYJ chain A in assembled-channel context (chains A-E present; the NTD is
+chain B, residues 49-140). At each target position: PyRosetta MutateResidue, repack the 10 Å CA shell with
+RestrictToRepacking and IncludeCurrent, then minimise side chains **and backbone** in that shell (LBFGS, two
+repack/minimise passes). Solvent-accessible area from Bio.PDB `ShrakeRupley` at atom level, hydrophobic defined
+as carbon plus sulphur, side chain defined as excluding N, CA, C and O.
+
+**Validation before use.** ShrakeRupley reproduced this work's independently measured accessibilities on the
+same structure: R104 13.4% against 11.6%, D82 8.0% against 8.5%, across 171 residues with a median of 45.5% and
+a wide spread. This check exists because a hand-rolled accessibility routine written earlier in the project
+returned near-zero for every residue, a consequence of unfiltered hydrogens where the PDB element column is blank.
+
+## The clash that nearly produced a false positive
+
+The first pass used **repacking only, without minimisation**, and appeared to support the hypothesis strongly:
+aromatics exposed far more hydrophobic carbon than wild type or the polar substitutions, surviving size
+normalisation, with W versus WT at +15.80 Å² (paired Wilcoxon p = 0.0005).
+
+Then the check for that clash:
+
+| Substitution | fa_rep at residue 104 (repack only) | Residue total energy |
+|---|---:|---:|
+| WT (Arg) | 1.10 | -2.29 |
+| **Trp** | **197.82** | **+109.42** |
+| Phe | 19.77 | +11.03 |
+| Tyr | 21.10 | +11.38 |
+| Gln | 0.68 | -1.67 |
+
+A repulsive term of 197 is a severe steric clash, not a comfortably surface-exposed ring. **Side-chain repacking
+alone cannot accommodate an aromatic at position 104**; the rotamer is shoved outward and left clashing, and the
+"exposed area" was largely that clash. Those numbers were discarded.
+
+**This is a reusable protocol warning, though it needs care in how it is stated.** Running the same test at
+seven positions shows that after full repack plus minimisation the residual strain from tryptophan is modest
+everywhere, and **lowest of all at position 104** (excess fa_rep +0.70, against +4.21 at position 125, +3.30 at
+84, +2.97 at 124). So the +197 was a *packing failure of the fixed-backbone protocol*, not a physical
+impossibility: once the backbone can relax, tryptophan is accommodated comfortably at 104. The warning is about
+protocol, not about the position.
+
+That distinction cuts against an appealing but wrong inference. It would be tempting to read the clash as evidence
+that R104W is structurally disruptive after all, and therefore that ThermoMPNN's near-zero score is a
+packing blindness. The control says otherwise: position 104 accommodates tryptophan better than five of
+the six comparison positions. **ThermoMPNN's low score for R104W looks correct, not naive.**
+
+After repack plus minimisation, fa_rep returns to baseline: Trp 1.58, Phe 1.46, Tyr 1.24 against wild type 0.84.
+Only these clash-verified poses were measured.
+
+## What the corrected measurement shows
+
+| Substitution | Side-chain carbons | Exposed carbon area (Å²) | vs WT | p (paired) |
+|---|---:|---:|---:|---:|
+| WT (Arg) | 4 | 3.32 ± 2.87 | reference | reference |
+| **Trp** | 9 | **17.01 ± 8.44** | **+13.69** | **0.0005** |
+| Phe | 7 | 20.83 ± 8.03 | +17.51 | 0.0010 |
+| Tyr | 7 | 17.31 ± 8.92 | +13.99 | 0.0024 |
+| Gln | 3 | 0.60 ± 0.96 | -2.72 | 0.0078 |
+| Lys | 4 | 0.91 ± 1.05 | -2.42 | 0.0117 |
+
+The effect survives the clash correction. It also survives the obvious size objection, and the cleanest framing
+does not need normalisation at all: **total exposed side-chain area is nearly identical across wild type, Gln and
+Lys** (34.2, 37.5 and 34.0 Å²). What changes is the chemical character of the exposed face.
+
+| Substitution | Fraction of exposed side-chain area that is carbon |
+|---|---:|
+| WT (Arg) | 9.7% |
+| Trp | 28.8% |
+| Phe | 38.6% |
+| Tyr | 25.3% |
+| Gln | 1.6% |
+| Lys | 2.7% |
+
+Position 104 is partially exposed in every case. Wild type and the polar substitutions present a polar face to
+solvent; the aromatics present a carbon face of similar total size.
+
+**This refutes my own earlier explanation for R104W's low ΔΔG.** I had attributed it to aromatic bulk
+refilling the vacated cavity (introduces-aromatic r = -0.639, p = 0.0057). A cavity-filling ring would be *less*
+exposed than the arginine. The tryptophan is *more* exposed: side-chain relative accessibility 31.9% against
+16.6%. That explanation should be retired or heavily qualified wherever it appears.
+
+## The control that kills the hypothesis
+
+The same protocol at seven real N-terminal positions, ranked by carbon area gained on substitution to
+tryptophan, against what is known about each position:
+
+| Position | Native | Trp carbon gain (Å²) | Known phenotype |
+|---|---|---:|---|
+| **34** | Arg | **+40.5** | **R34C is a benign control, reported in unrelated healthy individuals (Levy-Nissenbaum 2001)** |
+| 87 | Tyr | +13.7 | Y87C, demonstrated dominant-negative (Wang 2020) |
+| 104 | Arg | +13.7 | R104W, demonstrated dominant-negative, ClinVar P/LP, 9 submitters |
+| 84 | Asp | +4.6 | D84, three variants of uncertain significance |
+| 124 | Ala | +4.0 | A124D, the ER-retained answer key (Moreau 2012) |
+| 125 | Val | +1.8 | V125L, benign control |
+| **121** | Arg | **-1.4** | **R121W, demonstrated dominant-negative (Clatot 2012)** |
+
+Two failures, either of which is sufficient:
+
+**The benign control ranks first.** Position 34 gains three times more exposed hydrophobic area than position
+104. If exposed hydrophobic surface drove pathogenicity, position 34 would be the most dangerous site in the
+domain. It is the one position known to tolerate substitution in healthy people.
+
+**A demonstrated dominant-negative variant gains nothing.** R121W exposes essentially no additional carbon. The
+mechanism is not general even across the arginine-to-tryptophan variants it was invented to explain.
+
+Position 104 is mid-pack, fourth of seven.
+
+## A second control, which sharpens the negative result
+
+Because the clash raised the question of whether position 104 is unusually intolerant of aromatic substitution,
+the residual strain after full relaxation was measured at every control position:
+
+| Position | Native | Native fa_rep | Trp fa_rep | Excess |
+|---|---|---:|---:|---:|
+| 125 | Val | 1.02 | 5.23 | +4.21 |
+| 84 | Asp | 1.42 | 4.72 | +3.30 |
+| 124 | Ala | 0.95 | 3.92 | +2.97 |
+| 121 | Arg | 0.97 | 1.85 | +0.88 |
+| **104** | **Arg** | **0.84** | **1.54** | **+0.70** |
+| 34 | Arg | 0.33 | 0.59 | +0.26 |
+| 87 | Tyr | 1.04 | 1.12 | +0.08 |
+
+**Position 104 accommodates tryptophan better than four of the six comparison positions.** There is no hidden
+steric penalty. This independently supports the negative result rather than undermining it: R104W really is a
+structurally benign substitution at this site, by physical packing as well as by the learned predictor, and it is
+nonetheless the variant with nine concordant pathogenic submissions.
+
+## Independent replication
+
+This question was worked twice, in parallel and without shared code: once as described above (side-chain carbon
+area, 12 OpenMM frames, 8 Å patch definition), and once by a separate agent using its own protocol, its own patch
+definition, and full apolar surface rather than side-chain carbon only. **The two runs agree on the refutation.**
+
+| Position | Phenotype | This run (Å², rank) | Independent run (Å², rank) |
+|---|---|---:|---:|
+| **34** | **benign control** | **+40.5 (1)** | **+84.2 (1)** |
+| 124 | ER-retained answer key | +4.0 (5) | +51.0 (2) |
+| 87 | dominant-negative | +13.7 (2) | +29.6 (3) |
+| 104 | dominant-negative, P/LP | +13.7 (3) | +27.8 (4) |
+| 84 | three VUS | +4.6 (4) | +14.1 (5) |
+| 121 | dominant-negative | -1.4 (7) | +9.1 (6) |
+| 125 | benign control | +1.8 (6) | -1.0 (7) |
+
+Spearman ρ = 0.750 (p = 0.052) between the two rankings. **Both put the benign control at rank 1 and a
+demonstrated dominant-negative variant near the bottom.** The two failure modes that kill the hypothesis are
+reproduced independently.
+
+The one substantial disagreement is instructive rather than troubling. At position 124 the native residue is
+alanine with a single side-chain carbon, so substituting tryptophan adds nine. A metric counting side-chain
+carbons registers that differently from one measuring total apolar surface. Neither is wrong; they answer
+different questions, and the phenotype mismatch survives either.
+
+The independent run also extended the analysis to the **free N-terminal domain** as well as the assembled channel,
+which matters because pre-assembly is when inter-subunit association would have to initiate. Position 104's rank
+improves there (2 of 7 rather than 4 of 7), which is the reading least favourable to refutation, and it was
+reported rather than buried. **Even so, the benign control still ranks first in that context too** (+80.9 Å²
+against position 104's +33.2), so the hypothesis fails in both contexts.
+
+## Verdict
+
+**Hypothesis refuted.** Not by the size objection and not by the clash, both of which were controlled
+for. It fails the phenotype test, which is the one that matters.
+
+The structural observation stands on its own terms: aromatic substitution at position 104 converts a
+polar solvent-facing surface into a partly hydrophobic one, and cannot be accommodated without backbone
+relaxation. Neither of those facts explains pathogenicity.
+
+Two things worth keeping. The magnitude was never large enough to carry the claim: roughly 17 Å² is a
+sub-hotspot patch, where a real protein-protein interface buries 600 to 1000 Å² per side and a single hot-spot
+residue contributes 50 to 200 Å². And frame-to-frame variation was 50 to 60% of the mean, so the exposure is
+strongly conformation-dependent rather than a fixed structural feature.
+
+## What would actually test the association hypothesis
+
+Solvent accessibility on a monomer cannot answer it. The question requires the α-α interaction interface itself,
+and per Iamshanova et al. (Sci Rep 2026, PMID 42082654) that interface cannot be mapped in heterologous
+overexpression systems, because overexpressed Nav1.5 is predisposed to hydrophobic stickiness that mimics genuine
+interaction. Native-tissue crosslinking or a structure of the complex would be needed.
+
+**Which leaves the local-strain reconciliation, or the possibility that something in my own calculations is
+wrong.** Both remain open.
+
+---
+
+*Data: HYDROPHOBIC_EXPOSURE_RELAXED.csv, POS104_SIDECHAIN_RSA.csv, POS104_MIN_ENERGETICS.csv,
+POSITION_SPECIFICITY_CONTROL.csv, TRP_EXPOSURE_VS_PHENOTYPE.csv, ctrl_energetics.csv. Twelve frames for
+position 104, six for the control positions. Statistical error bars only; single relaxation protocol.*
+
+# Part 3. No linear degradation or retention motif at Arg104
+
+*  A negative with a built-in control.*
+
+---
+
+## Why this branch mattered
+
+Gütter 2013 listed five candidate mechanisms for R104Q loss of function. this work has closed two
+of them. **"Enhanced degradation" is one of the three that survive**, and it is the one most directly
+testable from sequence: many degradation and endoplasmic-reticulum-retention signals are short linear
+motifs, so a variant that creates or destroys one has an obvious mechanism.
+
+## Result: R104 is not in any canonical motif
+
+Scanning the canonical protein (NP_932173.1, 2016 aa, residue 104 = Arg, verified) for motifs
+*spanning residue 104*:
+
+| Motif class | Spans R104? |
+|---|---|
+| RxxL destruction box | no |
+| R-x-x-R basic cluster / CendR | no |
+| RxR endoplasmic-reticulum retention signal | no |
+| RR dibasic | no |
+| [KR]₂₊ basic cluster | no |
+| DSGxxS phosphodegron | none in the ±25 window |
+| KEN box | none in the ±25 window |
+
+**R104 is an isolated arginine.** Its local sequence is `NKGKTIF-R-FSATNAL`,  flanked by hydrophobics,
+not by basic residues. Since Arg→Gln can only *destroy* arginine-dependent motifs, and there are none
+to destroy, R104Q cannot act through this class of signal.
+
+The scan was sanity-checked rather than trusted: the same regex finds 8 RxxL occurrences elsewhere in
+the protein, so the absence in this window is real rather than a broken pattern.
+
+## The control that makes this decisive
+
+R121W is the project's other ΔΔG false negative, also an arginine, also in this domain, also
+pathogenic. If a linear retention motif explained pathogenicity here, the two should look alike.
+
+**They do not.** R121 sits inside a dibasic pair (`FHPI-RR-AAVKIL`, R121-R122), which *is* a canonical
+retention-signal context. R104 sits alone.
+
+So the two pathogenic arginines of this domain have **opposite motif contexts**, yet behave the same
+way: both pathogenic, both false negatives for folding ΔΔG, both with reduced current. **A linear-motif
+mechanism cannot explain the pair**, which argues against the class rather than just against R104.
+
+## What this does and does not close
+
+**Argues against:** R104Q acting through a linear degron or a linear endoplasmic-reticulum retention
+signal.
+
+**Does not close the degradation branch.** Degradation can be triggered by conformational quality
+control, misassembly recognised by chaperones, with no linear motif involved anywhere. That is in
+fact what the intracellular-dimer reconciliation would predict, since quality control there acts on an
+assembly state rather than a sequence feature. This result removes the *simple* version of the
+degradation hypothesis and leaves the conformational version untouched.
+
+**Running score on Gütter's five-way fork:**
+
+| Branch | Status |
+|---|---|
+| Incorrect endoplasmic-reticulum folding | argued against, calibrated ΔΔG work, clinical inversion |
+| Disturbed trafficking | argued against, three surface measurements, unchanged |
+| Impaired post-translational modification | **argued against above**,  no glycosylation sequon in the domain |
+| Enhanced degradation | **linear-motif version argued against above**; conformational version open |
+| Defective gating in correctly targeted channels | **open, and now the best-supported** |
+
+Four of five branches have been narrowed or closed, three of them, all from sequence and
+published data. The surviving branch is the one the coupled-gating literature already points at.
+
+---
+
+*Sequence NP_932173.1. Motif consensus definitions from standard published forms; this is a
+sequence-level screen, not a proteomics measurement, and a real degron could exist without matching a
+canonical consensus.*
+
+# Part 4. The N-terminal domain has no glycosylation sequon
+
+*  A clean negative with a real consequence.*
+
+---
+
+## Why this was asked
+
+Two 2026 papers converge on glycosylation as central to Naᵥ1.5 α-α association:
+
+- **Iamshanova et al. 2026** (PMID 42082654) report that heterologous Naᵥ1.5 interactions
+  **"depend on nascent N-linked glycosylation"** and are supported by non-native intermolecular
+  disulfide bonds.
+- **Li & Schmalzing 2026** (PPR1279120) report an intracellular antiparallel homodimer whose surface
+  form is monomeric, with mature Golgi-processed glycosylation confirmed by Endo H / PNGase F.
+
+If the dimer that quality control acts on depends on N-linked glycosylation, and if R104Q sits in or
+near a glycosylation determinant, that would be a direct mechanistic link from the variant to the
+dimer. It is a sequence question, answerable in minutes.
+
+## Result: there is no site to affect
+
+The canonical N-glycosylation sequon is **N-X-S/T where X ≠ P**. Scanning residues 1-130 of the
+canonical sequence (NP_932173.1, 2016 aa, matching transcript NM_000335.5):
+
+| Asparagine | Context | Sequon? |
+|---|---|---|
+| N3 | NFL | no |
+| N70 | NPP | no, proline at X, and no S/T |
+| N97 | NKG | no |
+| N109 | NAL | no |
+
+**Four asparagines, zero sequons. The Naᵥ1.5 N-terminal domain carries no N-glycosylation site at
+all.** Substituting position 104 with Gln, Trp or Lys neither creates nor destroys one.
+
+## What this rules out, and what it does not
+
+**Ruled out:** any mechanism in which R104Q alters dimer behaviour by changing N-linked glycosylation
+of the N-terminal domain itself. There is nothing there to change.
+
+**Not ruled out, and this is the more interesting reading.** Both papers report strong binding between
+full-length channel and the **isolated N-terminal domain peptide**. If that association is
+glycosylation-dependent yet the N-terminal domain is itself unglycosylated, then the glycosylation
+determinant must lie on the **partner**,  the transmembrane regions, which carry the known Naᵥ1.5
+glycosylation sites. That makes the interaction asymmetric: an unglycosylated N-terminal domain
+binding a glycosylated partner surface.
+
+That asymmetry is a testable prediction rather than a conclusion, and it is not something this
+analysis establishes.
+
+## Why the negative is worth recording
+
+It closes a plausible-sounding hypothesis in under an hour and prevents a longer investigation into
+"does R104Q disrupt a glycosylation signal." It also constrains the fourth reconciliation: whatever
+couples R104Q to the intracellular dimer, **it is not a glycosylation-site effect in the domain where
+the variant lives.**
+
+## Methods note, including one error caught
+
+The first attempt used **NP_000326.2**, which returned 2015 residues rather than the expected 2016.
+That is isoform b, which lacks Q1077. Re-run against **NP_932173.1** (isoform a, 2016 aa, matching the
+transcript whose CDS was verified as 210..6257 = 2016 codons). The two isoforms are **identical across
+residues 1-130**, so the result is unaffected, but the mismatch was checked rather than assumed,
+because a silent isoform substitution is exactly the kind of error that propagates.
+
+---
+
+*Sequences from NCBI (NP_932173.1, NP_000326.2). Sequon definition N-X-S/T, X ≠ P. Companion sources:
+PMID 42082654; Europe PMC PPR1279120 (abstract only, closed access).*
+
+# Part 5. The empagliflozin site and Arg104 are structurally independent
+
+* A structural test of the empagliflozin lead, run on 8VYJ. Cheap, decisive, and it makes
+the therapeutic argument sharper in both directions.*
+
+---
+
+## The question
+
+Empagliflozin raises peak sodium current by binding **Y1767**, the local-anaesthetic site, the same
+site mexiletine uses, and mutating it abolishes both drugs' effect. R104Q sits in the N-terminal
+domain. Whether the drug could help depends on whether the two sites are coupled.
+
+## The site is intact, and it is far away
+
+Checked against the 8VYJ cryo-EM structure (1,395 modelled residues, 12-1882):
+
+| Position | Expected | In 8VYJ |
+|---:|---|---|
+| F1760 | Phe | **Phe** |
+| N1765 | Asn | **Asn** |
+| **Y1767** | **Tyr** | **Tyr** |
+| 1764 | Ile | Val, isoform/numbering difference, not part of the critical triad |
+
+The local-anaesthetic site is present and correctly composed. **R104 to Y1767 is 50.7 Å Cα-Cα.**
+
+## They share no structural neighbourhood at all
+
+Residues within 12 Å of each site:
+
+- R104 shell: 36 residues, segments 58-61, 78-84, 88-96, 101-107, 125, 128-129, 178-179, 185-188
+- Y1767 shell: 32 residues, segments 398-410, 1466-1470, 1653-1660, 1760-1774
+- **Overlap: zero.**
+
+## Why this is good news for the lead
+
+**The drug's mechanism cannot be blocked by the variant.** Empagliflozin acts through a site that
+shares no contact surface with R104, so the N-terminal defect cannot interfere with binding or with
+the conformational change that follows. Whatever is wrong at position 104, the local-anaesthetic site
+is intact and available.
+
+That is the best possible structural answer for transferability: **the drug does not need the
+N-terminal domain to be functional in order to work.**
+
+## Why it is also the problem
+
+**By the same argument, the drug cannot repair the defect.** It has no contact with the damaged region.
+It would act by increasing delivery of whatever channel protein exists, mutant and wild-type alike.
+
+In a heterozygote, that means more mutant subunit at the membrane. **If the mechanism is
+dominant-negative interference occurring at the membrane, more mutant protein is the wrong direction.**
+The structural independence that makes the drug robust to the variant is exactly what prevents it from
+being selective.
+
+## An incidental structural result
+
+R104's 8 Å shell contains **only its own domain** (residues 60, 92-95, 102-106). Its nearest
+out-of-domain contacts sit at 8-12 Å: **A178, R179, A185, F186, T187, F188**,  the start of the
+channel body.
+
+So R104 is not buried in an isolated appendage, but nor is it in direct contact with the pore-forming
+regions. It sits near the domain boundary with second-shell reach into the channel body. That is
+consistent with the earlier finding that this residue is not N-terminal-domain-internal, and it is the
+structural basis for how a defect there could influence the whole channel without touching it
+directly.
+
+# What would falsify these conclusions
+
+Each refutation rests on a control, and each control is the thing to attack.
+
+The local-strain refutation would be overturned by a strain metric on which the benign controls R34C
+and V125L score below the dominant-negative variants. Mine did not; a better-constructed metric might.
+
+The hydrophobic-surface refutation would be overturned by a cross-position test in which apolar gain
+does track phenotype, or by evidence that position 34 is not in fact benign. Both are checkable. The
+benign status of R34C rests on its appearance in unrelated healthy individuals, including in the report
+that first described R104Q (PMID 11960580).
+
+The degron refutation would be overturned by a non-canonical or structurally-defined retention
+determinant at Arg104 that a linear motif scan cannot see, which is a real possibility and the reason I
+state the claim as being about linear motifs specifically.
+
+The glycosylation conclusion would be overturned by a glycosylation site outside the canonical N-X-S/T
+sequon, or by evidence that the relevant sequon lies on an interaction partner rather than in this
+domain.
+
+The drug-independence conclusion would be overturned by an allosteric path between the two sites, which
+a distance and shell analysis cannot exclude. Fifty Angstroms of separation with no shared shell residue
+argues against direct competition, not against long-range coupling.
+
+# Data availability
+
+All primary data are public. The structure is Protein Data Bank entry 8VYJ, chain A, with cryo-EM map
+EMD-43662 for density-guided relaxation. The reference protein sequence is RefSeq NP_932173.1 and the
+transcript NM_000335.5. Paralogue sequences are the nine human Nav alpha subunits retrieved from RefSeq,
+accessions as listed in the relevant section. Variant classifications came from ClinVar via NCBI
+E-utilities. Published functional data are cited by PMID throughout. Solvent accessibility was computed
+with Bio.PDB ShrakeRupley; relaxation used Rosetta and OpenMM. Tool version numbers are not recorded in
+my working notes for every step and I report that gap rather than reconstruct it.
+
+All derived tables are deposited as a single archive with a permanent identifier. The identifier is
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source.
+They comprise the per-model accessibility measurements, the seven-position tryptophan scan, the
+substitution profiles and the shell residue lists.
+
+# Competing interests
+
+I am a heterozygous carrier of SCN5A p.Arg104Gln, the variant at the centre of this analysis, and I have
+a clinical diagnosis of Brugada syndrome. No funding was received.
+
+Nothing here is clinical guidance for any person, including me. In particular, the empagliflozin section
+reports a structural relationship and is not a statement about whether any person should or should not
+take that drug. That decision belongs to a treating clinician.
+
+# References
+
+1. Clatot J, et al. Dominant-negative effect of SCN5A N-terminal mutations through the interaction of Nav1.5 alpha-subunits. *Cardiovasc Res* 2012;96(1):53-63. PMID 22739120.
+2. Wang Z, et al. Calmodulin binds to the N-terminal domain of the cardiac sodium channel Nav1.5. *Channels (Austin)* 2020;14(1):268-286. PMID 32815768.
+3. O'Neill MJ, et al. Dominant negative effects of SCN5A missense variants. *Genet Med* 2022;24(6):1238-1248. PMID 35305865.
+4. Moreau A, et al. Mexiletine differentially restores the trafficking defects caused by two Brugada syndrome mutations. *Front Pharmacol* 2012;3:62. PMID 22529811.
+5. Levy-Nissenbaum E, et al. Genetic analysis of Brugada syndrome in Israel: two novel mutations and possible genetic heterogeneity. *Genet Test* 2001;5(4):331-334. PMID 11960580.
+6. Gutter C, Benndorf K, Zimmer T. Characterization of N-terminally mutated cardiac Na+ channels associated with long QT syndrome 3 and Brugada syndrome. *Front Physiol* 2013;4:153. PMID 23805106.
+7. Protein Data Bank entry 8VYJ, human Nav1.5 cryo-EM structure, with map EMD-43662.
+8. RefSeq NP_932173.1 (SCN5A protein) and NM_000335.5 (transcript).
+
+Additional PMIDs cited at the point of use in the text are not repeated here.

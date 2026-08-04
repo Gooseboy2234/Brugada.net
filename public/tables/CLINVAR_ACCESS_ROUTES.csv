@@ -1,0 +1,7 @@
+variation_id,label,name,esummary_chars,vcv_chars,functionaldata_in_esummary,functionaldata_in_vcv,acmg_code_in_esummary,acmg_code_in_vcv
+4681248,SCN5A D82N,NM_000335.5(SCN5A):c.244G&gt;A (p.Asp82Asn),3763,21611,False,True,False,True
+9396,SCN5A p.Thr220Ile,NM_000335.5(SCN5A):c.659C&gt;T (p.Thr220Ile),10845,119522,False,True,False,True
+13476,KCNE1 p.Thr7Ile,NM_000219.6(KCNE1):c.20C&gt;T (p.Thr7Ile),5291,26211,False,True,False,True
+37393,BRCA1 p.Cys39Phe,NM_007294.4(BRCA1):c.116G&gt;T (p.Cys39Phe),6517,230932,False,True,False,True
+7620,JAG1 p.Arg184His,NM_000214.3(JAG1):c.551G&gt;A (p.Arg184His),7594,46013,False,True,False,True
+205915,KCNQ2 p.Arg560Trp,NM_172107.4(KCNQ2):c.1678C&gt;T (p.Arg560Trp),6890,95524,False,True,False,True

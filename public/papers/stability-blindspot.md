@@ -1,0 +1,204 @@
+# Folding-stability prediction misses three of four known loss-of-function variants in the SCN5A N-terminal domain
+
+**Ethan Bradley**
+
+Independent researcher, no institutional affiliation
+
+ORCID: [0009-0008-8925-7975](https://orcid.org/0009-0008-8925-7975)
+
+## Abstract
+
+Computational folding-stability prediction fails to identify most known loss-of-function variants in the N-terminal domain (residues 12-130) of the cardiac sodium channel Naᵥ1.5. Four variants with published functional evidence of dominant-negative loss of function served as a benchmark: R104W, R121W, and Y87C (Clatot 2012, PMID 22739120; Wang 2020, PMID 32815768), and A124D (Moreau 2012, PMID 22529811). Using ThermoMPNN as the primary predictor, with RaSP and Rosetta cartesian_ddg for arbitration, across two independently relaxed structural ensembles built from the cryo-EM structure 8VYJ (EMD-43662, 3.6 Å resolution), only A124D was correctly flagged as destabilizing, at +2.15 to +2.39 kcal/mol. R104W, R121W, and Y87C all scored near neutral or stabilizing, ranking last of 20 possible substitutions at their positions in the two cases where a full ranking was computed. A free-energy perturbation cross-check found R104Q strongly destabilizing at +3.71±0.30 kcal/mol, yet R104Q carries only a Conflicting ClinVar classification while R104W, predicted the least destabilizing substitution at its own position, is Pathogenic or Likely pathogenic with nine concordant submitters. Published substitution-level conservation reproduces this inversion at position 104, arguing against an explanation specific to this pipeline. Cross-paralogue position-level conservation, computed here across nine human Naᵥ paralogues, separates the same pathogenic and benign positions (p=0.027) where folding stability cannot. The method catches loss of function only when the mechanism is charge burial, and misses it otherwise.
+
+---
+
+> **Scope.** This is a computational finding about a prediction method, not about a patient and not
+> about a treatment. Every prediction here is a hypothesis for experimental test. Nothing in it is
+> clinical guidance.
+
+---
+
+## A key to the terms used here
+
+Every term is glossed the first time it appears, and collected here so nothing in this paper depends on
+knowing the jargon in advance.
+
+- **SCN5A** is the gene for the main sodium channel in heart muscle. **Nav1.5** is the protein it makes.
+- A **variant** is a single spelling change in the gene. **p.Arg104Gln**, shortened to **R104Q**, means
+  that at position 104 of the protein the amino acid arginine has been replaced by glutamine. Same
+  convention throughout: original amino acid, position, replacement. **R104W** is arginine to
+  tryptophan at the same spot; **A124D** is alanine to aspartate at 124.
+- **Loss of function** means the channel passes less current than it should. **Dominant-negative**
+  means the broken copy also interferes with the working copy, so the damage is worse than losing one
+  of two. Like a jammed dispensing machine that not only fails to fill its own order but blocks the
+  queue behind it.
+- The **N-terminal domain**, or **NTD**, is the first stretch of the protein, residues 12 to 130 here.
+- **Folding stability** is how firmly a protein holds its shape. **ΔΔG** (delta-delta-G) is the
+  predicted change in that firmness when one amino acid is swapped, in kcal/mol. Positive means less
+  stable. The premise under test is that variants which destabilise are likelier to be harmful.
+- **ThermoMPNN**, **RaSP** and Rosetta **cartesian_ddg** are three public programs that predict ΔΔG.
+- **ClinVar** is the public database of variants and how laboratories have classified them:
+  **Pathogenic**, **Benign**, or **Uncertain significance** when the evidence does not decide.
+  **Conflicting** means submitters disagree.
+- **Cryo-EM** is a microscopy method that yields a 3D model of a protein. **8VYJ** is the model used
+  here and **3.6 Å** is its resolution: fine enough to place the backbone, too coarse to be certain
+  where every side chain points. Think of a chart accurate to the runway but not to the centreline.
+- **Relative solvent accessibility** is how exposed a residue is to water. Low means buried.
+- **Patch clamp** is the electrical measurement of current through channels in a cell.
+- An **answer key** here means variants whose laboratory behaviour was already published, so the
+  prediction can be graded against a known result rather than against another prediction.
+
+## Summary
+
+Predicted folding free energy (ΔΔG) is widely used to interpret missense variants, on the premise that destabilising substitutions are likelier to be pathogenic, often through misfolding and failure to reach the cell surface. I tested that premise in the N-terminal domain (NTD) of the cardiac sodium channel Nav1.5, where four variants with published loss of function provide an answer key.
+
+Three of the four were missed. R104W (arginine 104, positively charged, replaced by tryptophan, bulky and neutral) and R121W (the same substitution at arginine 121) were predicted to be among the *least* destabilising substitutions possible at their own positions, one essentially neutral and one stabilising, in two independent structure preparations, by a method that scored benign controls near zero. Y87C (tyrosine 87, aromatic, replaced by cysteine, small and reactive), which I checked later, is a third miss at -0.03 to -0.12 kcal/mol. Only A124D (alanine 124, small and neutral, replaced by aspartate, negatively charged) was caught, at +2.15 kcal/mol and above.
+
+The failure is systematic rather than random. Two of the three misses replace a buried arginine with tryptophan, which by folding logic is the best-tolerated substitution at such a position, because the bulky aromatic ring refills the cavity the arginine leaves behind. The variant that was caught does the opposite, putting a charge into a pocket that had none, a penalty these models handle well. So here a negative prediction carries no information, and a positive one is only weakly supported: one true positive is not a positive predictive value, and two benign controls near zero are not a specificity estimate.
+
+## 1. Why I tested this
+
+Most SCN5A missense loss-of-function variants act dominant-negatively rather than by simple haploinsufficiency, and their carriers are enriched 2.7-fold in Brugada cases (O'Neill 2022). The NTD is a good place to ask whether stability prediction helps, because 172 catalogued missense variants lie in residues 12 to 130 and 141 of them (82%) are classified Uncertain Significance (ClinVar, retrieved 2026-07-24).
+
+Two of those variants let me write the answer down in advance. R104W and R121W both abolish sodium current, exert strong dominant-negative effects on wild type, and are mostly retained in the endoplasmic reticulum and degraded by the proteasome (Clatot 2012); R104W's effect has since been reproduced in vivo (Doisne 2021). Any method claiming to flag destabilising pathogenic variants should flag these two.
+
+## 2. What I did
+
+**Structure.** Human Nav1.5 cryo-EM structure 8VYJ (3.6 Å), chain A, NTD residues 12 to 130. One trap changes the answer: R104's burial comes mostly from the rest of the channel, so its relative solvent accessibility is 14.8% in the full alpha subunit against 32.6% in an excised NTD. A calculation on an excised domain is scoring a different residue. Everything here used the full-channel context, in two deliberately different preparations of six frames each: density-guided relaxation against the deposited map (Rosetta `relax` with `elec_dens_fast`, EMD-43662), and restrained molecular dynamics (OpenMM).
+
+**Predictors.** ThermoMPNN as primary, chosen on measured benchmark performance rather than citation count (Pearson r = 0.728 on Ssym-direct, n = 342). On the harder S669 set I measured r = 0.424, below published values, which I report rather than drop. RaSP was a second opinion, Rosetta `cartesian_ddg` an attempted third. Sign convention was fixed against known biology (p53 Y220C) rather than assumed, because the two predictors ship the same benchmark with opposite conventions.
+
+**Limits I measured before trusting either method.** Both compress dynamic range, quantified in section 5, and both violate antisymmetry, meaning ΔΔG(A to B) and ΔΔG(B to A) should sum to zero and instead average -0.79 ± 0.77 for ThermoMPNN (n = 144) and +1.63 ± 1.50 for RaSP (n = 331). That is roughly 1 kcal/mol of systematic error on ordinary soluble proteins, before any penalty for working outside the training distribution. So absolute values are not reportable here; rank order with error bars is.
+
+## 3. What happened
+
+### 3.1 Both answer-key variants ranked last at their own positions
+
+| Variant | Experimental phenotype | Rosetta prep | OpenMM prep | Rank at its own position |
+|---|---|---:|---:|---|
+| **R104W** | no current, dominant-negative | **-0.015 ± 0.012** | **+0.627 ± 0.178** | **20 of 20 (least destabilising)** |
+| **R121W** | no current; dominant-negative per Clatot 2012, not per Wang 2020 | **-1.263 ± 0.021** | **-0.427 ± 0.519** | **20 of 20 (least destabilising)** |
+| Y87C | dominant-negative | -0.030 | -0.120 | |
+| A124D | trafficking-defective (Moreau 2012) | +2.154 ± 0.014 | +2.389 ± 0.068 | |
+| R104Q | classification unresolved | +1.427 ± 0.006 | +1.451 ± 0.254 | 3 of 20 |
+| R34C | benign control (arginine 34 to cysteine) | -0.016 ± 0.024 | +0.028 ± 0.026 | |
+| V125L | benign control (valine 125 to leucine) | -0.258 ± 0.014 | -0.197 ± 0.156 | |
+
+All values kcal/mol. Both answer-key variants rank twentieth of twenty at their own positions, wild type included, in both preparations, while the benign controls sit near zero, so this is not a globally broken calculation.
+
+Neither other method rescued it, and one would have reversed the conclusion. RaSP failed differently and worse: it scored R104W at -0.215, the wrong sign, and put benign R34C at +0.98, above a known-pathogenic variant. The two predictors still agree broadly across the substitution set (Spearman 0.76), so had RaSP been my only method I would have concluded the opposite. That is my strongest argument for anchoring on an experimental answer key rather than on agreement between methods.
+
+### 3.2 Why the method misses them
+
+Tryptophan is not a substitution these models penalise: scanning all 20 residues at each of 11 NTD positions, it ranks at median position 16 of 20 by predicted destabilisation. At a buried arginine the substitutions scored most destabilising are instead charge reversals into the acidic pocket (R104D +2.30, R121D +1.05, replacing the positive arginine with a negative aspartate).
+
+Scoring the full substitution profile at position 104 separates three drivers, across n = 17: the 19 possible substitutions less proline and glycine, which act through backbone geometry rather than side-chain chemistry.
+
+| Driver | Correlation with predicted ΔΔG | p |
+|---|---:|---:|
+| Introduces acidic side chain (charge reversal) | **r = +0.689** | 0.0022 |
+| Introduces aromatic bulk (cavity refill) | **r = -0.639** | 0.0057 |
+| Volume reduction | r = -0.530 | 0.029 |
+| Retains basic charge | r = -0.167 | 0.52 (ns) |
+
+Two mechanisms raise predicted ΔΔG, charge reversal and cavity creation, and one lowers it, aromatic refill. R104W ranks last because tryptophan's bulk refills the cavity the arginine vacated, so the destabilising and stabilising contributions cancel.
+
+What separates the catch from the misses is therefore the wild-type residue, not the substitution: all three loss-of-function variants share the same formal charge change (-1) and volume change (+3 side-chain heavy atoms). A124D adds a charge into an empty neutral pocket, a clean desolvation penalty, while R104W and R121W remove a charge and refill the space it occupied. R104 has three acidic carboxylate oxygens within 8 Å of its Cβ; A124 and R121 none.
+
+### 3.3 Read clinically, the same numbers point the wrong way
+
+If pathogenicity at position 104 were driven by loss of folding stability, the most stable substitution should be the mildest. It is not. In calibrated automated patch clamp, R104W and R104Q (arginine 104 replaced by glutamine, neutral) are functionally equivalent: 69.6% and 68.3% of wild-type current in the heterozygous condition (O'Neill 2022, Supplementary Table 1). The substitution my calculation ranks most stable is as damaging as the one it ranks clearly destabilising.
+
+That corroborates the result rather than being independent evidence for it, since it rests on the same numbers whose calibration I have just reported as failing; what it uses is only rank order at a single position, a more defensible use than absolute values. I have stated it functionally rather than diagnostically on purpose. The ClinVar labels tell the same story less cleanly: R104W is Pathogenic/Likely pathogenic and R104Q Conflicting, but R104Q's single Uncertain-significance call comes from a population cohort (All of Us, 2023), predates four of its six concordant calls, and concerns a variant reported with low penetrance (Levy-Nissenbaum 2001). That is ascertainment, not severity.
+
+## 4. What I think this means
+
+The cavity-refill account explains R104W and R121W but not the third miss. Y87C is a tyrosine to cysteine substitution, outside that class, characterised as dominant-negative with reduced fully-glycosylated surface channel (Wang 2020), and I predicted it neutral. So all three dominant-negative variants are missed, only the charge-introducing one is caught, and my explanation covers two of the three misses.
+
+One complication in the reference phenotype, which I would rather disclose than tidy away. Clatot 2012 report R104W and R121W as mostly ER-retained; Wang 2020 report reduced surface channel for the same variants but find ER co-localisation unchanged, and no dominant-negative effect for R121W at all. Both agree surface channel is lost, so attributing that loss specifically to ER retention rests on Clatot 2012. The benchmark survives, because it needs only the loss of surface channel. But the phenotype these predictions are tested against is less settled than I assumed.
+
+The result is a scope restriction, not a dismissal of the method:
+
+> Folding-stability prediction catches loss of surface channel in this domain when it follows from burying a charge, and misses it when it follows from anything else. A positive prediction is interpretable. A negative one is not.
+
+Retention in the endoplasmic reticulum is a decision made by chaperone recognition, not a readout of global fold stability, so a variant can break one specific interaction while barely changing folding free energy. Calmodulin is a concrete candidate: it binds the Nav1.5 NTD over a predicted site spanning residues 80 to 105, where Y87C sits, and binding is impaired for R121W (Wang 2020). A dominant-negative effect is invisible to a single-chain calculation by construction, since it requires interaction between alpha subunits.
+
+## 5. What this can and cannot show
+
+**Range compression explains part of the failure, but not the part that matters.** These predictors shrink their numbers toward zero, and the size of that shrinkage can be read off the primary method's own calibration: r = 0.728, with predicted standard deviation 0.90 against a true 1.54. Multiplying gives a slope of predicted on true of 0.728 x (0.90/1.54) = 0.43, so a variant whose true effect is +2.0 kcal/mol should be expected to score near +0.85, and a true +1.5 near +0.64. Every absolute value in this note should be discounted on that basis. But compression shrinks magnitudes, it does not flip signs. On a pure-compression account all three misses would be small positive numbers, and two are not: R121W was scored as stabilising, and Y87C at -0.03 to -0.12 kcal/mol is at zero rather than merely shrunk. That residual is the part the calibration numbers do not account for, and it is the part worth attention.
+
+**What the error rates here do and do not support.** The answer key was pre-specified at n = 2, R104W and R121W, before any prediction was run. Both are arginine to tryptophan, so the pre-specified key covers a single substitution class. Y87C was added after the result was known and deliberately outside that class, and it also failed; that addition tests the explanation, not the finding. Recall is therefore 1 of 4. At n = 4 the confidence interval on that figure is uninformative and it should not be quoted as a rate: the claim is about three specific misses, not about a rate. The positive side is not established either, for the reasons in the summary, and on the second method a benign control outscored a known-pathogenic variant. What does hold up is that the failure reproduces across two structure preparations which disagree with each other by up to 0.84 kcal/mol on the benchmark variants themselves, so the conclusion is invariant to a perturbation larger than the effect the method is being asked to detect. I also made three attempts to reconcile the failure with a misfolding mechanism, and all three failed a control, including a seven-position test in which a benign control ranked highest on the proposed metric.
+
+Four further limits. There is no experimental ΔΔG for any of these variants, so this is prediction against phenotype, not against measured stability; they may genuinely not be destabilising, which fits my interpretation but is an inference either way. It is one domain and one structure, so the finding may not generalise beyond buried arginines in this fold. The `cartesian_ddg` arm was too noisy to arbitrate, variant means spreading over 5.97 kcal/mol against 4.34 between repeat runs of the same variant, so I cannot claim a physics-based method would fail the same way; a free-energy-perturbation calculation is the proper test. And at 3.6 Å these side chains are modelled into density rather than resolved by it, so which aspartate is R104's nearest partner flips between D84 and D82 depending on the protocol. Only the qualitative claim survives: R104 sits in an acidic pocket.
+
+## 6. What I would tell someone using this method here
+
+1. Anchor it on an answer key of the same substitution class as the variants you care about. Agreement between methods is not a substitute: here two methods correlated at 0.76 and one would have inverted the conclusion.
+2. Report rank order with error bars across a structural ensemble, never absolute kcal/mol.
+3. Check for clinical inversions. If the substitution ranked most stable at a position is the one that behaves worst functionally, folding stability is not ordering severity there. That check costs nothing and needs no method validation.
+
+## 7. What would falsify this
+
+Each of the claims here has a specific observation that would overturn it, and none of them requires
+access I do not have.
+
+The central negative would be falsified by an experimental folding-stability measurement showing that
+R104W, R121W or Y87C is in fact substantially destabilising, since that would mean the predictors were
+inaccurate on these variants rather than blind to their mechanism. A differential scanning fluorimetry
+or thermal-shift measurement on the isolated domain would settle it.
+
+The mechanism account, that the misses are cavity-refill substitutions and the catch is a charge
+burial, would be falsified by a buried-arginine-to-tryptophan variant elsewhere that these methods do
+flag, or by a charge-introducing variant in a comparable pocket that they miss. Either result would
+mean the wild-type residue is not what separates the catch from the misses.
+
+The scope restriction would be falsified by a folding-stability predictor that flags all four
+benchmark variants without also flagging the benign controls. I tested three predictors and cannot
+claim anything about a fourth.
+
+The clinical inversion argument would be falsified by new functional data separating R104W and R104Q,
+since it depends on their being functionally equivalent at 69.6 and 68.3 percent of wild-type current
+in the heterozygous condition (O'Neill 2022, Supplementary Table 1).
+
+The benchmark itself would be weakened by a report that any of the four variants does not in fact lose
+surface channel. The phenotype attribution is already less settled than I first assumed, as section 4
+records: Clatot 2012 and Wang 2020 disagree about ER retention for R121W and about whether it is
+dominant-negative at all.
+
+## 8. Data availability
+
+All primary data used here are public and require no credentials or permissions.
+
+The structure is Protein Data Bank entry 8VYJ, chain A, with the associated cryo-EM map EMD-43662 used
+for density-guided relaxation. The transcript is RefSeq NM_000335.5. Variant classifications and the
+domain variant census were retrieved from ClinVar via NCBI E-utilities on 24 July 2026. Published
+functional data are in the cited papers: O'Neill 2022 Supplementary Table 1 (PMID 35305865), Clatot
+2012 (PMID 22739120), Wang 2020 (PMID 32815768), Moreau 2012 (PMID 22529811), Doisne 2021 (PMID
+34122134). The predictors are public: ThermoMPNN, RaSP, and Rosetta `cartesian_ddg`. Version numbers
+for the predictor builds used are not recorded in my working notes, which is a reproducibility gap I
+report rather than paper over.
+
+All derived tables are deposited as a single archive with a permanent identifier. The identifier is
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source.
+They comprise the per-frame predictions, the full substitution profiles at each position, the
+tryptophan-rank scan across 11 positions, the benchmark comparisons on Ssym-direct and S669, and the
+microenvironment measurements.
+
+One thing failed to reproduce, and it changes how someone should set this up. Rebuilding the scoring pipeline from scratch reproduced the ranking almost exactly (Spearman 0.988) but not the original answer-key value for R104W, because I had kept only the scores from the first run and not the individual relaxed structures that produced them, without which the exact numbers cannot be recomputed. The conclusion survived because R121W failed in every preparation tested, and because the clinical inversion does not depend on absolute values. If you run this, save the relaxed structures, not just the scores.
+
+## 9. Competing interests
+
+I am a heterozygous carrier of SCN5A p.Arg104Gln, a variant at one of the positions analysed here, and
+I have a clinical diagnosis of Brugada syndrome. No funding was received for this work.
+
+Nothing in this paper is clinical guidance, for me or for anyone else. It is a finding about a
+prediction method.
+
+## References
+
+1. Clatot J, et al. Dominant-negative effect of SCN5A N-terminal mutations through the interaction of Nav1.5 alpha-subunits. *Cardiovasc Res* 2012;96(1):53-63. PMID 22739120.
+2. Wang Z, et al. Calmodulin binds to the N-terminal domain of the cardiac sodium channel Nav1.5. *Channels (Austin)* 2020;14(1):268-286. PMID 32815768. (Y87C)
+3. O'Neill MJ, et al. Dominant negative effects of SCN5A missense variants. *Genet Med* 2022;24(6):1238-1248. PMID 35305865.
+4. Doisne N, et al. In vivo dominant-negative effect of an SCN5A Brugada syndrome variant. *Front Physiol* 2021;12:661413. PMID 34122134.
+5. Moreau A, et al. Mexiletine differentially restores the trafficking defects caused by two Brugada syndrome mutations. *Front Pharmacol* 2012;3:62. PMID 22529811. (A124D)
+6. Levy-Nissenbaum E, et al. Genetic analysis of Brugada syndrome in Israel: two novel mutations and possible genetic heterogeneity. *Genet Test* 2001;5(4):331-334. PMID 11960580. (R104Q)

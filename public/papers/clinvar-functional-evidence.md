@@ -1,0 +1,728 @@
+# Deposited functional evidence in ClinVar is searchable only by exact term, and no surveyed tool reads it
+
+**Ethan Bradley**
+
+Independent researcher, no institutional affiliation
+
+ORCID: [0009-0008-8925-7975](https://orcid.org/0009-0008-8925-7975)
+
+Correspondence: the author
+
+Intended venue: *Database* (Oxford). Preprint first: bioRxiv.
+
+---
+
+## Abstract
+
+ClinVar accepts laboratory functional-evidence submissions in a structured `FunctionalData` element,
+and the reason downstream users do not see it is not the route they take to the data: it is that no
+surveyed tool parses the element, and six of the major pipelines already download the full XML
+release containing it and never read it. The element is restricted to the XML distributions, which
+NCBI documents, but that restriction is not the operative mechanism, because the pipelines most
+users rely on hold the complete file locally and still return nothing. I parsed the complete
+ClinVar release of 27 June 2026 (4,531,457 `VariationArchive` records, MD5
+`2e7e76ebbf668910b8688cc5e4284c1b` verified against NCBI's published checksum): 270,827 records,
+5.98 percent, carry deposited functional evidence, in 532,132 blocks. That headline count is
+dominated by a single depositor, who owns every functional block in 263,166 of those records, 97.17
+percent; the defensible pool is the 7,661 records, 2.83 percent of that dominated total, carrying at
+least one block deposited by another laboratory, and every aggregate below is computed on that pool.
+ClinVar publishes weekly, so these counts are properties of the checksummed file rather than of the
+database in perpetuity.
+
+Three findings concern retrieval. First, `FunctionalData` holds two adjacent child elements and only
+`FunctionalConsequence` is indexed by ClinVar's `FCNS` filter; it takes 185 distinct values where
+`FunctionalEffect` takes 4, and predicts `FCNS` membership with 100.000 percent agreement against
+8.611 percent, so a census on the wrong element misstates retrievability. Second, all 185 terms
+are individually retrievable, but the filter supports no wildcard and no match-any form: six
+constructions meant to return every variant with any functional consequence return zero, so the field
+is searchable by exact term only, never enumerable. Third, the one call that returns the element fails
+silently when one flag is omitted: `efetch` with `rettype=vcv` returns a 110-byte empty result set
+under HTTP 200, no error, unless `is_variationid` is supplied, byte-identical to the response for a
+VariationID that does not exist.
+
+Of twelve widely used variant-interpretation resources, eleven have a determinable ClinVar route and
+none parses `FunctionalData`. Six of the eleven already ingest the full XML release containing the
+element, so for those six the field is on disk and unread: the barrier is parser coverage, not
+access. One parser iterates the very element inside which `FunctionalData` is declared and extracts
+only sample and origin values from it.
+
+---
+
+**Keywords:** ClinVar, functional evidence, variant interpretation, controlled vocabulary,
+data retrieval, PS3, BS3
+
+
+## A key to the terms used here
+
+- **ClinVar** is the public NCBI database where laboratories deposit genetic variants and their
+  interpretations. A **variant** is a single spelling change in a gene.
+- **Functional evidence** means an actual laboratory measurement of what a variant does to the protein,
+  as opposed to a computational prediction. **PS3** and **BS3** are the standard codes for functional
+  evidence supporting a pathogenic or a benign interpretation.
+- **FunctionalData** is the structured field in ClinVar's records that holds that evidence.
+  **FunctionalEffect** and **FunctionalConsequence** are the two child fields inside it, and which of
+  the two the search index reads is the central finding here.
+- **XML** is the structured text format of the full ClinVar release. A **VCF** is the compact variant
+  file format most pipelines read instead, and a **tab-delimited export** is a simple table. The field
+  of interest exists in the first and not in the other two.
+- **E-utilities** are NCBI's public programming interfaces. **esearch** finds records, **efetch**
+  retrieves them, **esummary** returns a short summary, and **einfo** describes what is indexed.
+  **rettype** and **is_variationid** are parameters on those calls.
+- A **search filter** such as **FCNS** restricts a query to records carrying a particular kind of
+  content. A **wildcard** is a search term matching anything, and the absence of one is what makes this
+  field searchable but not enumerable: you can ask whether a specific term is present, but you cannot
+  ask for everything.
+- **Enumerable** means you can list every member of a set. **Searchable by exact term** means you can
+  only confirm the ones you already know to ask about, like a shelf you can check for a named product
+  but cannot inventory.
+- An **MD5 checksum** is a fingerprint of a file used to confirm a download is complete and unaltered.
+- **HTTP 200** is the code a web server returns for success. A response that returns 200 while
+  containing nothing is a **silent failure**, the failure mode this paper is mostly about, and the
+  dangerous kind: a loud error gets fixed, a quiet one gets published.
+- A **VariationID** and a **VCV accession** are the two identifiers ClinVar uses for a record.
+
+## 1. Introduction
+
+Clinical variant interpretation is limited less by the availability of evidence than by its
+reachability. Under the ACMG/AMP framework (Richards et al. 2015, PMID 25741868), a well-established
+functional assay contributes evidence through the PS3 criterion when it shows a damaging effect and
+BS3 when it shows a neutral one, with the strength of that contribution set by how well the assay
+has been calibrated (Brnich et al. 2019, PMID 31892348). Laboratories increasingly generate such data at scale, and ClinVar accepts it in a structured
+form: a `FunctionalData` element nested within the `ObservedIn` block of a submitted assertion,
+carrying a functional effect, a functional consequence, a numeric result and free-text commentary.
+
+The element is not, however, present in every route by which ClinVar is read. It does not appear
+in `esummary` responses, whose published document type definition declares 74 elements, none
+containing the string "functional". It does not appear in the tab-delimited submission summary or
+in the VCF distributions. NCBI documents this: its own guidance to the FTP files and E-utilities
+states that submissions including functional data are represented only in the ClinVar XML files
+under the `ObservedIn` element, and the schema confirms that `FunctionalData` is declared within
+the `ObservationSet` complex type of which `ObservedIn` is an instance. The restriction is a
+published contract, not a hidden behaviour, and this paper does not claim otherwise.
+
+What has not been established is the magnitude. Three questions follow, and none has been answered
+quantitatively in the literature. How much functional evidence is deposited. How completely it can
+be retrieved by the search interface ClinVar provides for it. Whether the tools that consume
+ClinVar read it. This paper answers all three by a complete parse of one release rather than by sampling, and in
+the course of doing so corrects a claim about the second that I had previously made incorrectly
+myself.
+
+## 2. Methods
+
+Every step below is reproducible from public data with no credentials, no institutional access and
+no licensed software.
+
+### 2.1 Data
+
+The complete ClinVar variation release was downloaded from the NCBI FTP site at
+`ftp.ncbi.nlm.nih.gov/pub/clinvar/xml/ClinVarVCVRelease_00-latest.xml.gz` on 4 August 2026.
+
+| Property | Value |
+|---|---|
+| File size | 5,824,540,370 bytes |
+| MD5 computed locally | `2e7e76ebbf668910b8688cc5e4284c1b` |
+| MD5 published by NCBI (`.md5` sidecar) | `2e7e76ebbf668910b8688cc5e4284c1b` |
+| `ReleaseDate` attribute in the file header | 2026-06-27 |
+| Schema declared in the header | `ClinVar_VCV_2.6.xsd` |
+
+Reporting the checksum alongside the release date matters because "the latest release" names a
+moving target. The checksum names one file.
+
+Two dates appear above and they are not in conflict. ClinVar publishes a new release every week to
+the same `_00-latest` path, so the file downloaded on 4 August 2026 is the release dated 27 June
+2026, and the checksum is what ties the two together. Every count in this paper is a property of
+that one file. **A reader who repeats this analysis in a later week will get different numbers, and
+the difference is new deposits rather than a disagreement with what is reported here.** Anyone
+reproducing these figures exactly should confirm the MD5 above before comparing, or retrieve the
+dated copy from the weekly archive directory; anyone reproducing the method rather than the figures
+should expect the totals to have grown and the structure of the findings to hold.
+
+### 2.2 Parsing
+
+The gzipped release was parsed as a stream, without decompressing to disk, using incremental XML
+parsing (`lxml.etree.iterparse`) with the element boundary set to `VariationArchive`. Fields were
+located by element path rather than by pattern matching over text, and each record was cleared
+from memory after processing together with its preceding siblings, which holds peak memory below
+one gigabyte on a file of this size. A complete pass takes 11.6 minutes on a ten-core desktop
+machine, so the analysis is not compute-limited and requires no cluster.
+
+For each record containing at least one `FunctionalData` block I extracted the variation
+identifier and accession, all gene symbols, the aggregate germline classification description, the
+number of submitters, every `FunctionalEffect` and `FunctionalConsequence` value with its
+Sequence Ontology identifier, numeric results, and ACMG evidence-code strings.
+
+A second pass attributes each `FunctionalData` block to the depositor that submitted it, by walking
+each `ClinicalAssertion` element, reading the `SubmitterName` attribute of its `ClinVarAccession`
+child, and assigning the blocks nested within that assertion to that submitter. This distinction is
+load-bearing and is discussed in section 3.2.
+
+ACMG evidence codes were identified by regular expression over the text of each functional block,
+matching the code families and their graded modifiers, case-insensitively. Because depositors write
+these codes inconsistently, the resulting count is a floor rather than a measurement.
+
+### 2.3 Retrieval characterisation
+
+Retrieval was tested against the live E-utilities interface rather than inferred from the file. The
+set of searchable ClinVar fields was enumerated with `einfo`, which reports 47 fields including
+`FCNS` ("Functional consequence") and `SBM` ("Submitter"). Counts and identifier lists were
+obtained with `esearch`, and individual records were inspected with `efetch` using `rettype=vcv`.
+The `efetch` flag behaviour reported in section 3.4a was tested on 4 August 2026 by issuing the same
+request with and without `is_variationid` and recording the response length, the HTTP status and the
+response body, across three VariationIDs plus one identifier chosen to be absent from the database.
+
+Two design choices matter for the validity of what follows. First, every test input was drawn from
+the computed parse output rather than chosen by hand, so the terms queried are the terms that
+actually occur in the data. Second, the vocabulary test was run over the complete term list, all
+185 distinct `FunctionalConsequence` values, not a sample, with one `esearch` per term.
+
+### 2.4 Tool survey
+
+Twelve variant-interpretation resources were examined by reading their public source: MyVariant.info,
+cBioPortal / Genome Nexus, clinvar-tsv, Nirvana, ClinVar Miner, the Ensembl ClinVar importer, the
+VEP plugin set, the Ensembl REST API, Biopython's Entrez module, InterVar, Bioconductor, and
+OakVar / OpenCRAVAT. For each, the question was whether any code path parses `FunctionalData`.
+
+The OakVar / OpenCRAVAT annotator modules are distributed through a module store rather than the
+main source repository. The store endpoint and request form were read from the client source
+(`oakvar/lib/store/db.py`, with the default store URL in `oakvar/lib/assets/system.yml`) and
+replicated exactly; the store requires authentication and returned HTTP 401 without it. The
+modules were therefore read from the public module repository instead, where all three ClinVar
+annotator modules are present.
+
+### 2.5 Availability
+
+All parser code, the per-variant census, the per-gene summary, the per-term retrieval
+verification and the tool survey are released as supplementary files (section 8).
+
+## 3. Results
+
+### 3.1 How much functional evidence is deposited
+
+Of 4,531,457 `VariationArchive` records in the release, **270,827 (5.977 percent) contain at least
+one `FunctionalData` block**, and those records contain **532,132 blocks in total**, a mean of 1.96
+blocks per record. Counting variants and counting deposited measurements are therefore different
+questions, and the larger number is the one relevant to how much laboratory work is represented.
+
+### 3.2 One depositor dominates, and the exclusion rule must be stated precisely
+
+A single depositor, the Dr. Peter K. Rogan Lab at Western University, is associated with the large
+majority of these records. Any aggregate computed over the full 270,827 describes that submission
+rather than the field, so a bulk-excluded pool is required. How the exclusion is applied changes
+the answer materially, because a variant can be submitted by several laboratories at once:
+
+| Rule | Variants |
+|---|---:|
+| All records with a `FunctionalData` block | 270,827 |
+| Bulk depositor appears anywhere in the submitter list | 263,596 |
+| Bulk depositor is the sole submitter | 239,002 |
+| Bulk depositor plus at least one independent laboratory | 24,594 |
+| No bulk depositor at all | 7,231 |
+
+Excluding a variant because the bulk depositor appears anywhere in its submitter list discards
+24,594 records in which an independent laboratory also deposited work. But a submitter list is the
+wrong instrument regardless of how it is thresholded, because it records who touched the record
+rather than who performed the measurement. A second pass therefore attributes each of the 532,132
+functional blocks to the depositor whose submission contains it, by walking each `ClinicalAssertion`
+and reading the `SubmitterName` of its `ClinVarAccession`. Every block resolved to a depositor: the
+count of unattributed blocks is zero, so no evidence is lost to this rule.
+
+| Attribution rule | Records |
+|---|---:|
+| At least one block owned by a depositor other than the bulk depositor | **7,661** |
+| All blocks owned by the bulk depositor | 263,166 |
+| Both bulk-owned and independently owned blocks present | 430 |
+
+**The denominator used throughout this paper is 7,661: records carrying at least one
+`FunctionalData` block deposited by a laboratory other than the single dominant depositor.** It is
+larger than the 7,231 that a submitter-list exclusion yields, because 430 records contain
+independent bench work alongside a bulk submission and a list-based filter discards all of them.
+The rule is applied uniformly to every figure below, and readers recomputing these numbers should
+apply the same one.
+
+One defect in an earlier build of the supplementary census file is worth recording here, because it
+is a clean example of the failure mode this section is about and because a reader comparing an
+earlier copy of that file against this table would otherwise find 911 rows unaccounted for. That
+build wrote only the first four submitter names per record, alphabetically, and then tested for the
+bulk depositor in that truncated list rather than in the complete one. On records with five or more
+submitting laboratories where the bulk depositor's name sorted fifth or later, the name was not in
+the list being searched, and the record was admitted. Exactly 911 records entered the file that way,
+all of them with five or more submitters, in every case with the bulk depositor at alphabetical rank
+5 or worse, and in 892 of the 911 every functional block belonged to the bulk depositor. A separate
+clause in the same build readmitted 15 records whose first listed gene was SCN5A, the gene in which
+I carry a variant, which is precisely where a special case should never be. The file distributed
+with this paper is rebuilt on the attribution rule stated above, carries the complete submitter list
+in every row, and contains 7,661 rows. No figure in this paper drew on the defective file, and the
+counts in the table above are unchanged: the exclusion table was computed from the release, and a
+re-parse of the same checksummed file reproduces all five of its rows. The decomposition
+7,231 + 911 + 15 = 8,157 accounts for that earlier file's row count without remainder. The lesson
+is the one in section 4: the filter ran correctly against the wrong list, and produced a number that
+passed every internal consistency check I applied to it, including two that summed exactly.
+
+### 3.3 The retrieval filter indexes one of two adjacent elements
+
+ClinVar provides a search filter for this data, `FCNS`. Its behaviour is determined by which of two
+sibling elements it indexes, and the two are easy to conflate because both sit directly inside
+`FunctionalData` and both carry Sequence Ontology terms.
+
+| Element | Distinct values in release | Most frequent value |
+|---|---:|---|
+| `FunctionalEffect` | **4** | functionally abnormal (459,996) |
+| `FunctionalConsequence` | **185** | retained intron (481,477) |
+
+The two-term query commonly used to find functional evidence,
+`"functionally abnormal"[FCNS] OR "functionally normal"[FCNS]`, returns 4,489 variants (1,313 and
+3,176 respectively). Testing which element predicts membership in that returned set, across all
+270,827 records rather than a sample, that being the full pool including the single bulk depositor:
+
+| Predictor | Agreement with live `FCNS` membership |
+|---|---:|
+| `FunctionalConsequence` carries an indexed term | **100.000 percent** |
+| `FunctionalEffect` carries an indexed term | 8.611 percent |
+
+The `FunctionalConsequence` contingency table has empty off-diagonal cells in both directions:
+4,488 records carry an indexed term and every one is retrieved; 266,339 carry none and none is
+retrieved. `FCNS` indexes `FunctionalConsequence`.
+
+**This corrects a claim I published in an earlier draft of this work.** That draft reported, on the
+basis of `FunctionalEffect`, that `FCNS` "indexes only two exact Sequence Ontology strings" and
+therefore missed 45.1 percent of the census, and offered SCN5A VariationID 67951, which carries
+PS3_strong, as an example of a variant `FCNS` cannot reach. Both statements are wrong.
+`67951[ALLUID] AND ("functionally abnormal"[FCNS] OR "functionally normal"[FCNS])` returns 0, which
+is what that draft observed, but `67951[ALLUID] AND "loss of function"[FCNS]` returns 1. The
+variant was retrievable by the term its depositor actually filed. The 45.1 percent figure is an
+artefact of measuring the wrong element and should not be cited.
+
+### 3.4 Every term is retrievable; the vocabulary is not enumerable
+
+Having identified the indexed element, I tested retrievability term by term over the complete
+vocabulary. For each of the 185 distinct `FunctionalConsequence` values, `"<term>"[FCNS]` was
+queried and compared against my own count.
+
+**All 185 of 185 terms return a non-zero result. None is unreachable.** Exact agreement between my
+counts and the live counts is 167 of 185 when both are computed per variant, rising to **179 of 185**
+once orthographic variants are collapsed.
+
+Two points about that comparison are methodologically relevant. First, `esearch` counts variants
+while a naive parse counts blocks, and a variant may carry several blocks bearing the same term;
+comparing the two produces apparent discrepancies that are purely denominator artefacts. For
+`retained intron` the per-block figure is 481,477 against a live count of 244,513, while the
+per-variant figure is 244,513, an exact match. Second, NCBI's index collapses orthographic variants
+of the same term: seven terms appear in both space-separated and underscored form, and each form
+returns the group total, so both spellings of "functionally normal" return 3,176 against separate
+per-variant counts of 147 and 3,029. Normalisation of this kind makes the filter more capable than a
+literal reading of the term list suggests, not less.
+
+The limitation lies elsewhere, and it survives the correction. **There is no way to ask `FCNS` for
+any functional consequence.** Six constructions intended to do so all return zero: a bare field
+name, `*[FCNS]`, `a*[FCNS]`, `"*"[FCNS]` (rejected as a syntax error), `FCNS:FCNS`, and a numeric
+range. The filter answers "which variants carry consequence X" for any X, and never "which variants
+carry any consequence".
+
+The consequence is a circularity. The vocabulary is open and partly free text, containing entries
+such as "Severe decrease in peak current due to reduced trafficking" alongside Sequence Ontology
+identifiers, and 27 terms occur exactly once. To enumerate the field through `FCNS`, a user must
+already possess the term list; the only way to obtain the term list is to parse the complete
+release. Enumeration and exact-term lookup are different capabilities, and only the second is
+available.
+
+This also settles how the 4,489 figure should be read. It is the size of one two-term slice, not
+the reach of the filter. The bulk submission, for instance, is thoroughly retrievable through
+`FCNS`: `Rogan[SBM] AND "retained_intron"[FCNS]` returns 244,475, a figure that my independent
+parse reproduces exactly, while only 13 of those records fall in the two-term union. Setting 4,489
+against 270,827, the full pool including the single bulk depositor, as though the difference were
+unreachable is not a valid comparison.
+
+### 3.4a One omitted flag turns the working call into a silent empty answer
+
+The single retrieval route that does return the element fails silently when one flag is left out. The
+failure is worth stating precisely because it does not look like a failure.
+
+Both commands below address the same record, SCN5A p.Asp82Asn, VariationID 4681248, VCV004681248,
+whose deposited block carries the Sequence Ontology term `loss of function`, a numeric result of
+-6.5 and a depositor assessment of PS3_strong from an automated patch clamp assay (PMID 38953211).
+Both were run on 4 August 2026.
+
+```
+efetch.fcgi?db=clinvar&id=4681248&rettype=vcv&retmode=xml
+  110 bytes. The body, with its newlines and whitespace padding preserved exactly:
+    <?xml version="1.0" encoding="UTF-8" ?>
+    <24 spaces>
+    <ClinVarResult-Set><set/></ClinVarResult-Set>
+  Stripped of the declaration line, the newlines and the padding, the payload is the
+  45-character string <ClinVarResult-Set><set/></ClinVarResult-Set> preceded by the
+  39-character declaration. The 110-byte figure is the response as delivered, which is what a caller
+  measures.
+
+efetch.fcgi?db=clinvar&id=4681248&rettype=vcv&is_variationid&retmode=xml
+  21,614 bytes, including the FunctionalData block in full
+```
+
+The first response arrives under HTTP 200 with no error element, no warning and no message of any
+kind. It is an empty result set, and it is indistinguishable from a true absence.
+
+Three controls establish that this is a general property of the interface and not a quirk of one
+record. First, the behaviour is identifier-independent: the flagless form returned the same
+110-byte empty set for VariationIDs 67951 and 12345 as well, while the flagged form returned
+22,177 and 16,777 bytes for the same two. Second, the identifier is not the problem. `esearch`
+for this variant returns exactly this identifier, `4681248`, as its only hit, and `esummary` resolves
+that same bare identifier to the correct record title without any flag, so the value a caller
+naturally carries forward from a search is precisely the value that yields nothing here. Third, and
+most consequential for anyone writing code against this endpoint, the empty response for a valid
+VariationID without the flag is byte-identical to the empty response for the nonexistent
+VariationID 999999999 with the flag. The interface returns the same 110 bytes for a missing flag
+and for a missing variant, so no caller can distinguish a query error from a data absence by
+inspecting the response.
+
+Omitting `rettype` entirely does not fail this way. It returns a 194-byte `IdList` echoing the
+identifier back, which is visibly not a record. The dangerous case is the one that looks closest to
+correct: the right endpoint, the right `rettype`, the right identifier, and one missing flag.
+
+### 3.5 Classification status of the non-bulk pool
+
+Within the 7,661 records carrying at least one independently deposited functional block, spanning
+**622 genes**, grouping the aggregate germline classification into coarse buckets:
+
+| Germline classification | Variants | Share |
+|---|---:|---:|
+| No germline classification at all | 3,737 | 48.8 |
+| Uncertain significance | 922 | 12.0 |
+| Conflicting classifications | 700 | 9.1 |
+| Pathogenic side | 1,322 | 17.3 |
+| Benign side | 734 | 9.6 |
+| Other | 246 | 3.2 |
+
+Two of the 7,661 records carry no gene symbol at all, both intergenic variants on chromosome Y
+(VariationIDs 3024128 and 3024132, deposited by Human Developmental Genetics, Institut Pasteur), so
+the per-gene supplementary table has 623 rows: 622 named genes plus one `(no gene)` bucket holding
+those two. An earlier draft reported 623 genes by counting that bucket as a gene. The gene count is
+622. A record spanning several genes is counted under each of them, which is why the per-gene rows
+sum to 7,852 rather than to 7,661.
+
+**5,359 records, 70.0 percent, carry deposited laboratory functional evidence and still have no
+confident clinical classification.** A further 1,892 records, 24.7 percent of the pool, carry a
+formal ACMG evidence code in the text of an independently deposited block, most commonly PS3
+(1,110), BS3 (1,106), PS3_strong (378) and PS3_moderate (233). In those cases the depositing
+laboratory has already stated the strength of its own evidence, so this is not raw data awaiting
+interpretation.
+
+The genes where the pattern is largest are those where a single laboratory has characterised many
+variants at once:
+
+| Gene | With functional data | No germline classification | Carries ACMG code |
+|---|---:|---:|---:|
+| BRCA1 | 3,894 | 2,002 | 0 |
+| KCNE1 | 1,106 | 891 | 1,106 |
+| JAG1 | 486 | 422 | 486 |
+| SCN5A | 350 | 52 | 275 |
+| PSAT1 | 224 | 0 | 0 |
+| SCN1A | 95 | 17 | 0 |
+| KCNQ2 | 84 | 5 | 0 |
+| FH | 77 | 11 | 0 |
+| TP53 | 71 | 7 | 0 |
+| SCN2A | 63 | 10 | 0 |
+
+KCNE1 and JAG1 are the clearest cases: 81 and 87 percent of their variants with functional data
+have no germline classification, and essentially every one carries an ACMG evidence code.
+
+An important qualification belongs here rather than in the discussion. A ClinVar germline
+classification requires that a variant has been observed in a person and submitted with clinical
+context, and functional evidence alone does not and should not trigger one. Many unclassified
+records are unclassified because no carrier has yet been reported, not because anyone overlooked
+the data. That reading strengthens rather than weakens the observation: it means functional
+evidence for a large number of variants has been banked in advance of the first patient, in a field
+that the ordinary programmatic route does not return.
+
+### 3.6 No surveyed tool reads the field
+
+Of twelve resources examined, **eleven have a determinable ClinVar route and none of the eleven
+parses `FunctionalData`.** The twelfth, Bioconductor, has no dedicated ClinVar client package and is
+recorded as not applicable rather than as a negative. Six of the eleven ingest the full XML release
+in which the element is present, so the omission is not explained by any of them fetching a compact
+summary.
+
+| Resource | Route | Reads `FunctionalData` |
+|---|---|---|
+| MyVariant.info | Full RCV XML release | No |
+| cBioPortal / Genome Nexus | Delegates to MyVariant.info | No |
+| clinvar-tsv | Full RCV XML release | No |
+| Nirvana | Both RCV and VCV XML | No |
+| ClinVar Miner | Full RCV XML | No |
+| Ensembl / VEP importer | Full RCV XML release | No |
+| VEP plugins | None query ClinVar | No |
+| Ensembl REST API | Ensembl's imported tables | No |
+| Biopython `Bio.Entrez` | Ships the `esummary` DTD | No |
+| InterVar | Pre-built ANNOVAR table | No |
+| Bioconductor | No dedicated ClinVar client found | not applicable |
+| **OakVar / OpenCRAVAT** | **Pre-built SQLite table, 38 fixed columns** | **No** |
+
+The final row was undetermined in earlier work and is resolved here. The three ClinVar annotator
+modules in the public OpenCRAVAT module repository (`annotators/clinvar`, `clinvar_acmg`,
+`clinvargene`) were read in full, eleven source and configuration files, and the case-insensitive
+string "functional" occurs zero times in all of them. The annotator issues a single query selecting
+38 named columns from a pre-built SQLite table keyed on position, reference and alternate allele;
+none of the 38 carries functional evidence, so the field cannot reach output regardless of what
+ClinVar contains.
+
+Nirvana is the clearest illustration of the mechanism. Its parser defines and iterates the
+`ObservedIn` element, the very element within which `FunctionalData` is declared, and extracts only
+sample and origin values from it. The string "Functional" does not occur in the file. This is a
+parser standing directly on the data and stepping past it.
+
+## 4. Discussion
+
+The results compose into a single observation. Functional evidence is deposited in ClinVar at
+appreciable scale by hundreds of laboratories. It is fully searchable, but only by a term the
+searcher must already know, and it cannot be enumerated through the search interface at all.
+And the resources through which most users actually encounter ClinVar do not read it, including
+several that already hold the data on disk.
+
+The flag behaviour in section 3.4a deserves separate weight, because it is the only one of these
+findings that actively misleads rather than merely omitting. The other routes fail visibly: a
+tab-delimited export has no column for the field, and a parser that never mentions the element plainly
+never reads it. A caller who omits `is_variationid` gets a well-formed empty answer to a
+well-formed question, under a success status, for a variant that does in fact carry the evidence. The
+natural interpretation of that response is that the variant has no functional data. Because the same
+110 bytes come back for an identifier that does not exist at all, there is no way to tell the two
+apart without already knowing the answer.
+
+This has a bearing on the paper's own reliability, and it is worth saying plainly rather than
+quietly. Four times in this work a wrong parameter or a missing flag produced a zero that looked like
+a finding about the world. The `FCNS` element mix-up in section 3.3 is the one that nearly reached
+print, as a claim that no search filter existed. Unversioned GTEx gene identifiers return HTTP 200
+with zero rows. Hand-constructed variant identifiers returned records that did not carry the field.
+And this flag returns an empty set. Every one of those four was a query defect presenting as an
+absence of data. That recurrence is not incidental to the argument; it is the argument, restated from
+the caller's side. An interface that answers a malformed request with a plausible empty result will
+produce false negatives at a rate nobody measures, because a null result invites no investigation.
+The practical defence is the one used in section 3.3: predict the query's result from an independent
+parse of the underlying data, and treat any disagreement as a fault in the query until shown
+otherwise.
+
+None of these is a defect in isolation, which is why the combination is worth reporting.
+Restricting a nested element to the XML distributions is a defensible design choice, and NCBI
+documents it. Indexing a controlled vocabulary term by term is normal information retrieval.
+Choosing not to parse an optional element is a reasonable decision for any individual tool. The
+result of all three together is that a laboratory can deposit a well-controlled measurement, with
+its own ACMG strength assessment attached, into a public database, and a downstream user following
+ordinary practice will not see it and has no way to discover that it exists.
+
+Three remedies follow directly from the measurements and none is large. A match-any-value form for
+`FCNS`, of the kind other Entrez fields support, would convert exact-term lookup into enumeration
+and remove the circularity in section 3.4. Adding one element to a parser that already walks
+`ObservedIn` is a small change for the six pipelines that already ingest the full release. And an
+`efetch` request that supplies an identifier the endpoint cannot interpret in the requested mode
+should return a warning rather than an empty set, so that a caller can tell a malformed query from an
+absent record.
+
+The correction reported in section 3.3 has methodological weight beyond this paper. Two sibling
+elements inside the same container, both carrying Sequence Ontology terms, differ by a factor of 46
+in vocabulary size, and only one is indexed. A census that reads the wrong one produces internally
+consistent numbers and a coverage statistic that is entirely an artefact. My earlier draft made
+exactly that error and reported a 45.1 percent miss rate that does not exist. The check that caught
+it was cheap: predicting live query membership from the parse and requiring the contingency table to
+be clean. Any claim that a database field is unreachable should be tested that way before
+publication, because a failed query is evidence about the query and not about the world.
+
+## 5. Limitations
+
+1. **Detection is by element presence, not by curation.** A record counts if it contains a
+   `FunctionalData` block. I did not assess whether each block reports a meaningful measurement,
+   and some may be sparse or uninformative.
+2. **The ACMG code count is a floor.** Codes were found by pattern matching over deposit text.
+   Capitalisation is inconsistent in the data and unusual formats will be missed.
+3. **One release, one snapshot.** All counts describe the release of 27 June 2026, identified by
+   checksum. ClinVar publishes weekly and these numbers drift. One concrete illustration arose
+   during this work: VariationID 201627 is retrievable through `FCNS`, and the assertion carrying its
+   functional data (accession SCV007615693, Avery Lab, Oakland University) has a creation date of
+   19 July 2026, three weeks after the release date, so the element is absent from the file
+   entirely. Its submission date of 11 June 2026 precedes the release, so the lag is in processing
+   rather than submission. Live queries and file parses disagree by exactly this margin, which is
+   why the file checksum rather than the phrase "latest release" identifies the data here.
+4. **The vocabulary list ages.** 185 terms were found in this release. Depositors may add free-text
+   terms at any time, so any enumeration built on the list is a snapshot.
+5. **Classification buckets are coarse.** Six groupings were imposed on more varied underlying
+   strings and some assignments are judgement calls.
+6. **The tool survey is a source read, not an execution.** I did not run any of the twelve
+   pipelines end to end and did not audit full dependency trees. A tool may have added support
+   after the commit I read. The OakVar module store itself was authentication-gated and was not
+   reached; that finding rests on the public module repository.
+7. **This measures a database, not clinical practice.** It shows that the field is absent from
+   widely used routes. It does not measure how many interpretation decisions were affected, which
+   would require knowing what route each decision used.
+8. **The documented-versus-hidden distinction matters and is settled against the stronger claim.**
+   NCBI documents the XML-only restriction in prose and in the `esummary` DTD. This paper claims
+   the omission is consequential, not that it is concealed. The same holds for the `is_variationid`
+   flag in section 3.4a: the flag is documented. What is reported here is the shape of the failure
+   when it is omitted, not a claim that its existence is undisclosed.
+9. **The flag test covers four identifiers, not the identifier space.** Section 3.4a rests on three
+   real VariationIDs and one absent identifier, tested on one day. It establishes that the empty
+   response is not specific to one record and that it collides with the not-found response. It does
+   not establish behaviour for every identifier class the endpoint accepts, and I did not test
+   accession-formatted inputs such as VCV or RCV strings.
+10. **An earlier build of the supplementary census file was wrong, and internal consistency did not
+    catch it.** The defect is described in section 3.2 and accounted for exactly in
+    `CENSUS_DISCREPANCY_RESOLVED.md`. It matters as a limitation and not only as a fixed bug,
+    because the defective file passed the checks I had: its row count summed, its columns were
+    populated, and the exclusion table in section 3.2 was arithmetically self-consistent in both
+    directions. The error surfaced only when the file's row count was compared against the table
+    it was supposed to support, which is a check I had not run. Any count in this paper that I have
+    not reconciled against an independent recomputation of the same quantity carries the same
+    exposure. The counts in section 3.2 have now been reconciled that way; the retrieval tests, the
+    vocabulary counts and the tool survey rest on separate evidence and have not been recomputed by
+    a second parser.
+11. **The bulk depositor is identified by submitter-name string.** If that laboratory deposits under
+    an additional institutional name I did not recognise, records under that name are counted as
+    independent and inflate the 7,661. Matching the full name and matching the substring "Rogan"
+    both return 263,596, which closes variant spellings of this name but not a different name
+    entirely.
+
+### What would falsify the central claims
+
+The element-identification claim would be falsified by a single variant whose
+`FunctionalConsequence` carries neither indexed term but which the two-term `FCNS` union returns,
+or by one carrying an indexed term that the union does not return. Across 270,827 records, the full pool including the single bulk depositor, the
+contingency table contains zero of either. The enumeration claim would be falsified by any working
+match-any-value `FCNS` construction; six failed. The tool claim would be falsified by any of the
+twelve reading `FunctionalData` in a path I did not open. The silent-failure claim in section 3.4a
+would be falsified by a flagless `rettype=vcv` request that returns a populated record, or by any
+warning or error element appearing in that 110-byte response, or by the not-found response
+differing from it in any byte. The exclusion table and the 7,661 denominator would be falsified by a
+re-parse of the file with the stated MD5 returning any different value for any of its rows, or by a
+single `FunctionalData` block that resolves to no depositor, since the attribution rule assumes every
+block sits inside a `ClinicalAssertion` and zero were unattributed across all 532,132. Each of those
+is a one-command test and the exact commands are printed above.
+
+## 6. Conclusion
+
+270,827 ClinVar records carry deposited laboratory functional evidence in a structured element that
+is fully searchable by exact term, not enumerable through the search interface, and read by none of
+the eleven surveyed variant-interpretation resources whose route could be determined. That count
+must not be quoted on its own: one depositor owns every functional block in 263,166 of those
+records, 97.17 percent, so 270,827 measures one bulk submission far more than it measures the
+field. In the 7,661 records, 2.83 percent of the total, that carry at least one block deposited by
+another laboratory, spanning 622 genes, 70.0
+percent still lack a confident clinical classification and 24.7 percent carry a formal ACMG
+evidence code assigned by the depositing laboratory. The gap is not one of data availability but of
+retrieval and parser coverage, and closing it requires a match-any-value search form and one
+additional element in parsers that already read the enclosing block. The single call that does return
+the element also returns an empty set, silently and under a success status, when one documented flag
+is omitted, and that empty set is byte-identical to the one returned for a variant that does not
+exist. A caller who omits the flag therefore records an absence of evidence that is really an absence
+of a correctly formed request.
+
+## 7. Data availability
+
+All primary data are public and require no credentials. The release analysed is
+`ClinVarVCVRelease_00-latest.xml.gz`, release date 2026-06-27, MD5
+`2e7e76ebbf668910b8688cc5e4284c1b`, from
+`ftp.ncbi.nlm.nih.gov/pub/clinvar/xml/`. Because that path always serves the current release,
+readers reproducing this work should verify the checksum, or retrieve the dated equivalent from the
+weekly archive directory. Retrieval tests used the public NCBI E-utilities. Tool source was read
+from public repositories. Venue characteristics were taken from the DOAJ and Crossref APIs.
+
+All derived tables are deposited as a single archive with a permanent identifier. The identifier is
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. Parser code accompanies this manuscript (section 8). No ethical approval was
+required: no human subjects were involved and no individual-level data were accessed.
+
+## 8. Supplementary files
+
+| File | Contents |
+|---|---|
+| `census2_parse.py` | The parser, pass 1: enumerate records with functional evidence |
+| `census2_pass2.py` | The parser, pass 2: attribute each block to its depositor |
+| `CENSUS_FUNCTIONAL_CENSUS_V2.csv` | One row per record with functional evidence, 7,661 rows |
+| `CENSUS_BY_GENE_V2.csv` | Per-gene counts by classification status |
+| `CENSUS_FCNS_TERM_VERIFICATION.csv` | All 185 vocabulary terms with live retrieval counts |
+| `CENSUS_TOOL_ACCESS_ROUTES_V2.csv` | The twelve resources with evidence per row |
+| `CENSUS_VENUE_VERIFICATION.csv` | Venue facts with a source per claim |
+| `FIG1_fcns_element_correction.png` | Figure 1 |
+| `CLINVAR_FUNCTIONAL_CENSUS.csv` | Per-record census on the attribution rule, 7,661 rows, complete submitter lists |
+| `reconcile_census.py` | One pass that recomputes every count in section 3.2 under both submitter-matching rules |
+| `reconcile_gap_rows.csv` | All 911 records admitted by the truncation defect, enumerated individually |
+| `CENSUS_DISCREPANCY_RESOLVED.md` | Full account of the 911-row defect and its arithmetic |
+
+The last four files exist because of the defect recorded in section 3.2. They are included rather
+than quietly replaced so that a reader holding an earlier copy of the census file can reconcile it
+against this paper row by row instead of taking my word for the difference.
+
+## Figure 1
+
+**The retrieval filter indexes one of two adjacent elements, and the consequence for coverage.**
+(a) `FunctionalData` contains two sibling elements carrying Sequence Ontology terms;
+`FunctionalEffect` takes 4 distinct values across the release, `FunctionalConsequence` takes 185.
+(b) Agreement between each element and live `FCNS` membership, computed over all 270,827 records
+carrying functional evidence, the full pool including the single bulk depositor: `FunctionalConsequence` predicts membership perfectly,
+`FunctionalEffect` does not. (c) Each of the 185 distinct `FunctionalConsequence` terms queried
+individually against `FCNS`; every term returns a non-zero result, and the dashed line is equality
+with the count from the independent parse. Points off the line reflect orthographic normalisation
+in NCBI's index. Higher agreement in (b) means the element is the one indexed.
+
+## Competing interests, and who did the work
+
+
+Sole author. I designed the analysis, wrote the parsers, performed the retrieval tests and the tool
+survey, and wrote the manuscript. I am a carrier of a variant in one of the genes discussed
+(SCN5A), which is what prompted the initial question; the analysis is a measurement of a database
+and makes no claim about any variant, patient or clinical decision. No funding was received. No
+competing financial interests.
+
+## References
+
+This paper rests mainly on database releases, schemas and source repositories rather than on a
+literature corpus, so the list below is short by nature. It is divided accordingly. Each of the three
+journal articles was verified against Europe PMC on 4 August 2026 by querying its PubMed identifier
+and reading back the author list, journal, year, volume, issue and pages recorded here; none is
+reproduced from memory. Where an article is cited in the text it is cited by first author and PMID so
+the two lists can be checked against each other.
+
+### Journal articles
+
+1. Richards S, Aziz N, Bale S, Bick D, Das S, Gastier-Foster J, Grody WW, Hegde M, Lyon E, Spector E,
+   Voelkerding K, Rehm HL; ACMG Laboratory Quality Assurance Committee. Standards and guidelines for
+   the interpretation of sequence variants: a joint consensus recommendation of the American College
+   of Medical Genetics and Genomics and the Association for Molecular Pathology. *Genet Med*
+   2015;17(5):405-424. doi:10.1038/gim.2015.30. PMID 25741868. *Cited in section 1 for the framework
+   in which PS3 and BS3 are defined.*
+
+2. Brnich SE, Abou Tayoun AN, Couch FJ, Cutting GR, Greenblatt MS, Heinen CD, Kanavy DM, Luo X,
+   McNulty SM, Starita LM, Tavtigian SV, Wright MW, Harrison SM, Biesecker LG, Berg JS; Clinical
+   Genome Resource Sequence Variant Interpretation Working Group. Recommendations for application of
+   the functional evidence PS3/BS3 criterion using the ACMG/AMP sequence variant interpretation
+   framework. *Genome Med* 2019;12(1):3. doi:10.1186/s13073-019-0690-2. PMID 31892348. *Cited in
+   section 1 for how assay calibration sets the strength of a functional evidence code.*
+
+3. Ma JG, O'Neill MJ, Richardson E, Thomson KL, Ingles J, Muhammad A, Solus JF, Davogustto G,
+   Anderson KC, Shoemaker MB, Stergachis AB, Floyd BJ, Dunn K, Parikh VN, Chubb H, Perrin MJ, Roden
+   DM, Vandenberg JI, Ng CA, Glazer AM. Multisite validation of a functional assay to adjudicate
+   SCN5A Brugada syndrome-associated variants. *Circ Genom Precis Med* 2024;17(4):e004569.
+   doi:10.1161/circgen.124.004569. PMID 38953211. *Cited in section 3.4a as the assay underlying the
+   worked example, VariationID 4681248.*
+
+### Data, schemas and interfaces
+
+4. ClinVar VCV XML release, release date 2026-06-27, downloaded 4 August 2026 from
+   `ftp.ncbi.nlm.nih.gov/pub/clinvar/xml/ClinVarVCVRelease_00-latest.xml.gz`. 5,824,540,370 bytes,
+   MD5 `2e7e76ebbf668910b8688cc5e4284c1b`, matching the `.md5` sidecar published alongside it. This
+   file is the primary source for every count in the paper.
+
+5. ClinVar VCV XML schema, `ClinVar_VCV_2.6.xsd`, declared in the header of the release above and
+   published at `ftp.ncbi.nlm.nih.gov/pub/clinvar/xsd_public/`. Source for the declaration of
+   `FunctionalData` within the `ObservationSet` complex type of which `ObservedIn` is an instance.
+
+6. NCBI E-utilities, `einfo`, `esearch`, `efetch` and `esummary` against `db=clinvar`, queried
+   4 August 2026. Source for the 47 indexed fields including `FCNS`, for all live retrieval counts,
+   and for the `rettype=vcv` and `is_variationid` behaviour reported in section 3.4a.
+
+7. The `esummary` document type definition for `db=clinvar`, published by NCBI. Source for the
+   statement that its 74 declared elements include none containing the string "functional".
+
+8. Public source repositories of the twelve variant-interpretation resources surveyed in section 3.6,
+   read 4 August 2026. Each resource, the specific route examined and the evidence per row are
+   recorded in `CENSUS_TOOL_ACCESS_ROUTES_V2.csv` rather than duplicated here.
+
+9. DOAJ and Crossref public APIs, queried for the venue characteristics recorded in
+   `CENSUS_VENUE_VERIFICATION.csv`.
+
+I did not perform a systematic literature search for prior quantitative censuses of this element.
+The three articles above are cited for the interpretive framework and for one assay, not as a survey
+of prior work, and I make no claim that no earlier census exists.

@@ -18,6 +18,37 @@ export default function Home() {
         where the uncertainty actually sits.
       </p>
 
+      <h2>What Brugada syndrome is</h2>
+
+      <p>
+        It is a condition of the heart&rsquo;s electrical system rather than its
+        structure. The heart beats because an electrical signal sweeps through
+        it in a coordinated wave. In Brugada syndrome that signal can be weaker
+        or slower than it should be in one part of the heart, and under certain
+        conditions the rhythm can become dangerously disorganised.
+      </p>
+
+      <p>
+        Because the problem is electrical, the heart usually looks entirely
+        normal on a scan. A normal echocardiogram does not rule it out, which is
+        a common and reasonable source of confusion. It is diagnosed from a
+        particular pattern on an electrocardiogram, a recording of the
+        heart&rsquo;s electrical activity, sometimes only visible during a fever
+        or after a specific medication.
+      </p>
+
+      <p>
+        <b>Fever is a recognised trigger.</b> That is worth knowing, and worth
+        mentioning to any doctor treating you for an illness. What to do about
+        it is a conversation with your own doctor, not something this site can
+        answer.
+      </p>
+
+      <p>
+        Most people who carry a variant associated with this condition never
+        develop symptoms.
+      </p>
+
       <h2>What the name means</h2>
 
       <p>

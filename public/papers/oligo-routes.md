@@ -1,0 +1,558 @@
+# No antisense oligonucleotide has demonstrated target engagement in a human cardiomyocyte, and an unprotected ADAR-recruiting oligonucleotide against SCN5A R104Q would make the current worse
+
+**Ethan Bradley**
+
+Independent researcher, no institutional affiliation
+
+ORCID: [0009-0008-8925-7975](https://orcid.org/0009-0008-8925-7975)
+
+## Abstract
+
+Two independent barriers close the oligonucleotide route to the SCN5A Brugada variant p.Arg104Gln, and
+both are negative. The first is delivery: across 1,410 unique records from 26 PubMed queries, no
+antisense oligonucleotide has demonstrated target engagement inside a human cardiomyocyte. Four records tagged as human cardiac engagement fail on reading: two are adenoviral
+transfer into explanted cells (PMID 11864915, 12479247), one a review reporting animal data
+(PMID 33472516), one patisiran acting on liver (PMID 38437698). The strongest conjugate results stop
+at mouse and nonhuman primate, and the first human trial of that platform reports target reduction only
+from skeletal muscle biopsy (PMID 41707138). There is no cardiac
+equivalent of the liver-targeting N-acetylgalactosamine ligand, and the one chemistry with repeated
+cardiac engagement, arginine-rich peptide conjugation, carries a dose-limiting renal toxicity in which
+arginine content drives both cardiac uptake and nephrotoxicity (PMID 32782413). The
+second barrier is bystander editing. Of the editable adenosines an ADAR-recruiting oligonucleotide
+would expose, 13 of 15 produce damaging amino acid changes and nine of those products are already
+catalogued ClinVar variants of uncertain significance, so an unprotected guide is predicted to make the
+current worse: 34.1 percent of wild type falls to 17.6 percent at 50 percent editing. Across 3,517,306 annotated cardiac cells, ADAR1 is detected in 3.5
+percent of cardiac muscle cells against 16.2 percent of endothelial cells, while SCN5A runs the
+opposite way at 29 to 31 percent against about 2: the enzyme is scarcest in the cells carrying the
+target.
+
+---
+
+## A key to the terms used here
+
+- **SCN5A** is the gene for the main sodium channel in heart muscle; **Nav1.5** is the protein it
+  makes. **p.Arg104Gln**, or **R104Q**, means arginine at protein position 104 has been replaced by
+  glutamine.
+- **Messenger RNA** is the working copy the cell makes from a gene and reads to build protein. Editing
+  the messenger RNA changes the product without altering the gene itself, so it has to be redone
+  continuously, the way a maintenance action with a fixed interval has to be repeated rather than
+  signed off once.
+- An **antisense oligonucleotide**, or **ASO**, is a short synthetic strand of genetic letters designed
+  to stick to one specific messenger RNA by matching its sequence.
+- **ADAR** is an enzyme already present in human cells that changes the RNA letter A into I, which the
+  cell then reads as G. An **ADAR-recruiting oligonucleotide** is an ASO designed to pair with the
+  target and invite ADAR to make one specific letter change. **ADAR1** and **ADAR2** are the two
+  relevant forms.
+- **Target engagement** means the drug was shown to act on its intended target inside the intended
+  cell, not merely to be present in the tissue. This distinction carries most of the weight in this
+  paper. Stock on the shelf is not a dose given to a patient.
+- A **cardiomyocyte** is a heart muscle cell, the cell that would need to be reached here.
+- The **editing window** is the stretch of transcript exposed to the enzyme when the oligonucleotide is
+  paired at its target. A **bystander** edit is an unintended change at another letter inside that
+  window.
+- **GalNAc**, N-acetylgalactosamine, is a sugar tag that liver cells actively take up, which is why
+  liver-directed oligonucleotide drugs work. No equivalent tag exists for heart.
+- A **conjugate** is an oligonucleotide chemically attached to something that helps it enter cells, such
+  as an antibody or a peptide. **Nephrotoxicity** means kidney damage.
+- **TPM**, transcripts per million, is a unit of how much a gene is expressed in a tissue.
+- **Variant of uncertain significance**, or **VUS**, is a ClinVar classification meaning the evidence
+  does not yet establish whether a variant is harmful or harmless: not known to be safe, not known to be
+  dangerous.
+- **kcal/mol** measures binding strength here; more negative means tighter binding.
+
+## Methods
+
+**Literature search, and its bounds.** I queried PubMed through NCBI E-utilities with 26 distinct
+queries combining the molecule class (antisense oligonucleotide, ASO, siRNA, ADAR-recruiting
+oligonucleotide, conjugate) with the tissue and evidence terms (cardiomyocyte, cardiac, myocardium,
+heart, target engagement, knockdown, biopsy) and with the named delivery platforms. That returned 1,410
+unique records. I read every record whose title, abstract or full text claimed cardiac evidence, and
+traced each claim to whether the measurement was made in human cardiac tissue, in animal cardiac
+tissue, or in another tissue entirely. Positive controls were run on every query before any zero was
+believed, because a zero from a malformed query is indistinguishable from a zero in the literature.
+
+This search is bounded and I do not claim it is exhaustive. It covers PubMed-indexed literature and the
+trial registry entries I pulled. It does not reach conference abstracts, patent filings, unpublished
+industry programmes, or any trial whose cardiac measurements exist but are unreported. A single
+published human cardiac target-engagement measurement would overturn the delivery finding, and my claim
+is only that I looked in the places named and did not find one.
+
+**Bystander analysis.** The editing window is the stretch of transcript an ADAR-recruiting
+oligonucleotide would expose to the enzyme when duplexed at the target site. Within that window I
+enumerated every adenosine, translated the consequence of an A-to-I change at each in the reading frame
+of RefSeq NM_000335.5, and classified each as silent, tolerated, or damaging by the resulting amino acid
+substitution. Relative editing propensity was ranked using the published Eggington sequence-preference
+scale, which is ordinal: a rank of 8 of 16 does not mean half the rate, and I did not convert ranks to
+rates anywhere.
+
+**Rescue arithmetic.** Predicted current as a function of editing efficiency was computed from the
+published co-expression measurements in O'Neill et al. 2022 (PMID 35305865, Supplementary Table 1),
+taking the heterozygous R104Q baseline as 34.1 percent of wild type, unaffected as 100, and simple loss
+of one allele as 50. The model is linear in functional protein and linear in the dominant-negative
+penalty, which is an assumption stated in the limitations rather than a measurement.
+
+**Specificity.** Duplex thermodynamics were computed with ViennaRNA. Transcriptome-wide competitive
+binding was assessed both by mismatch-capped scanning, which is bounded by that cap, and by an independent comparison
+against 120,000 random transcript windows, which carries no mismatch cap.
+
+Tool versions and exact retrieval dates are not recorded in my working notes for every step, and I
+report that gap rather than reconstructing dates after the fact.
+
+## Lead finding, stated first because it is negative
+
+**No antisense oligonucleotide has ever been shown to engage a target inside a human heart
+muscle cell.** I searched 1,410 records across 26 separate PubMed queries and read every record
+that claimed cardiac evidence. Four came back tagged as human cardiac target engagement. All four
+fail on reading:
+
+- PMID 11864915 and PMID 12479247 are adenovirus gene transfer into cardiomyocytes already
+  removed from the patient and sitting in a dish. That is not a delivered drug.
+- PMID 33472516 is a review whose cardiac dystrophin numbers come from animals.
+- PMID 38437698 is patisiran in ATTR cardiac amyloidosis. Patisiran works on **liver** cells to
+  lower a protein circulating in the blood that then stops depositing in the heart. The heart
+  never sees the drug in a therapeutically meaningful way. Real benefit, wrong organ.
+
+The best real evidence stops in animals. PMID 35944903 achieved dystrophin at 77 percent of
+wild-type in **mouse** heart using an antibody-oligonucleotide conjugate that grabs the
+transferrin receptor. PMID 37224533 got greater than 75 percent target messenger RNA reduction in
+striated muscle including cardiac in **mice and monkeys**. PMID 40207629 showed the same with a
+small peptide instead of an antibody, in **nonhuman primates**. These are genuinely strong
+results and the platform is real.
+
+Then it reaches humans and the heart drops out of the readout. PMID 41707138 is the first
+published human trial of this delivery platform, del-desiran in myotonic dystrophy. It reduced
+the target messenger RNA by 46, 44 and 37 percent across three dose groups versus 0.9 percent on
+placebo. Every one of those numbers comes from a **skeletal muscle biopsy**. There is no cardiac
+tissue measurement in the paper, in the companion molecular-pathology paper (PMID 41821312), or
+anywhere in the trial registry entries I pulled.
+
+
+### There is one genuinely encouraging precedent, and it is not a conjugate
+
+An **unconjugated** antisense oligonucleotide given under the skin worked in the heart of a mouse
+carrying a cardiomyopathy variant. PMID 34462437 targeted phospholamban in PLN-R14del mice:
+protein aggregates prevented, cardiac dysfunction prevented, survival up three-fold, plus a
+reversal in a second unrelated model and improved left-ventricular contractility in rats after
+myocardial infarction. PMID 35269571 halted advanced disease. PMID 40905134 confirmed cardiac
+target engagement by dose-response. This is the closest structural analogue to the R104Q problem
+that exists: a single-nucleotide cardiomyopathy variant, an oligonucleotide, the heart, and it
+worked without any targeting ligand.
+
+That programme has now reached humans. AZD4063 (NCT07241104, AstraZeneca, Phase 1, recruiting) is
+a first-in-human subcutaneous agent in PLN-R14del dilated cardiomyopathy. A second, ATR 1072
+(NCT07738107, Atrium Therapeutics, Phase 1/2, not yet recruiting), delivers a small interfering
+RNA against PRKAG2 for a genetic cardiomyopathy by intravenous infusion every six weeks. Neither
+has posted cardiac pharmacodynamic results. **The question of whether an oligonucleotide can work
+inside a human cardiomyocyte is being actively answered right now, and the answer is not in yet.**
+
+### The hardest number in the delivery literature
+
+PMID 24549299 dosed mice for eight weeks and then measured drug, splicing and protein in each
+tissue. In heart, the oligonucleotide half-life was about 65 days, longer than in skeletal
+muscle, liver or kidney at about 35 days. And in the same heart tissue: **high oligonucleotide
+levels but low splicing correction and low protein**. The drug got in, persisted longer than
+anywhere else, and did not work.
+
+That is the single most dangerous fact for this route, and it is worse than a delivery failure.
+Drug measured in cardiac tissue is not evidence of drug doing anything in cardiac tissue.
+Whatever fraction sits in the wrong compartment inside the cell, or bound to the wrong thing, is
+invisible to a tissue-concentration assay. PMID 20407428 independently found heart had the lowest
+oligonucleotide levels of any muscle group examined, with the longest half-life, about 46 days.
+The heart is both the hardest striated muscle to reach and the one that most misleads you about
+whether you reached it.
+
+### For the exact molecule class on this route, delivery is liver-only
+
+The route needs an ADAR-recruiting oligonucleotide. Of every record I classified, **not one
+demonstrated ADAR-recruiting oligonucleotide editing in heart tissue of any species**. The single
+nonhuman-primate demonstration of this exact chemistry (PMID 35256816) reached up to 50 percent
+editing with no detectable bystander editing of the control transcript. In **liver**, using an
+N-acetylgalactosamine sugar that a liver-specific receptor grabs.
+
+Every clinical-stage programme of this class is liver-directed and treats the same liver disease:
+WVE-006 (NCT06186492 completed, NCT06405633 active), KRRO-110 (NCT06677307, terminated), AIR-001
+(NCT07431112, recruiting), all in alpha-1 antitrypsin deficiency. The reason is not coincidence.
+GalNAc works because hepatocytes display a receptor that vacuums up anything carrying that sugar.
+**There is no cardiomyocyte equivalent of GalNAc.** The closest thing is the transferrin receptor,
+which is not cardiac-specific, and its human data stop at skeletal muscle.
+
+### The one demonstrated cardiac oligonucleotide route carries a dose-limiting toxicity, and it is driven by the same property that gets the drug into heart
+
+Peptide conjugation is the only chemistry in this literature with repeated demonstrated target
+engagement in cardiac tissue. Peptide-conjugated phosphorodiamidate morpholino oligomers restored
+dystrophin in mouse heart with functional improvement (PMID 18784278), sustained it over months
+(PMID 18545222), and prevented cardiomyopathy durably (PMID 19815563). Those are the strongest cardiac
+delivery results in the whole set, and every one of them is in rodent.
+
+The problem is what makes them work. In the delivery review by Roberts, Langer and Wood (*Nat Rev
+Drug Discov* 2020, PMID 32782413), the cell-penetrating peptides used for these conjugates are
+arginine-rich, and **arginine content correlates with both cardiac uptake and nephrotoxicity**. The
+property being optimised for delivery to heart is the property that damages kidney, so the two cannot
+be separated by tuning the same variable: raising arginine content to reach more cardiomyocytes raises
+renal exposure in step. That is a dose-limiting toxicity rather than a formulation problem, and it is
+the reason this route has not advanced to human cardiac dosing despite the strength of the animal
+data. Any design that reaches for peptide conjugation to solve the delivery barrier inherits it.
+
+### The enzyme this route depends on is scarce in exactly the cells that carry the target
+
+An ADAR-recruiting oligonucleotide does no work by itself. It has to recruit an ADAR enzyme already
+present in the cell, so the route needs the enzyme and the target transcript in the same cell. In
+heart they are largely in different cells.
+
+Across **3,517,306 annotated cardiac cells** in 11 cell types, ADAR1 is detected in **3.5 percent of
+cardiac muscle cells** against **16.2 percent of endothelial cells**, while SCN5A runs the opposite
+way: **29 to 31 percent of cardiac myocytes** against about **2 percent of endothelial cells**. The
+cells that carry the transcript needing repair are the cells with least of the enzyme that would
+repair it, and the cells with the most enzyme barely express the target at all. Expressed as a ratio
+of detection rates, ADAR1 to SCN5A is 0.11 in cardiac muscle cells and 9.35 in endothelial cells, an
+83-fold difference in the wrong direction.
+
+This is a sharper statement of the same problem than the bulk-tissue measurement gives. Bulk left
+ventricle reports ADAR at 21.48 TPM, rank 53 of 54 tissues, which already says heart is enzyme-poor.
+The single-cell reading says the shortfall is concentrated precisely in the cell type that matters,
+and bulk tissue understates it because endothelial and other non-myocyte cells contribute most of the
+ADAR signal a bulk assay measures. A route whose efficiency scales with local enzyme availability is
+therefore worse off than the bulk number suggests.
+
+## The bystander problem: I can solve it, and solving it breaks something else
+
+### What is exposed
+
+Sequence contexts are ranked on the Eggington 2011 scale (PMID 21587236), which quantified editing
+at 406 sites in one long double-stranded RNA and ranks all 16 three-letter contexts worst to best;
+the target's own CAG context is rank 8 of 16, the exact median.
+
+Within 25 nucleotides of the target there are **15 editable letters, and 13 of them change the
+protein if edited**. Widening to 50 nucleotides: 27 letters, 23 damaging. Twelve of these sit in
+sequence contexts the enzyme likes **more** than the target's own. The worst is 5 letters away,
+in an identical CAG context, meaning the enzyme finds it exactly as attractive as the intended
+site; editing it gives S106G.
+
+Two findings here appear not to have been drawn together before.
+
+**Nine of the bystander products are already catalogued human variants.** These are not
+hypothetical proteins. S106G is ClinVar VCV000850004, T101A is VCV001798889, I102V is
+VCV000967224, Y112C is VCV001332491, and five more. All are currently classified uncertain
+significance, so none is known to be harmful, but none is known to be safe either. An editing
+drug that produced one of these would be manufacturing a variant of uncertain significance on
+purpose, in a heart, in a person who already has an arrhythmia syndrome.
+
+**D84G is an editable letter.** It sits 60 nucleotides upstream, outside every footprint I
+considered, so it is not a design problem today. It matters because D84 is the carboxylate that
+the rescue hypothesis under test here is built around gripping. If a future design reached that
+far, editing there would destroy the target of the parallel chemistry route.
+
+### The protection scheme works, on paper, and the paper is weaker support than it looks
+
+Schneider 2014 (PMID 24744243) is the sole published basis for the protection scheme. It is usually
+cited as showing that a G placed opposite an unwanted A blocks editing there while permitting
+near-quantitative editing 5 nucleotides away. I read the full text (open access,
+doi 10.1093/nar/gku272) to check the geometry, and found three things, one better than expected
+and two worse.
+
+**Better than expected: the blocking distance.** The paper protected the GFP Tyr66 codon while
+editing the adjacent Ser67 codon, and states that the strategy succeeded even when the targeted
+base and the off-site base were separated by only **one intervening nucleotide**. My footprints
+contain no damaging bystander closer than 5 nucleotides to the target, so every site I need to
+block sits comfortably inside the distance range where blocking has actually been demonstrated.
+That part of the design is on firmer ground than the 5-nucleotide figure implies.
+
+**Worse, first: the enzyme was not endogenous ADAR.** Schneider used SNAP-ADAR1 and SNAP-ADAR2,
+engineered fusions in which the enzyme's own double-stranded-RNA-binding domains were **replaced**
+by a SNAP-tag, and the guide RNA was **covalently attached** to the enzyme through a
+benzylguanine linker. That is a one-to-one enzyme-guide complex delivered as a unit. This route
+depends on the opposite arrangement: a bare chemically modified oligonucleotide that must recruit
+whatever endogenous ADAR happens to diffuse past, in a heart where ADAR1 sits at 21.48 TPM,
+rank 53 of 54 tissues. The word "recruit" does not appear anywhere in Schneider 2014. Every
+protection number in my tables inherits an untested assumption: that a blocking G behaves the
+same way when the enzyme is not tethered to the guide.
+
+**Worse, second: they protected one site. I need seven to ten.** Schneider blocked a single
+off-site adenosine. My fully protected 30-mer requires seven simultaneous G mismatches and the
+40-mer requires ten. The paper contains exactly one observation on multiple simultaneous
+mismatches, and it is discouraging: with two mismatches present, an A/C at the target plus an
+A/G protection, **SNAP-ADAR2 did not accept the doubly mismatched substrate well** and target
+editing yield stayed low, for both A/C+A/C and A/C+A/G combinations. SNAP-ADAR1 handled it and
+gave efficient, selective editing.
+
+There is one genuinely favourable inference in that. The enzyme that tolerated the double mismatch
+was ADAR1, and heart is overwhelmingly ADAR1-dominant: 21.48 TPM against 3.18 TPM for ADAR2. If
+mismatch tolerance is an intrinsic property of the two enzymes, the heart has the more forgiving
+one. But this is an inference from one experiment with an engineered fusion, extrapolated from two
+mismatches to seven, in the tissue with almost the least ADAR1 in the body. It is a reason to test
+the idea, not a reason to believe it.
+
+### Why that is not a solution
+
+Each protective G is a deliberate mismatch, and mismatches cost binding energy. For a 30-mer,
+blocking all seven damaging bystanders moves the binding energy from -56.0 to -32.4 kcal/mol, a
+penalty of 23.6. For a 40-mer, ten blocks cost 29.0.
+
+I then tested what that weakening does to specificity, and this is the result that decides the
+task. I scanned all **669,547 Ensembl 116 transcripts, 1,478,394,455 nucleotides**, every window
+position, and separately compared each design against 120,000 randomly drawn transcriptome
+windows:
+
+| design | protective blocks | grip on target | random windows binding at least as tightly |
+|---|---|---|---|
+| 20-mer, unblocked | 0 | -32.1 | 0 of 120,000 |
+| 30-mer, unblocked | 0 | -56.0 | 0 of 120,000 |
+| 30-mer, worst site only | 2 | -47.1 | 0 of 120,000 |
+| 20-mer, fully blocked | 3 | -22.9 | 0.04 percent |
+| 25-mer, fully blocked | 5 | -27.6 | 0.34 percent |
+| 40-mer, fully blocked | 10 | -47.7 | 0.37 percent |
+| 30-mer, fully blocked | 7 | -32.4 | **0.87 percent** |
+
+A fully blocked 30-mer binds roughly **1 in 115 random transcriptome positions** at least as
+tightly as it binds its own intended target. Scaled across the transcriptome that is on the order
+of ten million competitive sites. The oligo stops being a targeted molecule.
+
+**The tension, stated plainly.** A longer oligo does give better transcriptome
+specificity when unblocked, and that is real: the bare 30-mer had zero competitive random
+windows. But a longer oligo also exposes more damaging local letters, 3 at 20 nucleotides rising
+to 13 at 50. Blocking those letters is the only way to make the local problem safe, and blocking
+is precisely what destroys the specificity that made the longer oligo attractive. The two
+constraints are not independent; they are coupled through binding energy, and the coupling runs
+the wrong way.
+
+**No length optimises both. I tested 33 length-and-protection combinations and zero passed both
+measured criteria.** Every unblocked design leaves damaging bystanders exposed. Every fully
+blocked design binds competitively across the transcriptome. The intermediate option, blocking
+only the worst sites, gives a 30-mer with clean transcriptome behaviour that still leaves five
+damaging letters unprotected, including T101A and N109D. That is the closest thing to a viable
+design and it is not viable.
+
+### An off-target in the brain sodium channel, which an earlier filter had hidden
+
+The bare 20-mer has an off-target in **SCN1A**, the brain sodium channel and the Dravet syndrome
+gene, at the same single-mismatch count as its own target and binding **6.5 kcal/mol more
+tightly** (-38.6 versus -32.1). The window is nearly identical because the two channels are
+paralogues; the protein sequences read ...NKGKAIFRFSATSA... in SCN1A against ...NKGKTIFRFSA... in
+SCN5A. Two editable letters sit in that window, which would give I99V and S103G in SCN1A.
+
+An earlier version of this transcriptome scan did not report SCN1A at all. I checked why: that
+scan retained only hits carrying an editable A at the edit-site position, and every one of its
+1,966 rows has that flag set. The SCN1A window has a G there, matching the oligo's C as an
+ordinary pair, so it was filtered out before counting. This is the same class of error as the
+seed-and-extend failure already documented on this route: a filter that looks reasonable removes
+exactly the hits that matter. The 30-mer does not have this problem.
+
+## Rescue arithmetic, redone for RNA editing
+
+DNA editing fixes a cell once. RNA editing fixes a fraction of messages continuously and must be
+re-dosed, so what matters is the steady-state fraction repaired.
+
+Anchors, from O'Neill 2022 (PMID 35305865, Supplementary Table 1, open preprint
+10.1101/2021.09.22.461398 p.29, Sleeping Beauty genomic integration so wild-type is not diluted
+and the no-effect baseline is 100): heterozygous R104Q at 68.3 plus or minus 6.1 percent of a
+single wild-type allele, n=34. Rescaled to a heart where two working alleles equal 100:
+unaffected 100, simple loss of one allele 50, measured R104Q 34.1.
+
+With every bystander perfectly blocked:
+
+| target repaired | dominant-negative | simple loss of one allele |
+|---|---|---|
+| 0 percent | 34.1 | 50.0 |
+| 25 percent | 50.6 | 62.5 |
+| 50 percent | 67.1 | 75.0 |
+| 75 percent | 83.5 | 87.5 |
+| 100 percent | 100.0 | 100.0 |
+
+**24.1 percent** of mutant messages must be repaired to reach 50, what simple loss of one allele
+would give. **51.9 percent** to reach 68.3. Under the loss-of-one-allele mechanism the baseline is
+already 50, so any editing is gain, and 36.6 percent reaches 68.3.
+
+Now the coupling that DNA editing does not have. The worst bystander shares the target's exact
+sequence context, so the honest assumption is that it is edited at the same rate as the target.
+Under that assumption:
+
+| target repaired | unprotected, bystander damaging | unprotected, bystander merely non-functional |
+|---|---|---|
+| 10 percent | 33.4 | 35.2 |
+| 25 percent | 30.0 | 35.0 |
+| 50 percent | 17.6 | 29.6 |
+| 90 percent | -19.3 | 9.5 |
+
+**Every unprotected curve peaks at or below the untreated baseline of 34.1 and then falls.** The
+best the damaging-bystander case ever achieves is 34.1, at zero editing. Even assuming the
+bystander product is merely non-functional rather than actively poisonous, the curve tops out at
+35.4 and never approaches 50. Under simple loss of one allele the unprotected curve starts at 50
+and only declines. **An unprotected ADAR oligo at this site is predicted to make the sodium
+current worse under all three mechanistic assumptions.** The harder it works, the worse the
+outcome.
+
+This inverts how bystander editing is usually discussed. It is normally a tolerability footnote.
+Here it is the sign of the treatment effect.
+
+How much bystander editing can be tolerated: at 50 percent on-target editing, no more than
+**17.3 percent** of transcripts may carry a damaging bystander edit and still hold 50 percent
+current. At 75 percent on-target, **13.2 percent** to hold 68.3. These are demanding numbers for
+a site whose worst neighbour is 5 nucleotides away in an identical context.
+
+## Does the route survive
+
+**Conditionally, and not on the strength of anything I found.** Both barriers came back negative in
+their strong form, and the piece usually treated as already solved is not: the protection scheme
+rests on a single paper using a tethered engineered enzyme rather than the endogenous recruitment
+this route requires.
+
+The bystander constraint is solvable in principle by Schneider blocking, and every dangerous site
+is inside the distance range where blocking has been demonstrated, but only ever for one site at a
+time and with a tethered enzyme. No length and protection combination I tested, 33 of them, passes
+both the local and the transcriptome-wide test, because the blocks that fix the local problem
+destroy the global one. The specific claim that a longer oligo buys specificity
+is true only for unblocked oligos, and unblocked oligos are predicted to be net harmful.
+
+Delivery has never been demonstrated for this molecule class in a heart of any species, and has
+never been demonstrated for any oligonucleotide inside a human cardiomyocyte.
+
+## The single most likely thing to kill this route
+
+**Delivery, and specifically the finding in PMID 24549299 that cardiac drug levels do not predict
+cardiac drug activity.** Not the bystanders, because those are a design problem with a known
+mechanism of attack even if no current design threads it. Not the enzyme shortage, though that is
+real and already documented on this route. Delivery, because it is the one failure mode where the
+usual evidence would not tell you that you had failed. A trial could measure oligonucleotide in a
+cardiac biopsy, see plenty of it, and still be looking at a drug doing nothing, exactly as
+happened in mouse heart with an eight-week dosing schedule.
+
+If I had to name the experiment that decides this route, it is not an editing experiment. It is:
+does AZD4063 or ATR 1072 produce measurable target engagement in human cardiac tissue. That
+result is roughly one to three years out and is being generated by somebody else.
+
+## Limitations, and what would falsify this
+
+1. **The entire protection scheme rests on one paper that used a different enzyme system.**
+   Schneider 2014 used SNAP-ADAR fusions with the guide RNA covalently tethered to the enzyme and
+   the enzyme's own RNA-binding domains removed. This route needs endogenous ADAR recruited by an
+   untethered oligonucleotide. It protected one site; my designs need seven to ten. Its only
+   multiple-mismatch observation showed ADAR2 rejecting a doubly mismatched substrate, though
+   ADAR1, the enzyme that dominates heart, tolerated it. **Falsified by:** a G-protected
+   multi-mismatch oligo tested against endogenous ADAR1. This is the single most informative bench
+   experiment available on this route and is far cheaper than anything on the delivery side.
+2. **The Eggington ranking is an ordinal scale, not a rate.** Rank 8 of 16 does not mean half
+   speed. I used it to rank relative risk, which is what it supports, and I did not convert ranks
+   to rates anywhere in the rescue model. Where I needed a bystander rate I assumed equality with
+   the target for the site that shares the target's exact context, which is a mechanistic argument
+   rather than a measurement. **Falsified by:** measured editing rates at positions 520 and 525 in
+   the same reporter.
+3. **The rescue model is linear in functional protein and linear in the dominant-negative
+   penalty.** The 15.9-point gap between simple loss of one allele at 50 and the measured 34.1 is
+   attributed entirely to dominant-negative interference and assumed proportional. If interference
+   saturates, unprotected editing is less catastrophic than I show. **Falsified by:** an allelic
+   titration series measuring current against mutant fraction.
+4. **Whether R104Q is dominant-negative in a human heart is unresolved.** Settling it requires a
+   measurement I cannot make myself, in a cardiomyocyte model rather than a heterologous expression
+   system. I report both mechanisms throughout, simple loss of one allele and dominant-negative
+   interference, and neither changes the sign of the unprotected result.
+5. **My transcriptome scan capped reported hits at 8 mismatches.** For designs whose intended
+   duplex carries more than 8 mismatches, the 40-mer with 11, that cap sits below the intended
+   duplex, so that hit count is a lower bound and I did not use it as a pass. This is
+   why I ran the independent 120,000-random-window comparison, which has no mismatch cap and
+   showed the 40-mer binding 0.37 percent of random windows competitively.
+6. **The specificity test is thermodynamic, not cellular.** ViennaRNA duplex energy ignores
+   target structure, RNA-binding proteins, and whether ADAR is even present at a given transcript.
+   A site that binds tightly is not automatically edited. **Falsified by:** transcriptome-wide
+   editing measurement after transfection of a blocked oligo.
+7. **Chemical modification is out of scope here.** It changes binding energies and could shift the
+   trade-off numbers in either direction. My protection penalties are computed on unmodified RNA, so
+   a modified-backbone design might recover some of the binding energy that protection costs.
+8. **The peptide-conjugate toxicity is a reported correlation, not my measurement.** Roberts, Langer
+   and Wood (PMID 32782413) state that arginine content tracks both cardiac uptake and
+   nephrotoxicity; I did not measure either, and I did not find a study that separates the two
+   properties. **Falsified by:** a peptide conjugate achieving cardiac target engagement at an
+   arginine content low enough to avoid renal toxicity, which would mean the two properties are
+   separable after all and this barrier is a formulation problem rather than a dose-limiting one.
+9. **The single-cell enzyme measurement is detection rate, not molecule count.** Percentage of cells
+   with at least one read is not concentration, and droplet single-cell data undercounts low-expressed
+   transcripts, so the absolute ADAR1 figures are lower bounds and the myocyte-versus-endothelial
+   contrast could be inflated by differences in capture efficiency between cell types. The comparison
+   holds only if SCN5A and ADAR1 are undercounted similarly, which I did not verify. **Falsified by:**
+   a protein-level or targeted-RNA measurement of ADAR1 in purified human cardiomyocytes showing enzyme
+   abundance sufficient for the editing rates this route needs.
+10. **My literature search is bounded, not exhaustive.** 26 PubMed queries, 1,410 unique records, every one classified and every human cardiac claim read individually, plus 6 registry queries.
+   I could not reach conference abstracts, company pipeline disclosures, or the two 2026 records
+   without abstracts (PMID 41707145 is an editorial). A cardiac pharmacodynamic result presented
+   at a meeting and not indexed would not appear. **Falsified by:** any published measurement of
+   oligonucleotide target engagement in human cardiac tissue.
+11. **One registry field name failure worth recording.** My first ClinicalTrials.gov queries
+   returned HTTP 400 because `Phases` and `Conditions` are not valid field names, `Phase` and
+   `Condition` are. A 400 is loud, but the same class of error returning an empty list instead
+   would have looked like absence of trials. I bisected every field before trusting any count, and
+   ran positive controls on every PubMed query before believing any zero.
+
+## What is settled and what is not
+
+Settled: the bystander enumeration is now complete and traceable to the reference sequence, with
+protein consequences and ClinVar status for every site. The protection scheme is designed and
+costed. The trade-off question has a definite answer, which is that no length optimises both. The
+rescue arithmetic now includes the bystander coupling term, which changes the sign of the result.
+The delivery question has a definite answer for this molecule class.
+
+One correction to the received position rather than a new finding: the protection scheme is widely
+treated as established, and it is not. It is one paper, one protected site, a tethered engineered
+enzyme, and a single discouraging observation about simultaneous mismatches.
+
+Not settled: whether the dominant-negative mechanism operates in a human heart. Whether any
+oligonucleotide engages a target in a human cardiomyocyte. Whether a chemically modified oligo can
+recover the binding energy that protection costs, which is the one route by which the trade-off
+verdict here could be overturned.
+
+
+## Where the single-cell and expression numbers come from
+
+The cardiac single-cell figures are detection rates across 3,517,306 annotated cells in 11 cardiac
+cell types, from the cardiac cell atlas data used throughout this project, tabulated in
+`ADAR_CARDIOMYOCYTE_EXPRESSION.csv`: for each cell type, the percentage of cells with at least one
+read for ADAR1 and for SCN5A, alongside cell counts. Bulk tissue values are GTEx v8 medians, ADAR at
+21.48 TPM in left ventricle and 3.18 TPM for ADAR2, tabulated in `gtex_adar_expression.csv` across
+all 54 tissues so the rank can be checked rather than taken on trust.
+
+## Data availability
+
+All primary evidence is public. The literature findings rest on the PubMed records cited by PMID
+throughout, retrieved through NCBI E-utilities; the search was 26 queries returning 1,410 unique
+records, and the queries and dates are as recorded in the methods above. Trial registry entries were
+read at ClinicalTrials.gov. The rescue arithmetic uses published co-expression current measurements
+from O'Neill et al., Genet Med 2022, PMID 35305865, Supplementary Table 1. Sequence context for the
+bystander analysis is RefSeq NM_000335.5. All derived tables are deposited as a single archive with a permanent identifier. The identifier is
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source.
+They comprise the per-adenosine bystander consequence calls, the delivery-evidence classification of
+every record read, the cardiac single-cell expression table, and the editing-versus-current curves.
+
+## Competing interests
+
+I am a heterozygous carrier of SCN5A p.Arg104Gln, the variant analysed here, and I have a clinical
+diagnosis of Brugada syndrome. No funding was received.
+
+Nothing in this paper is clinical guidance or a treatment recommendation for any person, including me.
+It reports why a therapeutic route does not currently work.
+
+## References
+
+Cited by PubMed identifier throughout. Every record below was retrieved from PubMed and read; the
+relevant finding from each is stated at the point of citation in the text rather than summarised here.
+
+1. PMID 11864915
+2. PMID 12479247
+3. PMID 33472516
+4. PMID 38437698
+5. PMID 35944903
+6. PMID 37224533
+7. PMID 41707138
+8. PMID 35305865
+9. PMID 40207629
+10. PMID 41821312
+11. PMID 34462437
+12. PMID 35269571
+13. PMID 40905134
+14. PMID 24549299
+15. PMID 20407428
+16. PMID 35256816
+17. PMID 21587236
+18. PMID 24744243
+19. PMID 41707145
+20. PMID 32782413 (Roberts TC, Langer R, Wood MJA. Advances in oligonucleotide drug delivery. *Nat Rev Drug Discov* 2020)
+21. PMID 18784278 (peptide-conjugated morpholino, cardiac dystrophin restoration in mdx mice)
+22. PMID 18545222 (sustained dystrophin expression from peptide-conjugated morpholino oligomers)
+23. PMID 19815563 (long-term improvement in mdx cardiomyopathy after peptide-conjugated morpholino therapy)

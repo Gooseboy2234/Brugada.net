@@ -1,0 +1,10 @@
+percent_cells_corrected,predicted_percent_of_normal,fold_vs_untreated,note
+5,37.4,1.1,
+10,40.7,1.19,
+20,47.3,1.39,Levy 2020 general cardiac survey
+30,53.9,1.58,
+50,67.1,1.96,
+60,73.7,2.16,Qi 2024 threshold that ELIMINATED the phenotype in mice
+75,83.5,2.45,
+99,99.3,2.91,Qi 2024 best observed correction in Scn5a
+100,100.0,2.93,

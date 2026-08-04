@@ -138,8 +138,10 @@ export default function Routes() {
         <img
           src="/figures/scn5a_splicing_measurement.png"
           alt="Panel a: splice-junction reads showing SCN5A in heart at a median of 0.00 percent against SCN1A in brain cortex at 1.40 percent. Panel b: isoform estimates, same ordering, smaller gap. Panel c: redirecting every non-productive transcript buys 1.06-fold against the 1.5-fold the route needs."
-          width={2423}
-          height={1799}
+          width={1400}
+          height={1039}
+          loading="lazy"
+          decoding="async"
         />
         <figcaption className="small" style={{ marginTop: "0.75rem" }}>
           Measured at 0.0045 percent across 827 human heart samples, against
@@ -200,8 +202,10 @@ export default function Routes() {
         <img
           src="/figures/PRIME_EDITING_FIGURE.png"
           alt="Panel a: prime editing recovers a canonical docking sequence where base editing has none. Panel b: each requirement in series removes almost every surviving off-target site, leaving three at one locus. Panel c: relaxing the docking rule multiplies nickable sites. Panel d: in the heart, published prime editing correction of 11 percent in vivo and 34.8 percent in vitro sits far below base editing at 99.2 percent, and below the 60 percent threshold."
-          width={1938}
-          height={2050}
+          width={1323}
+          height={1400}
+          loading="lazy"
+          decoding="async"
         />
         <figcaption className="small" style={{ marginTop: "0.75rem" }}>
           Prime editing is the better-designed option at this site and the worse
