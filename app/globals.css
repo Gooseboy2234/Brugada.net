@@ -151,12 +151,18 @@ a:hover { text-decoration-color: currentColor; }
 
 main { flex: 1; }
 
+/* The container matches the masthead so the text column starts under the
+   wordmark. Prose inside is held to a short measure; figures and tables are
+   allowed the full width. */
 .wrap {
-  max-width: var(--measure);
+  max-width: var(--wide);
   margin: 0 auto;
   padding: 3.5rem 1.5rem 5rem;
 }
-.wrap-wide { max-width: var(--wide); }
+.wrap > * { max-width: var(--measure); }
+.wrap > figure,
+.wrap > .tablewrap,
+.wrap > .readout { max-width: 46rem; }
 
 /* ---------- Type ---------- */
 
