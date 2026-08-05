@@ -82,25 +82,18 @@ export default function Science() {
         question rather than a theoretical one.
       </p>
 
-      <figure style={{ margin: "2rem 0" }}>
-        <img
-          src="/figures/FIG_EXPERIMENT_DESIGN.png"
-          alt="Panel a: bar chart showing 100 percent for two working alleles, 50 percent if one allele is silent, and 34.1 percent measured for R104Q. Panel b: two overlapping distributions showing that single cells overlap heavily so group means are the readout. Panel c: sample size required against assumed cell-to-cell variability."
-          width={1400}
-          height={1230}
-          loading="lazy"
-          decoding="async"
-        />
-        <figcaption className="small" style={{ marginTop: "0.75rem" }}>
-          The two hypotheses, the overlap between individual cells, and the
-          number of cells needed to tell them apart.{" "}
-          <span className="src">
-            <a href={MEASUREMENT.pmidUrl}>
-              Baseline from {MEASUREMENT.source}, PMID {MEASUREMENT.pmid}
-            </a>
-          </span>
-        </figcaption>
-      </figure>
+      <div className="notice">
+        <b>Corrected since: the figure that was here has been withdrawn.</b> It
+        drew the comparison as 50 percent expected against 34.1 percent
+        measured. Both numbers were rescaled by dividing the laboratory
+        measurement by two, which assumes the two copies add perfectly. The same
+        study measured the two-copy case directly and got 218.4 percent of one
+        copy rather than 200, so the correct pair is {MEASUREMENT.simpleLoss}{" "}
+        against {MEASUREMENT.rescaled}. The figure is held back until it can be
+        redrawn rather than shown with the superseded pair. The sample-size
+        panel it carried was computed against the old pair and has not been
+        recalculated.
+      </div>
 
       <div className="readout">
         <span className="readout-value">{MEASUREMENT.rescaled}%</span>

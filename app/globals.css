@@ -327,7 +327,7 @@ h3 {
   margin: 0.7rem 0 0;
 }
 
-/* The gap bar: 50 percent expected against 34.1 percent measured. */
+/* The gap bar: 45.8 percent expected against 31.3 percent measured. */
 .gapbar { margin: 1.5rem 0 0; }
 .gapbar-track {
   position: relative;

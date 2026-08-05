@@ -50,9 +50,15 @@ export const MEASUREMENT = {
   homozygous: 0.4,
   homozygousSd: 0.2,
   cellsHom: 22,
-  rescaled: 34.1,
-  simpleLoss: 50,
-  gapPoints: 15.9,
+  // Corrected 2026-08-04. The earlier figures rescaled the measured current to a
+  // two-allele heart by dividing by two, giving 34.1 against a 50.0 comparator.
+  // That assumed perfect additivity. O'Neill measured the two-allele case: their
+  // WT+WT cells read 218.4 +/- 7.7 percent of a single allele (n = 199), not 200.
+  // Dividing by 2.184 gives 31.3, and the comparator moves to 45.8. Source is the
+  // correction section of PUBLISH_2_BASE_EDITOR_SPECIFICITY.md.
+  rescaled: 31.3,
+  simpleLoss: 45.8,
+  gapPoints: 14.5,
   source: "O'Neill et al., Genet Med 2022",
   pmid: "35305865",
   pmidUrl: "https://pubmed.ncbi.nlm.nih.gov/35305865/",
@@ -208,7 +214,7 @@ export const ROUTES: Route[] = [
     blocker:
       "The reserve it would redirect measures 0.0045 percent, against roughly the 1.5-fold increase the route needed.",
     detail:
-      "The idea was to make the working copy produce more channel, and it was attractive because it was the only route that did not depend on resolving the mechanism first. It needs a pool of non-productive message to redirect. Across 827 human heart samples that pool is about 300 times smaller than the equivalent pool in brain, where the same strategy is already proven in children. The ceiling is a 1.06-fold increase, taking 34.1 percent to 36.0 percent.",
+      "The idea was to make the working copy produce more channel, and it was attractive because it was the only route that did not depend on resolving the mechanism first. It needs a pool of non-productive message to redirect. Across 827 human heart samples that pool is about 300 times smaller than the equivalent pool in brain, where the same strategy is already proven in children. The ceiling is a 1.06-fold increase, taking 31.3 percent to 33.1 percent.",
     falsifier:
       "Non-productive copies are destroyed by design, so the amount present understates the amount made. A heart-cell experiment with that destruction blocked would settle it.",
     paper: 6,
@@ -308,11 +314,11 @@ export const EXPERIMENTS: Experiment[] = [
     needs:
       "A patch clamp rig and an electrophysiologist for roughly 34 recording days. That time, not the reagents, is the real cost, and it is excluded from the figure above.",
     design:
-      "Three cell lines, not two. The patient's own cells, the same cells with the letter repaired, and a third line with one copy deliberately switched off. That third line is the point: it makes the 50 percent benchmark a measured value rather than a theoretical one.",
+      "Three cell lines, not two. The patient's own cells, the same cells with the letter repaired, and a third line with one copy deliberately switched off. That third line is the point: it makes the 45.8 percent benchmark a measured value rather than a theoretical one.",
     resolves:
       "The decisive comparison is the patient line against the switched-off line. If the broken copy behaves like a silent one, the two sit on top of each other. If it interferes, the patient line sits below.",
     kill:
-      "If the switched-off line does not read near 50 percent, the scale is broken and neither comparison means anything. That is the internal control, and it is stated in advance.",
+      "If the switched-off line does not read near 45.8 percent, the scale is broken and neither comparison means anything. That is the internal control, and it is stated in advance.",
   },
 ];
 

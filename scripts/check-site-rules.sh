@@ -57,11 +57,22 @@ fi
 # number gets published.
 report "Checking for superseded values"
 sup_fail=0
-check_absent() { # pattern, explanation
+check_absent() { # pattern, explanation, [allow-in-correction-notices]
   # Comment lines are excluded: recording that a value is retired is the
   # opposite of publishing it, and content.ts documents exactly that.
-  if hits=$(grep -rnE "$1" app/ 2>/dev/null | grep -v '\.old-backup' \
-      | grep -vE '^[^:]+:[0-9]+: *(//|\*|/\*)'); then
+  local hits
+  hits=$(grep -rnE "$1" app/ 2>/dev/null | grep -v '\.old-backup' \
+      | grep -vE '^[^:]+:[0-9]+: *(//|\*|/\*)') || true
+  # Some rules name a number in order to withdraw it. A page carrying an
+  # explicit "Corrected since" notice has to be able to say what it corrected,
+  # so those files are exempt from that rule and only that rule.
+  if [ "${3:-}" = "allow-corrections" ]; then
+    for f in $(grep -rl 'Corrected since' app/ 2>/dev/null || true); do
+      hits=$(printf '%s\n' "$hits" | grep -v "^$f:") || true
+    done
+  fi
+  hits=$(printf '%s\n' "$hits" | grep -v '^[[:space:]]*$') || true
+  if [ -n "$hits" ]; then
     echo "  FAIL: $2"; echo "$hits"; sup_fail=1
   fi
 }
@@ -81,6 +92,8 @@ check_absent '37 percent|\+37%|52\.3|13\.7 percent' "retired single-replicate sa
 check_absent 'orphaned buried charge|orphaned charge' "the unqualified orphaned-charge claim was retired"
 # Experiment Zero was answered; describing it as unrun is stale.
 check_absent 'zero off-target|no off-target site survives' "the prime-editing zero-off-target claim is withdrawn"
+# The rescaling that divided by two, rather than by the measured 2.184.
+check_absent '34\.1|15\.9' "the 34.1 rescaling and its 15.9-point gap were corrected to 31.3 and 14.5" allow-corrections
 [ $sup_fail -eq 0 ] && echo "  ok"
 [ $sup_fail -eq 1 ] && fail=1
 
