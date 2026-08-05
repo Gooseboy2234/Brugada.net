@@ -281,7 +281,8 @@ export const EXPERIMENTS: Experiment[] = [
       "minimum viable, using an engineered cell line rather than patient cells",
     weeks: 26,
     weeksNote: "26 weeks to the answer, 40 with function measured",
-    gates: "the base-editing manuscript, which currently contains no edited base",
+    gates:
+      "The base-editing manuscript, which at present contains no edited base at all. Everything in it is a prediction.",
     needs:
       "a molecular biology bench. No electrophysiologist and no stem cells are required.",
     design:
@@ -301,7 +302,8 @@ export const EXPERIMENTS: Experiment[] = [
     costNote: "45,342 if the cell lines already exist, 59,342 if they must be made",
     weeks: 42,
     weeksNote: "42 weeks",
-    gates: "four therapeutic routes, and the correction threshold for all of them",
+    gates:
+      "Four therapeutic routes, and the correction threshold for every one of them.",
     needs:
       "a patch clamp rig and an electrophysiologist for roughly 34 recording days. That time, not the reagents, is the real cost.",
     design:

@@ -32,8 +32,8 @@ export default function Limitations() {
       </p>
 
       <p className="small">
-        Applies to: the {MEASUREMENT.heterozygousPercent} percent figure, the{" "}
-        {MEASUREMENT.rescaledPercent} percent rescaling, and every statement
+        Applies to: the {MEASUREMENT.heterozygous} percent figure, the{" "}
+        {MEASUREMENT.rescaled} percent rescaling, and every statement
         about current.
       </p>
 

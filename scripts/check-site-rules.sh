@@ -58,7 +58,10 @@ fi
 report "Checking for superseded values"
 sup_fail=0
 check_absent() { # pattern, explanation
-  if hits=$(grep -rnE "$1" app/ 2>/dev/null | grep -v '\.old-backup'); then
+  # Comment lines are excluded: recording that a value is retired is the
+  # opposite of publishing it, and content.ts documents exactly that.
+  if hits=$(grep -rnE "$1" app/ 2>/dev/null | grep -v '\.old-backup' \
+      | grep -vE '^[^:]+:[0-9]+: *(//|\*|/\*)'); then
     echo "  FAIL: $2"; echo "$hits"; sup_fail=1
   fi
 }
@@ -70,8 +73,41 @@ check_absent 'nearest protein.changing[^.]*3 mismatch|MSH6[^.]*nearest' "MSH6 is
 check_absent '3\.71' "the +3.71 FEP value is contradicted inside its own paper"
 # The negative-result count is seven, not five.
 check_absent '[Ff]ive of the ten|5 of the ten' "the negative-result count is seven of ten"
+# The per-gene census table and the 8,157 / 8,142 / 791-gene pool are defective.
+check_absent '8,157|8,142|791 genes' "superseded census pool; the corrected figures are 7,661 across 622 genes"
+# Retired single-replicate mechanism numbers.
+check_absent '37 percent|\+37%|52\.3|13\.7 percent' "retired single-replicate salt-bridge and RMSF values"
+# The unqualified form of the central structural claim was retired.
+check_absent 'orphaned buried charge|orphaned charge' "the unqualified orphaned-charge claim was retired"
+# Experiment Zero was answered; describing it as unrun is stale.
+check_absent 'zero off-target|no off-target site survives' "the prime-editing zero-off-target claim is withdrawn"
 [ $sup_fail -eq 0 ] && echo "  ok"
 [ $sup_fail -eq 1 ] && fail=1
+
+# --- Rule: every content field a page references must exist. ---
+# A rename in content.ts silently renders as an empty string, which is how
+# "the 68.3 percent figure" became "the percent figure" on a live page.
+report "Checking content references resolve"
+if python3 - <<'PYEOF'
+import re, glob, sys
+s = open('app/content.ts').read()
+defined = {}
+for name in ['MEASUREMENT','CENSUS','COMPARATOR','PRECEDENT','SITE','VARIANT']:
+    m = re.search(r'export const %s = \{(.*?)\n\};' % name, s, re.S)
+    if m:
+        defined[name] = set(re.findall(r'^\s*(\w+):', m.group(1), re.M))
+bad = []
+for f in glob.glob('app/**/page.tsx', recursive=True):
+    t = open(f).read()
+    for obj, fields in defined.items():
+        for used in set(re.findall(r'\b%s\.(\w+)' % obj, t)):
+            if used not in fields:
+                bad.append(f"  {f}: {obj}.{used}")
+if bad:
+    print("\n".join(sorted(bad)))
+    sys.exit(1)
+PYEOF
+then echo "  ok"; else echo "FAIL: a page references a field that does not exist"; fail=1; fi
 
 # --- Rule: every nav entry resolves to a real page. ---
 report "Checking nav targets exist"

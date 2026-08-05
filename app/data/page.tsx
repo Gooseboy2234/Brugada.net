@@ -54,8 +54,8 @@ const GROUPS: { heading: string; note: string; rows: [string, string][] }[] = [
     note: "Behind the result that generalises beyond this gene.",
     rows: [
       [
-        "CLINVAR_CENSUS_BY_GENE",
-        "Genes carrying deposited functional evidence, with counts by classification status. An earlier build of this table over-counted; the defect and its arithmetic are recorded in a companion note rather than the file being replaced silently.",
+        "CLINVAR_FUNCTIONAL_CENSUS",
+        "Every variant carrying functional evidence deposited by a laboratory other than the one bulk depositor, one row each, with classification, submitter counts and the evidence codes. This is the corrected build.",
       ],
       [
         "CLINVAR_ACCESS_ROUTES",
@@ -120,7 +120,11 @@ export default function Data() {
               <tbody>
                 {g.rows.map(([name, what]) => (
                   <tr key={name}>
-                    <td className="mono">{name}</td>
+                    <td className="mono">
+                      <a href={`/tables/${name}.csv`} download>
+                        {name}.csv
+                      </a>
+                    </td>
                     <td>{what}</td>
                   </tr>
                 ))}
@@ -129,6 +133,16 @@ export default function Data() {
           </div>
         </section>
       ))}
+
+      <h2>One table is withheld, and why</h2>
+
+      <p>
+        The per-gene breakdown of the census is not offered. The build that
+        exists predates the correction described on{" "}
+        <a href="/census">the census page</a>, and a corrected per-gene table
+        has not been produced. Publishing the old one would put a file on this
+        site that the project has already shown to be wrong, so it waits.
+      </p>
 
       <h2>What is deliberately not here</h2>
 

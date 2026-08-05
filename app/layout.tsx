@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { NAV, SITE, VARIANT } from "./content";
+import { SITE, VARIANT } from "./content";
+import { Nav } from "./nav";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -87,13 +88,7 @@ export default function RootLayout({
               <a className="wordmark" href="/">
                 {SITE.domain}
               </a>
-              <nav className="nav" aria-label="Main">
-                {NAV.map((item) => (
-                  <a key={item.href} href={item.href}>
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
+              <Nav />
             </div>
           </header>
 

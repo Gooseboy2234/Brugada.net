@@ -276,6 +276,19 @@ h3 {
   font-weight: 500;
 }
 
+/* Where a link is the action rather than a reference, it needs to look like
+   one. The soft underline is right for prose and too quiet for a download or a
+   "read this" control. */
+.paper-meta a,
+.tablewrap a,
+.next a,
+.backlink a {
+  text-decoration-color: currentColor;
+  text-underline-offset: 0.18em;
+}
+.paper-meta a { font-weight: 560; color: var(--ink); }
+.tablewrap a { color: var(--ink); }
+
 /* Inline source. Every number gets one. */
 .src {
   font-family: var(--sans);
