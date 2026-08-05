@@ -174,9 +174,6 @@ const label: Record<Beat["outcome"], { text: string; cls: string }> = {
 };
 
 export default function History() {
-  const refuted = BEATS.filter((b) => b.outcome === "refuted").length;
-  const own = BEATS.filter((b) => b.self).length;
-
   return (
     <div className="wrap">
       <p className="eyebrow">What was tried</p>
@@ -186,9 +183,9 @@ export default function History() {
       </h1>
 
       <p className="standfirst">
-        A dated account of every idea pursued, and how each one ended. Of the
-        entries below, {refuted} were refuted outright and {own} were killed by
-        this project testing its own favourite ideas harder.
+        A dated account of every idea pursued, and how each one ended. Most were
+        refuted outright, and most of those were caught by this project testing
+        its own favourite ideas harder rather than by anyone else.
       </p>
 
       <div className="notice">

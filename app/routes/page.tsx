@@ -18,14 +18,12 @@ const stateClass: Record<string, string> = {
 };
 
 export default function Routes() {
-  const dead = ROUTES.filter((r) => r.state === "dead").length;
-
   return (
     <div className="wrap">
       <p className="eyebrow">Therapeutic routes</p>
 
       <h1 className="page-title">
-        Nine routes, ranked, including the {dead} that are closed.
+        Nine routes, ranked, including the two that are closed.
       </h1>
 
       <p className="standfirst">

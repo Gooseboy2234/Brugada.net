@@ -278,15 +278,15 @@ export const EXPERIMENTS: Experiment[] = [
     costMin: 17894,
     costFull: 27976,
     costNote:
-      "minimum viable, using an engineered cell line rather than patient cells",
+      "in its minimum viable form, using an engineered cell line rather than patient cells",
     weeks: 26,
     weeksNote: "26 weeks to the answer, 40 with function measured",
     gates:
       "The base-editing manuscript, which at present contains no edited base at all. Everything in it is a prediction.",
     needs:
-      "a molecular biology bench. No electrophysiologist and no stem cells are required.",
+      "A molecular biology bench, and nothing else. No electrophysiologist and no stem cells are required, which is the main reason this is the easier favour to ask.",
     design:
-      "Put the variant into a standard cell line, deliver the editor and guide, then sequence a designed 16-site panel to see whether the intended letter changed and whether anything else did.",
+      "Put the variant into a standard cell line, deliver the editor and guide, then sequence a designed 18-site panel to see whether the intended letter changed and whether anything else did.",
     resolves:
       "It fails fast and cheaply. A week-12 checkpoint costing about 4,000 dollars shows whether any editing happened at all, and if not the remaining money is never spent.",
     kill:
@@ -299,13 +299,14 @@ export const EXPERIMENTS: Experiment[] = [
       "Does the broken copy simply sit out, or does it sabotage the working one?",
     costMin: 45342,
     costFull: 59342,
-    costNote: "45,342 if the cell lines already exist, 59,342 if they must be made",
+    costNote:
+      "when the patient and corrected cell lines already exist, rising to 59,342 if they have to be made",
     weeks: 42,
     weeksNote: "42 weeks",
     gates:
       "Four therapeutic routes, and the correction threshold for every one of them.",
     needs:
-      "a patch clamp rig and an electrophysiologist for roughly 34 recording days. That time, not the reagents, is the real cost.",
+      "A patch clamp rig and an electrophysiologist for roughly 34 recording days. That time, not the reagents, is the real cost, and it is excluded from the figure above.",
     design:
       "Three cell lines, not two. The patient's own cells, the same cells with the letter repaired, and a third line with one copy deliberately switched off. That third line is the point: it makes the 50 percent benchmark a measured value rather than a theoretical one.",
     resolves:

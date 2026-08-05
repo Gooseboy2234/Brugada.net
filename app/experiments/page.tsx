@@ -43,9 +43,8 @@ export default function Experiments() {
           <div className="readout">
             <span className="readout-value">{usd(x.costMin)}</span>
             <p className="readout-label">
-              US dollars, {x.costNote}. {x.weeksNote}. Personnel salary is
-              excluded throughout, and for the mechanism experiment that
-              exclusion hides the largest real cost.
+              US dollars {x.costNote}. {x.weeksNote}. Consumables and outsourced
+              services only, with salary excluded.
             </p>
           </div>
 

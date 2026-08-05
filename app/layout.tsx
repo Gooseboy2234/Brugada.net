@@ -107,8 +107,8 @@ export default function RootLayout({
                 <b>This site cannot tell you your risk.</b> It explains what has
                 been measured about one variant. Risk assessment belongs to an
                 electrophysiologist who has your whole picture. Nothing here is
-                medical advice, and no result on this site should change anyone
-                &rsquo;s treatment.
+                medical advice, and no result on this site should change
+                anyone&rsquo;s treatment.
               </p>
               <p>
                 None of this work has been peer reviewed. Preprints are posted

@@ -135,15 +135,15 @@ export default function Home() {
       <h2>The papers</h2>
 
       <p>
-        There are {PAPERS.length}. {NEGATIVE_COUNT} of them report a negative
-        result, meaning the finding went against the idea being tested. One of
+        There are ten, and seven of them report a negative result, meaning the
+        finding went against the idea being tested. One of
         those closed a route this project had spent months on, and another found
         that a method I had been relying on missed three of the four cases it
         should have caught.
       </p>
 
       <p>
-        <a href="/papers">Read the {PAPERS.length} papers</a>, each with a
+        <a href="/papers">Read all ten</a>, each with a
         one-line plain summary.
       </p>
 
