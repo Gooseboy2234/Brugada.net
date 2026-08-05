@@ -29,6 +29,18 @@ const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
+    // One canonical host. www.brugada.net is a CNAME to a Cloudflare Tunnel
+    // whose origin still serves a placeholder written before this site existed,
+    // so anyone typing the www form is told the site is not here yet. Claiming
+    // the route here redirects it instead, without touching the tunnel that
+    // also carries ssh and compute.
+    if (url.hostname === "www.brugada.net") {
+      return Response.redirect(
+        `https://brugada.net${url.pathname}${url.search}`,
+        301,
+      );
+    }
+
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
       return handleImageOptimization(request, {

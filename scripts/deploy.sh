@@ -17,6 +17,10 @@ cd "$(dirname "$0")/.."
 
 WORKER=brugada-net
 DOMAINS=(brugada.net)
+# www is a CNAME to the Cloudflare Tunnel that also carries ssh and compute, so
+# it cannot become a custom domain without moving DNS. Claiming it as a Worker
+# route leaves the tunnel alone; worker/index.ts redirects it to the apex.
+ROUTES=('www.brugada.net/*')
 CONFIG=dist/server/wrangler.json
 DRY=""
 [ "${1:-}" = "--dry-run" ] && DRY="--dry-run"
@@ -51,13 +55,14 @@ PATCH
 
 echo
 echo "== Deploy =="
-DOMAIN_ARGS=()
-for d in "${DOMAINS[@]}"; do DOMAIN_ARGS+=(--domains "$d"); done
+TRIGGER_ARGS=()
+for d in "${DOMAINS[@]}"; do TRIGGER_ARGS+=(--domains "$d"); done
+for r in "${ROUTES[@]}"; do TRIGGER_ARGS+=(--routes "$r"); done
 
 WRANGLER_LOG_PATH=.wrangler/deploy-run.log \
   npx wrangler deploy \
     --config "$CONFIG" \
     --name "$WORKER" \
-    "${DOMAIN_ARGS[@]}" \
+    "${TRIGGER_ARGS[@]}" \
     --message "brugada.net rebuild: $(git rev-parse --short HEAD)" \
     $DRY
