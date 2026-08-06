@@ -73,7 +73,7 @@ const GROUPS: { heading: string; note: string; rows: [string, string][] }[] = [
     rows: [
       [
         "MODALITY_COMPARISON",
-        "The nine routes as assessed on 4 August 2026, with what each acts on, predicted current, best precedent, what gates it, and whether it depends on the unresolved mechanism. Two cautions. The tenth route, chaperone upregulation, was added on 6 August and is not in this table, it is on the routes page. And every figure in the predicted-current column was computed on the superseded rescaling withdrawn on the science page, so those percentages should not be reused, while the gates and precedents are unaffected.",
+        "Nine rows as assessed on 4 August 2026, with what each acts on, predicted current, best precedent, what gates it, and whether it depends on the unresolved mechanism. Three cautions, and they matter more than the table does. Two of the nine rows are current care rather than routes, an implanted defibrillator and existing drugs. Two therapeutic routes that the routes page ranks are missing from this file entirely: prime editing, which is ranked second, and chaperone upregulation, which was added on 6 August after this table was built. And every figure in the predicted-current column was computed on the superseded rescaling withdrawn on the science page, so those percentages should not be reused, while the gates and precedents are unaffected. The routes page, not this file, is the current list.",
       ],
       [
         "PE_VS_ABE_EFFICIENCY",

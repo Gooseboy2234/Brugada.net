@@ -105,7 +105,7 @@ if python3 - <<'PYEOF'
 import re, glob, sys
 s = open('app/content.ts').read()
 defined = {}
-for name in ['MEASUREMENT','CENSUS','COMPARATOR','PRECEDENT','SITE','VARIANT','DEPOSIT']:
+for name in ['MEASUREMENT','CENSUS','COMPARATOR','PRECEDENT','SITE','VARIANT','DEPOSIT','ROUTE_INVENTORY']:
     m = re.search(r'export const %s = \{(.*?)\n\};' % name, s, re.S)
     if m:
         defined[name] = set(re.findall(r'^\s*(\w+):', m.group(1), re.M))
@@ -173,6 +173,29 @@ elif [ -f "$DOI_FILE" ]; then
 else
   echo "  ok"
 fi
+
+# --- Rule: the served manuscripts match the authoritative copies. ---
+# Added 2026-08-06. Every rule above this one is scoped to app/, which is how
+# ten manuscripts under public/papers/ shipped outside the guard and seven of
+# them served the retired 34.1 rescaling for two days. This checks the copy
+# itself rather than searching it for phrases: a paper legitimately names a
+# retired figure inside its own dated correction table, so a string rule here
+# would fail on correct files. Byte identity against SUBMIT_THESE/papers/ is
+# the property that actually matters.
+report "Checking served manuscripts match SUBMIT_THESE/papers"
+if node scripts/sync-manuscripts.mjs --check; then :; else
+  echo "FAIL: run node scripts/sync-manuscripts.mjs"
+  fail=1
+fi
+
+# --- Rule: every manuscript names its version of record. ---
+report "Checking every manuscript carries a provenance header"
+prov_fail=0
+for f in public/papers/*.md; do
+  head -1 "$f" | grep -q '<!-- provenance' || { echo "  MISSING header: $f"; prov_fail=1; }
+  grep -q 'Version of record: 10\.5281/zenodo\.' "$f" || { echo "  MISSING DOI: $f"; prov_fail=1; }
+done
+if [ $prov_fail -eq 0 ]; then echo "  ok"; else fail=1; fi
 
 # --- Rule: no page says an identifier is pending that already exists. ---
 # Ten DOIs went live on /papers while the same page still said "DOI pending".

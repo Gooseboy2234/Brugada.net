@@ -153,7 +153,7 @@ export default function Science() {
       </p>
 
       <div className="next">
-        <a href="/routes">What this means for the ten routes</a>
+        <a href="/routes">What this means for the therapeutic routes</a>
         <a href="/experiments">The experiment that would settle it</a>
         <a href="/limitations">What none of this establishes</a>
       </div>

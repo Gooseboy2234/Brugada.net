@@ -175,7 +175,7 @@ export default function Home() {
 
       <div className="next">
         <a href="/science">The mechanism, and the open question</a>
-        <a href="/routes">All ten routes, including the dead ones</a>
+        <a href="/routes">The nine therapeutic routes, including the dead ones</a>
         <a href="/limitations">What this work cannot tell you</a>
       </div>
     </div>

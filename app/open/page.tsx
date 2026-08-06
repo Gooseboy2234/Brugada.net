@@ -89,9 +89,9 @@ export default function Open() {
       <h2>What is already closed</h2>
 
       <p>
-        {closed.length} of the ten routes are shut, and they are not waiting on
-        anything. Each was closed by a measurement rather than by losing
-        interest, and the measurement is named on{" "}
+        {closed.length} of the nine therapeutic routes are shut, and they are
+        not waiting on anything. Each was closed by a measurement rather than by
+        losing interest, and the measurement is named on{" "}
         <a href="/routes">the routes page</a>. A closed route is a result: it is
         one fewer thing for the next person to try.
       </p>

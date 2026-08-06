@@ -88,6 +88,80 @@ test("every declared identifier reaches a page", async () => {
   );
 });
 
+// The two lists both said ten and meant different sets. The page has to say so
+// in its own words, not only in a comment in content.ts.
+test("the routes page reconciles its ten against the project inventory", async () => {
+  const body = await html("/routes");
+  assert.match(body, /not the same ten/i, "no reconciliation section");
+  assert.match(
+    body,
+    /resolving the mechanism/i,
+    "the first non-therapeutic entry is not named",
+  );
+  assert.match(
+    body,
+    /publishing the ten papers/i,
+    "the second non-therapeutic entry is not named",
+  );
+  assert.match(
+    body,
+    /therapeutic routes/i,
+    "the page does not say what kind of list it is",
+  );
+});
+
+// The defect this guards: seven manuscripts under public/papers/ served the
+// retired rescaling for two days because nothing checked anything outside app/.
+// scripts/check-site-rules.sh checks them against SUBMIT_THESE; this checks the
+// rendered pages, which is what a reader actually opens.
+test("every rendered manuscript names its version of record", async () => {
+  const { MANUSCRIPTS } = await import("../scripts/manuscript-provenance.mjs");
+  assert.equal(MANUSCRIPTS.length, 10, "expected ten manuscripts");
+
+  for (const m of MANUSCRIPTS) {
+    const md = await readFile(
+      new URL(`../public/papers/${m.slug}.md`, import.meta.url),
+      "utf8",
+    );
+    const rendered = await readFile(
+      new URL(`../public/m/${m.slug}.html`, import.meta.url),
+      "utf8",
+    );
+
+    assert.ok(
+      md.includes(`Version of record: ${m.doi}`),
+      `${m.slug}.md does not name its version of record`,
+    );
+    assert.ok(
+      rendered.includes(m.doi),
+      `/m/${m.slug}.html does not carry ${m.doi}`,
+    );
+    // The interim banners are gone, and no manuscript may go back to telling a
+    // reader that everything in it is uncitable.
+    assert.doesNotMatch(
+      md,
+      /SUPERSEDED REVISION/,
+      `${m.slug}.md still carries the interim superseded banner`,
+    );
+
+    if (m.status === "corrective" || m.status === "additive") {
+      assert.ok(
+        md.includes("No version 2 has been deposited"),
+        `${m.slug}.md diverges from its record without saying so`,
+      );
+    }
+  }
+
+  const divergent = MANUSCRIPTS.filter((m) => m.status !== "in-sync");
+  assert.equal(divergent.length, 4, "expected four divergent manuscripts");
+  const flagged = [...content.matchAll(/postDeposit:\s*"(\w+)"/g)].length;
+  assert.equal(
+    flagged,
+    divergent.length,
+    "content.ts and the manuscripts disagree on which papers diverge",
+  );
+});
+
 test("no page describes a published identifier as pending", async () => {
   for (const path of ["/", "/papers", "/data", "/open"]) {
     const body = await html(path);

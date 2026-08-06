@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { COMPARATOR, PAPERS, PRECEDENT, ROUTES } from "../content";
+import {
+  COMPARATOR,
+  PAPERS,
+  PRECEDENT,
+  ROUTE_INVENTORY,
+  ROUTES,
+} from "../content";
 
 export const metadata: Metadata = {
   title: "Therapeutic routes",
   description:
-    "All ten routes considered for SCN5A R104Q, ranked, with the measurement that closed each dead one, and why Brugada syndrome has no cheap animal test.",
+    "The nine therapeutic routes considered for SCN5A R104Q, ranked, plus current care, with the measurement that closed each dead one and why Brugada syndrome has no cheap animal test.",
   alternates: { canonical: "/routes" },
 };
 
@@ -23,13 +29,16 @@ export default function Routes() {
       <p className="eyebrow">Therapeutic routes</p>
 
       <h1 className="page-title">
-        Ten routes, ranked, including the two that are closed.
+        {ROUTE_INVENTORY.therapeutic} therapeutic routes, ranked, including the
+        two that are closed.
       </h1>
 
       <p className="standfirst">
         Two of these are dead and one does not apply. They are listed anyway,
         each with the measurement that closed it. A page showing only the live
-        options would be advocacy rather than a record.
+        options would be advocacy rather than a record. Current care is listed
+        last, unranked, so that the comparison is on the page rather than
+        assumed.
       </p>
 
       <div className="notice">
@@ -75,7 +84,7 @@ export default function Routes() {
         the one used throughout this site.
       </p>
 
-      <h2>The ten routes</h2>
+      <h2>The routes</h2>
 
       {ROUTES.map((route) => {
         const paper = route.paper
@@ -129,16 +138,17 @@ export default function Routes() {
         );
       })}
 
-      <h2>The tenth route, and how it was missed</h2>
+      <h2>The route that was missed, and how</h2>
 
       <p>
-        This list carried nine routes until 6 August 2026. The tenth had been
-        sitting in this project&rsquo;s own literature corpus the whole time,
-        and was screened out by a filter built to select experimental protocols
-        rather than therapeutic strategies. The filter did what it was written
-        to do. The failure is that no separate pass ever asked whether a paper
-        described a route, so the list was never a survey of the field. It was
-        bounded by what one person thought to look for.
+        This list carried eight therapeutic routes until 6 August 2026. The
+        ninth, chaperone upregulation, had been sitting in this
+        project&rsquo;s own literature corpus the whole time, and was screened
+        out by a filter built to select experimental protocols rather than
+        therapeutic strategies. The filter did what it was written to do. The
+        failure is that no separate pass ever asked whether a paper described a
+        route, so the list was never a survey of the field. It was bounded by
+        what one person thought to look for.
       </p>
 
       <p>
@@ -146,9 +156,63 @@ export default function Routes() {
         closed it and neither opened it. The single measurement that would have
         settled it on efficiency sits in a paywalled paper with no copy in any
         repository, and six attempts to retrieve it failed, so the test was
-        never run rather than passed. A tenth route appearing this late is
-        evidence about the completeness of the other nine, and it is recorded
-        here for that reason as much as for its own.
+        never run rather than passed. A route appearing this late is evidence
+        about the completeness of the other eight, and it is recorded here for
+        that reason as much as for its own.
+      </p>
+
+      <h2>
+        Ten on this page, ten in the project record, and not the same ten
+      </h2>
+
+      <p>
+        This page lists {ROUTE_INVENTORY.listed} entries:{" "}
+        {ROUTE_INVENTORY.therapeutic} routes to a therapy, ranked, and current
+        care at the end. The project&rsquo;s own inventory of what stands in the
+        way, in the file called THE WALL, also counts{" "}
+        {ROUTE_INVENTORY.wallTotal}. Until 6 August 2026 both said ten and
+        neither said which ten, and the two sets were not identical. The
+        disagreement was about membership, not about counting, and it is written
+        out here rather than quietly aligned.
+      </p>
+
+      <p>
+        {ROUTE_INVENTORY.shared} entries are common to both lists: base editing,
+        prime editing, RNA editing, chaperone upregulation, raising output from
+        the healthy copy, silencing the broken copy, the folding corrector, and
+        gene replacement.
+      </p>
+
+      <p>
+        {ROUTE_INVENTORY.wallNonTherapeutic} entries in the project inventory
+        are not therapies, and they are deliberately not listed above. One is
+        resolving the mechanism, which is an experiment rather than a treatment
+        and is <a href="/experiments">costed in full on the experiments page</a>
+        . The other is publishing the ten papers, which is an act of record
+        keeping, was finished on 5 August 2026, and is{" "}
+        <a href="/papers">on the papers page</a>. A public page listing
+        publication as a way to treat a variant would be an odd thing to read,
+        which is why this list stays therapeutic and states the relationship
+        instead.
+      </p>
+
+      <p>
+        {ROUTE_INVENTORY.hereOnly} entries here are absent from that inventory.
+        One is the interaction drug at rank 5, which the route comparison table
+        carries and the inventory has no entry for. The other is current care,
+        which the inventory excludes from its count on purpose. So the
+        arithmetic runs {ROUTE_INVENTORY.shared} shared plus{" "}
+        {ROUTE_INVENTORY.hereOnly} here alone on this side, and{" "}
+        {ROUTE_INVENTORY.shared} shared plus{" "}
+        {ROUTE_INVENTORY.wallNonTherapeutic} non-therapeutic on that side.
+      </p>
+
+      <p>
+        The numbering differs as well, and that difference is not cosmetic. The
+        numbers in the project record are a stable inventory index, fixed when
+        each route was first written down. The ranks on this page are a ranking
+        by strength of the case. Chaperone upregulation is rank 4 here and route
+        10 there, and it is the same route.
       </p>
 
       <h2>The route that died on a measurement</h2>
