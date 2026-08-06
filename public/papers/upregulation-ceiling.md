@@ -1,3 +1,35 @@
+> ---
+>
+> # SUPERSEDED REVISION. THIS IS NOT THE PUBLISHED PAPER. DO NOT CITE ANY FIGURE IN IT.
+>
+> **Banner added 6 August 2026. Nothing below it has been altered.**
+>
+> **What this file is.** A copy of this manuscript that was taken for the website **before the corrections
+> of 4 August 2026 evening** and never resynced. The authoritative copy is
+> `SUBMIT_THESE/papers/PUBLISH_6_UPREGULATION_CEILING.md`, which is what the submission PDF was built from and what was
+> deposited. **The published version of record is `10.5281/zenodo.21799863`, published 5 August 2026 and resolving at https://doi.org/10.5281/zenodo.21799863**
+>
+> **How this happened, recorded because the same trap is still open.** `scripts/check-site-rules.sh`
+> guards against exactly this class of defect, but every one of its checks is scoped to `app/` only.
+> Nothing has ever checked `public/papers/`, so ten manuscripts shipped outside the guard. Seven of the
+> ten are stale. `CLAUDE.md` states that the copies under `brugada-net-production/{public,dist}/` are
+> byte-identical build artifacts; **for this file that statement is false**, and the fork is real.
+>
+> **It carries the retired 34.1 percent rescaling.** Every current figure in this file is built on
+> **34.1 percent** of a normal two-copy heart against a **50 percent** comparator for simple loss of one
+> allele. Both were obtained by dividing the measured 68.3 percent by two, which assumes the two alleles
+> add perfectly. O'Neill 2022 measured the two-allele case directly and read **218.4 percent of a single
+> allele, not 200**, so the divisor is 2.184: the baseline is **31.3 percent**, the comparator is
+> **45.8 percent**, and the gap between them is **14.5 points**, not 15.9. **The two retired figures
+> travel together.** Reading 31.3 against 50 is a third wrong answer, not a partial fix. Every derived
+> row, fold-gain and threshold in this file inherits the error, including ones that do not themselves
+> print "34.1".
+>
+> **Nothing here is deleted.** The text is left exactly as it was, per the standing convention that
+> retirement carries a reason and a date rather than a silent edit. Read the published record instead.
+>
+> ---
+
 # SCN5A lacks the non-productive mRNA reserve that antisense upregulation therapy would need in human heart
 
 **Ethan Bradley**

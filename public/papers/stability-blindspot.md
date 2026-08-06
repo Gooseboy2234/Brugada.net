@@ -1,3 +1,36 @@
+> ---
+>
+> # SUPERSEDED REVISION. THIS IS NOT THE PUBLISHED PAPER. DO NOT CITE ANY FIGURE IN IT.
+>
+> **Banner added 6 August 2026. Nothing below it has been altered.**
+>
+> **What this file is.** A copy of this manuscript that was taken for the website **before the corrections
+> of 4 August 2026 evening** and never resynced. The authoritative copy is
+> `SUBMIT_THESE/papers/PUBLISH_1_STABILITY_BLINDSPOT.md`, which is what the submission PDF was built from and what was
+> deposited. **The published version of record is `10.5281/zenodo.21799855`, published 5 August 2026 and resolving at https://doi.org/10.5281/zenodo.21799855**
+>
+> **How this happened, recorded because the same trap is still open.** `scripts/check-site-rules.sh`
+> guards against exactly this class of defect, but every one of its checks is scoped to `app/` only.
+> Nothing has ever checked `public/papers/`, so ten manuscripts shipped outside the guard. Seven of the
+> ten are stale. `CLAUDE.md` states that the copies under `brugada-net-production/{public,dist}/` are
+> byte-identical build artifacts; **for this file that statement is false**, and the fork is real.
+>
+> **Two specific claims in this file were withdrawn before publication and are still printed below.**
+>
+> 1. The abstract quotes a free-energy-perturbation result of **+3.71 +/- 0.30 kcal/mol**. The paper never
+>    ran an FEP calculation; its own section 5 says one is "the proper test". The published version
+>    replaces it with the value the paper's own table reports, **+1.43 to +1.45**, third of 20 at that
+>    position.
+> 2. The **cavity-refill mechanism** is argued here as the explanation for why folding-stability
+>    prediction misses these variants. It was **refuted by this project's own companion paper** (paper 8)
+>    and the published version carries a dated correction saying so. The measurement stands, three misses
+>    out of four against a pre-specified answer key; the explanation does not.
+>
+> **Nothing here is deleted.** The text is left exactly as it was, per the standing convention that
+> retirement carries a reason and a date rather than a silent edit. Read the published record instead.
+>
+> ---
+
 # Folding-stability prediction misses three of four known loss-of-function variants in the SCN5A N-terminal domain
 
 **Ethan Bradley**

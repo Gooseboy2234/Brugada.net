@@ -22,9 +22,15 @@ The design document. One file.
 
 ### papers/
 The ten preprints, plus `PAPER_READINESS.csv` which records every convention check each one passed.
-These have not been posted yet, so they have no DOIs. When they are posted, each gets a DOI that belongs
-on the site's papers page. Seven of the ten are negative results and the brief explains why that is the
-point rather than a weakness.
+~~These have not been posted yet, so they have no DOIs. When they are posted, each gets a DOI that belongs
+on the site's papers page.~~ **Corrected 6 August 2026: they are posted.** All ten papers and the data
+deposit went live on Zenodo on **5 August 2026** — eleven records, verified against the Zenodo API on
+6 August. Data deposit `10.5281/zenodo.21799234`; papers 1–10 at `21799855`, `21799850`, `21799857`,
+`21799859`, `21799861`, `21799863`, `21799865`, `21799867`, `21799869`, `21799871`, all **version**
+identifiers. That is route 9, and route 9 is **done**. Seven of the ten are negative results and the brief
+explains why that is the point rather than a weakness. **One caution:** the local copies of papers 4, 7 and
+8 were edited on 6 August and are now ahead of their published versions — see
+`SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md` before citing a local paper as the published record.
 
 ### science/
 The working documents behind the papers. These are longer and more detailed than the papers and are the
@@ -32,9 +38,27 @@ right source for site prose about mechanism and routes.
 - `WHY_THIS_MATTERS.md` is the framing document. It states who the work is for, and it contains the
   correction that matters most: this is for carriers who do NOT qualify for an implanted device and have
   no protection at all, not for people who already have one.
-- `MODALITY_COMPARISON.md` and `CURE_ROUTE_MAP.md` cover all the therapeutic routes with what blocks each.
-- `BASE_EDITING_DESIGN.md` and `PRIME_EDITING_DESIGN.md` are the two live routes.
-- `RNA_EDITING_DESIGN.md` and `UPREGULATION_ANALYSIS.md` are the conditional and dead ones.
+- **`THE_WALL.md` is the authority on the route inventory and its tally.** Ten routes: two live (1, 2),
+  four closed (4, 5, 6, 7), two conditional (3, 10), one answered in a cell line and open for
+  cardiomyocytes (8), and one — publication — done (9). 2 + 4 + 2 + 1 + 1 = 10. If any other file
+  disagrees, `THE_WALL.md` section 1 wins.
+- `MODALITY_COMPARISON.md` and `CURE_ROUTE_MAP.md` cover the therapeutic routes with what blocks each.
+  **Both carry retired enumerations and both now carry dated correction headers saying so** —
+  `MODALITY_COMPARISON.md` is a 4 August ranking with a 6 August correction block, and
+  `CURE_ROUTE_MAP.md` is a 27 July snapshot marked SUPERSEDED. Neither is the route inventory.
+- `ROUTE_10_MOG1.md` is the tenth route, chaperone upregulation via AAV9-*MOG1*, added 6 August 2026.
+  **Record it as conditional, never as promising.** Its assessment is `THE_WALL.md` section 1.3.
+- `BASE_EDITING_DESIGN.md` (route 1) and `RNA_EDITING_DESIGN.md` (route 2) are the two live routes.
+- `PRIME_EDITING_DESIGN.md` (route 3) is conditional — better designed than base editing and worse
+  delivered. `UPREGULATION_ANALYSIS.md` (route 5) is closed on measurement.
+
+*Corrected 6 August 2026. The three bullets above previously read: "`MODALITY_COMPARISON.md` and
+`CURE_ROUTE_MAP.md` cover all the therapeutic routes with what blocks each. `BASE_EDITING_DESIGN.md` and
+`PRIME_EDITING_DESIGN.md` are the two live routes. `RNA_EDITING_DESIGN.md` and `UPREGULATION_ANALYSIS.md`
+are the conditional and dead ones." Two errors. **The live pair is base editing and RNA editing, not base
+editing and prime editing** — prime editing is route 3 and conditional, and RNA editing is route 2 and
+live. And `MODALITY_COMPARISON.md` and `CURE_ROUTE_MAP.md` did not cover "all" the routes: neither has a
+row for the tenth, and `CURE_ROUTE_MAP.md` enumerates a retired seven.*
 - `CLINVAR_CENSUS.md` is the database finding that generalises beyond this variant.
 - `OFFTARGET_REFINEMENT.md` is the safety analysis.
 - `STATE_OF_THE_UNION.md` is the most recent overall status.
@@ -43,6 +67,15 @@ right source for site prose about mechanism and routes.
 Tables a reader might want to download. `SCN5A_R104Q_DATA_DEPOSIT.tgz` is the packaged archive intended
 for a repository deposit; once deposited it will have its own permanent identifier, and that identifier
 is what the site should cite rather than hosting the tables directly.
+
+
+**One caution before anyone recomputes a number from these tables.** Several files store one row per
+guide-and-position pair rather than one row per position, because the same genomic position can be reached by
+more than one guide. Counting rows therefore gives a larger number than counting positions, and the two
+answer different questions. The splice-site table is the clearest case: 18,422 rows correspond to 1,184
+distinct positions. Every count quoted in the papers is a count of distinct positions. If a recomputed figure
+comes out several times too large, this is almost certainly why. This project made that exact mistake once
+and published the row count in three documents before catching it.
 
 ### figures/
 Publication figures. All were generated from the tables in `data/` and are safe to use on the site with
@@ -69,10 +102,17 @@ are the highest-value pages on the site for reaching anyone who could actually r
   corrected up to 99.20 percent of transcripts of this same gene in a mouse, and above 60 percent
   correction the disease signature disappeared. That mouse carried a different variant with the opposite
   effect, so the mechanism transfer is not established.
-- Why nobody has done this for Brugada: the disease has no cheap animal test. Its signature depends on a
-  voltage gradient across the right ventricular wall that mouse hearts do not reproduce.
-- The two experiments that would move it: 16,670 US dollars and 26 weeks for the editing validation,
-  45,342 dollars and 42 weeks for the mechanism question. Details in `protocols/`.
+- Why nobody has done this for Brugada: the disease has no cheap animal test **available to this project**.
+  Its signature depends on a voltage gradient across the right ventricular wall that mouse hearts do not
+  reproduce. **Narrowed 6 August 2026 — this line used to stop at "no cheap animal test" and imply none
+  exists.** One does: Yu et al. 2022 (PMID 35675436) built a *Scn5a*<sup>G1746R/+</sup> knock-in mouse with
+  a J wave, ventricular tachyarrhythmias and sudden death. What survives is the word *cheap* — that endpoint
+  needs a funded laboratory to build a variant-specific knock-in line, which for R104Q does not exist and
+  nobody is building. Full revision in `science/THE_WALL.md` section 4, which keeps both versions.
+- The two experiments that would move it: **17,894** US dollars and 26 weeks for the editing validation,
+  45,342 dollars and 42 weeks for the mechanism question. Details in `protocols/`. **Corrected 6 August
+  2026: the editing figure read 16,670.** Adding *OBSCN* and *JPH2* to the sequencing panel took it from 16
+  sites to 18 and raised the minimum-viable cost; the full arm moves from 26,752 to 27,976.
 
 ---
 

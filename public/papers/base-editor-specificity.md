@@ -1,3 +1,43 @@
+> ---
+>
+> # SUPERSEDED REVISION. THIS IS NOT THE PUBLISHED PAPER. DO NOT CITE ANY FIGURE IN IT.
+>
+> **Banner added 6 August 2026. Nothing below it has been altered.**
+>
+> **What this file is.** A copy of this manuscript that was taken for the website **before the corrections
+> of 4 August 2026 evening** and never resynced. The authoritative copy is
+> `SUBMIT_THESE/papers/PUBLISH_2_BASE_EDITOR_SPECIFICITY.md`, which is what the submission PDF was built from and what was
+> deposited. **The published version of record is `10.5281/zenodo.21799850`, published 5 August 2026 and resolving at https://doi.org/10.5281/zenodo.21799850**
+>
+> **How this happened, recorded because the same trap is still open.** `scripts/check-site-rules.sh`
+> guards against exactly this class of defect, but every one of its checks is scoped to `app/` only.
+> Nothing has ever checked `public/papers/`, so ten manuscripts shipped outside the guard. Seven of the
+> ten are stale. `CLAUDE.md` states that the copies under `brugada-net-production/{public,dist}/` are
+> byte-identical build artifacts; **for this file that statement is false**, and the fork is real.
+>
+> **It carries the retired 34.1 percent rescaling.** Every current figure in this file is built on
+> **34.1 percent** of a normal two-copy heart against a **50 percent** comparator for simple loss of one
+> allele. Both were obtained by dividing the measured 68.3 percent by two, which assumes the two alleles
+> add perfectly. O'Neill 2022 measured the two-allele case directly and read **218.4 percent of a single
+> allele, not 200**, so the divisor is 2.184: the baseline is **31.3 percent**, the comparator is
+> **45.8 percent**, and the gap between them is **14.5 points**, not 15.9. **The two retired figures
+> travel together.** Reading 31.3 against 50 is a third wrong answer, not a partial fix. Every derived
+> row, fold-gain and threshold in this file inherits the error, including ones that do not themselves
+> print "34.1".
+>
+> **It also carries the superseded off-target count.** The data availability section below says
+> **16 protein-changing** off-target sites. The body and Table 3 of the published version both say
+> **22 missense / 26 protein-changing**.
+>
+> **The rescue table below is wrong throughout.** Its per-cell gains read **2.93-fold** (dominant
+> negative) and **2.00-fold** (haploinsufficiency). On the corrected divisor they are **3.20-fold** and
+> **2.18-fold**, and every intermediate row changes with them.
+>
+> **Nothing here is deleted.** The text is left exactly as it was, per the standing convention that
+> retirement carries a reason and a date rather than a silent edit. Read the published record instead.
+>
+> ---
+
 # Editability-scored off-target counting, and the specificity cost of PAM relaxation, in adenine base editor design: SCN5A p.Arg104Gln as a worked example
 
 **Ethan Bradley**

@@ -1,3 +1,32 @@
+> ---
+>
+> # SUPERSEDED REVISION. THIS IS NOT THE PUBLISHED PAPER. DO NOT CITE ANY FIGURE IN IT.
+>
+> **Banner added 6 August 2026. Nothing below it has been altered.**
+>
+> **What this file is.** A copy of this manuscript that was taken for the website **before the corrections
+> of 4 August 2026 evening** and never resynced. The authoritative copy is
+> `SUBMIT_THESE/papers/PUBLISH_7_DOMINANT_NEGATIVE_DEGENERACY.md`, which is what the submission PDF was built from and what was
+> deposited. **The published version of record is `10.5281/zenodo.21799865`, published 5 August 2026 and resolving at https://doi.org/10.5281/zenodo.21799865**
+>
+> **How this happened, recorded because the same trap is still open.** `scripts/check-site-rules.sh`
+> guards against exactly this class of defect, but every one of its checks is scoped to `app/` only.
+> Nothing has ever checked `public/papers/`, so ten manuscripts shipped outside the guard. Seven of the
+> ten are stale. `CLAUDE.md` states that the copies under `brugada-net-production/{public,dist}/` are
+> byte-identical build artifacts; **for this file that statement is false**, and the fork is real.
+>
+> **It predates the Tano 2026 integration.** Tano et al. 2026 (PMID 41582807) shows that dimer
+> formation and the dominant-negative effect come apart: p.G833R dimerises with wild type by both
+> co-immunoprecipitation and proximity ligation yet exerts no dominant-negative and no coupled-gating
+> effect. The authoritative local copy carries a new abstract sentence, a methods provenance note, a new
+> results section and a sixth experimental arm on the strength of it. None of that is below. That work
+> also postdates the DOI; see `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md`.
+>
+> **Nothing here is deleted.** The text is left exactly as it was, per the standing convention that
+> retirement carries a reason and a date rather than a silent edit. Read the published record instead.
+>
+> ---
+
 # Peak current alone cannot separate trafficking arrest from coupled gating in SCN5A dominant-negative variants
 
 **Ethan Bradley**

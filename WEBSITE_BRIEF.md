@@ -128,13 +128,19 @@ difference between one paper and five years, and it will not change.
 ```
 /                     what the variant is, what is known, who wrote this
 /science              the mechanism, the open question, the structural argument
-/routes               all six therapeutic routes, ranked, with blockers
+/routes               all ten therapeutic routes, ranked, with blockers
 /papers               ten preprints with DOIs and one-line plain summaries
 /experiments          the two costed protocols, for anyone who could run them
 /data                 the deposited tables with the archive DOI
 /for-carriers         plain language, no jargon, what to ask an EP
 /limitations          what this work cannot tell you
 ```
+
+*Corrected 6 August 2026: the `/routes` line read "all six therapeutic routes". The count is **ten**.
+The tenth, chaperone upregulation via AAV9-*MOG1*, was added on 6 August 2026 and is recorded as
+conditional, never as promising. The inventory and tally are `WEBSITE_HANDOFF/science/THE_WALL.md`
+section 1: two live (1, 2), four closed (4, 5, 6, 7), two conditional (3, 10), one answered in a cell
+line and open for cardiomyocytes (8), one — publication — done (9); 2 + 4 + 2 + 1 + 1 = 10.*
 
 The `/limitations` page is not a disclaimer page. It is a scientific page listing what each result cannot
 establish. Having it as a top-level link rather than fine print is the point.

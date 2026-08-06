@@ -1,3 +1,29 @@
+> ---
+>
+> # SUPERSEDED REVISION. THIS IS NOT THE PUBLISHED PAPER. DO NOT CITE ANY FIGURE IN IT.
+>
+> **Banner added 6 August 2026. Nothing below it has been altered.**
+>
+> **What this file is.** A copy of this manuscript that was taken for the website **before the corrections
+> of 4 August 2026 evening** and never resynced. The authoritative copy is
+> `SUBMIT_THESE/papers/PUBLISH_3_CLINVAR_FUNCTIONAL_EVIDENCE.md`, which is what the submission PDF was built from and what was
+> deposited. **The published version of record is `10.5281/zenodo.21799857`, published 5 August 2026 and resolving at https://doi.org/10.5281/zenodo.21799857**
+>
+> **How this happened, recorded because the same trap is still open.** `scripts/check-site-rules.sh`
+> guards against exactly this class of defect, but every one of its checks is scoped to `app/` only.
+> Nothing has ever checked `public/papers/`, so ten manuscripts shipped outside the guard. Seven of the
+> ten are stale. `CLAUDE.md` states that the copies under `brugada-net-production/{public,dist}/` are
+> byte-identical build artifacts; **for this file that statement is false**, and the fork is real.
+>
+> **It carries at least one superseded census figure.** The retired pool sizes **8,157 / 8,142 / 791
+> genes** were replaced by **7,661 records across 622 genes**; one instance of the retired figure
+> survives in the text below.
+>
+> **Nothing here is deleted.** The text is left exactly as it was, per the standing convention that
+> retirement carries a reason and a date rather than a silent edit. Read the published record instead.
+>
+> ---
+
 # Deposited functional evidence in ClinVar is searchable only by exact term, and no surveyed tool reads it
 
 **Ethan Bradley**

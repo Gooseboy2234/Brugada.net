@@ -25,6 +25,34 @@
     reasoning and any errors are both visible. Treat every claim as provisional.
     <a href="/papers/stability-blindspot.md">Plain markdown source</a>.
   </div>
+<blockquote>
+<hr>
+<h1>SUPERSEDED REVISION. THIS IS NOT THE PUBLISHED PAPER. DO NOT CITE ANY FIGURE IN IT.</h1>
+<p><strong>Banner added 6 August 2026. Nothing below it has been altered.</strong></p>
+<p><strong>What this file is.</strong> A copy of this manuscript that was taken for the website <strong>before the corrections
+of 4 August 2026 evening</strong> and never resynced. The authoritative copy is
+<code>SUBMIT_THESE/papers/PUBLISH_1_STABILITY_BLINDSPOT.md</code>, which is what the submission PDF was built from and what was
+deposited. <strong>The published version of record is <code>10.5281/zenodo.21799855</code>, published 5 August 2026 and resolving at <a href="https://doi.org/10.5281/zenodo.21799855">https://doi.org/10.5281/zenodo.21799855</a></strong></p>
+<p><strong>How this happened, recorded because the same trap is still open.</strong> <code>scripts/check-site-rules.sh</code>
+guards against exactly this class of defect, but every one of its checks is scoped to <code>app/</code> only.
+Nothing has ever checked <code>public/papers/</code>, so ten manuscripts shipped outside the guard. Seven of the
+ten are stale. <code>CLAUDE.md</code> states that the copies under <code>brugada-net-production/{public,dist}/</code> are
+byte-identical build artifacts; <strong>for this file that statement is false</strong>, and the fork is real.</p>
+<p><strong>Two specific claims in this file were withdrawn before publication and are still printed below.</strong></p>
+<ol>
+<li>The abstract quotes a free-energy-perturbation result of <strong>+3.71 +/- 0.30 kcal/mol</strong>. The paper never
+ran an FEP calculation; its own section 5 says one is &quot;the proper test&quot;. The published version
+replaces it with the value the paper&#39;s own table reports, <strong>+1.43 to +1.45</strong>, third of 20 at that
+position.</li>
+<li>The <strong>cavity-refill mechanism</strong> is argued here as the explanation for why folding-stability
+prediction misses these variants. It was <strong>refuted by this project&#39;s own companion paper</strong> (paper 8)
+and the published version carries a dated correction saying so. The measurement stands, three misses
+out of four against a pre-specified answer key; the explanation does not.</li>
+</ol>
+<p><strong>Nothing here is deleted.</strong> The text is left exactly as it was, per the standing convention that
+retirement carries a reason and a date rather than a silent edit. Read the published record instead.</p>
+<hr>
+</blockquote>
 <h1>Folding-stability prediction misses three of four known loss-of-function variants in the SCN5A N-terminal domain</h1>
 <p><strong>Ethan Bradley</strong></p>
 <p>Independent researcher, no institutional affiliation</p>
