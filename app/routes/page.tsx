@@ -4,7 +4,7 @@ import { COMPARATOR, PAPERS, PRECEDENT, ROUTES } from "../content";
 export const metadata: Metadata = {
   title: "Therapeutic routes",
   description:
-    "All nine routes considered for SCN5A R104Q, ranked, with the measurement that closed each dead one, and why Brugada syndrome has no cheap animal test.",
+    "All ten routes considered for SCN5A R104Q, ranked, with the measurement that closed each dead one, and why Brugada syndrome has no cheap animal test.",
   alternates: { canonical: "/routes" },
 };
 
@@ -23,7 +23,7 @@ export default function Routes() {
       <p className="eyebrow">Therapeutic routes</p>
 
       <h1 className="page-title">
-        Nine routes, ranked, including the two that are closed.
+        Ten routes, ranked, including the two that are closed.
       </h1>
 
       <p className="standfirst">
@@ -75,7 +75,7 @@ export default function Routes() {
         the one used throughout this site.
       </p>
 
-      <h2>The nine routes</h2>
+      <h2>The ten routes</h2>
 
       {ROUTES.map((route) => {
         const paper = route.paper
@@ -128,6 +128,28 @@ export default function Routes() {
           </div>
         );
       })}
+
+      <h2>The tenth route, and how it was missed</h2>
+
+      <p>
+        This list carried nine routes until 6 August 2026. The tenth had been
+        sitting in this project&rsquo;s own literature corpus the whole time,
+        and was screened out by a filter built to select experimental protocols
+        rather than therapeutic strategies. The filter did what it was written
+        to do. The failure is that no separate pass ever asked whether a paper
+        described a route, so the list was never a survey of the field. It was
+        bounded by what one person thought to look for.
+      </p>
+
+      <p>
+        Two checks were commissioned to close the new route cheaply. Neither
+        closed it and neither opened it. The single measurement that would have
+        settled it on efficiency sits in a paywalled paper with no copy in any
+        repository, and six attempts to retrieve it failed, so the test was
+        never run rather than passed. A tenth route appearing this late is
+        evidence about the completeness of the other nine, and it is recorded
+        here for that reason as much as for its own.
+      </p>
 
       <h2>The route that died on a measurement</h2>
 

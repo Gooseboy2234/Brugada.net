@@ -6,7 +6,15 @@
 // Source hierarchy inside WEBSITE_HANDOFF/, because its documents disagree
 // with each other and some are stale:
 //   1. science/WHY_THIS_MATTERS.md   authoritative on framing and comparator
-//   2. science/MODALITY_COMPARISON.md   authoritative on routes (nine, 2026-08-04)
+//   2. science/MODALITY_COMPARISON.md   authoritative on routes one to nine.
+//      Corrected 2026-08-06: it was written 2026-08-04, said nine routes, and
+//      its predicted-current column is still computed on the retired 34.1
+//      baseline even though its own header carries the corrected 31.3. Read its
+//      dated correction block before trusting any percentage in its table.
+//   2b. science/ROUTE_10_MOG1.md   authoritative on route ten, chaperone
+//      upregulation, added 2026-08-06 and itself corrected in five places the
+//      same day by SESSION_ARCHIVE_20260804/data/MOG1_RESCUE_SPECTRUM.md and
+//      MOG1_HEADROOM_ANALYSIS.md. Record it as conditional, never as promising.
 //   3. science/OFFTARGET_REFINEMENT.md  supersedes BASE_EDITING_DESIGN.md on
 //      every off-target count, including the nearest protein-changing site
 //   4. protocols/EXPERIMENT_PROTOCOLS.md  authoritative on the two experiments
@@ -179,7 +187,13 @@ export type Route = {
   paper?: number;
 };
 
-// Nine routes, from MODALITY_COMPARISON.md (2026-08-04).
+// Ten routes. Ranks 1 to 3 and 5 to 9 are from MODALITY_COMPARISON.md
+// (2026-08-04), which assessed nine including current care. Rank 4, chaperone
+// upregulation, was added 2026-08-06 from ROUTE_10_MOG1.md. It was in this
+// project's own literature corpus throughout and was screened out by a filter
+// selecting experimental protocols rather than therapeutic strategies, so the
+// list was never complete, it was bounded by what one person thought to look
+// for. Every rank below 4 moved down by one on that date.
 export const ROUTES: Route[] = [
   {
     rank: 1,
@@ -220,6 +234,17 @@ export const ROUTES: Route[] = [
   },
   {
     rank: 4,
+    name: "Chaperone upregulation",
+    state: "conditional",
+    blocker:
+      "It has been shown to rescue exactly two variants of this channel, both from one laboratory, and both of them fail to reach the cell surface. No study has tested it on a variant that reaches the surface normally, which is the case that has to be ruled out here.",
+    detail:
+      "A helper protein called MOG1 escorts the sodium channel to the cell surface, and unlike the channel gene it is small enough to fit the standard delivery vehicle. In a mouse carrying a different Brugada variant, delivering extra of it raised the current, abolished the disease signature and blocked the arrhythmia. It never has to tell the two copies apart, which is the difficulty that keeps allele-specific silencing weak. It is recorded as conditional rather than promising, for three reasons. It turns on the same unresolved mechanism as the routes above, and in the case where the broken copy is both held back inside the cell and interfering at the surface, escorting more of it out lowers the current instead of raising it, at a threshold that sits inside the range this approach can reach. The gene behind the helper protein was moved by ClinGen on 31 October 2025 from disputed to refuted as a cause of Brugada syndrome, which leaves the case resting on two laboratory papers with no supporting human genetic evidence at all. And the mouse paper is paywalled with no copy in any repository, so every result attributed to it here is read from its abstract.",
+    falsifier:
+      "The same mechanism experiment decides it. If the broken copy reaches the cell surface in normal proportion, this helps for any increase it delivers. If it is heavily held back inside the cell, it can be worse than doing nothing.",
+  },
+  {
+    rank: 5,
     name: "Interaction drug",
     state: "conditional",
     blocker:
@@ -228,7 +253,7 @@ export const ROUTES: Route[] = [
       "If the broken copy interferes with the working one at the cell surface, then the thing to target is the interaction itself rather than the channel. There is no published structure of that interface to build on, so this branch starts closer to zero than it feels.",
   },
   {
-    rank: 5,
+    rank: 6,
     name: "Raising output from the healthy copy",
     state: "dead",
     blocker:
@@ -240,7 +265,7 @@ export const ROUTES: Route[] = [
     paper: 6,
   },
   {
-    rank: 6,
+    rank: 7,
     name: "Silencing the broken copy",
     state: "weak",
     blocker:
@@ -249,7 +274,7 @@ export const ROUTES: Route[] = [
       "Shutting off only the broken copy means distinguishing two sequences differing by one letter, and this particular substitution is the most conservative one available.",
   },
   {
-    rank: 7,
+    rank: 8,
     name: "Folding corrector",
     state: "dead",
     blocker: "Refuted by this project's own calibration test.",
@@ -260,7 +285,7 @@ export const ROUTES: Route[] = [
     paper: 1,
   },
   {
-    rank: 8,
+    rank: 9,
     name: "Gene replacement",
     state: "not applicable",
     blocker:

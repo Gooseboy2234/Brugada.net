@@ -56,9 +56,16 @@ argument, and it comes from the deposited cryo-EM coordinates rather than a mode
 The open question, which is the honest centre of the whole project: does the broken copy simply fail to
 reach the membrane, leaving one working copy and roughly half the normal current, or does it actively
 interfere with the working copy and pull the total below half? Measured current in the laboratory system
-rescales to 34.1 percent of a normal two-copy heart, which is below the 50 percent that simple loss would
-give. That gap of about 16 percentage points is the entire question, and nobody has measured it in a human
+rescales to 31.3 percent of a normal two-copy heart, which is below the 45.8 percent that simple loss would
+give. That gap of about 14.5 percentage points is the entire question, and nobody has measured it in a human
 heart cell.
+
+**Corrected 6 August 2026.** The two sentences above read "34.1 percent" against "the 50 percent that simple
+loss would give", with a gap of "about 16 percentage points". Both numbers came from dividing the measured
+68.3 percent by two, which assumes the two copies add perfectly. O'Neill 2022 measured the two-copy case
+directly and got 218.4 percent of one copy, not 200, so the divisor is 2.184: 68.3 / 2.184 = 31.3 and
+100 / 2.184 = 45.8, and the gap is 14.5 points. **The retired baseline and the retired comparator travel
+together — quoting 31.3 against 50 is a third wrong answer, not a partial fix.**
 
 Say plainly that this is unresolved. It gates every therapeutic route on the site, and pretending
 otherwise would be the single fastest way to lose reader 2.

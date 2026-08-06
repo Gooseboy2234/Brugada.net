@@ -59,8 +59,10 @@ are the highest-value pages on the site for reaching anyone who could actually r
 - The variant is SCN5A p.Arg104Gln, also written R104Q, also c.311G>A. Transcript NM_000335.5.
   Genomic NC_000003.12:g.38630392C>T on GRCh38. ClinVar VariationID 67780.
 - Measured effect: 68.3 plus or minus 6.1 percent of a single working copy, n=34 cells, O'Neill and
-  colleagues 2022, PMID 35305865. Rescaled to a heart with two working copies that is 34.1 percent,
-  against 50 percent for simple loss of one copy.
+  colleagues 2022, PMID 35305865. Rescaled to a heart with two working copies that is 31.3 percent,
+  against 45.8 percent for simple loss of one copy. **Corrected 6 August 2026:** this line read
+  "34.1 percent, against 50 percent". Both came from dividing by two. The same study measured the
+  two-copy case at 218.4 percent of one copy, so the divisor is 2.184, not 2. Never pair 31.3 with 50.
 - The open question, and it is genuinely open: whether that interference behaves the same way in a human
   heart cell. Nobody has measured it. It gates every therapeutic route.
 - Base editing precedent: Qi and colleagues, Circulation 2024, PMID 37965733. A single injection

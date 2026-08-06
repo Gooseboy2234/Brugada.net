@@ -143,8 +143,14 @@ export default function Home() {
       </p>
 
       <p>
-        All ten were published on {DEPOSIT.publishedLong}, together with the
-        data they rest on, and each carries a permanent identifier.{" "}
+        All ten were published on {DEPOSIT.publishedLong} and each carries a
+        permanent identifier. The data they rest on is a single archive under
+        one more,{" "}
+        <a href={DEPOSIT.url} className="mono">
+          {DEPOSIT.doi}
+        </a>
+        , which is what every paper&rsquo;s data availability statement points
+        at.{" "}
         <a href="/papers">Read all ten</a>, each with a one-line plain summary.
       </p>
 
@@ -169,7 +175,7 @@ export default function Home() {
 
       <div className="next">
         <a href="/science">The mechanism, and the open question</a>
-        <a href="/routes">All nine routes, including the dead ones</a>
+        <a href="/routes">All ten routes, including the dead ones</a>
         <a href="/limitations">What this work cannot tell you</a>
       </div>
     </div>

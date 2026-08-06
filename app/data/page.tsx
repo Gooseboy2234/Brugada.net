@@ -73,7 +73,7 @@ const GROUPS: { heading: string; note: string; rows: [string, string][] }[] = [
     rows: [
       [
         "MODALITY_COMPARISON",
-        "All nine routes with what each acts on, predicted current, best precedent, what gates it, and whether it depends on the unresolved mechanism.",
+        "The nine routes as assessed on 4 August 2026, with what each acts on, predicted current, best precedent, what gates it, and whether it depends on the unresolved mechanism. Two cautions. The tenth route, chaperone upregulation, was added on 6 August and is not in this table, it is on the routes page. And every figure in the predicted-current column was computed on the superseded rescaling withdrawn on the science page, so those percentages should not be reused, while the gates and precedents are unaffected.",
       ],
       [
         "PE_VS_ABE_EFFICIENCY",
