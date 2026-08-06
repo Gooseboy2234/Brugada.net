@@ -105,7 +105,7 @@ if python3 - <<'PYEOF'
 import re, glob, sys
 s = open('app/content.ts').read()
 defined = {}
-for name in ['MEASUREMENT','CENSUS','COMPARATOR','PRECEDENT','SITE','VARIANT']:
+for name in ['MEASUREMENT','CENSUS','COMPARATOR','PRECEDENT','SITE','VARIANT','DEPOSIT']:
     m = re.search(r'export const %s = \{(.*?)\n\};' % name, s, re.S)
     if m:
         defined[name] = set(re.findall(r'^\s*(\w+):', m.group(1), re.M))
@@ -155,6 +155,31 @@ if [ -f "$DOI_FILE" ] && head -1 "$DOI_FILE" | grep -q 'PASTE_THE_DOI_HERE'; the
   else
     echo "  ok, deposit still pending and no identifier quoted"
   fi
+elif [ -f "$DOI_FILE" ]; then
+  # The reverse defect, which is the one that actually happened: the deposit is
+  # published and the site never names it. The DOI has to match the file.
+  deposited=$(grep -oE '10\.5281/zenodo\.[0-9]+' "$DOI_FILE" | head -1)
+  if [ -z "$deposited" ]; then
+    echo "  ok"
+  elif ! grep -q "$deposited" app/content.ts; then
+    echo "  FAIL: deposit $deposited is published but content.ts does not carry it"
+    fail=1
+  elif ! grep -q 'DEPOSIT\.' app/data/page.tsx; then
+    echo "  FAIL: the data page does not quote the deposit identifier"
+    fail=1
+  else
+    echo "  ok, deposit $deposited published and quoted"
+  fi
+else
+  echo "  ok"
+fi
+
+# --- Rule: no page says an identifier is pending that already exists. ---
+# Ten DOIs went live on /papers while the same page still said "DOI pending".
+report "Checking no live identifier is described as pending"
+if grep -rn 'DOI pending\|Pending deposit' app/ 2>/dev/null | grep -v '\.old-backup'; then
+  echo "FAIL: an identifier that exists is still marked pending"
+  fail=1
 else
   echo "  ok"
 fi

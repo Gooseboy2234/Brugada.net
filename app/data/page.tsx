@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { SITE } from "../content";
+import { DEPOSIT, SITE } from "../content";
 
 export const metadata: Metadata = {
   title: "Data",
   description:
-    "The tables behind the SCN5A R104Q preprints, grouped by the result each supports, under CC BY 4.0, with the permanent archive identifier once deposited.",
+    "The tables behind the SCN5A R104Q preprints, grouped by the result each supports, under CC BY 4.0, archived on Zenodo with a permanent identifier.",
   alternates: { canonical: "/data" },
 };
 
@@ -97,11 +97,16 @@ export default function Data() {
 
       <div className="notice">
         <b>Archive identifier</b>{" "}
-        <span className="pending">Pending deposit</span>
+        <a href={DEPOSIT.url} className="mono">
+          {DEPOSIT.doi}
+        </a>
         <p style={{ margin: "0.6rem 0 0" }}>
-          The deposit has not been completed, so no identifier is quoted here. It
-          is marked pending rather than estimated, which is the rule applied to
-          every unfinished value on this site.
+          The data is deposited on Zenodo as a single archive of{" "}
+          {DEPOSIT.files} files, published {DEPOSIT.publishedLong} under{" "}
+          {DEPOSIT.licence}. That identifier is permanent, and it is what every
+          paper&rsquo;s data availability statement points at. The tables below
+          are the subset the papers rest on, served individually here because
+          opening one file is easier than downloading an archive to reach it.
         </p>
       </div>
 
@@ -179,8 +184,17 @@ export default function Data() {
       <h2>Licence</h2>
 
       <p>
-        CC BY 4.0. Attribution to {SITE.author}, ORCID{" "}
+        {DEPOSIT.licence}. Attribution to {SITE.author}, ORCID{" "}
         <a href={SITE.orcidUrl}>{SITE.orcid}</a>, is sufficient.
+      </p>
+
+      <p>
+        If you would rather cite something permanent than link to this page,
+        cite the deposit:{" "}
+        <span className="mono">
+          {SITE.author}. {DEPOSIT.title}. Zenodo, {DEPOSIT.publishedLong}.{" "}
+          <a href={DEPOSIT.url}>{DEPOSIT.doi}</a>
+        </span>
       </p>
 
       <div className="next">

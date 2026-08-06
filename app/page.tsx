@@ -1,4 +1,4 @@
-import { MEASUREMENT, NEGATIVE_COUNT, PAPERS, VARIANT } from "./content";
+import { DEPOSIT, MEASUREMENT, VARIANT } from "./content";
 
 export default function Home() {
   return (
@@ -143,8 +143,9 @@ export default function Home() {
       </p>
 
       <p>
-        <a href="/papers">Read all ten</a>, each with a
-        one-line plain summary.
+        All ten were published on {DEPOSIT.publishedLong}, together with the
+        data they rest on, and each carries a permanent identifier.{" "}
+        <a href="/papers">Read all ten</a>, each with a one-line plain summary.
       </p>
 
       <h2>Who wrote this</h2>

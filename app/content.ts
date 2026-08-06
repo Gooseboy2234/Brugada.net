@@ -22,7 +22,27 @@ export const SITE = {
   orcidUrl: "https://orcid.org/0009-0008-8925-7975",
   // Public already, via the ORCID record above.
   contact: "ethan@brugada.net",
-  updated: "2026-08-04",
+  updated: "2026-08-06",
+};
+
+// The data deposit. One archive holding every table behind the ten papers, and
+// the address every paper's data availability statement points at.
+//
+// Date checked against the Zenodo API rather than the log: the record reports
+// publication_date 2026-08-05. SUBMIT_THESE/SUBMITTED_LOG.md row 0 says
+// 2026-08-04, which is the date the draft was built, not the date it published.
+// The DOI itself is from SUBMIT_THESE/DATA_DOI.txt and resolves 302.
+export const DEPOSIT = {
+  doi: "10.5281/zenodo.21799234",
+  url: "https://doi.org/10.5281/zenodo.21799234",
+  title:
+    "SCN5A R104Q: guide design, off-target scan, and ClinVar functional-evidence census",
+  published: "2026-08-05",
+  publishedLong: "5 August 2026",
+  files: 50,
+  licence: "CC BY 4.0",
+  // Eleven Zenodo records in total: this deposit and the ten papers.
+  records: 11,
 };
 
 export const VARIANT = {
@@ -337,8 +357,10 @@ export type Paper = {
   result: Result;
   resultNote?: string;
   venue: "bioRxiv" | "medRxiv";
-  // Published to Zenodo 2026-08-04. The DOI is the citable address; the
-  // manuscript is also served from public/papers/<slug>.md and /m/<slug>.html.
+  // Published to Zenodo 2026-08-05, verified against the Zenodo API. The DOI is
+  // the version DOI and the citable address; Zenodo also minted a concept DOI
+  // one number below each, which is not the one to cite. The manuscript is also
+  // served from public/papers/<slug>.md and /m/<slug>.html.
   doi?: string;
   bearsOn?: string;
 };

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { NEGATIVE_COUNT, PAPERS, SITE } from "../content";
+import { DEPOSIT, NEGATIVE_COUNT, PAPERS, SITE } from "../content";
 
 export const metadata: Metadata = {
   title: "Papers",
@@ -34,8 +34,8 @@ export default function Papers() {
         deliberate: it puts the reasoning and any errors in the open. Treat every
         claim as provisional until other people have checked it.
         <p style={{ margin: "0.7rem 0 0" }}>
-          Each manuscript is readable in full here, until it is posted to a
-          preprint server and receives a permanent identifier.
+          All ten are archived on Zenodo with permanent identifiers, published{" "}
+          {DEPOSIT.publishedLong}. Each is also readable in full on this site.
         </p>
       </div>
 
@@ -66,8 +66,9 @@ export default function Papers() {
                   Cite it: {paper.doi}
                 </a>
               )}
-              <span>{paper.venue}</span>
-              <span className="pending">DOI pending</span>
+              <span className="pending">
+                {paper.venue} submission pending
+              </span>
             </p>
           </article>
         );
@@ -102,9 +103,26 @@ export default function Papers() {
 
       <p>
         Every paper is sole-authored by {SITE.author}, ORCID{" "}
-        <a href={SITE.orcidUrl}>{SITE.orcid}</a>. Once each preprint is posted it
-        receives a permanent identifier, and this page will carry it. Until then
-        the identifiers are marked pending rather than estimated.
+        <a href={SITE.orcidUrl}>{SITE.orcid}</a>. Cite the identifier printed
+        beside each one above. Those are version identifiers; Zenodo also minted
+        a second one per paper that resolves to all versions, and the version
+        identifier is the one to use.
+      </p>
+
+      <p>
+        The data behind every one of them is deposited separately, under{" "}
+        {DEPOSIT.licence}, at{" "}
+        <a href={DEPOSIT.url} className="mono">
+          {DEPOSIT.doi}
+        </a>
+        . That is the address each data availability statement gives, and{" "}
+        <a href="/data">the data page</a> lists what is in it.
+      </p>
+
+      <p>
+        What is still pending is the preprint servers. Posting to bioRxiv and
+        medRxiv needs an account login that has not been completed, so those
+        submissions are marked pending rather than described as done.
       </p>
 
       <p>
