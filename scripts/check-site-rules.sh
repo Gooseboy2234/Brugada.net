@@ -125,7 +125,7 @@ then echo "  ok"; else echo "FAIL: a page references a field that does not exist
 # --- Rule: every nav entry resolves to a real page. ---
 report "Checking nav targets exist"
 nav_fail=0
-for route in "" new-here for-carriers science routes experiments papers census data history limitations; do
+for route in "" new-here for-carriers science routes open experiments papers census data history limitations; do
   if [ -z "$route" ]; then
     [ -f app/page.tsx ] || { echo "  MISSING /"; nav_fail=1; }
   elif [ ! -f "app/$route/page.tsx" ]; then

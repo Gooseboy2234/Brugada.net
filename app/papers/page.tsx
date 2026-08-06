@@ -61,6 +61,11 @@ export default function Papers() {
             <p className="paper-meta">
               <span className={`state ${l.cls}`}>{l.text}</span>
               <a href={`/m/${paper.slug}.html`}>Read the manuscript</a>
+              {paper.doi && (
+                <a href={`https://doi.org/${paper.doi}`}>
+                  Cite it: {paper.doi}
+                </a>
+              )}
               <span>{paper.venue}</span>
               <span className="pending">DOI pending</span>
             </p>
