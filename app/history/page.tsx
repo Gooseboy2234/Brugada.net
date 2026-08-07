@@ -161,7 +161,7 @@ const BEATS: Beat[] = [
     did:
       "Measured the raw material it depends on across 827 human heart samples, having stated in advance that a few percent would kill the route.",
     happened:
-      "0.0045 percent. Around 300 times less than in the tissue where the same strategy already works in children. The ceiling is a 1.06-fold increase where roughly 1.5 was needed. The route was attractive because it was mechanism-independent, and it is dead because the substrate is absent. Those are separate reasons.",
+      "0.0045 percent. Around 300 times less than in the tissue where the same strategy already works in children. The ceiling is a 1.06-fold increase where roughly 1.5 was needed. The route was attractive because it was mechanism-independent, and it is dead because the substrate is absent. Those are separate reasons. Two days later this entry was found to be titled too widely, and the correction is worth more than the result: the pool measured here is the discarded message, so what died is redirecting it, which is one method of raising output rather than the level itself. Every other method needs no such pool. The heading was narrowed on 6 August 2026 and the rest of it is now a separate route, recorded as conditional. The measurement is unchanged. It killed one method, not a level. This still reads as refuted rather than narrowed, because the prediction that was written down in advance was tested and it failed. What was narrowed is the name it was filed under.",
     outcome: "refuted",
   },
 ];
