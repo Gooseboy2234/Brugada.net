@@ -780,8 +780,27 @@ readers reproducing this work should verify the checksum, or retrieve the dated 
 weekly archive directory. Retrieval tests used the public NCBI E-utilities. Tool source was read
 from public repositories. Venue characteristics were taken from the DOAJ and Crossref APIs.</p>
 <p>All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. Parser code accompanies this manuscript (section 8). No ethical approval was
-required: no human subjects were involved and no individual-level data were accessed.</p>
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. No ethical
+approval was required: no human subjects were involved and no individual-level data were accessed.</p>
+<p><strong>Corrected, 7 August 2026.</strong> The sentence removed here read <em>&quot;Parser code accompanies this manuscript
+(section 8).&quot;</em> <strong>It was false in both places it could have been true.</strong> The Zenodo record for this
+paper, <code>10.5281/zenodo.21799857</code>, carries <strong>one file, the PDF</strong> — verified against the Zenodo API on
+7 August 2026 — so nothing accompanies the manuscript. And the data archive did not hold the scripts
+either.</p>
+<p><strong>Of the twelve files section 8 lists, eight are deposited and four were not.</strong> The eight present are
+<code>CENSUS_FUNCTIONAL_CENSUS_V2.csv</code>, <code>CENSUS_BY_GENE_V2.csv</code>, <code>CENSUS_FCNS_TERM_VERIFICATION.csv</code>,
+<code>CENSUS_TOOL_ACCESS_ROUTES_V2.csv</code>, <code>CENSUS_VENUE_VERIFICATION.csv</code>, <code>CLINVAR_FUNCTIONAL_CENSUS.csv</code>,
+<code>reconcile_gap_rows.csv</code> and <code>FIG1_fcns_element_correction.png</code>.</p>
+<p><strong>One of the four was recoverable and is now deposited</strong>: <code>CENSUS_DISCREPANCY_RESOLVED.md</code>, the full
+account of the 911-row defect, added to version 2 of the data archive
+(<code>10.5281/zenodo.21840036</code>) on 7 August 2026.</p>
+<p><strong>Three are not deposited and are not recoverable</strong>: <code>census2_parse.py</code>, <code>census2_pass2.py</code> and
+<code>reconcile_census.py</code>. All three were searched for on 7 August 2026 across the entire project tree and
+the compute host, and <strong>no copy of any of them exists</strong>. Section 8 still lists them because they are
+what produced the census and a reader should know what is missing rather than what was convenient to
+claim. <strong>Every count in section 3.2 remains checkable</strong> from <code>CLINVAR_FUNCTIONAL_CENSUS.csv</code> and
+<code>reconcile_gap_rows.csv</code>, which carry the per-record data both parser passes produced; what cannot be
+re-derived is the parsing itself.</p>
 <h2>8. Supplementary files</h2>
 <table>
 <thead>

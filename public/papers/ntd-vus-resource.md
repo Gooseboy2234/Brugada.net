@@ -190,8 +190,29 @@ I want to restate the central limitation plainly, because it is the whole basis 
 
 ## Data availability
 
-Structural data: PDB entry 8VYJ, chain A, with associated cryo-EM map EMD-43662, both from public archives. PDB entry 2OCJ was used for the independent sign-convention check. Variant data: ClinVar accessions are listed by VCV number in the tables above; the domain was queried through NCBI E-utilities, but the exact query string and retrieval date are not recorded in the source material and I do not reconstruct them here. The predictor is ThermoMPNN (Kuhlman Lab), scored with its default bundled checkpoint. All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. They comprise the full 151-variant scoring run, the calibration gate, the tiered nomination list and the conservation filter.
+Structural data: PDB entry 8VYJ, chain A, with associated cryo-EM map EMD-43662, both from public archives. PDB entry 2OCJ was used for the independent sign-convention check. Variant data: ClinVar accessions are listed by VCV number in the tables above; the domain was queried through NCBI E-utilities, but the exact query string and retrieval date are not recorded in the source material and I do not reconstruct them here. The predictor is ThermoMPNN (Kuhlman Lab), scored with its default bundled checkpoint. **Corrected, 7 August 2026. The sentence this replaces was false, and it is corrected here rather than
+left to be discovered.** Version 1 said "All derived tables are deposited as a single archive … They
+comprise the full 151-variant scoring run, the calibration gate, the tiered nomination list and the
+conservation filter." **One of those four is deposited. Three are not, and they are not recoverable.**
+
+**What is deposited**, in the archive at `10.5281/zenodo.21799234` (cite version 2,
+`10.5281/zenodo.21840036`, which is the version these filenames refer to):
+
+- `NTD_VUS_CONSERVATION_FILTER.csv` — the conservation filter, 172 rows
+- `NTD_PARALOG_CONSERVATION.csv` — the paralogue conservation data the filter is built on, 119 rows
+
+**What is NOT deposited, stated plainly because naming a file does not make it exist.** There is no
+151-row ThermoMPNN scoring table, no calibration-gate table and no tiered nomination list in the
+archive. They were searched for on 7 August 2026 across the whole project tree and the compute host and
+**no copy of any of the three exists**. The scoring run was not preserved as a table; its outputs
+survive only as the values printed in this paper. `CARTDDG_CALIBRATION_FAILURE.csv` is in the archive
+but it is a Rosetta `cartesian_ddg` calibration table belonging to papers 1 and 8, **not** this paper's
+gate, and it should not be mistaken for it.
+
+**What this does and does not change.** Every number this paper prints stands as printed and no
+conclusion moves. What a reader loses is the ability to recompute the scoring run from deposited
+material; the conservation filter, which is the part other people are most likely to reuse, is fully
+supported. The identifier is also recorded in DATA_DOI.txt alongside this manuscript.
 
 ## Competing interests
 

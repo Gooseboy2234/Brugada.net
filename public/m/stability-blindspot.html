@@ -242,11 +242,32 @@ functional data are in the cited papers: O&#39;Neill 2022 Supplementary Table 1 
 34122134). The predictors are public: ThermoMPNN, RaSP, and Rosetta <code>cartesian_ddg</code>. Version numbers
 for the predictor builds used are not recorded in my working notes, which is a reproducibility gap I
 report rather than paper over.</p>
-<p>All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source.
-They comprise the per-frame predictions, the full substitution profiles at each position, the
-tryptophan-rank scan across 11 positions, the benchmark comparisons on Ssym-direct and S669, and the
-microenvironment measurements.</p>
+<p><strong>Corrected, 7 August 2026. The sentence this replaces claimed more than the archive holds, and one of
+its five items is absent entirely.</strong> Version 1 said the deposited tables &quot;comprise the per-frame
+predictions, the full substitution profiles at each position, the tryptophan-rank scan across 11
+positions, the benchmark comparisons on Ssym-direct and S669, and the microenvironment measurements.&quot;
+<strong>Three of those five are deposited, one is deposited over fewer positions than claimed, and one is not
+deposited at all.</strong></p>
+<p><strong>What is deposited</strong>, in the archive at <code>10.5281/zenodo.21799234</code> (cite version 2,
+<code>10.5281/zenodo.21840036</code>, which is the version these filenames refer to):</p>
+<ul>
+<li><code>HYDROPHOBIC_PATCH_ANALYSIS.csv</code> — 2,592 rows, carrying the per-frame predictions, the substitution
+profiles and the microenvironment measurements</li>
+<li><code>HYDROPHOBIC_EXPOSURE_RELAXED.csv</code> — 84 rows, the relaxed-structure exposure measurements</li>
+<li><code>CARTDDG_CALIBRATION_FAILURE.csv</code> — the Rosetta <code>cartesian_ddg</code> calibration table</li>
+</ul>
+<p><strong>Where the claim overstated what is there, stated exactly.</strong> The tryptophan-rank scan is described
+above as covering <strong>11 positions</strong>. The deposited table covers <strong>7</strong> — positions 34, 84, 87, 104, 121,
+124 and 125. The remaining four positions appear only as printed values in this paper.</p>
+<p><strong>What is NOT deposited at all.</strong> There is no Ssym-direct or S669 benchmark comparison table. Those
+values exist only as prose, in this project&#39;s <code>NEGATIVE_RESULT_NOTE.md</code> and <code>DDG_LADDER_RESULTS.md</code>,
+neither of which is in the archive. Both were searched for on 7 August 2026 across the project tree and
+the compute host; <strong>no benchmark table was ever written to disk.</strong></p>
+<p><strong>What this does and does not change.</strong> No number in this paper moves and no conclusion changes. The
+reproducibility gap this section already reports — that the relaxed structures were not kept, so the
+exact original R104W value cannot be recomputed — is now joined by a second one of the same kind, and
+both are stated rather than papered over. The identifier is also recorded in DATA_DOI.txt alongside
+this manuscript.</p>
 <p>One thing failed to reproduce, and it changes how someone should set this up. Rebuilding the scoring pipeline from scratch reproduced the ranking almost exactly (Spearman 0.988) but not the original answer-key value for R104W, because I had kept only the scores from the first run and not the individual relaxed structures that produced them, without which the exact numbers cannot be recomputed. The conclusion survived because R121W failed in every preparation tested, and because the clinical inversion does not depend on absolute values. If you run this, save the relaxed structures, not just the scores.</p>
 <h2>9. Competing interests</h2>
 <p>I am a heterozygous carrier of SCN5A p.Arg104Gln, a variant at one of the positions analysed here, and

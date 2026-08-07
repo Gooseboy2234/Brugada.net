@@ -238,6 +238,84 @@ adequate — is unaffected.
 matrix and the per-transcript abundances were aggregated away before saving. They are named in the data
 availability statement below rather than left for a reader to discover.
 
+## Correction, 7 August 2026, third: this paper claims mechanism-independence for a class it did not measure, and then retracts the claim in its own discussion
+
+**Lead with what does not change, because it is almost everything.** The title is correctly scoped and
+stays. The abstract is correctly scoped and stays. The measurement stands: the non-productive fraction of
+*SCN5A* mRNA in 827 GTEx heart samples is 0.0045 percent, the positive-control figure in brain is 1.388
+percent, the shortfall is 308-fold, and the ceiling on splice redirection is 1.057-fold against a
+1.463-fold requirement. **Splice redirection is closed and this correction does not reopen it.** What is
+withdrawn is a framing claim in the introduction, and the reason it is withdrawn is that this paper
+already contradicts it further down.
+
+**The sentence.** The section headed "Why raising output looked like the only mechanism-independent
+option" reads:
+
+> "Raising total transcript output is different. It helps regardless of which mechanism is operating,
+> because more working mRNA means more working channel either way. That property made it worth testing
+> before the mechanism question is resolved, and it is the reason a negative result here closes something
+> rather than merely narrowing it."
+
+**Two defects, and they compound.**
+
+**First, the paper contradicts itself, and the contradiction is internal rather than a divergence from
+anything.** The section headed "The saturation risk that outlives this negative" says the opposite in its
+own words: the proportionality assumption behind mechanism-independence "is untested", and if the mutant
+subunit interferes with a fixed absolute amount of channel complex rather than a fixed fraction, "raising
+expression from both alleles delivers more interfering protein alongside more working protein, and the
+intervention could lower current rather than raise it". **A strategy that could lower current under one
+branch of the mechanism fork does not help regardless of which mechanism is operating.** The introduction
+asserts mechanism-independence as the property that made the question worth asking, and the discussion
+withdraws it. Both statements are in the deposited record at `10.5281/zenodo.21799863`. This is the same
+defect class already found in paper 2 of this series: an internal contradiction that a diff against the
+deposit cannot surface, because the deposit reproduces it faithfully.
+
+**Second, the scope claim is wider than the measurement, and it licences a wider closure than the paper
+earned.** "Raising total transcript output" is a level of intervention. Blocking non-productive splicing
+is one method at that level, and it is the only one measured here. **A non-productive splice fraction is a
+precondition for splice redirection and for nothing else.** Transcriptional activation, Wnt or beta-catenin
+pathway inhibition, EZH2 inhibition, histone-deacetylase inhibition, microRNA antagonism and mRNA
+stabilisation do not require one to exist, so none of them is touched by a 308-fold shortfall in one. The
+clause "it is the reason a negative result here closes something rather than merely narrowing it" is
+therefore true of splice redirection and false of the class the sentence names.
+
+**Why this matters rather than being a wording preference, and it is measurable.** This project's own
+route enumeration filed this paper's closure under a heading reading "Transcriptional upregulation (make
+more of the healthy copy)", and every later reader in that project, including its author, read the class
+as closed. It was not. The project's literature corpus holds a measurement in the right cell type: in
+cardiomyocytes derived from Brugada-syndrome patients, the small-molecule Wnt inhibitor Wnt-C59 gave
+**2.1-fold Na<sub>v</sub>1.5 protein** (*p* = 0.0005), and short hairpin RNA knockdown of beta-catenin
+gave **4.0-fold protein and 4.9-fold peak *I*<sub>Na</sub>**, replicated in a second patient line (PMID
+37226398). Against the 1.463-fold requirement stated above, both are above the bar. **A closure this paper
+did not make was read out of it for two days.**
+
+**What that measurement does not do, stated so this correction cannot be read as an opening.** It does not
+open anything. The deliverable agent, the small molecule, was never measured on current at all, and the
+4.9-fold came from a knockdown that is a laboratory tool rather than a therapy. Neither patient line
+carries R104Q; one carries a different missense variant and the other a frameshift. The intervention is
+allele-agnostic, so it raises the variant message alongside the healthy one and runs into this paper's own
+saturation risk unresolved. Wnt inhibition is an organism-wide developmental intervention offered against a
+comparator of no treatment. And the evidence is one 2023 paper from one laboratory. **It is recorded as
+conditional and it is not a route this paper endorses.**
+
+**What is corrected, exactly.**
+
+| Where | Was | Is |
+|---|---|---|
+| Introduction, the property claimed | "Raising total transcript output ... helps regardless of which mechanism is operating" | **Withdrawn.** The claim is inconsistent with this paper's own saturation-risk section and is not established for any method at that level, including the one measured here |
+| Introduction, what the negative closes | "a negative result here closes something rather than merely narrowing it" | **Narrowed.** It closes splice redirection in human heart. It does not close transcriptional or post-transcriptional upregulation by any other route |
+| Scope of the finding | implied class-level | **Method-level.** The title and abstract were always method-level and are unchanged |
+
+**One thing this correction deliberately does not do.** It does not change the paper's conclusion, its
+title, its abstract or any number in it, and it does not claim the measurement was misreported. The
+measurement is right, the ceiling is right, and the closure it supports is right at the width the
+measurement supports. **What was wrong was a sentence claiming a property the paper had not tested and
+later contradicted, and the cost of that sentence was paid by a downstream document rather than by this
+one.**
+
+**This section is not in the record deposited at `10.5281/zenodo.21799863` on 5 August 2026,** which
+carries the framing sentence uncorrected.
+
 ## Data availability
 
 Public data used: GTEx v10 junction and transcript quantification files and GTEx v9 long-read quantification files, available from the GTEx Portal; Ensembl REST API annotations for ENSG00000183873 and ENSG00000144285, GRCh38, accessed 2026-08-04; O'Neill et al. 2022 electrophysiology data, PMID 35305865, Supplementary Table 1, and the corresponding preprint, doi 10.1101/2021.09.22.461398.

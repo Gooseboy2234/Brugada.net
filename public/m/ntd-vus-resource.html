@@ -406,8 +406,27 @@ output on unknowns is used at all.</li>
 <p>If future patch-clamp or trafficking assays showed several Tier 1 or Tier 2 nominations to be functionally neutral, at a rate clearly above chance, that would indicate the positive-prediction claim itself is miscalibrated in this domain, not merely imprecise, and would be the strongest single result that could overturn this list. If a fifth known loss-of-function variant in this exact domain were found to score positively where R104W, R121W and Y87C do not, that would partially rehabilitate sensitivity, though it would still not make the 114 non-nominated variants informative; a substantially larger benchmark of confirmed true positives and true negatives is the only thing that could actually calibrate sensitivity here, and none exists for this domain today. If a benign variant were confirmed at a highly conserved position, that would weaken the conservation filter, which currently rests on only two benign anchor points. No correction for multiple comparisons was applied to either the 131 stability tests or the 141 conservation tests, and at nominal thresholds some fraction of both the seventeen and the forty-one are expected by chance alone; that fraction has not been estimated here. The two structure preparations share the same trained model, so agreement between the Rosetta and OpenMM relaxations checks that the relaxation protocol is not driving the signal, and it is not an independent replication of the predictor itself.</p>
 <p>I want to restate the central limitation plainly, because it is the whole basis of this list. None of the 114 non-nominated stability variants, and none of the 100 conservation variants outside the low band, should be treated as benign on the strength of anything here. Three of four known loss-of-function benchmark variants in this domain score neutral or stabilizing under this predictor. A negative score from this method carries no information in this domain. The only framing this predictor survives is a positive-only nomination list, and it cannot support exclusion of anything.</p>
 <h2>Data availability</h2>
-<p>Structural data: PDB entry 8VYJ, chain A, with associated cryo-EM map EMD-43662, both from public archives. PDB entry 2OCJ was used for the independent sign-convention check. Variant data: ClinVar accessions are listed by VCV number in the tables above; the domain was queried through NCBI E-utilities, but the exact query string and retrieval date are not recorded in the source material and I do not reconstruct them here. The predictor is ThermoMPNN (Kuhlman Lab), scored with its default bundled checkpoint. All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. They comprise the full 151-variant scoring run, the calibration gate, the tiered nomination list and the conservation filter.</p>
+<p>Structural data: PDB entry 8VYJ, chain A, with associated cryo-EM map EMD-43662, both from public archives. PDB entry 2OCJ was used for the independent sign-convention check. Variant data: ClinVar accessions are listed by VCV number in the tables above; the domain was queried through NCBI E-utilities, but the exact query string and retrieval date are not recorded in the source material and I do not reconstruct them here. The predictor is ThermoMPNN (Kuhlman Lab), scored with its default bundled checkpoint. <strong>Corrected, 7 August 2026. The sentence this replaces was false, and it is corrected here rather than
+left to be discovered.</strong> Version 1 said &quot;All derived tables are deposited as a single archive … They
+comprise the full 151-variant scoring run, the calibration gate, the tiered nomination list and the
+conservation filter.&quot; <strong>One of those four is deposited. Three are not, and they are not recoverable.</strong></p>
+<p><strong>What is deposited</strong>, in the archive at <code>10.5281/zenodo.21799234</code> (cite version 2,
+<code>10.5281/zenodo.21840036</code>, which is the version these filenames refer to):</p>
+<ul>
+<li><code>NTD_VUS_CONSERVATION_FILTER.csv</code> — the conservation filter, 172 rows</li>
+<li><code>NTD_PARALOG_CONSERVATION.csv</code> — the paralogue conservation data the filter is built on, 119 rows</li>
+</ul>
+<p><strong>What is NOT deposited, stated plainly because naming a file does not make it exist.</strong> There is no
+151-row ThermoMPNN scoring table, no calibration-gate table and no tiered nomination list in the
+archive. They were searched for on 7 August 2026 across the whole project tree and the compute host and
+<strong>no copy of any of the three exists</strong>. The scoring run was not preserved as a table; its outputs
+survive only as the values printed in this paper. <code>CARTDDG_CALIBRATION_FAILURE.csv</code> is in the archive
+but it is a Rosetta <code>cartesian_ddg</code> calibration table belonging to papers 1 and 8, <strong>not</strong> this paper&#39;s
+gate, and it should not be mistaken for it.</p>
+<p><strong>What this does and does not change.</strong> Every number this paper prints stands as printed and no
+conclusion moves. What a reader loses is the ability to recompute the scoring run from deposited
+material; the conservation filter, which is the part other people are most likely to reuse, is fully
+supported. The identifier is also recorded in DATA_DOI.txt alongside this manuscript.</p>
 <h2>Competing interests</h2>
 <p>I disclose that I am a heterozygous carrier of the SCN5A variant p.Arg104Gln (R104Q), which appears as a reference point in the scoring above.</p>
 <h2>References</h2>

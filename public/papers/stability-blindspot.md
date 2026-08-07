@@ -202,11 +202,35 @@ functional data are in the cited papers: O'Neill 2022 Supplementary Table 1 (PMI
 for the predictor builds used are not recorded in my working notes, which is a reproducibility gap I
 report rather than paper over.
 
-All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source.
-They comprise the per-frame predictions, the full substitution profiles at each position, the
-tryptophan-rank scan across 11 positions, the benchmark comparisons on Ssym-direct and S669, and the
-microenvironment measurements.
+**Corrected, 7 August 2026. The sentence this replaces claimed more than the archive holds, and one of
+its five items is absent entirely.** Version 1 said the deposited tables "comprise the per-frame
+predictions, the full substitution profiles at each position, the tryptophan-rank scan across 11
+positions, the benchmark comparisons on Ssym-direct and S669, and the microenvironment measurements."
+**Three of those five are deposited, one is deposited over fewer positions than claimed, and one is not
+deposited at all.**
+
+**What is deposited**, in the archive at `10.5281/zenodo.21799234` (cite version 2,
+`10.5281/zenodo.21840036`, which is the version these filenames refer to):
+
+- `HYDROPHOBIC_PATCH_ANALYSIS.csv` — 2,592 rows, carrying the per-frame predictions, the substitution
+  profiles and the microenvironment measurements
+- `HYDROPHOBIC_EXPOSURE_RELAXED.csv` — 84 rows, the relaxed-structure exposure measurements
+- `CARTDDG_CALIBRATION_FAILURE.csv` — the Rosetta `cartesian_ddg` calibration table
+
+**Where the claim overstated what is there, stated exactly.** The tryptophan-rank scan is described
+above as covering **11 positions**. The deposited table covers **7** — positions 34, 84, 87, 104, 121,
+124 and 125. The remaining four positions appear only as printed values in this paper.
+
+**What is NOT deposited at all.** There is no Ssym-direct or S669 benchmark comparison table. Those
+values exist only as prose, in this project's `NEGATIVE_RESULT_NOTE.md` and `DDG_LADDER_RESULTS.md`,
+neither of which is in the archive. Both were searched for on 7 August 2026 across the project tree and
+the compute host; **no benchmark table was ever written to disk.**
+
+**What this does and does not change.** No number in this paper moves and no conclusion changes. The
+reproducibility gap this section already reports — that the relaxed structures were not kept, so the
+exact original R104W value cannot be recomputed — is now joined by a second one of the same kind, and
+both are stated rather than papered over. The identifier is also recorded in DATA_DOI.txt alongside
+this manuscript.
 
 One thing failed to reproduce, and it changes how someone should set this up. Rebuilding the scoring pipeline from scratch reproduced the ranking almost exactly (Spearman 0.988) but not the original answer-key value for R104W, because I had kept only the scores from the first run and not the individual relaxed structures that produced them, without which the exact numbers cannot be recomputed. The conclusion survived because R121W failed in every preparation tested, and because the clinical inversion does not depend on absolute values. If you run this, save the relaxed structures, not just the scores.
 

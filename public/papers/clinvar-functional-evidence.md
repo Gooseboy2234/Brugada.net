@@ -628,8 +628,31 @@ weekly archive directory. Retrieval tests used the public NCBI E-utilities. Tool
 from public repositories. Venue characteristics were taken from the DOAJ and Crossref APIs.
 
 All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. Parser code accompanies this manuscript (section 8). No ethical approval was
-required: no human subjects were involved and no individual-level data were accessed.
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. No ethical
+approval was required: no human subjects were involved and no individual-level data were accessed.
+
+**Corrected, 7 August 2026.** The sentence removed here read *"Parser code accompanies this manuscript
+(section 8)."* **It was false in both places it could have been true.** The Zenodo record for this
+paper, `10.5281/zenodo.21799857`, carries **one file, the PDF** — verified against the Zenodo API on
+7 August 2026 — so nothing accompanies the manuscript. And the data archive did not hold the scripts
+either.
+
+**Of the twelve files section 8 lists, eight are deposited and four were not.** The eight present are
+`CENSUS_FUNCTIONAL_CENSUS_V2.csv`, `CENSUS_BY_GENE_V2.csv`, `CENSUS_FCNS_TERM_VERIFICATION.csv`,
+`CENSUS_TOOL_ACCESS_ROUTES_V2.csv`, `CENSUS_VENUE_VERIFICATION.csv`, `CLINVAR_FUNCTIONAL_CENSUS.csv`,
+`reconcile_gap_rows.csv` and `FIG1_fcns_element_correction.png`.
+
+**One of the four was recoverable and is now deposited**: `CENSUS_DISCREPANCY_RESOLVED.md`, the full
+account of the 911-row defect, added to version 2 of the data archive
+(`10.5281/zenodo.21840036`) on 7 August 2026.
+
+**Three are not deposited and are not recoverable**: `census2_parse.py`, `census2_pass2.py` and
+`reconcile_census.py`. All three were searched for on 7 August 2026 across the entire project tree and
+the compute host, and **no copy of any of them exists**. Section 8 still lists them because they are
+what produced the census and a reader should know what is missing rather than what was convenient to
+claim. **Every count in section 3.2 remains checkable** from `CLINVAR_FUNCTIONAL_CENSUS.csv` and
+`reconcile_gap_rows.csv`, which carry the per-record data both parser passes produced; what cannot be
+re-derived is the parsing itself.
 
 ## 8. Supplementary files
 
