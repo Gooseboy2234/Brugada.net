@@ -215,9 +215,16 @@ test("every rendered manuscript names its version of record", async () => {
       `${m.slug}.md still carries the interim superseded banner`,
     );
 
+    // This used to assert the literal sentence "No version 2 has been
+    // deposited". That sentence was removed on 7 August 2026 because a
+    // generated page cannot keep it true: it flips the moment anything is
+    // deposited and nothing here would notice. The test's intent is unchanged
+    // and is the point of it — a manuscript that diverges from its deposited
+    // record must say so on its face — so it now anchors on the claim that
+    // survives a deposit rather than on the one that does not.
     if (m.status === "corrective" || m.status === "additive") {
       assert.ok(
-        md.includes("No version 2 has been deposited"),
+        md.includes("this page is the corrected one"),
         `${m.slug}.md diverges from its record without saying so`,
       );
     }

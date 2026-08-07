@@ -9,7 +9,7 @@
 >
 > **This copy is ahead of the version of record, and the addition is dated.** On 6 August 2026, after the deposit, Tano et al. 2026 (PMID 41582807) was folded in at six places: a requirement sharpened in the Part 4 discussion, a bullet in the evidence list, a new subsection on what Tano adds and the one thing it takes away, a trafficking paragraph that constrains the class rather than this variant, a limitation, and reference 9. **The record at the identifier above contains none of it.** No conclusion changes.
 >
-> **No version 2 has been deposited, and nothing has been uploaded.** The identifier above still resolves to the 5 August text. If a figure on this page disagrees with the same figure at that identifier, this page is the corrected one. The full divergence, and what a version-2 deposit would have to include, is recorded in `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md`.
+> **If a figure on this page disagrees with the same figure at the identifier above, this page is the corrected one.** The full divergence, and what a version-2 deposit would have to include, is recorded in `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md`. *(This paragraph used to open by asserting that no version 2 had been deposited and nothing had been uploaded. That was true when written on 6 August 2026 and is not a claim a generated page can keep true, because it would turn false the moment anything is deposited and nothing here would notice. The sentence is removed rather than updated: **to find out what is deposited, resolve the identifier**, which is the only source that cannot go stale.)*
 >
 > **None of this is peer reviewed, and none of it has been through a wet lab.** No cell has been edited and no current has been recorded for this variant by this project. Every therapeutic statement in the manuscript below is a prediction.
 >
@@ -616,9 +616,20 @@ wrong.** Both remain open.
 
 ---
 
-*Data: HYDROPHOBIC_EXPOSURE_RELAXED.csv, POS104_SIDECHAIN_RSA.csv, POS104_MIN_ENERGETICS.csv,
-POSITION_SPECIFICITY_CONTROL.csv, TRP_EXPOSURE_VS_PHENOTYPE.csv, ctrl_energetics.csv. Twelve frames for
+*Data: ~~HYDROPHOBIC_EXPOSURE_RELAXED.csv, POS104_SIDECHAIN_RSA.csv, POS104_MIN_ENERGETICS.csv,
+POSITION_SPECIFICITY_CONTROL.csv, TRP_EXPOSURE_VS_PHENOTYPE.csv, ctrl_energetics.csv.~~ Twelve frames for
 position 104, six for the control positions. Statistical error bars only; single relaxation protocol.*
+
+**Correction, 7 August 2026 — that file list is struck through because five of its six names are not in
+the data archive and never were.** Only `HYDROPHOBIC_EXPOSURE_RELAXED.csv` is deposited, and it
+reproduces the corrected-measurement table above exactly. POS104_SIDECHAIN_RSA.csv,
+POS104_MIN_ENERGETICS.csv, POSITION_SPECIFICITY_CONTROL.csv, TRP_EXPOSURE_VS_PHENOTYPE.csv and
+ctrl_energetics.csv are outputs of this Part's own protocol that were never written anywhere this
+project can still reach, so the seven-position control table, the two fa_rep tables and the side-chain
+accessibility figures in this Part exist only as printed here. The struck names are kept rather than
+deleted, because they are printed in the record deposited on 5 August 2026 and a reader who went looking
+for them should find out what happened rather than find a silence. Full account in the correction section
+below and in `P8_REGENERATION_NOTE.md` in the archive.
 
 # Part 3. No linear degradation or retention motif at Arg104
 
@@ -922,7 +933,106 @@ never genotyped. None of that touches the structural refutations in this paper, 
 benign controls. What it touches is how much a resolved mechanism would be worth, and the honest answer is that
 this has not been established for any SCN5A variant, including this one.
 
+## Correction, 7 August 2026: the data availability statement was partly false, and so was the file list closing Part 2
+
+**Version 1 of this paper, deposited at `10.5281/zenodo.21799867` on 5 August 2026, told its readers that
+four kinds of derived table were in the shared data archive. One of the four was not, and separately the
+italic data line closing Part 2 named six CSV files of which five were not.** This was found on 7 August
+2026, in the last of an eleven-paper audit of data availability statements begun on 6 August, which found
+the same class of defect in six other papers.
+
+**Lead with what was wrong rather than with what has been fixed.**
+
+| Named as deposited | State on 5 August 2026 | State now |
+|---|---|---|
+| per-model accessibility measurements | present: `HYDROPHOBIC_PATCH_ANALYSIS.csv`, 2,592 rows | unchanged, and now named by filename |
+| seven-position tryptophan scan | present for the independent run only, inside the same file | unchanged, and the run that is **not** deposited is now named |
+| substitution profiles | present, inside the same file | unchanged, and now named by filename |
+| **shell residue lists** | **absent.** The deposited file carried a `shell_n_res` count and no list | **regenerated from the public 8VYJ coordinates and deposited** as `P8_SHELL_RESIDUES_8VYJ.csv` |
+| `HYDROPHOBIC_EXPOSURE_RELAXED.csv` (Part 2 line) | present, 84 rows | unchanged |
+| POS104_SIDECHAIN_RSA.csv, POS104_MIN_ENERGETICS.csv, POSITION_SPECIFICITY_CONTROL.csv, TRP_EXPOSURE_VS_PHENOTYPE.csv, ctrl_energetics.csv | **absent, all five** | **still absent, declared, and not reconstructible** |
+
+**And a fifth thing was never claimed and was also missing: Part 1 has no deposited data at all.** The
+1,008-model Rosetta and OpenMM analysis behind sections 2 through 6a has no file in the archive. That was
+tested rather than assumed — `HYDROPHOBIC_PATCH_ANALYSIS.csv` was checked against Part 1's printed tables
+under every plausible reading of its columns and reproduces none of them, because Part 1 carries a
+three-seed axis and a self-mutation control the deposited file has no column for. **Every effect size,
+confidence interval and Cliff's δ in Part 1 therefore exists only as printed here.** The statement below
+says so.
+
+**What was regenerated, and how far it verifies.** Everything in this paper that derives from a public
+structure or a public sequence was regenerated by `p8_regen_structure_and_sequence.py`, written from the
+method as this paper states it, from PDB entry 8VYJ chain A and the 2,016-residue canonical sequence.
+**Forty-three of the forty-five quantities checked reproduce exactly**, including the shell residue lists
+themselves, the 50.7 Å separation of Arg104 from Tyr1767, the zero overlap between the two 12 Å shells,
+all seven motif classes, the sanity-check count of eight RxxL occurrences elsewhere in the protein, the
+four asparagines and the zero sequons in residues 1–130, and Arg104's 13.4 % Shrake–Rupley accessibility.
+**The two that do not reproduce are in one sentence of Part 2's validation paragraph** — Asp82's
+accessibility, printed 8.0 % and recomputing to 9.2 %, and the median accessibility across the
+171-residue carve-out, printed 45.5 % and recomputing to 41.0 %. Both are consistent with a different
+choice of reference maxima for those two figures than for the Arg104 figure beside them, which
+reproduces exactly. **The printed values are left as printed and the deviations are recorded rather than
+quietly adjusted.** Neither bears on any conclusion; the sentence's purpose is to show that Shrake–Rupley
+agrees with an independently measured accessibility, and on the figure it is actually comparing it does.
+
+**One notational looseness fell out of the regeneration and is corrected here rather than in the text
+above, because the text above is not wrong.** Section 5 prints the Arg104 12 Å shell as **contiguous
+runs** and the Tyr1767 12 Å shell as **spans**, and does not say so. `398-410` covers 398, 401–407, 409
+and 410 — ten residues, not thirteen; `1466-1470` is three residues and `1653-1660` is four. The residue
+count of 32 is exact, every residue listed really is in the shell, and the zero-overlap conclusion is
+unaffected — but a reader adding up the printed ranges gets 41 rather than 32.
+`P8_SHELL_RESIDUES_8VYJ.csv` lists all three shells residue by residue, which removes the ambiguity.
+
+**Two conventions had to be recovered from the numbers because this paper does not state them, and they
+are stated here so that the next reader does not have to.** The shells are **Cα-to-Cα and include the
+target residue itself** — that is what gives 36, 32 and the printed range `101-107`, which contains 104;
+a closest-heavy-atom shell at the same cutoffs gives 67 and 72. And the RxxL sanity count is a
+**non-overlapping** scan, which gives 8; an overlapping scan gives 9, because Arg1913 and Arg1914 each
+start one.
+
+**One further defect, found by the same audit, stated because it is checkable and not resolved because it
+cannot be.** **This paper prints two different sets of numbers for the same quantity.** Section 6a's
+cross-position table gives the apolar gain on tryptophan substitution as +68.4 at position 34, +32.7 at
+124, +30.0 at 104, +18.9 at 87, +14.0 at 121, +9.1 at 84 and −3.2 at 125. Part 2's replication table,
+reporting **the same run** in its *Independent run* column, gives +84.2, +51.0, +27.8, +29.6, +9.1, +14.1
+and −1.0 — different magnitudes, and 84 and 121 the other way round, so position 104 ranks third in one
+table and fourth in the other. Section 6a's own text quotes +30.0 as this run's value at position 104 and
+Part 2 attributes +27.8 to it.
+
+**The deposited file settles which of the two is reproducible and not which of the two is right.** Part
+2's column reproduces from `HYDROPHOBIC_PATCH_ANALYSIS.csv` to the printed digit, at every one of the
+seven positions, in both structural contexts. Section 6a's table reproduces from no reading of that file
+that was tried — not either apolar measure, not four normalisations, not either context, not either
+relaxation prep separately or pooled. **That is consistent with section 6a having been computed on a
+different run of the same protocol whose output is not deposited, and it is equally consistent with an
+error in one of the two tables.** Part 1's own data does not exist, so this project cannot tell which,
+and it will not guess in order to look tidy.
+
+**What does not change either way, and it is the whole of section 6a's argument.** In both tables the
+benign control at position 34 ranks first by a wide margin, position 125 is at the bottom, and the
+dominant-negative-versus-benign split runs the wrong way. **The refutation of hypothesis B rests on the
+ordering, and the two tables agree on the ordering wherever the argument uses it.** The discrepancy is
+recorded here because a reader who adds up this paper's two tables will find it, and finding it
+undocumented is worse than finding it named.
+
+**Why the checker did not catch this, which is the part worth carrying forward.** `presubmit_check.py`
+check 5 compares files cited by a paper against the deposit, and it extracts citations with a regular
+expression that matches **backticked** filenames only. Part 2's six names are in plain italic prose. The
+check therefore had nothing to match and reported nothing wrong, for a paper that named five missing
+files explicitly. Every filename in the statement below is in backticks so that the check has teeth on
+this paper from version 2 onward, and **widening that regex to catch bare `.csv` tokens is the obvious
+follow-up and has not been done.**
+
+**None of this changes a result.** No mechanism moves into or out of the eliminated set. The corrections
+are to what this paper says about where its data are, and to one piece of notation.
+
+**This section is not in the record deposited at `10.5281/zenodo.21799867` on 5 August 2026,** which
+carries the false statement.
+
 # Data availability
+
+**This statement was rewritten on 7 August 2026 because the version published on 5 August 2026 named a
+table that was not in the archive, and Part 2 named five more; see the correction section above.**
 
 All primary data are public. The structure is Protein Data Bank entry 8VYJ, chain A, with cryo-EM map
 EMD-43662 for density-guided relaxation. The reference protein sequence is RefSeq NP_932173.1 and the
@@ -932,10 +1042,81 @@ E-utilities. Published functional data are cited by PMID throughout. Solvent acc
 with Bio.PDB ShrakeRupley; relaxation used Rosetta and OpenMM. Tool version numbers are not recorded in
 my working notes for every step and I report that gap rather than reconstruct it.
 
-All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source.
-They comprise the per-model accessibility measurements, the seven-position tryptophan scan, the
-substitution profiles and the shell residue lists.
+The derived tables are deposited in the data archive whose identifier is recorded in DATA_DOI.txt
+alongside this manuscript and should be cited as the data source. **From version 2 of that archive
+onward they are these eleven files, named individually so that a reader can check this statement against the
+archive rather than take it on trust:**
+
+- `HYDROPHOBIC_PATCH_ANALYSIS.csv` — the per-model accessibility and energetics table, 2,592 rows and 56
+  columns, covering both the position-104 substitution ladder and the seven-position tryptophan scan, in
+  both the assembled-channel and free-N-terminal-domain contexts, at all three protocol tiers. This is
+  the run Part 2 calls the **independent run**; its column of that table — position 34 +84.2, 124 +51.0,
+  87 +29.6, 104 +27.8, 84 +14.1, 121 +9.1, 125 −1.0 Å² — is this file filtered to
+  `run = position_specificity_control`, `context = assembled`, `tier = tier2_cart`, column `sc_apolar`.
+- `HYDROPHOBIC_EXPOSURE_RELAXED.csv` — Part 2's own position-104 measurement, 12 frames × 7
+  substitutions, from which the corrected-measurement table in Part 2 reproduces exactly.
+- `NTD_PARALOG_CONSERVATION.csv` — the per-position conservation table across the nine human Nav
+  paralogues, which supports the abstract's claim that Arg104 and Asp84 are both invariant across them.
+- `P8_SHELL_RESIDUES_8VYJ.csv` — **the shell residue lists.** All three shells of Part 5 residue by
+  residue: Arg104 at 8 Å, Arg104 at 12 Å and Tyr1767 at 12 Å, each row carrying the Cα–Cα distance, the
+  closest-heavy-atom distance and whether the residue is inside the N-terminal domain. This table is a
+  7 August 2026 regeneration, not the 5 August original, which does not exist.
+- `P8_SITE_GEOMETRY_8VYJ.csv` — every structural quantity Part 5 prints, each beside the value printed
+  here: the modelled residue count and range, the Arg104-to-Tyr1767 distance, the two shell sizes, the
+  overlap, the 8 Å shell, the six out-of-domain contacts and the composition of the local-anaesthetic
+  site.
+- `P8_LINEAR_MOTIF_SCAN.csv` — Part 3's scan, one row per motif class, with occurrence counts under both
+  the overlapping and non-overlapping conventions, whether the motif spans residue 104, and every hit in
+  the ±25-residue window.
+- `P8_GLYCOSYLATION_SEQUON_SCAN.csv` — Part 4's scan, one row per asparagine in residues 1–130.
+- `P8_RESIDUE_SASA_8VYJ.csv` — Shrake–Rupley solvent-accessible area and relative accessibility for all
+  1,395 modelled residues of chain A and for the 171-residue carve-out, which is the reference behind
+  Part 2's validation paragraph.
+- `p8_regen_structure_and_sequence.py` — the script that writes the five `P8_*` tables from the public
+  8VYJ coordinates and the public canonical sequence, and checks them against every quantity printed in
+  this paper.
+- `P8_VERIFICATION_OUTPUT.txt` — that script's output, setting each reproduced quantity beside the value
+  printed here. 43 of 45 reproduce; the two that do not are named in the correction section above.
+- `P8_REGENERATION_NOTE.md` — the provenance note, which states that the `P8_*` tables are a 7 August
+  2026 reconstruction and why the originals are unrecoverable.
+
+**Four things this paper reports are not deposited, and this statement says so rather than implying
+otherwise.**
+
+1. **Part 1's per-model table does not exist.** The 1,008-model Rosetta and OpenMM analysis behind
+   sections 2 through 6a was never written to disk in a form this project can still reach, and it cannot
+   be regenerated: it needs 12 Rosetta density-guided relaxations against map EMD-43662 and 12
+   restrained-OpenMM relaxations, and those ensembles are not retained. A fresh ensemble would be a
+   different ensemble whose agreement with the printed effect sizes is unknown, so producing one and
+   depositing it as Part 1's data would replace one false statement with another. **Every excess local
+   |ΔE|, every Asp84 donor count, every backbone RMSD, every DSSP agreement figure, every packstat and
+   buried-unsatisfied count, and both apolar-exposure tables in sections 6 and 6a therefore exist only as
+   printed in this paper.**
+2. **Five files named in Part 2's own data line do not exist**: POS104_SIDECHAIN_RSA.csv,
+   POS104_MIN_ENERGETICS.csv, POSITION_SPECIFICITY_CONTROL.csv, TRP_EXPOSURE_VS_PHENOTYPE.csv and
+   ctrl_energetics.csv. **Those five names are deliberately not in backticks**, and every filename in
+   this paper that names a deposited file is. `presubmit_check.py` check 5 reads a backticked CSV name
+   as a claim that the file is in the deposit and fails the kit when it is not; these five are the exact
+   opposite of that claim, so backticking them would either break the check or teach a reader that the
+   two notations mean the same thing. **In this paper, backticks mean deposited.** They are outputs of
+   Part 2's own protocol, which is not the protocol behind
+   `HYDROPHOBIC_PATCH_ANALYSIS.csv` and does not reproduce from it. **Part 2's seven-position control
+   table, its two fa_rep tables including the +197.82 clash figure, and its side-chain relative
+   accessibilities exist only as printed.**
+3. **The relaxed structural ensembles are not deposited.** Neither the 12 Rosetta nor the 12 OpenMM
+   frames, in either context, are retained anywhere in this project.
+4. **Tool versions are not recorded** for Rosetta, OpenMM or PyRosetta, as the paragraph above already
+   states. The regeneration script records the version of every library it uses itself, which covers the
+   `P8_*` tables and nothing else.
+
+The two inputs to the regeneration are public and are identified by checksum inside the script: 8VYJ
+chain A as `8vyj_full.pdb`, md5 `63b182c23e25e65148445e17b9c36310`, and the 2,016-residue canonical
+sequence as `nav15_canonical.fasta`, md5 `a6d7a83147964ee337df4e05514354ae`. **Neither file is
+redeposited in the archive**, because both are copies of public reference records — PDB entry 8VYJ and
+the canonical SCN5A protein sequence — and this archive does not republish third-party reference data.
+The checksums are what make the regeneration reproducible against a fresh download. Residue identity is checked
+at every position this paper names before anything is computed, because a silent isoform substitution is
+the error Part 4's methods note records having made once.
 
 # Competing interests
 

@@ -13,7 +13,7 @@
 >
 > **No conclusion in this paper changes.** Every corrected figure is worse for the therapy than the figure it replaces, so the negative result is strengthened rather than weakened. The paper's own dated correction table, under its limitations, lists all thirteen changed figures with the arithmetic for each, and a methods paragraph now derives all three anchors from the measured 68.3 and 218.4 rather than asserting them.
 >
-> **No version 2 has been deposited, and nothing has been uploaded.** The identifier above still resolves to the 5 August text. If a figure on this page disagrees with the same figure at that identifier, this page is the corrected one. The full divergence, and what a version-2 deposit would have to include, is recorded in `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md`.
+> **If a figure on this page disagrees with the same figure at the identifier above, this page is the corrected one.** The full divergence, and what a version-2 deposit would have to include, is recorded in `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md`. *(This paragraph used to open by asserting that no version 2 had been deposited and nothing had been uploaded. That was true when written on 6 August 2026 and is not a claim a generated page can keep true, because it would turn false the moment anything is deposited and nothing here would notice. The sentence is removed rather than updated: **to find out what is deposited, resolve the identifier**, which is the only source that cannot go stale.)*
 >
 > **None of this is peer reviewed, and none of it has been through a wet lab.** No cell has been edited and no current has been recorded for this variant by this project. Every therapeutic statement in the manuscript below is a prediction.
 >
