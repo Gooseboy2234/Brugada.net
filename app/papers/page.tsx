@@ -24,7 +24,7 @@ const label: Record<string, { text: string; cls: string }> = {
 // things that are untrue rather than by miscalculating.
 const divergence: Record<string, string> = {
   corrective:
-    "The copy on this site is corrected and the deposited version is not. The record at this identifier is wrong, was corrected here on 6 August 2026 after the deposit, and no conclusion changed. In two cases the record miscalculates. In three it states something untrue: that no expert panel exists for this gene, that four named tables are in the data archive when none of them are, and a count that the same document contradicts two subsections later. The manuscript opens with the full list.",
+    "The copy on this site is corrected and the deposited version is not. The record at this identifier is wrong, was corrected here after the deposit, and no conclusion changed. In two cases the record miscalculates. In four it states something untrue: that no expert panel exists for this gene, that named tables are in the data archive when they are not, and a count that the same document contradicts two subsections later. The manuscript opens with the full list.",
   additive:
     "The copy on this site is ahead of the deposited version. A paper published after the deposit was folded in on 6 August 2026, and the record at this identifier does not contain it. No conclusion changed. The manuscript opens with what was added.",
 };
@@ -59,17 +59,18 @@ export default function Papers() {
             own page.
           </b>{" "}
           {DIVERGENCE.corrective} of those {DIVERGENCE.divergent} were corrected
-          on 6 August 2026 because the deposited version is wrong. Two of them
-          miscalculate. The other three state something untrue, which is the
+          after the deposit because the deposited version is wrong. Two of them
+          miscalculate. The other four state something untrue, which is the
           worse defect, because a reader can catch a wrong number by recomputing
           it and cannot catch a false statement about what is in an archive
-          without downloading the archive and finding nothing there. The
-          remaining {DIVERGENCE.additive} are ahead of their record rather than
-          correcting it. The identifier stays the thing to cite, because it is
-          the fixed public record, and this site serves the corrected text
-          because serving something known to be wrong without saying so is
-          worse. No conclusion in any paper changed. Nothing has been
-          re-uploaded, and no record has a version 2.
+          without downloading the archive and finding nothing there. Four papers
+          named derived tables as deposited that the archive does not hold, and
+          an audit on 6 August 2026 found that same defect in six of the eleven.
+          The identifier stays the thing to cite, because it is the fixed public
+          record, and this site serves the corrected text because serving
+          something known to be wrong without saying so is worse. No conclusion
+          in any paper changed. Nothing has been re-uploaded, and no record has a
+          version 2.
         </p>
         <p style={{ margin: "0.7rem 0 0" }}>
           <b>An eleventh paper exists and is not here.</b> It is finished and it

@@ -9,6 +9,10 @@
 >
 > **Warning, and it points at the published record rather than at this page.** The version deposited on 5 August 2026 contains seven figures that are wrong. They were corrected here on 6 August 2026, after the deposit. The deposited paper carried the corrected baseline of 31.3 percent throughout and paired it with the retired comparator of 50 percent throughout. The worst of the results, 36.0 percent for the ceiling and 51.2, 68.2 and 85.2 percent in the boost table, are the retired 34.1 baseline multiplied out, sitting in a table whose own column header reads 31.3. A reader checking the arithmetic from the printed anchor got a different answer from the printed result.
 >
+> **A second correction, and this one is worse than the arithmetic above.** The deposited version's data availability statement said this paper's derived tables were in the shared archive and named three of them: the per-sample junction and transcript classifications, the transcript biotype table, and the headroom calculations. **The archive at `10.5281/zenodo.21799234` contained none of the three.** It held no GTEx junction file, no transcript classification, no biotype table and no headroom table, and its own README had no section for this paper. That is a statement a reader cannot check except by downloading the archive and finding nothing there. It was found in an audit of all eleven papers' data availability statements on 6 August 2026, which found the same class of defect in six of them.
+>
+> **Three of the four tables were not lost, and the fourth had the same defect as this paper.** `SCN5A_SPLICING_MEASUREMENT.csv`, `jx_classification.csv` and `ensembl_tx_biotypes.csv` were saved by the original pipeline on 4 August 2026 and simply never copied into the deposit; all three are staged for version 2. The fourth, the headroom table, existed on disk **carrying the retired 34.1 and 50 anchors that the first correction above withdraws**, so it was recomputed from 31.3, 45.8 and 100 and staged as `UPREGULATION_HEADROOM_CORRECTED.csv`. The retired file is neither deleted nor deposited. Every quantity printed in the paper was then recomputed from the deposited files by `p6_verify_and_headroom.py`, and **116 of 119 reproduce at the precision printed.** The three that do not are recorded in the paper rather than quietly adjusted, and the largest of them is a misattributed Mann-Whitney p-value that **understated this paper's own result**.
+>
 > **No conclusion in this paper changes.** The measured non-productive fraction of 0.0045 percent and the generous transcript-level upper bound of 5.38 percent are junction and transcript measurements, and the baseline question never touched them. The 1.46-fold requirement is unchanged, and it is worth saying why rather than leaving it looking untouched: the required boost is the ratio of the one-allele level to the measured heterozygous level, so the scale factor cancels out of it. It was right for the wrong reason before and is right for the right reason now.
 >
 > **No version 2 has been deposited, and nothing has been uploaded.** The identifier above still resolves to the 5 August text. If a figure on this page disagrees with the same figure at that identifier, this page is the corrected one. The full divergence, and what a version-2 deposit would have to include, is recorded in `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md`.
@@ -28,7 +32,7 @@ ORCID: [0009-0008-8925-7975](https://orcid.org/0009-0008-8925-7975)
 
 ## Abstract
 
-Raising total SCN5A output by blocking non-productive mRNA splicing is not a viable strategy in human heart, because the material this strategy needs to redirect is essentially absent from cardiac tissue. Splice-junction read counting across 827 GTEx v10 heart samples (371 left ventricle, 456 atrial appendage) puts the non-productive fraction of SCN5A mRNA at 0.0045 percent (69 of 1,545,656 reads, 95 percent Wilson confidence interval 0.0035 to 0.0056 percent). The same method applied to SCN1A in 491 brain cortex and frontal cortex samples, the tissue and gene in which this drug class already works clinically (zorevunersen, an antisense oligonucleotide approved for Dravet syndrome, *N Engl J Med* 2026;394(10):969-982, PMID 41780062), gives 1.388 percent. The gap is 308-fold (Mann-Whitney one-sided p = 1.6e-160). Even under a generous transcript-level estimate of 5.38 percent non-productive SCN5A mRNA, redirecting all of it with perfect efficiency raises output only 1.057-fold. The R104Q variant, whose heterozygous current is 31.3 percent of normal (O'Neill et al. 2022, PMID 35305865), needs 1.46-fold to reach the 45.8 percent level that simple loss of one allele would give. A frameshifting cassette exon with the structural signature this drug class targets does exist in the SCN5A annotation, but its splice junctions are undetectable anywhere in the GTEx v10 junction file. The strategy has no substrate in cardiac tissue as currently characterized.
+Raising total SCN5A output by blocking non-productive mRNA splicing is not a viable strategy in human heart, because the material this strategy needs to redirect is essentially absent from cardiac tissue. Splice-junction read counting across 827 GTEx v10 heart samples (371 left ventricle, 456 atrial appendage) puts the non-productive fraction of SCN5A mRNA at 0.0045 percent (69 of 1,545,656 reads, 95 percent Wilson confidence interval 0.0035 to 0.0056 percent). The same method applied to SCN1A in 491 brain cortex and frontal cortex samples, the tissue and gene in which this drug class already works clinically (zorevunersen, an antisense oligonucleotide approved for Dravet syndrome, *N Engl J Med* 2026;394(10):969-982, PMID 41780062), gives 1.388 percent. The gap is 308-fold, and the separation between the two per-sample distributions is overwhelming by a one-sided Mann-Whitney test (junction method p = 4.0e-219 with tie correction, 1.3e-168 without; transcript method p = 1.6e-160). Even under a generous transcript-level estimate of 5.38 percent non-productive SCN5A mRNA, redirecting all of it with perfect efficiency raises output only 1.057-fold. The R104Q variant, whose heterozygous current is 31.3 percent of normal (O'Neill et al. 2022, PMID 35305865), needs 1.46-fold to reach the 45.8 percent level that simple loss of one allele would give. A frameshifting cassette exon with the structural signature this drug class targets does exist in the SCN5A annotation, but its splice junctions are undetectable anywhere in the GTEx v10 junction file. The strategy has no substrate in cardiac tissue as currently characterized.
 
 ## A key to the terms used here
 
@@ -100,7 +104,7 @@ A third file, the GTEx v9 long-read isoform quantification (FLAIR pipeline, GENC
 | SCN1A, frontal cortex | 229 | | | | 1.031% | 2.900% | 10.13% |
 | SCN1A, brain pooled | 491 | 2,194 / 158,063 | **1.388%** | 1.332-1.447% | | | |
 
-The gap between the two pooled fractions is 308-fold. A one-sided Mann-Whitney test comparing per-sample SCN5A-heart fractions against SCN1A-brain fractions gives p = 1.6e-160. The distribution matters as much as the pooled number: the 90th percentile for SCN5A in both heart tissues is still 0.000 percent, and the single highest value across all 827 heart samples is 0.935 percent. There is no hidden subpopulation of high-splicing-waste hearts obscured by an average.
+The gap between the two pooled fractions is 308-fold, a figure computed from the rounded fractions 1.388 and 0.0045; from the raw read counts it is 310.9-fold. A one-sided Mann-Whitney test comparing the per-sample junction fractions, 827 heart samples against 491 brain samples, gives p = 4.0e-219 with tie correction and p = 1.3e-168 without it. The same test on the transcript-level fractions of the next section, 879 heart against 528 brain, gives p = 1.6e-160. With most SCN5A junction values exactly zero, no asymptotic p-value at these extremities should be read as a probability; what they establish is that the separation is not marginal under any convention. The distribution matters as much as the pooled number: the 90th percentile for SCN5A in both heart tissues is still 0.000 percent, and the single highest value across all 827 heart samples is 0.935 percent. There is no hidden subpopulation of high-splicing-waste hearts obscured by an average.
 
 Sensitivity is not the explanation for the low number. All 27 annotated SCN5A MANE junctions were quantified at 19 to 107 reads per sample, with median per-sample junction depth of 1,173 to 1,947 reads depending on tissue and junction. The sequencing depth was adequate to detect a non-productive signal had one existed; none was found.
 
@@ -192,10 +196,81 @@ generous bound and four orders of magnitude at the reliable one.
 **This section is not in the record deposited at `10.5281/zenodo.21799863` on 5 August 2026,** which
 carries the pre-correction arithmetic.
 
+## Correction, 6 August 2026, second: the data availability statement was false, and checking it found three more things
+
+**Version 1 of this paper said its derived tables were deposited in the shared data archive. They were
+not.** The statement named three of them — the per-sample junction and transcript classifications, the
+transcript biotype table, and the headroom calculations — and the archive at
+`10.5281/zenodo.21799234` contained none of the three. It held no GTEx junction file, no transcript
+classification, no biotype table and no headroom table, and its own README had no section for this paper.
+**That is a statement a reader cannot check except by downloading the archive and finding nothing there**,
+and it is the most serious defect in this paper, worse than the arithmetic corrected above. It was found
+in an audit of all eleven papers' data availability statements on 6 August 2026, which found the same
+class of defect in six of them.
+
+Three of the four tables were **not lost**. They were saved by the original pipeline on 4 August 2026 and
+simply never copied into the deposit; they are `SCN5A_SPLICING_MEASUREMENT.csv`,
+`jx_classification.csv` and `ensembl_tx_biotypes.csv`, and all three are deposited now. The fourth, the
+headroom table, existed on disk in a form that **carried the retired 34.1 and 50 anchors this paper's
+first correction section withdraws**, so it was recomputed from 31.3, 45.8 and 100 and deposited as
+`UPREGULATION_HEADROOM_CORRECTED.csv`. The retired file is not deleted and not deposited.
+
+Every quantity printed in this paper was then recomputed from the deposited files by
+`p6_verify_and_headroom.py`, and 116 of 119 reproduce at the precision printed. **Three do not, and all
+three are recorded here rather than quietly adjusted.**
+
+| Where | Was | Is | Why |
+|---|---|---|---|
+| Abstract and the junction section, the Mann-Whitney p | `p = 1.6e-160`, attributed to the junction comparison | junction p = 4.0e-219 with tie correction, 1.3e-168 without; **1.6e-160 is the transcript comparison** | 1.6e-160 reproduces exactly from the RSEM per-sample fractions at n = 879 against 528. The junction comparison the sentence named, n = 827 against 491, gives neither figure. The error understated the paper's own result |
+| Junction section, the 308-fold gap | 308-fold, stated without qualification | 308-fold from the rounded 1.388 and 0.0045; **310.9-fold from the raw read counts** | a rounding propagation. The printed figure is kept, and its provenance is now stated |
+| Transcript table, SCN1A frontal cortex 90th percentile | 65.87% | the value is **65.8646%**, which prints as 65.86 | a last-digit slip. Left as printed in the table and recorded here; the correct value is in the deposited per-sample file |
+
+**Nothing in the conclusion changes.** The misattributed p-value is the only one of the three that
+touches an argument, and it moves in the direction of a larger separation, not a smaller one.
+
+**One documentation gap was found and is not a defect.** The sensitivity paragraph's "median per-sample
+junction depth of 1,173 to 1,947 reads" mixes two sample sets: 1,947 is the left-ventricle median after
+the depth quality-control filter, and 1,173 is the heart-pooled median before it, across 913 samples
+rather than the 827 the section is about. Both endpoints reproduce. The point being made — that depth was
+adequate — is unaffected.
+
+**Four claims in this paper are not checkable against any deposited file**, because the per-junction read
+matrix and the per-transcript abundances were aggregated away before saving. They are named in the data
+availability statement below rather than left for a reader to discover.
+
 ## Data availability
 
-Public data used: GTEx v10 junction and transcript quantification files and GTEx v9 long-read quantification files, available from the GTEx Portal; Ensembl REST API annotations for ENSG00000183873 and ENSG00000144285, GRCh38, accessed 2026-08-04; O'Neill et al. 2022 electrophysiology data, PMID 35305865, Supplementary Table 1, and the corresponding preprint, doi 10.1101/2021.09.22.461398. All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. They comprise the per-sample junction and transcript classifications, the transcript biotype table, and the headroom calculations.
+Public data used: GTEx v10 junction and transcript quantification files and GTEx v9 long-read quantification files, available from the GTEx Portal; Ensembl REST API annotations for ENSG00000183873 and ENSG00000144285, GRCh38, accessed 2026-08-04; O'Neill et al. 2022 electrophysiology data, PMID 35305865, Supplementary Table 1, and the corresponding preprint, doi 10.1101/2021.09.22.461398.
+
+The derived tables are deposited in the data archive whose identifier is recorded in DATA_DOI.txt
+alongside this manuscript, and they are these seven files, named individually so that a reader can check
+this statement against the archive rather than take it on trust:
+
+- `SCN5A_SPLICING_MEASUREMENT.csv` — the per-sample junction and transcript classifications, 2,942 rows,
+  one per sample per gene per method, carrying the non-productive signal, the total, the fraction, the
+  unit and the depth quality-control flag. Every sample count, median, 90th percentile and maximum in the
+  two tables above is computed from this file.
+- `SCN5A_SPLICING_SUMMARY.csv` — the four headline group statistics.
+- `jx_classification.csv` — every annotated junction of both genes with the transcripts containing it,
+  whether it is in MANE Select, and whether it is non-productive-specific.
+- `ensembl_tx_biotypes.csv` — the transcript biotype table: 21 SCN5A and 30 SCN1A transcripts with
+  biotype, length, coordinates and the non-productive classification.
+- `UPREGULATION_HEADROOM_CORRECTED.csv` — the headroom calculations, both the ceiling table and the boost
+  table, computed from 31.3, 45.8 and 100.
+- `p6_verify_and_headroom.py` — the script that writes the headroom table and checks the other four files
+  against every quantity printed in this paper.
+- `P6_VERIFICATION_OUTPUT.txt` — that script's output. 116 of 119 checked quantities reproduce at the
+  precision this paper prints them to; the three that do not are named in the correction section below.
+
+**Four claims in this paper cannot be checked against any deposited file, and this statement says so
+rather than implying otherwise.** The per-junction read matrix was not retained, so the range of 19 to
+107 reads per sample across the 27 MANE junctions, the median of 19 reads on the exon-skipping junction,
+the 832 and 724 reads on the two SCN1A junctions, and the claim that neither SCN5A poison-exon inclusion
+junction appears anywhere in the GTEx v10 junction file all rest on a streamed file that was not stored.
+What the deposit does support is that both inclusion junctions exist in the annotation and are correctly
+classified. Per-transcript abundance was aggregated before saving, so the three median values of 0.47,
+0.32 and 0.07 TPM are likewise not recoverable from the deposit. Reproducing any of these would require
+downloading the GTEx v10 junction and transcript files again.
 
 ## Competing interests
 

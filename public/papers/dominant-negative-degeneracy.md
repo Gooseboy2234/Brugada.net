@@ -7,7 +7,13 @@
 >
 > **What was here before, because nothing on this site is deleted quietly.** Until 6 August 2026 this file was a copy taken before the corrections of 4 August 2026 evening and never resynced, so it served the retired 34.1 percent rescaling of the measured current. Earlier on 6 August 2026 it was given a banner reading "superseded revision, do not cite any figure in it". That banner was an accurate description of a stale file and a poor thing to serve on a research site, so the stale file has been replaced with the authoritative text rather than annotated. The retired rescaling divided the measured 68.3 percent by two; O'Neill 2022's own two-allele control reads 218.4 percent of a single allele rather than 200, so the divisor is 2.184, the baseline is 31.3 percent and the comparator for simple loss of one allele is 45.8 percent.
 >
-> **This copy is ahead of the version of record, and the addition is dated.** On 6 August 2026, after the deposit, Tano et al. 2026 (PMID 41582807) was folded in at six places: one new sentence in the abstract, a provenance note in the methods, a new results section on the Tano family variants p.G833R and p.T1396P, a sixth experimental arm that the abstract's arm count deliberately still does not include, a new limitation, and reference 10. **The record at the identifier above contains none of it.**
+> **Warning, and it points at the published record rather than at this page.** The version deposited on 5 August 2026 says this paper's derived tables are in the shared data archive and names two: the per-study numbers used in the power calculation, and the dimer-arithmetic solutions for *x*. **The archive at `10.5281/zenodo.21799234` contained neither, nor any other file belonging to this paper.** That is a statement a reader cannot check except by downloading the archive and finding nothing there. It was found in an audit of all eleven papers' data availability statements on 6 August 2026, which found the same class of defect in six of them.
+>
+> **No saved output of either calculation exists anywhere**, because the tables were assembled to write the paper and never written to disk. **Both were regenerated from first principles rather than reconstructed from the paper**, which is possible here in a way it is not for most papers, because everything in them is closed-form arithmetic over published summary statistics and the method is fully stated in the Methods. `p7_power_and_dimer.py` also recomputes the three structural distances from the public 8VYJ chain A coordinates. The regeneration reproduces **36 of the 38 quantities this paper prints**, at the precision printed, including every solved *x*, both cross-study z-tests and all four structural measurements. **The two that do not reproduce exactly are rounding propagations, and both are named in the paper rather than quietly adjusted**: a minimum detectable difference printed as 37.3 percentage points that recomputes as 37.245 from the unrounded standard error, and a z of 4.25 that recomputes as 4.258. Neither changes an argument.
+>
+> **One thing the regeneration sharpened, and it cuts this paper's own way.** The post-hoc power of about 27 percent for Wang's endoplasmic-reticulum null is a normal approximation, reproducing as 26.5 percent. The exact non-central *t* at the group sizes this paper itself assumes gives **21.7 to 24.7 percent**. The printed figure is therefore the generous one, so the argument it supports, that Wang's null is a failure to resolve rather than evidence of absence, is if anything understated by it.
+>
+> **Separately, this copy is also ahead of the version of record, and that addition is dated.** On 6 August 2026, after the deposit, Tano et al. 2026 (PMID 41582807) was folded in at six places: one new sentence in the abstract, a provenance note in the methods, a new results section on the Tano family variants p.G833R and p.T1396P, a sixth experimental arm that the abstract's arm count deliberately still does not include, a new limitation, and reference 10. **The record at the identifier above contains none of it.** *(Until 7 August 2026 this header described the paper as additive only, meaning ahead of its record with nothing corrected. That was true when written and was falsified by the data availability audit, so it is corrected here rather than left standing.)*
 >
 > **No conclusion changes, and the new limitation cuts against this paper rather than for it.** It is repeated here rather than left buried: Tano's own claim is that phenotypic severity is independent of dominant-negative and coupled-gating status, which if true means resolving the mechanism buys less clinical information than this paper's framing implies.
 >
@@ -72,7 +78,7 @@ This is a bounded search over named queries on a stated date, not an exhaustive 
 
 **Structural measurements.** Distances were measured on PDB accession 8VYJ, chain A, a cryo-EM structure solved to 3.6 Å resolution (release date not recorded in the source material I worked from), using Biopython's Bio.PDB module with the ShrakeRupley algorithm (module version not recorded), after stripping hydrogens and heteroatoms. These are my own computations, not a value taken from a published table. The Cβ to Cβ distance between residue 96 and residue 104 is 11.0 Å. The dimer interface mapped by Clatot 2017 (PMID 29233994, residues 493-517, first intracellular loop) is unresolved in 8VYJ: the model has a 247-residue gap spanning residues 433 to 681. Measured to the nearest resolved flanking residues, the centroid-to-centroid distance from R104 is 23.4 Å to residue 433 and 32.0 Å to residue 681, but a disordered 247-residue linker could place the true interface almost anywhere relative to R104. Structure, at the current resolution of the available model, cannot place the N-terminal domain at or away from the dimer interface.
 
-**Statistics.** Comparisons between studies use a two-sample z-test on reported mean ± SEM values. Power calculations are two-sided at α = 0.05.
+**Statistics.** Comparisons between studies use a two-sample z-test on reported mean ± SEM values. Power calculations are two-sided at α = 0.05 and use the normal approximation, which version 1 of this paper did not state; the exact non-central t form is reported alongside it in the correction section below, and it is the more conservative of the two.
 
 ## The algebra: why current alone cannot tell the mechanisms apart
 
@@ -158,10 +164,82 @@ I do not think that conclusion follows from one family, and the reasons are wort
 
 Two further limits apply specifically to R104Q. No protein-level or mechanistic co-expression data exist for R104Q at all; everything above reasons from R104W, R121W, Y87C and L96P by structural and positional analogy within the same domain, and R104Q is a different substitution from R104W at the same position, which need not share its mechanism. And structure cannot adjudicate this question either: the dimer interface mapped by Clatot 2017 is unresolved in the best available cryo-EM model of Nav1.5, so the N-terminal domain can be neither placed at, nor excluded from, that interface on structural grounds at present.
 
+## Correction, 6 August 2026: the data availability statement was false, and the tables it named have been regenerated
+
+**Version 1 of this paper said its derived tables were deposited in the shared data archive. They were
+not.** The statement named two — the per-study numbers used in the power calculation, and the
+dimer-arithmetic solutions for *x* — and the archive at `10.5281/zenodo.21799234` contained neither, nor
+any other file belonging to this paper. **That is a statement a reader cannot check except by downloading
+the archive and finding nothing there.** It was found in an audit of all eleven papers' data availability
+statements on 6 August 2026, which found the same class of defect in six of them.
+
+No saved output of either calculation exists anywhere: the tables were assembled to write the paper and
+never written to disk. **Both have been regenerated from first principles rather than reconstructed from
+the paper**, which is possible here in a way it is not for most papers, because everything in them is
+closed-form arithmetic over published summary statistics and the method is fully stated in the Methods
+above. The regenerating script, `p7_power_and_dimer.py`, also recomputes the three structural distances
+from the public 8VYJ chain A coordinates.
+
+The regeneration reproduces **37 of the 39 quantities checked**, at the precision printed,
+including every solved *x*, every predicted surface-protein separation, both cross-study *z*-tests, both
+arithmetic slips this paper flags in Wang 2020, and all four structural measurements. **The two that do
+not reproduce exactly are recorded here rather than quietly adjusted, and both are rounding
+propagations:**
+
+| Where | Printed | Recomputed | Why |
+|---|---|---|---|
+| Wang 2020 endoplasmic-reticulum power paragraph, minimum detectable difference | 37.3 percentage points | 37.245 from the unrounded standard error of 13.2944; **37.26 from the rounded 13.3**, which is where 37.3 comes from | the figure was computed from the rounded intermediate this paper prints, not from the full-precision chain |
+| R121W section, Wang against O'Neill | z = 4.25 | 4.258 from the unrounded ratio 122.135 and its standard error 13.976; **4.250 from the rounded 122.1 and 14.0**, which is where 4.25 comes from | the same. p is 2.1×10⁻⁵ either way |
+
+Neither changes an argument. The printed values are kept, and their provenance is now stated and
+deposited so that a reader can compute it either way.
+
+**One thing the regeneration sharpened.** The post-hoc power of approximately 27 percent for Wang's
+endoplasmic-reticulum null is a normal approximation, reproducing as 26.5 percent; the Methods now say
+so. The exact non-central *t* at the group sizes this paper itself assumes for those panels, n = 5 to 12
+per group, gives **21.7 to 24.7 percent**. The printed figure is therefore the generous one, and the
+argument it supports — that Wang's null is a failure to resolve rather than evidence of absence — is if
+anything understated by it.
+
+**This section is not in the record deposited at `10.5281/zenodo.21799865` on 5 August 2026,** which
+carries the false data availability statement and, separately, no mention of Tano 2026.
+
 ## Data availability
 
-This paper draws exclusively on published data retrieved through PubMed E-utilities (accessed 2026-07-25) and on structural coordinates from PDB accession 8VYJ, chain A. No new experimental data were generated. All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. They comprise the per-study numbers used in the power calculation and the dimer-arithmetic solutions for x. Every one is a reformulation of numbers already published under the PMIDs cited throughout.
+This paper draws exclusively on published data retrieved through PubMed E-utilities (accessed 2026-07-25) and on structural coordinates from PDB accession 8VYJ, chain A. No new experimental data were generated.
+
+The derived tables are deposited in the data archive whose identifier is recorded in DATA_DOI.txt
+alongside this manuscript, and they are these five files, named individually so that a reader can check
+this statement against the archive rather than take it on trust:
+
+- `P7_POWER_INPUTS.csv` — the per-study numbers used in the power calculation and in the two cross-study
+  z-tests: O'Neill 2022's four arms, Wang 2020's two current tables, its endoplasmic-reticulum
+  co-localisation arms and its two wild-type-plus-empty-vector references, Clatot 2018's headline
+  reduction and Pujolas 2026's L96P reduction, each with its dispersion, dispersion type, n, unit, PMID
+  and the source table it was read from.
+- `P7_DIMER_ARITHMETIC.csv` — the dimer-arithmetic solutions for x, one row per variant, with
+  I/I_null, f, the solved x, the surface-protein level each mechanism predicts and the separation between
+  them.
+- `p7_power_and_dimer.py` — the script that writes both tables from those inputs and checks them against
+  every quantity printed in this paper, including the three structural distances, which it recomputes
+  from the public 8VYJ chain A coordinates.
+- `P7_VERIFICATION_OUTPUT.txt` — that script's output. 37 of 39 checked quantities reproduce at the
+  precision this paper prints them to; the two that do not are named in the correction section below.
+
+Every number in these tables is a reformulation of numbers already published under the PMIDs cited
+throughout, and `P7_POWER_INPUTS.csv` records which publication and which table each came from. The four
+rows of O'Neill 2022 Supplementary Table 1 that this paper uses are quoted inside `p7_power_and_dimer.py`
+so that it runs standalone; that table is not redeposited in full, because it is a third party's
+supplementary material and this paper prints the four rows it needs in its own text.
+
+**Two things this paper reports are not reproducible from anything deposited, and this statement says so
+rather than implying otherwise.** The eighteen PubMed E-utilities query strings behind the literature
+search were not recorded verbatim, and the date they were first run is not recorded either, as the
+Methods already state; the retrieval counts that follow from them — 305 unique records, 303 abstracts
+screened, 80 classified as bearing on the fork, eight on an N-terminal-domain variant, eleven
+variant-level measurements — therefore cannot be re-derived. And every figure attributed to Clatot 2012,
+Mercier 2015, Iamshanova 2026 and Pujolas 2026 is transcribed from an abstract, because those full texts
+were not obtainable; the same applies to the Tano 2026 measurements, which are read from PMC12911491.
 
 ## Competing interests
 

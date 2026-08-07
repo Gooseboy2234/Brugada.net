@@ -160,13 +160,16 @@ test("every rendered manuscript names its version of record", async () => {
   // named instead, from SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md,
   // SUBMIT_THESE/PAPER_10_DATA_STATEMENT_FIX.md and the per-record version
   // notes under SUBMIT_THESE/V2_STAGING/. Papers 4 and 6 miscalculate; papers
-  // 2, 5 and 10 state something untrue; papers 7 and 8 are merely ahead.
+  // 2, 5, 7 and 10 state something untrue; paper 8 alone is merely ahead.
+  // Paper 7 moved from additive to corrective on 7 August 2026 when its data
+  // availability statement was audited and found to name two tables the
+  // archive does not hold.
   const nums = (s) =>
     MANUSCRIPTS.filter((m) => m.status === s)
       .map((m) => m.n)
       .sort((a, b) => a - b);
-  assert.deepEqual(nums("corrective"), [2, 4, 5, 6, 10], "corrective set moved");
-  assert.deepEqual(nums("additive"), [7, 8], "additive set moved");
+  assert.deepEqual(nums("corrective"), [2, 4, 5, 6, 7, 10], "corrective set moved");
+  assert.deepEqual(nums("additive"), [8], "additive set moved");
   assert.deepEqual(nums("in-sync"), [1, 3, 9], "in-sync set moved");
 
   const divergent = MANUSCRIPTS.filter((m) => m.status !== "in-sync");

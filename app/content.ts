@@ -576,7 +576,7 @@ export const PAPERS: Paper[] = [
       "The standard assay cannot tell apart two different ways a broken copy interferes with a healthy one, because the two explanations are algebraically degenerate: they predict the same number. Measuring harder with the same method cannot help. This paper names the experiment that would settle it.",
     result: "negative",
     bearsOn: "Names the experiment that would settle the open question",
-    postDeposit: "additive",
+    postDeposit: "corrective",
     venue: "bioRxiv",
   },
   {
