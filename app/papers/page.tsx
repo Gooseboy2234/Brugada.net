@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DEPOSIT, NEGATIVE_COUNT, PAPERS, SITE } from "../content";
+import { DEPOSIT, DIVERGENCE, NEGATIVE_COUNT, PAPERS, SITE } from "../content";
 
 export const metadata: Metadata = {
   title: "Papers",
@@ -14,12 +14,17 @@ const label: Record<string, { text: string; cls: string }> = {
   constructive: { text: "Constructive", cls: "state-known" },
 };
 
-// Shown against the four manuscripts whose text on this site is not the text at
+// Shown against the manuscripts whose text on this site is not the text at
 // their identifier. The wording is deliberately blunt about which of the two is
 // wrong, because in the corrective cases it is the published one.
+//
+// Corrected 6 August 2026: the corrective line said the record contained
+// arithmetic that is wrong. That covered papers 4 and 6 and was false of papers
+// 2, 5 and 10, whose deposited versions are wrong in a worse way, by stating
+// things that are untrue rather than by miscalculating.
 const divergence: Record<string, string> = {
   corrective:
-    "The copy on this site is corrected and the deposited version is not. Arithmetic in the record at this identifier is wrong, was corrected here on 6 August 2026 after the deposit, and no conclusion changed. The manuscript opens with the list of every changed figure.",
+    "The copy on this site is corrected and the deposited version is not. The record at this identifier is wrong, was corrected here on 6 August 2026 after the deposit, and no conclusion changed. In two cases the record miscalculates. In three it states something untrue: that no expert panel exists for this gene, that four named tables are in the data archive when none of them are, and a count that the same document contradicts two subsections later. The manuscript opens with the full list.",
   additive:
     "The copy on this site is ahead of the deposited version. A paper published after the deposit was folded in on 6 August 2026, and the record at this identifier does not contain it. No conclusion changed. The manuscript opens with what was added.",
 };
@@ -49,15 +54,30 @@ export default function Papers() {
         </p>
         <p style={{ margin: "0.7rem 0 0" }}>
           <b>
-            Four of the ten copies on this site differ from the record at their
-            identifier, and each says so at the top of its own page.
+            {DIVERGENCE.divergent} of the ten copies on this site differ from
+            the record at their identifier, and each says so at the top of its
+            own page.
           </b>{" "}
-          Two of those four were corrected on 6 August 2026 because the
-          deposited version contains arithmetic that is wrong. The identifier
-          stays the thing to cite, because it is the fixed public record, and
-          this site serves the corrected text because serving known bad
-          arithmetic without saying so is worse. No conclusion in any paper
-          changed. Nothing has been re-uploaded.
+          {DIVERGENCE.corrective} of those {DIVERGENCE.divergent} were corrected
+          on 6 August 2026 because the deposited version is wrong. Two of them
+          miscalculate. The other three state something untrue, which is the
+          worse defect, because a reader can catch a wrong number by recomputing
+          it and cannot catch a false statement about what is in an archive
+          without downloading the archive and finding nothing there. The
+          remaining {DIVERGENCE.additive} are ahead of their record rather than
+          correcting it. The identifier stays the thing to cite, because it is
+          the fixed public record, and this site serves the corrected text
+          because serving something known to be wrong without saying so is
+          worse. No conclusion in any paper changed. Nothing has been
+          re-uploaded, and no record has a version 2.
+        </p>
+        <p style={{ margin: "0.7rem 0 0" }}>
+          <b>An eleventh paper exists and is not here.</b> It is finished and it
+          has never been deposited, so it has no identifier, and every manuscript
+          on this site names the identifier that is its version of record. Until
+          it has one there is nothing to name. It is recorded here rather than
+          left silent, because a list of ten that does not mention the eleventh
+          is the same kind of omission the eleventh paper is about.
         </p>
       </div>
 

@@ -31,9 +31,12 @@
 <p><strong>Version of record: 10.5281/zenodo.21799850, published 5 August 2026.</strong> That identifier is the citable address for this paper and it resolves at <a href="https://doi.org/10.5281/zenodo.21799850">https://doi.org/10.5281/zenodo.21799850</a>. It is a version identifier; Zenodo minted a second one that resolves to all versions, and the version identifier is the one to cite.</p>
 <p><strong>What this file is.</strong> This project&#39;s authoritative copy of the manuscript, <code>SUBMIT_THESE/papers/PUBLISH_2_BASE_EDITOR_SPECIFICITY.md</code>, which is the file the deposited PDF was built from. Synced 6 August 2026 by <code>scripts/sync-manuscripts.mjs</code>, which copies the source byte for byte and prepends this note. Nothing in the manuscript below has been rewritten for the website.</p>
 <p><strong>What was here before, because nothing on this site is deleted quietly.</strong> Until 6 August 2026 this file was a copy taken before the corrections of 4 August 2026 evening and never resynced, so it served the retired 34.1 percent rescaling of the measured current. Earlier on 6 August 2026 it was given a banner reading &quot;superseded revision, do not cite any figure in it&quot;. That banner was an accurate description of a stale file and a poor thing to serve on a research site, so the stale file has been replaced with the authoritative text rather than annotated. The retired rescaling divided the measured 68.3 percent by two; O&#39;Neill 2022&#39;s own two-allele control reads 218.4 percent of a single allele rather than 200, so the divisor is 2.184, the baseline is 31.3 percent and the comparator for simple loss of one allele is 45.8 percent.</p>
-<p><strong>This text matches the version of record, on the evidence available here.</strong> The authoritative markdown was last written on 4 August 2026, before the submission PDFs were built that evening and before the deposit the following day, so nothing in it postdates the identifier above.</p>
-<p><strong>The limit of that claim, stated rather than hidden.</strong> It is an argument from timestamps. The published PDFs have never been downloaded and compared against the local build, so no published text has been read back. <code>SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md</code> records what was and was not checked.</p>
-<p><strong>One defect in the deposited data, recorded here because this paper describes it.</strong> The paper says its lead guide has 22 protein-changing predicted off-targets, and its Table 3 lists 22. The summary file in the data deposit, <code>MS_TABLE3_LEAD_PROTEIN_CHANGING.csv</code>, still holds the 16 rows of the superseded count, because the paper was corrected and the file was not regenerated. The underlying file the paper points to for full detail, <code>ABE_CONSEQUENCE_RECHECK.csv</code>, is complete at 22,717 rows. The defect is in the deposited summary table, not in this text.</p>
+<p><strong>Warning, and it points at the published record rather than at this page.</strong> The version deposited on 5 August 2026 carries four defects, corrected here on 6 August 2026, after the deposit. Two are the same count twice: Table 2a&#39;s protein-changing column read 3, 16, 23, 55 and now reads 5, 22, 34, 71, and section 6.5 read &quot;16 of which change a protein&quot; and now reads 22. The deposited paper therefore prints <strong>16 protein-changing sites for the SpG route in Table 2a and 22 for the same route two subsections later</strong>, which is an internal contradiction rather than a divergence from the archive. The corrected column reconciles exactly with the coding-exon column, which never changed. The editable-site columns were always right, so the 6.2-fold PAM-relaxation cost, which is what that section exists to report, does not move.</p>
+<p><strong>The third correction is a new section 3.4.8, and half of it is a defect in a published data file.</strong> <code>ABE_CONSEQUENCE_RECHECK.csv</code>, as deposited in <code>10.5281/zenodo.21799234</code>, truncates its <code>recomputed_aa</code> field at exactly 1,500 characters. Fifty-eight of its 668 call-carrying rows end mid-token, and <strong>1,706 of 8,843 consequence calls, 19.3 percent, are missing from a published file.</strong> The truncated rows are not marked and do not look truncated. Every consequence figure in the deposited paper is therefore a statement about the 7,137 calls the table still prints, and the deposited paper does not say so. This copy says so, in section 3.4.8, in limitation 6.1.11 and in its data availability section. What the table printed for the missing 1,706 is unrecoverable; the producing script is not in the project tree. The same section reports a fourth wrong consequence call, at <em>KCNQ2</em> chr20:63,424,178, where p.Arg416Gly, p.Arg406Gly and p.Arg393Gly are really p.Ser416Gly, p.Ser406Gly and p.Ser393Gly. The call is missense under both readings and nothing downstream of the residue label changes.</p>
+<p><strong>The fourth correction is structural, it moves no number, and it is the one a reader can see without opening a data file.</strong> The deposited version prints, as a section heading of a published scientific paper, the line <code>## Insert into PUBLISH_2_BASE_EDITOR_SPECIFICITY.md as section 3.4.7, immediately after 3.4.6</code>. That is a build instruction to whoever assembled the manuscript. It was pasted in with the section it introduces, never removed, and deposited; its presence in the deposited PDF was confirmed by downloading that PDF from the Zenodo API on 6 August 2026. The instruction was also never followed, so the deposited version prints section 3.4 in the order 3.4.1, 3.4.2, 3.4.3, 3.4.4, 3.4.6, 3.4.5, and then prints section 3.4.7 twenty-five pages later, after the Discussion has ended. In this copy sections 3.4.5 through 3.4.8 are in numerical order and the instruction line is removed. <strong>Not one word of any section was rewritten</strong>, and the removed line is quoted verbatim in a dated note at the position the displaced sections occupied.</p>
+<p><strong>One further defect in the deposited data, recorded here because this paper describes it.</strong> The paper says its lead guide has 22 protein-changing predicted off-targets and its Table 3 lists 22. The summary file in the data deposit, <code>MS_TABLE3_LEAD_PROTEIN_CHANGING.csv</code>, still holds the 16 rows of the superseded count, because the paper was corrected and the file was not regenerated. That defect is in the deposited summary table, not in this text. <em>(This paragraph previously ended by calling <code>ABE_CONSEQUENCE_RECHECK.csv</code> complete at 22,717 rows. The row count is right and the word complete was wrong, and it was corrected here on 6 August 2026: the file has 22,717 rows and is missing 19.3 percent of its consequence calls, as set out above. A sentence that states a true row count and infers completeness from it is exactly the failure mode this project keeps finding, so it is corrected in place rather than deleted.)</em></p>
+<p><strong>No conclusion, risk tier, editor route, sequencing-panel entry or recommendation changes.</strong> Two of the four corrections make the negative result larger rather than smaller.</p>
+<p><strong>No version 2 has been deposited, and nothing has been uploaded.</strong> The identifier above still resolves to the 5 August text. If a figure on this page disagrees with the same figure at that identifier, this page is the corrected one. The full divergence, and what a version-2 deposit would have to include, is recorded in <code>SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md</code>.</p>
 <p><strong>None of this is peer reviewed, and none of it has been through a wet lab.</strong> No cell has been edited and no current has been recorded for this variant by this project. Every therapeutic statement in the manuscript below is a prediction.</p>
 <hr>
 </blockquote>
@@ -42,7 +45,12 @@
 <p>Independent researcher, no institutional affiliation</p>
 <p>ORCID: <a href="https://orcid.org/0009-0008-8925-7975">0009-0008-8925-7975</a></p>
 <p>Correspondence: the author</p>
-<p>Preprint. Version 1, 2026-08-04.</p>
+<p>Preprint. Version 1, 2026-08-04. <strong>Corrected 6 August 2026</strong> in three places: a fourth wrong consequence
+call in my own recheck table and a 1,500-character truncation in that table as deposited (section 3.4.8,
+carried into 6.1 and 7); a stale protein-changing column in Table 2a; and a stale protein-changing count
+in section 6.5. The three are collected in &quot;Corrections, 6 August 2026&quot; before section 7. <strong>The record
+deposited at <code>10.5281/zenodo.21799850</code> on 5 August 2026 carries none of them.</strong> No conclusion, no
+recommendation, no risk tier, no editor route and no sequencing-panel entry changes.</p>
 <p><strong>Keywords:</strong> adenine base editing, off-target prediction, PAM relaxation, SpG, Cas9-NG, SpRY, guide RNA design, SCN5A, Brugada syndrome, dominant negative</p>
 <hr>
 <h2>Abstract</h2>
@@ -378,7 +386,7 @@ healthy allele   5&#39;-TTCCGGTTCAGTGCCACCAA-3&#39;
 <td align="right">9</td>
 <td align="right">136</td>
 <td align="right">6</td>
-<td align="right">3</td>
+<td align="right">5</td>
 </tr>
 <tr>
 <td><strong>SpG, <code>NG</code></strong></td>
@@ -386,7 +394,7 @@ healthy allele   5&#39;-TTCCGGTTCAGTGCCACCAA-3&#39;
 <td align="right"><strong>51</strong></td>
 <td align="right"><strong>655</strong></td>
 <td align="right"><strong>26</strong></td>
-<td align="right"><strong>16</strong></td>
+<td align="right"><strong>22</strong></td>
 </tr>
 <tr>
 <td>SpRY, purine <code>NRN</code></td>
@@ -394,7 +402,7 @@ healthy allele   5&#39;-TTCCGGTTCAGTGCCACCAA-3&#39;
 <td align="right">131</td>
 <td align="right">1,598</td>
 <td align="right">40</td>
-<td align="right">23</td>
+<td align="right">34</td>
 </tr>
 <tr>
 <td>SpRY, unrestricted</td>
@@ -402,9 +410,20 @@ healthy allele   5&#39;-TTCCGGTTCAGTGCCACCAA-3&#39;
 <td align="right">268</td>
 <td align="right">4,064</td>
 <td align="right">79</td>
-<td align="right">55</td>
+<td align="right">71</td>
 </tr>
 </tbody></table>
+<p><em>(<strong>Corrected 6 August 2026.</strong> The protein-changing column read 3, 16, 23 and 55. Those are pre-recheck
+counts: this table alone was never recomputed from <code>ABE_CONSEQUENCE_RECHECK.csv</code> when Table 2b, section
+3.4.4 and Table 3 were, so the paper printed 16 protein-changing sites for the SpG route here and 22 for
+the same route two subsections later. The corrected column is the recheck&#39;s missense calls on the same
+row sets, and it reconciles with the unchanged coding-exon column exactly — 5 + 1, 22 + 4, 34 + 6 and
+71 + 8 synonymous give 6, 26, 40 and 79. <strong>The editable columns are unaffected and were correct.</strong> The
+correction makes the protein-changing load larger on every route, so it is unfavourable to this paper&#39;s
+own recommendation in absolute terms and marginally favourable in relative terms — the <code>NG</code>-to-unrestricted
+ratio on this column moves from 55/16 = 3.44 to 71/22 = 3.23, while the editable-load figure of 6.2-fold,
+which is what this section is about, does not move at all. The record deposited on 5 August 2026 prints
+the retired column.)</em></p>
 <p>Relaxing the docking collar from <code>NG</code> to unrestricted multiplies the editable off-target load <strong>6.2-fold on a sequence that has not changed at all</strong>. The <code>NGG</code> row is included for calibration only; as section 3.1 established, no <code>NGG</code> guide exists at this site, so that row is not an available option.</p>
 <h4>3.4.3 Route level: SpRY carries 34.7 times the load for no benefit</h4>
 <p>The comparison that decides the recommendation is not editor against editor but route against route, because only one of the seven guides has an on-target PAM SpG can read. The other six have on-target PAMs <code>CCT</code>, <code>GCC</code>, <code>ACG</code>, <code>AAC</code>, <code>CAA</code>, <code>CCA</code>, none satisfying <code>NG</code>. So the SpG route is <strong>one guide</strong> and that is its entire exposure, while the SpRY route is <strong>all seven</strong>.</p>
@@ -668,6 +687,13 @@ every overlapping transcript is in <code>ABE_CONSEQUENCE_RECHECK.csv</code>.</p>
 <p><strong>MSH6 deserves naming rather than a footnote.</strong> It is a DNA mismatch-repair gene, and inherited loss of function causes Lynch syndrome, a cancer-predisposition condition. It is the hit on the lead guide I would not wave through on paper. The mitigating detail is specific and testable: it sits at 3 mismatches, at guide positions 6, 7 and 12, with the mismatch at position 12 inside the PAM-proximal seed region where mismatches are least tolerated; the substitution p.Val263Ala is conservative rather than truncating; and cardiac expression is low at 2.82 TPM in left ventricle. It is a site to assay empirically, and it is listed explicitly for that purpose, not a reason to abandon the guide.</p>
 <p><strong>MSH6 is no longer the nearest protein-changing off-target, and I state that plainly because an earlier version of this analysis said it was.</strong> Under ungapped alignment it remains the nearest, at 3 mismatches. Once 1-nucleotide bulges are allowed, four protein-changing loci appear at only 2 mismatches (<em>TXNIP</em>, <em>SAMD15</em>, <em>SLC68A1</em>, <em>HNRNPAB</em>), and 41 appear at 3 mismatches against the 2 the ungapped scan found, among them <em>CACNA1D</em>, <em>MPL</em>, <em>CHD5</em>, <em>RPTOR</em> and the cardiac myopalladin gene <em>MYPN</em>. MSH6 is still a real hit and still the one I would assay first on consequence grounds. It is simply not the closest.</p>
 <p><strong>One accessibility question about MSH6 that I did not resolve.</strong> Its four editable protein-changing rows read closed in purified cardiomyocyte data, 0 of 3 experiments with the nearest peak 5,925 bp away, and open in bulk left-ventricle ATAC, 6 of 15 experiments. The cardiomyocyte reading is the one relevant to the delivery target, and it is the favourable one, which is exactly why I am not resolving the disagreement in that direction: the cardiomyocyte tier is 3 experiments against 15, and choosing the tier that gives the preferred answer is the move that produces a wrong result. The two data types disagree, and MSH6 stays flagged on sequence grounds.</p>
+<h4>3.4.5 Two cardiac genes are reachable only by the SpRY route</h4>
+<p><strong>Table 5</strong> (<code>MS_TABLE5_CARDIAC_GENE_HITS.csv</code>) enumerates all 24 editable hits in named cardiac ion-channel and sarcomeric genes. The two coding hits are:</p>
+<ul>
+<li><em><strong>TRIM63</strong></em>, 116.2 TPM in left ventricle, the highest-expressed cardiac gene in the whole hit set. Missense, 3 mismatches, reached by the SpRY guides at positions 8 and 9. <em>TRIM63</em> is a cardiac protein-turnover gene associated with hypertrophic cardiomyopathy.</li>
+<li><em><strong>KCNJ8</strong></em>, 40.2 TPM, missense, 4 mismatches, reached by the SpRY guide at position 3. <em>KCNJ8</em> encodes a cardiac potassium channel subunit and has itself been linked to early-repolarisation and Brugada phenotypes. Editing it while attempting to treat Brugada syndrome would be a poor outcome.</li>
+</ul>
+<p><strong>Neither coding hit is reachable by the lead SpG guide.</strong> The lead guide&#39;s only hits in this gene set are two non-coding sites in <em>CACNA1C</em>, both at 4 mismatches, one intronic and one in an untranslated or non-coding exon. Intronic hits are lower concern than coding ones but not zero, since they can affect splicing.</p>
 <h4>3.4.6 Bulge-aware rescan, and an error it exposed in my own consequence table</h4>
 <p>A position-by-position comparison can only count substitutions. It is structurally blind to a
 <strong>bulge</strong>, one extra unpaired nucleotide on one side of the pairing: a bulged site throws every
@@ -715,13 +741,303 @@ an ATG start and no internal stops before deciding which call was right, and MTR
 because both analyses used the same transcript NM_015360.5: the old call was p.Ala1018Ala synonymous,
 the truth is p.Leu1019Pro missense. Every consequence figure in this paper is recomputed from
 <code>ABE_CONSEQUENCE_RECHECK.csv</code>. No number is carried forward from the original table.</p>
-<h4>3.4.5 Two cardiac genes are reachable only by the SpRY route</h4>
-<p><strong>Table 5</strong> (<code>MS_TABLE5_CARDIAC_GENE_HITS.csv</code>) enumerates all 24 editable hits in named cardiac ion-channel and sarcomeric genes. The two coding hits are:</p>
-<ul>
-<li><em><strong>TRIM63</strong></em>, 116.2 TPM in left ventricle, the highest-expressed cardiac gene in the whole hit set. Missense, 3 mismatches, reached by the SpRY guides at positions 8 and 9. <em>TRIM63</em> is a cardiac protein-turnover gene associated with hypertrophic cardiomyopathy.</li>
-<li><em><strong>KCNJ8</strong></em>, 40.2 TPM, missense, 4 mismatches, reached by the SpRY guide at position 3. <em>KCNJ8</em> encodes a cardiac potassium channel subunit and has itself been linked to early-repolarisation and Brugada phenotypes. Editing it while attempting to treat Brugada syndrome would be a poor outcome.</li>
-</ul>
-<p><strong>Neither coding hit is reachable by the lead SpG guide.</strong> The lead guide&#39;s only hits in this gene set are two non-coding sites in <em>CACNA1C</em>, both at 4 mismatches, one intronic and one in an untranslated or non-coding exon. Intronic hits are lower concern than coding ones but not zero, since they can affect splicing.</p>
+<p><strong>That recheck table has since been found wrong in a fourth place, and incomplete in a way that was
+invisible when this section was written.</strong> Section 3.4.8, added 6 August 2026, counts how many calls are
+exposed to the failure mode described here rather than how many were caught, and reports a truncation in
+the deposited copy of the file this paragraph directs the reader to. Neither finding moves a count in this
+paper.</p>
+<h4>3.4.7 A splice-site result the coding-only annotation could not have found, and the general lesson in it</h4>
+<p>Everything up to this point counted off-targets by what they do to a protein&#39;s amino acid sequence. That
+choice quietly decided which off-targets could be found at all, and this section is the correction.</p>
+<p>A note on two terms first. A <strong>splice site</strong> is the junction where the cell cuts a non-coding stretch out
+of a gene&#39;s message before building the protein. Two bases on the intron side of each junction are
+effectively invariant across human genes: a junction the cell cuts <em>into</em> almost always begins <code>GT</code> and
+the one it cuts <em>out of</em> almost always ends <code>AG</code>. In pharmacy terms these are the tamper-evident seals on
+a blister pack. The pill inside can be perfect and the dose can be right, and if the seal is broken the
+pack does not get dispensed. Break the <code>AG</code> and the cell can no longer find that junction, so it usually
+splices to the next one it can find and the entire intervening block is dropped from every copy of the
+message. That is a much larger change than swapping one amino acid.</p>
+<p><strong>Why my earlier annotation could not see this class.</strong> Section 6.1 point 6 recorded that the 5-and-6
+mismatch tail was annotated only where a hit overlaps a coding block. A hit sitting 1 or 2 bases from a
+splice junction lies <strong>in the intron</strong>, on the non-coding side. It was therefore outside the annotated set
+<strong>by construction</strong>. It was not scored as low risk and it was not ranked below other hits. It was
+invisible. I want that stated in those words, because &quot;annotated only where it overlaps coding sequence&quot;
+reads like a completeness caveat and it was actually a blind spot with a specific shape.</p>
+<p><strong>This is the second blind spot of the same shape in this analysis.</strong> Section 3.4.6 describes the first:
+a position-by-position comparison is structurally incapable of seeing a bulged alignment, so allowing one
+unpaired base promoted four protein-changing loci to 2 mismatches that the ungapped scan could not
+represent. Both blind spots were created by a filter that looked like a reasonable scoping decision, and
+in both cases the filter removed exactly the class of event the analysis was asking about. <strong>The general
+lesson for off-target prediction is that a filter chosen for tractability has to be tested against the
+question being asked, not just documented.</strong> Two independent instances in one project is enough to state
+that as a methods point rather than an anecdote.</p>
+<p><strong>What the rescan covered.</strong> I rescanned the same 3,099,750,718 base pairs of GRCh38 as the original scan,
+which is the no-alt analysis set across 194 sequences with the Epstein-Barr virus decoy contig excluded,
+both strands, ungapped, keeping every editable hit at 5 and 6 mismatches regardless of whether it
+touches a coding block. That returns <strong>1,924,387 editable tail hits</strong> across the eight guides, 219,802 at
+5 mismatches and 1,704,585 at 6. The 6-mismatch figure reproduces the count in section 6.1 exactly, which
+is the check that the rescan and the original scan agree on the part they share. The lead guide
+contributes 49,376 of those hits, of which 856 place an editable adenine within 2 bases of a splice
+junction.</p>
+<p><strong>An adenine base editor cannot damage the two junction seals equally, and the asymmetry is the result.</strong>
+The editor converts adenine to guanine and nothing else. The <code>AG</code> that ends a cut-out junction has an
+adenine in its first position, so that position is directly editable and an edit changes <code>AG</code> to <code>GG</code>,
+which the cell no longer recognises. The <code>GT</code> that begins a junction has no adenine on the sense strand
+at all; the editable base is the complementary thymine, reached only from the opposite strand, and editing
+it yields <code>GC</code> rather than destroying the seal. <code>GC</code> is a real minor-class junction that the cell can
+still use, if less efficiently. <strong>So an adenine base editor can destroy an acceptor and can only weaken a
+donor.</strong> Across all eight guides that gives 1,184 distinct genomic adenines that would destroy an invariant <code>AG</code>
+against 256 that would weaken a <code>GT</code>, and in the 139-gene cardiac panel 20 against 2. Counted as
+guide-by-adenine records rather than distinct positions the same data gives 18,422 and 2,883, because one
+genomic adenine can be reached by several guides; the distinct-position count is the one to quote. The two classes are
+reported separately in <code>GAP_A_CARDIAC_SPLICE_DINUCLEOTIDE.csv</code> and should not be pooled.</p>
+<p><strong>The lead guide has two, and one of them matters.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gene</th>
+<th>Position (hg38)</th>
+<th align="right">Mismatches</th>
+<th>Edit class</th>
+<th>Transcripts affected</th>
+<th>Heart LV TPM (rank of 54)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>OBSCN</em></td>
+<td>chr1:228,317,890</td>
+<td align="right">6</td>
+<td>acceptor <code>AG</code> destroyed</td>
+<td>4 curated <code>NM_</code></td>
+<td>35.49 (2)</td>
+</tr>
+<tr>
+<td><em>JPH2</em></td>
+<td>chr20:44,181,572</td>
+<td align="right">6</td>
+<td>acceptor <code>AG</code> destroyed</td>
+<td>1 predicted <code>XM_</code> only</td>
+<td>49.98 (10)</td>
+</tr>
+</tbody></table>
+<p><strong><em>OBSCN</em> is the finding.</strong> Obscurin is a giant sarcomeric scaffolding protein that binds titin, and its
+variants are associated with cardiomyopathy. At <strong>35.49 TPM in heart left ventricle it is the second
+highest of 54 GTEx tissues</strong> (ENSG00000154358.20, GTEx v8), which puts it level with <em>SCN5A</em> itself at
+35.11 TPM in the same tissue. Heart is where this gene lives. The edited adenine is position 1 of the
+acceptor dinucleotide for an exon that is <strong>282 base pairs long and therefore an exact multiple of three</strong>,
+so skipping it removes 94 amino acids in frame rather than shifting the reading frame: residues
+approximately 4617 to 4710 of the 6,620-residue <code>NM_052843.4</code> product, and 5574 to 5667 of the 8,925-residue
+<code>NM_001386125.1</code> product. All four affected transcripts are curated <code>NM_</code> records, not computational models.</p>
+<p><strong>Why <em>OBSCN</em> outranks every missense hit in Table 3 despite being further away in mismatch distance.</strong>
+Table 3&#39;s worst entry swaps one amino acid for another. This hit can remove a 94-residue block from every
+copy of a structural protein&#39;s message in the tissue being treated. Consequence class and mismatch
+distance are different axes, and a reader should not have to infer the ranking: <strong>on consequence class
+<em>OBSCN</em> is the most severe predicted off-target of the lead guide, and on mismatch distance it is among
+the least likely.</strong> <em>MSH6</em> at 3 mismatches remains the site I would assay first on probability grounds.
+<em>OBSCN</em> at 6 mismatches is the site whose consequence, if it were edited, would be worst.</p>
+<p><strong><em>JPH2</em> is reported and explicitly down-weighted.</strong> Junctophilin-2 is a genuine cardiac gene at 49.98 TPM
+in left ventricle, and the edited base does sit on an invariant acceptor, but <strong>only in <code>XM_006723833.5</code>,
+a computationally predicted transcript model.</strong> No curated <code>NM_</code> transcript of <em>JPH2</em> has a junction
+there. The consequence is conditional on that model being real, which I cannot establish from sequence,
+so it goes on the sequencing panel and not into the risk narrative.</p>
+<p><strong>What this does not do.</strong> It does not retire the lead guide. Both sites sit at 6 mismatches, editing
+probability falls steeply with mismatch count, and neither reads open in purified cardiomyocyte
+accessibility data (<em>OBSCN</em> 0 of 3 experiments, <em>JPH2</em> 0 of 3; <em>OBSCN</em> is open in 2 of 12 bulk
+left-ventricle DNase experiments). What it does is convert an unassessed tail into <strong>two named sites with
+a sequencing plan</strong>. Both have been added to <code>AMPLICON_PANEL.csv</code> as tier <code>T4_CARDIAC_SPLICE_mm6</code>, taking
+the panel from 16 sites to 18, with primers designed under the same constraints as the original 16 and
+each edited base at least 89 bases from either primer. A named tail risk with a plan to measure it is a
+stronger position than an unexamined tail.</p>
+<p><strong>One caveat about the underlying table that anyone reusing it must know.</strong> The original scan stored a
+single editable-adenine coordinate per hit rather than the full set. An adenine base editor edits every
+adenine in its window, and these windows average 1.74 editable adenines each. Recomputing the complete set
+for every candidate window is what surfaced the <em>JPH2</em> site, which the stored single coordinate missed.
+<strong><code>ABE_TAIL_ANNOTATION.csv</code> and the scan tables list one editable position per hit, not all of them</strong>, and
+any reuse for consequence prediction has to recompute the window from the reference sequence.</p>
+<p><strong>Prior art, and it bounds this contribution.</strong> Using a base editor to disrupt a splice site is an
+established deliberate technique, not a discovery here. Adenine base editing of an intron acceptor to
+inactivate a gene was reported in 2018, a dedicated design tool for splice-disrupting guides exists
+(SpliceR), and a head-to-head screen in primary cells found that targeting donors gives more reliable
+knockouts than targeting acceptors (Kluesner et al., <em>Nat Commun</em> 2021, PMID 33893286). The asymmetry
+described above is therefore consistent with published mechanism rather than new mechanism: the field
+already knows which seal an adenine editor can break.</p>
+<p><strong>What is new here is the direction of the question.</strong> That literature asks how to disrupt a splice site
+deliberately, and chooses the editor and the seal accordingly. This analysis asks the inverse: given a guide
+chosen for an entirely different purpose, how much unintended splice-disrupting capacity does it carry across
+the genome, and is that capacity symmetric between the two seal types. I have not found that quantified for
+an off-target set, and the answer bears on any therapeutic base-editing design rather than on knockout
+screens. The 4.62-fold excess of acceptor-destroying over donor-weakening positions means an off-target
+analysis that treats splice sites as one category will misestimate the risk, and one that ignores intronic
+hits entirely, as my own earlier version did, will not see it at all.</p>
+<h4>3.4.8 A fourth wrong consequence call in my own corrected table, and a truncation in the deposited copy of it</h4>
+<p><strong>Added 6 August 2026. Two defects in tables this paper published. Neither changes a count, a consequence
+class, a risk tier, an editor route, a sequencing-panel entry or the recommendation. They are reported in
+the Results, and again in section 6.1, because they are errors in this paper&#39;s own data rather than
+caveats about someone else&#39;s.</strong></p>
+<p>Section 3.4.6 recorded three wrong consequence calls whose shared cause is that the edited codon straddles
+an exon-exon junction: three consecutive bases read off the genome spell <code>AGG</code>, which is arginine, where
+the spliced codon spells serine. Those three — <em>ALPK3</em> p.Arg48Gly and <em>CCDC180</em> p.Arg317Gly and
+p.Arg320Gly — were found by verifying corrected calls against full-length reference protein. <strong>What was
+never done was to count how many calls are exposed to that failure mode, as opposed to how many were
+caught.</strong> That census has now been run at three nested levels, and the exposure is small, bounded, and
+contains one error nobody had seen.</p>
+<p><strong>The exposure first, because it is the negative and it is the larger of the two results.</strong> Across the
+consequence table reconstructed to its full size, <strong>67 of 8,843 transcript-level protein calls sit on a
+codon that straddles an exon-exon junction. That is 0.758 percent</strong>, at four genomic adenines out of the
+577 in this scan that land in a coding sequence, in four genes: <em>ALPK3</em>, <em>CCDC180</em>, <em>KCNQ2</em> and <em>UBR4</em>.
+Exon structure alone predicts 4.80 exposed adenines against the 4 observed, so this analysis was neither
+lucky nor unlucky and there is no large hidden population of suspect calls. The test uses no sequence at
+all — a codon is exposed when its three genomic positions are not consecutive in the direction of
+transcription, which is a property of the exon coordinates — so exposure is decided exhaustively and
+cannot be biased by which reference base sits anywhere. A separate level of the census crossed every
+editable adenine in the scan against every RefSeq coding transcript containing it, 5,099
+adenine-and-transcript pairs at 577 distinct adenines in 3,160 transcripts, to answer the question the
+other levels cannot: whether an exposed adenine was missed because no call was ever made on it. None was.
+The same four adenines are the whole population.</p>
+<p><strong>The error is <em>KCNQ2</em>, and it is the fourth wrong call of this type.</strong> At chr20:63,424,178 the table
+publishes <strong>p.Arg416Gly across seven transcript records, p.Arg406Gly across four, and p.Arg393Gly across
+one — three residue numbers across twelve transcript records.</strong> The reference residue is serine at all
+three positions, so the correct calls are <strong>p.Ser416Gly, p.Ser406Gly and p.Ser393Gly</strong>. The signature is
+identical to the three already known: the spliced codon reads <code>AGC</code> or <code>AGT</code> depending on the transcript,
+the genome-contiguous reading spells <code>AGG</code>. Residue 406 of <code>NM_004518.6</code> and residue 416 of <code>NM_172107.4</code>
+were checked against NCBI&#39;s own translated proteins and both read S. <strong>Residue 393 (<code>XM_017027843.2</code>) is
+computed rather than NCBI-verified</strong>; it is the same genomic adenine and the same spliced codon as the
+other eleven, differing only in that transcript&#39;s 5&#39; structure, which is what moves the residue number.</p>
+<p><strong>Three residue labels change and nothing else does.</strong> The call is missense under both readings in all
+twelve records, so no consequence count in this paper moves. The site is not on the lead route: it is a
+minus-strand match at 4 mismatches with 1 seed mismatch, PAM <code>TGC</code>, reachable only by SpRY
+(<code>spry_route_editable</code> true, <code>spg_route_editable</code> false, <code>pam_ok_SpCas9_NGG</code> false), tier
+<code>TIER5_coding_mm4</code>. <strong>Heart left-ventricle expression is 0.033 TPM and <code>cardiac_expressed</code> is false</strong> —
+this is the neonatal-epilepsy and developmental-encephalopathy potassium channel, effectively absent from
+the tissue any therapy here would target. <em>KCNQ2</em> is a serious gene in its own domain and a predicted
+missense off-target in it is worth naming correctly, which is why this correction is in the Results. It is
+not a cardiac risk finding, and correcting the residue changes no risk tier, no mismatch count, no editor
+route and no entry on the amplicon panel.</p>
+<p><strong>The fourth exposed gene was called correctly, and it is the case that shows exposure is not the same
+thing as error.</strong> <em>UBR4</em> contributes 50 of the 67 exposed records at a single adenine, chr1:19,105,189,
+spanning 35 distinct residue numbers from 4132 to 4213 because fifty transcript models differ in 5&#39;
+structure over one shared genomic base. All fifty are synonymous under both readings. Thirteen are still
+printed in the deposited file and all thirteen read serine, matching the spliced codon and NCBI residue
+4168 of <code>NM_020765.3</code>. <strong>The other thirty-seven cannot be adjudicated at all</strong>, for the reason in the next
+subsection.</p>
+<p><strong>So the count of demonstrably wrong consequence calls attributable to junction straddling is 17
+transcript-level records at three adenines</strong> — one <em>ALPK3</em>, four <em>CCDC180</em>, twelve <em>KCNQ2</em>. Five of the
+seventeen were already known, being the three verified rows expanded to their transcript records; twelve
+are new. In gene-and-site terms the arithmetic is <strong>three known wrong calls plus one new</strong>. Four adenines
+are exposed and wrong calls occur at three of them, because <em>UBR4</em>&#39;s produced none.</p>
+<table>
+<thead>
+<tr>
+<th>Gene</th>
+<th>Position (hg38)</th>
+<th>Spliced codon</th>
+<th>Genome-contiguous codon</th>
+<th>Table says</th>
+<th>Truth</th>
+<th>Records (printed + destroyed)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>ALPK3</em></td>
+<td>chr15:84,817,594</td>
+<td><code>AGC</code></td>
+<td><code>AGG</code></td>
+<td>p.Arg48Gly</td>
+<td><strong>p.Ser48Gly</strong></td>
+<td>1 (1 + 0)</td>
+</tr>
+<tr>
+<td><em>CCDC180</em></td>
+<td>chr9:97,317,227</td>
+<td><code>AGT</code></td>
+<td><code>AGG</code></td>
+<td>p.Arg317Gly, p.Arg320Gly</td>
+<td><strong>p.Ser317Gly, p.Ser320Gly</strong></td>
+<td>4 (4 + 0)</td>
+</tr>
+<tr>
+<td><em>KCNQ2</em></td>
+<td>chr20:63,424,178</td>
+<td><code>AGC</code>, <code>AGT</code></td>
+<td><code>AGG</code></td>
+<td>p.Arg416Gly ×7, p.Arg406Gly ×4, p.Arg393Gly ×1</td>
+<td><strong>p.Ser416Gly, p.Ser406Gly, p.Ser393Gly</strong></td>
+<td>12 (12 + 0)</td>
+</tr>
+<tr>
+<td><em>UBR4</em></td>
+<td>chr1:19,105,189</td>
+<td><code>AGT</code></td>
+<td><code>AGG</code></td>
+<td>p.Ser→Ser at 12 distinct residue numbers, p.Ser4168Ser among them</td>
+<td><strong>correct in all 13 printed</strong>; 37 destroyed, truth p.Ser→Ser</td>
+<td>50 (13 + 37)</td>
+</tr>
+</tbody></table>
+<p>All four codons split the same way, with codon bases one and two at the end of one exon and base three at
+the start of the next, and <strong>all four junctions are canonical <code>GT</code>-<code>AG</code> donor-acceptor pairs</strong>, checked
+directly in the reference sequence, so none of this is an annotation artefact of a non-canonical or
+single-transcript exon boundary.</p>
+<p><strong>One observation about which cases failed, offered as an observation rather than a rule, because n is
+four.</strong> The three wrong calls all place the edited adenine at codon position one, where the base carried
+across the junction is one the caller had to read but never had to edit. The one correct call, <em>UBR4</em>,
+places it at codon position three, which is itself the base across the junction. The caller appears to
+fail when it reads across a junction and to survive when it edits across one. All fifty <em>UBR4</em> records,
+printed and destroyed alike, sit at codon position three, which is a reason to expect the thirty-seven
+unadjudicable ones were also right and is not evidence that they were.</p>
+<p><strong>A data-integrity defect in the file this paper directs every consequence figure to, and it is the larger
+finding.</strong> <code>ABE_CONSEQUENCE_RECHECK.csv</code>, deposited in this paper&#39;s data archive, <strong>silently truncates its
+<code>recomputed_aa</code> field at exactly 1,500 characters.</strong> Fifty-eight of its 668 call-carrying rows sit at
+exactly 1,500 characters and each ends mid-token — the first stops at <code>…NRXN3:XM_047431956.1:</code> with no
+residue and no consequence class — and no row exceeds it. The next longest field below the cap is 1,469
+characters, so a pile-up at a round number is the signature of a fixed-width slice rather than of rows
+that happened to be long. <strong>The file prints 7,137 of the 8,843 transcript-level calls it should carry;
+1,706, or 19.3 percent, are gone</strong>, and 28 genes lose at least one call. Only that column is affected:
+every other column of that file, and every column of the full-CDS verification table, tops out at a value
+with no rows piled at it. This defect is why the first version of the census reported &quot;30 exposed calls of
+7,496&quot; — it had parsed the surviving tokens and taken their number for the size of the table. That figure
+is withdrawn and replaced by the 67 of 8,843 above.</p>
+<p><strong>What the truncation costs, at its real size.</strong> What is recoverable is <em>which</em> calls exist, not <em>what the
+table said about them</em>. The caller&#39;s universe is deterministic — one call per row, RefSeq coding
+transcript and codon number, over every editable adenine of the row&#39;s protospacer that lands in a coding
+sequence — and that rule was tested rather than assumed: on the 610 rows the cap never touched it predicts
+5,032 calls and the file carries exactly those 5,032, with none missing and none extra. Applied to all 668
+rows it gives 8,843. <strong>The honest limit is that the largest untruncated row it is validated against
+carries 38 calls, while the capped rows run to 153 reconstructed calls each, so above 38 it is an
+extrapolation of a rule that never failed below it rather than a verified reproduction.</strong> The published
+residue letters for the 1,706 destroyed calls are unrecoverable, which is exactly why 37 exposed <em>UBR4</em>
+records are counted above as unadjudicable rather than as correct. <strong>Any statement of the form &quot;<em>n</em>
+published calls were wrong&quot; in this paper is a statement about the 7,137 calls the deposited file still
+prints, not about the 8,843 it should carry.</strong> The producing script is not in my tree and there is no
+second copy of the CSV, so the clean repair is to regenerate the table without the cap and redeposit it;
+until that is done, &quot;this cannot be counted&quot; is the correct answer for those 37 records, and I record it
+as an open defect rather than as a closed one.</p>
+<p><strong>A second, smaller cap of the same class</strong>, named so the next reader does not rediscover it as a
+surprise: the older <code>ABE_OFFTARGET_SCAN.csv</code> caps its <code>transcripts</code> column at 4 entries per row, with 671
+rows sitting at exactly 4, and its <code>aa_consequences</code> column at 6 entries, with 345 rows at exactly 6. That
+table is superseded for consequence calls by the recheck table, as section 7 already states, and no count
+in this paper depends on it for them.</p>
+<p><strong>Method and validation.</strong> Annotation is UCSC hg38 <code>ncbiRefSeq.txt.gz</code>, retrieved 6 August 2026, md5
+<code>c4e88a1a1e6a526fa7c5155521a513fe</code>, 197,654 transcript records of which 145,446 have a coding sequence;
+reference bases come from the UCSC hg38 sequence endpoint. Validation was against material the census did
+not itself produce. For all 133 rows of the full-CDS verification table the computed codon number, both
+codons, the reference residue and the protein length equal the independently recorded values, <strong>zero
+failures in 133</strong>. The reference residue agrees with the published table on <strong>every non-straddling call it
+still prints, 7,466 of 7,466</strong>. Run against the superseded pre-recheck consequence column the census
+independently rediscovers the one-residue offset of section 3.4.6, reproducing 894 displaced calls at 133
+distinct adenines. Six residues pulled from NCBI&#39;s own GenBank translations agree with the spliced
+reading. <strong>What is measured</strong>: the exon coordinates, the reference bases, the four canonical <code>GT</code>-<code>AG</code>
+junctions, the six NCBI residues, and every field length, row count and exposure count above. <strong>What is
+inferred</strong>: the genome-contiguous codon column, which reconstructs what a genome-contiguous reader
+produces rather than observing the code that produced the original calls, and the existence of the 1,706
+destroyed calls. <strong>What is not established at all</strong>: what the published table said about those 1,706, and
+in particular about the 37 exposed <em>UBR4</em> records among them.</p>
+<p><strong>Where the census tables are.</strong> The four census tables — the per-row exposure determination, the 8,843
+reconstructed calls flagged for whether the published file still prints them, the 5,099 adenine-transcript
+pairs, and the record of what the truncated file actually contains — together with the full method and
+limitations, are in the project record as <code>JUNCTION_STRADDLING_CENSUS.md</code> and its CSVs. <strong>They are not in
+the version-1 data archive <code>10.5281/zenodo.21799234</code></strong>, which was built before the census was run, and
+adding them is listed as an open item against the next version of that deposit.</p>
 <p><em>[Figure 1 is supplied as a separate file, <code>FIG1_OFFTARGET.png</code>. Upload it with the submission.]</em></p>
 <p><strong>Figure 1. Predicted off-target load of the SCN5A R104Q base-editing guides.</strong> Complete both-strand comparison across the 3,099,750,718 bp of GRCh38 scanned, at all 20 protospacer positions with no seed heuristic, every candidate site scored on PAM compatibility and the presence of an editable adenine. Complete within that scanned span and mismatch budget; the excluded contigs, the unannotated 5-and-6 mismatch tail, and bulged alignments are stated in section 6.1. <strong>(a)</strong> Cost of PAM relaxation with guide identity held constant: the identical 20-mer scored under four PAM rules. The <code>NGG</code> row is calibration only, since no <code>NGG</code> guide exists at this site. <strong>(b)</strong> Naive sequence-match counts (open circles) against editable counts (filled). The SpG route&#39;s 4,388 matches reduce to 655; the SpRY route&#39;s 24,555 reduce only to 22,710. <strong>(c)</strong> Cumulative editable sites against mismatch budget, ungapped alignment. The lead guide has no editable site at 1 mismatch under that model, marked by the triangle at the axis floor; under bulge tolerance it has five alignments at four loci there, none protein-changing. <strong>(d)</strong> The lead guide&#39;s protein-changing hits in genes expressed at 1 TPM or above in heart left ventricle, ordered by expression; <em>MSH6</em> at 3 mismatches is the closest under ungapped alignment, which is the model this panel uses. Gene symbols name the transcript carrying the coding consequence. Counts are off-target sites only, excluding the on-target locus. Cardiac expression is GTEx v8 bulk left-ventricle median.</p>
 <h3>3.5 Predicted rescue, reported under both mechanisms</h3>
@@ -854,130 +1170,33 @@ the truth is p.Leu1019Pro missense. Every consequence figure in this paper is re
 <p>I stated in section 1.3 that the comparator is no treatment rather than a functioning defibrillator. That cuts in both directions and I want both directions on the record.</p>
 <p>It raises the tolerable risk, because most carriers have no protection at all and a device would not treat the disease in any case. It does not lower the standard of evidence. An off-target edit in <em>MSH6</em> or <em>TRIM63</em> would be a permanent change in a person who may never have had an arrhythmia. The measurement has to be honest in both directions, and the reason this paper spends most of its length on the off-target profile rather than on the rescue arithmetic is that the off-target profile is the part that could cause harm.</p>
 <hr>
-<h2>Insert into PUBLISH_2_BASE_EDITOR_SPECIFICITY.md as section 3.4.7, immediately after 3.4.6</h2>
-<h3>3.4.7 A splice-site result the coding-only annotation could not have found, and the general lesson in it</h3>
-<p>Everything up to this point counted off-targets by what they do to a protein&#39;s amino acid sequence. That
-choice quietly decided which off-targets could be found at all, and this section is the correction.</p>
-<p>A note on two terms first. A <strong>splice site</strong> is the junction where the cell cuts a non-coding stretch out
-of a gene&#39;s message before building the protein. Two bases on the intron side of each junction are
-effectively invariant across human genes: a junction the cell cuts <em>into</em> almost always begins <code>GT</code> and
-the one it cuts <em>out of</em> almost always ends <code>AG</code>. In pharmacy terms these are the tamper-evident seals on
-a blister pack. The pill inside can be perfect and the dose can be right, and if the seal is broken the
-pack does not get dispensed. Break the <code>AG</code> and the cell can no longer find that junction, so it usually
-splices to the next one it can find and the entire intervening block is dropped from every copy of the
-message. That is a much larger change than swapping one amino acid.</p>
-<p><strong>Why my earlier annotation could not see this class.</strong> Section 6.1 point 6 recorded that the 5-and-6
-mismatch tail was annotated only where a hit overlaps a coding block. A hit sitting 1 or 2 bases from a
-splice junction lies <strong>in the intron</strong>, on the non-coding side. It was therefore outside the annotated set
-<strong>by construction</strong>. It was not scored as low risk and it was not ranked below other hits. It was
-invisible. I want that stated in those words, because &quot;annotated only where it overlaps coding sequence&quot;
-reads like a completeness caveat and it was actually a blind spot with a specific shape.</p>
-<p><strong>This is the second blind spot of the same shape in this analysis.</strong> Section 3.4.6 describes the first:
-a position-by-position comparison is structurally incapable of seeing a bulged alignment, so allowing one
-unpaired base promoted four protein-changing loci to 2 mismatches that the ungapped scan could not
-represent. Both blind spots were created by a filter that looked like a reasonable scoping decision, and
-in both cases the filter removed exactly the class of event the analysis was asking about. <strong>The general
-lesson for off-target prediction is that a filter chosen for tractability has to be tested against the
-question being asked, not just documented.</strong> Two independent instances in one project is enough to state
-that as a methods point rather than an anecdote.</p>
-<p><strong>What the rescan covered.</strong> I rescanned the same 3,099,750,718 base pairs of GRCh38 as the original scan,
-which is the no-alt analysis set across 194 sequences with the Epstein-Barr virus decoy contig excluded,
-both strands, ungapped, keeping every editable hit at 5 and 6 mismatches regardless of whether it
-touches a coding block. That returns <strong>1,924,387 editable tail hits</strong> across the eight guides, 219,802 at
-5 mismatches and 1,704,585 at 6. The 6-mismatch figure reproduces the count in section 6.1 exactly, which
-is the check that the rescan and the original scan agree on the part they share. The lead guide
-contributes 49,376 of those hits, of which 856 place an editable adenine within 2 bases of a splice
-junction.</p>
-<p><strong>An adenine base editor cannot damage the two junction seals equally, and the asymmetry is the result.</strong>
-The editor converts adenine to guanine and nothing else. The <code>AG</code> that ends a cut-out junction has an
-adenine in its first position, so that position is directly editable and an edit changes <code>AG</code> to <code>GG</code>,
-which the cell no longer recognises. The <code>GT</code> that begins a junction has no adenine on the sense strand
-at all; the editable base is the complementary thymine, reached only from the opposite strand, and editing
-it yields <code>GC</code> rather than destroying the seal. <code>GC</code> is a real minor-class junction that the cell can
-still use, if less efficiently. <strong>So an adenine base editor can destroy an acceptor and can only weaken a
-donor.</strong> Across all eight guides that gives 1,184 distinct genomic adenines that would destroy an invariant <code>AG</code>
-against 256 that would weaken a <code>GT</code>, and in the 139-gene cardiac panel 20 against 2. Counted as
-guide-by-adenine records rather than distinct positions the same data gives 18,422 and 2,883, because one
-genomic adenine can be reached by several guides; the distinct-position count is the one to quote. The two classes are
-reported separately in <code>GAP_A_CARDIAC_SPLICE_DINUCLEOTIDE.csv</code> and should not be pooled.</p>
-<p><strong>The lead guide has two, and one of them matters.</strong></p>
-<table>
-<thead>
-<tr>
-<th>Gene</th>
-<th>Position (hg38)</th>
-<th align="right">Mismatches</th>
-<th>Edit class</th>
-<th>Transcripts affected</th>
-<th>Heart LV TPM (rank of 54)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><em>OBSCN</em></td>
-<td>chr1:228,317,890</td>
-<td align="right">6</td>
-<td>acceptor <code>AG</code> destroyed</td>
-<td>4 curated <code>NM_</code></td>
-<td>35.49 (2)</td>
-</tr>
-<tr>
-<td><em>JPH2</em></td>
-<td>chr20:44,181,572</td>
-<td align="right">6</td>
-<td>acceptor <code>AG</code> destroyed</td>
-<td>1 predicted <code>XM_</code> only</td>
-<td>49.98 (10)</td>
-</tr>
-</tbody></table>
-<p><strong><em>OBSCN</em> is the finding.</strong> Obscurin is a giant sarcomeric scaffolding protein that binds titin, and its
-variants are associated with cardiomyopathy. At <strong>35.49 TPM in heart left ventricle it is the second
-highest of 54 GTEx tissues</strong> (ENSG00000154358.20, GTEx v8), which puts it level with <em>SCN5A</em> itself at
-35.11 TPM in the same tissue. Heart is where this gene lives. The edited adenine is position 1 of the
-acceptor dinucleotide for an exon that is <strong>282 base pairs long and therefore an exact multiple of three</strong>,
-so skipping it removes 94 amino acids in frame rather than shifting the reading frame: residues
-approximately 4617 to 4710 of the 6,620-residue <code>NM_052843.4</code> product, and 5574 to 5667 of the 8,925-residue
-<code>NM_001386125.1</code> product. All four affected transcripts are curated <code>NM_</code> records, not computational models.</p>
-<p><strong>Why <em>OBSCN</em> outranks every missense hit in Table 3 despite being further away in mismatch distance.</strong>
-Table 3&#39;s worst entry swaps one amino acid for another. This hit can remove a 94-residue block from every
-copy of a structural protein&#39;s message in the tissue being treated. Consequence class and mismatch
-distance are different axes, and a reader should not have to infer the ranking: <strong>on consequence class
-<em>OBSCN</em> is the most severe predicted off-target of the lead guide, and on mismatch distance it is among
-the least likely.</strong> <em>MSH6</em> at 3 mismatches remains the site I would assay first on probability grounds.
-<em>OBSCN</em> at 6 mismatches is the site whose consequence, if it were edited, would be worst.</p>
-<p><strong><em>JPH2</em> is reported and explicitly down-weighted.</strong> Junctophilin-2 is a genuine cardiac gene at 49.98 TPM
-in left ventricle, and the edited base does sit on an invariant acceptor, but <strong>only in <code>XM_006723833.5</code>,
-a computationally predicted transcript model.</strong> No curated <code>NM_</code> transcript of <em>JPH2</em> has a junction
-there. The consequence is conditional on that model being real, which I cannot establish from sequence,
-so it goes on the sequencing panel and not into the risk narrative.</p>
-<p><strong>What this does not do.</strong> It does not retire the lead guide. Both sites sit at 6 mismatches, editing
-probability falls steeply with mismatch count, and neither reads open in purified cardiomyocyte
-accessibility data (<em>OBSCN</em> 0 of 3 experiments, <em>JPH2</em> 0 of 3; <em>OBSCN</em> is open in 2 of 12 bulk
-left-ventricle DNase experiments). What it does is convert an unassessed tail into <strong>two named sites with
-a sequencing plan</strong>. Both have been added to <code>AMPLICON_PANEL.csv</code> as tier <code>T4_CARDIAC_SPLICE_mm6</code>, taking
-the panel from 16 sites to 18, with primers designed under the same constraints as the original 16 and
-each edited base at least 89 bases from either primer. A named tail risk with a plan to measure it is a
-stronger position than an unexamined tail.</p>
-<p><strong>One caveat about the underlying table that anyone reusing it must know.</strong> The original scan stored a
-single editable-adenine coordinate per hit rather than the full set. An adenine base editor edits every
-adenine in its window, and these windows average 1.74 editable adenines each. Recomputing the complete set
-for every candidate window is what surfaced the <em>JPH2</em> site, which the stored single coordinate missed.
-<strong><code>ABE_TAIL_ANNOTATION.csv</code> and the scan tables list one editable position per hit, not all of them</strong>, and
-any reuse for consequence prediction has to recompute the window from the reference sequence.</p>
-<p><strong>Prior art, and it bounds this contribution.</strong> Using a base editor to disrupt a splice site is an
-established deliberate technique, not a discovery here. Adenine base editing of an intron acceptor to
-inactivate a gene was reported in 2018, a dedicated design tool for splice-disrupting guides exists
-(SpliceR), and a head-to-head screen in primary cells found that targeting donors gives more reliable
-knockouts than targeting acceptors (Kluesner et al., <em>Nat Commun</em> 2021, PMID 33893286). The asymmetry
-described above is therefore consistent with published mechanism rather than new mechanism: the field
-already knows which seal an adenine editor can break.</p>
-<p><strong>What is new here is the direction of the question.</strong> That literature asks how to disrupt a splice site
-deliberately, and chooses the editor and the seal accordingly. This analysis asks the inverse: given a guide
-chosen for an entirely different purpose, how much unintended splice-disrupting capacity does it carry across
-the genome, and is that capacity symmetric between the two seal types. I have not found that quantified for
-an off-target set, and the answer bears on any therapeutic base-editing design rather than on knockout
-screens. The 4.62-fold excess of acceptor-destroying over donor-weakening positions means an off-target
-analysis that treats splice sites as one category will misestimate the risk, and one that ignores intronic
-hits entirely, as my own earlier version did, will not see it at all.</p>
+<h2>Sections 3.4.7 and 3.4.8 used to sit here, and an editorial instruction used to sit here with them</h2>
+<p><strong>Moved 6 August 2026 23:35 CDT. Nothing was deleted except one line that was never part of the paper, and
+that line is quoted below in full.</strong> A reader working from the version of record — the PDF deposited at
+<code>10.5281/zenodo.21799850</code> on 5 August 2026 — will find sections 3.4.7 and 3.4.8 printed at this point,
+after section 5.4 and before section 6, and will find them introduced by a heading reading:</p>
+<blockquote>
+<p><code>## Insert into PUBLISH_2_BASE_EDITOR_SPECIFICITY.md as section 3.4.7, immediately after 3.4.6</code></p>
+</blockquote>
+<p><strong>That heading was an instruction to whoever assembled this paper, not text of the paper.</strong> It was pasted
+in with the section it describes and never removed, and it was deposited. It is removed here rather than
+struck through, because striking it through would leave a sentence in the manuscript that addresses a
+file-editing operation and not a reader — the only case in this document where deletion is the honest
+option. It is quoted above so that nothing is lost.</p>
+<p><strong>The instruction was followed, 6 August 2026, and it was correct.</strong> Section 3.4.7 now sits immediately
+after 3.4.6, and section 3.4.8 immediately after 3.4.7, inside section 3.4 where the numbering says they
+belong. <strong>Section 3.4.5 was also out of order</strong> — it was printed after 3.4.6 — and is now printed before
+it. <strong>Not one word of any of the four sections was changed by the move</strong>, and Figure 1 stays where it
+was, at the end of section 3.4 just before 3.5, because its caption reports the bulge-aware results that
+section 3.4.6 introduces.</p>
+<p><strong>Order in the deposited version 1:</strong> 3.4.1, 3.4.2, 3.4.3, 3.4.4, <strong>3.4.6, 3.4.5</strong>, Figure 1, 3.5, 4, 5,
+5.1–5.4, <em>[the editorial heading]</em>, <strong>3.4.7</strong>, then section 6. <strong>Order here:</strong> 3.4.1 through 3.4.8 in
+numerical order, then Figure 1, then 3.5, 4, 5, 5.1–5.4, then section 6.</p>
+<p><strong>This changes page layout throughout and is therefore an editorial decision on a published paper, not a
+typographical fix.</strong> It is recorded as such in <code>SUBMIT_THESE/V2_STAGING/05_paper_2/VERSION_NOTE.md</code> and it
+is reversible: no text was rewritten, so restoring the deposited order is a matter of moving the same
+blocks back. <strong>Nothing has been uploaded.</strong></p>
+<hr>
 <h3>A correction to the rescue baseline, made 4 August 2026</h3>
 <p>An earlier version of this analysis rescaled the measured heterozygous current to a two-allele heart by
 dividing by two, giving 34.1 percent. That assumed perfect additivity. O&#39;Neill 2022 measured the two-allele
@@ -1000,7 +1219,9 @@ gain, which rises from 2.93-fold to 3.20-fold.</p>
 <p>6a. <strong>I did not resolve the MSH6 accessibility disagreement.</strong> Its editable protein-changing rows read closed in purified cardiomyocyte data, 0 of 3 experiments, and open in bulk left-ventricle ATAC, 6 of 15. The cardiomyocyte reading is the relevant one for a cardiomyocyte-directed therapy and it is also the favourable one, and I decline to resolve the disagreement in that direction, because the cardiomyocyte tier is 3 experiments against 15 and picking the tier that returns the preferred answer is how a wrong result gets published. <strong>What would settle it:</strong> a primary purified-cardiomyocyte ATAC or DNase experiment at adequate depth covering chr2:47,798,7xx.
 7. <strong>Expression evidence is partial and bulk.</strong> I resolved 295 of 330 genes in GTEx v8. A hit in an unresolved gene has <strong>no</strong> expression evidence here, which is not evidence of no expression. GTEx medians are bulk adult post-mortem tissue, not cardiomyocyte-specific and not developmental. One row in Table 3, <em>CAVIN2</em>, has no resolved expression value at all.
 8. <strong>Guide-independent deaminase activity is outside any sequence scan.</strong> Base editors produce off-target editing that does not depend on the guide at all. No sequence method can predict it.
-9. <strong>RNA off-target editing is outside the scope of this scan.</strong> Adenine base editors edit RNA as well as DNA. Qi 2024 detected none in treated mouse hearts, which is encouraging but is a measurement of their editor in their system.</p>
+9. <strong>RNA off-target editing is outside the scope of this scan.</strong> Adenine base editors edit RNA as well as DNA. Qi 2024 detected none in treated mouse hearts, which is encouraging but is a measurement of their editor in their system.
+10. <strong>Four residue labels in my corrected consequence table were wrong, and the exposure to that error is now counted rather than assumed.</strong> <em>(Added 6 August 2026.)</em> A codon that straddles an exon-exon junction is read incorrectly by a genome-contiguous reader, which is the cause of the three errors in section 3.4.6 and of the fourth, <em>KCNQ2</em>, in section 3.4.8. <strong>67 of 8,843 transcript-level calls, 0.758 percent, are exposed to it, at four adenines in four genes</strong>; 17 transcript-level records at three of those adenines carry a wrong reference residue, 13 carry a right one, and 37 cannot be judged. <strong>The consequence class is unchanged in every one of them, so no count, tier or route in this paper moves</strong> — the defect is in residue labels only. What remains a genuine limitation is that the correction was derived by re-deriving the reference residue and not by re-deriving whether an editor would edit any of these adenines at a measurable rate, which is unmeasured here as everywhere in this paper. One of the three <em>KCNQ2</em> residue numbers, 393 in <code>XM_017027843.2</code>, is computed from the exon model rather than checked against an NCBI translation.
+11. <strong>The deposited <code>ABE_CONSEQUENCE_RECHECK.csv</code> is truncated, and 19.3 percent of its consequence calls are not in it.</strong> <em>(Added 6 August 2026.)</em> Its <code>recomputed_aa</code> field is capped at exactly 1,500 characters; 58 of 668 call-carrying rows sit at the cap ending mid-token; the file prints 7,137 of the 8,843 calls it should carry. This is a defect in a file that has been published, not a caveat about a method. <strong>Every consequence figure in this paper is drawn from that file, so every such figure is a statement about the 7,137 calls it prints.</strong> The reconstruction of <em>which</em> calls are missing is validated 5,032 times without a miss on the rows the cap never touched, but the published text for the missing 1,706 is gone and is not recoverable from anything. The producing script is not in my tree. Until the table is regenerated without the cap and redeposited, a reader reusing that file for any purpose other than reproducing this paper&#39;s numbers must know that a fifth of it is absent, and that the absence is invisible in the file itself because the truncated rows still look like well-formed rows.</p>
 <p><strong>Only an empirical assay can confirm any of this.</strong> GUIDE-seq, CIRCLE-seq, or targeted deep sequencing of the ranked sites in <code>ABE_OFFTARGET_SCAN.csv</code>.</p>
 <h3>6.2 Limitations of the rescue prediction</h3>
 <ol>
@@ -1022,15 +1243,67 @@ gain, which rises from 2.93-fold to 3.20-fold.</p>
 <li><strong>A trained activity model promoting a site this method ranked as distant.</strong> This would falsify the ranking without falsifying the enumeration. The bulge-aware half of this test has now been run, and it did promote sites: see section 3.4.6.
 3a. <strong>Measured editing at the four two-mismatch bulged loci showing none detectable.</strong> <em>TXNIP</em>, <em>SAMD15</em>, <em>SLC68A1</em> and <em>HNRNPAB</em> are the sites bulge tolerance brought closer than the ungapped scan could see. No detectable editing at them would mean bulged binding does not translate into bulged editing here, and would return the nearest protein-changing risk to 3 mismatches.
 3b. <strong>Measured editing at chr20:38,139,629 changing <em>TGM2</em> expression despite the synonymous codon.</strong> That would mean the reassurance about the four one-mismatch bulged loci rests on the wrong mechanism, since it currently rests on protein sequence and splice-boundary distance alone.
-3c. <strong>A full-CDS translation of any corrected transcript showing my residue numbering off by one in the other direction.</strong> I verified 3 of the 133 substantive consequence corrections against full-length translated coding sequence; the remaining 130 rest on the same validated code path and were not individually checked against NCBI.</li>
+3c. <strong>A full-CDS translation of any corrected transcript showing my residue numbering off by one in the other direction.</strong> <del>I verified 3 of the 133 substantive consequence corrections against full-length translated coding sequence; the remaining 130 rest on the same validated code path and were not individually checked against NCBI.</del> <strong>Superseded 6 August 2026, and the superseding result is the reason section 3.4.8 exists.</strong> All 133 were subsequently verified against full-length reference protein, every reconstructed coding sequence matching the official translation exactly before being used to judge anything, and <strong>three of the 133 were wrong</strong> — <em>ALPK3</em> p.Arg48Gly and <em>CCDC180</em> p.Arg317Gly and p.Arg320Gly, all three from junction-straddling codons, all three unchanged in consequence class. The falsification test named here has therefore been run and it returned three failures, not zero. <strong>What has not been run is the equivalent verification for the 1,706 consequence calls the deposited table truncated away</strong>, and that test remains open in the sense that it cannot be run at all until the table is regenerated.</li>
 <li><strong>My own genome containing a variant that creates a close editable site absent from the reference.</strong> Directly checkable.</li>
 <li><strong>An allele-resolved surface-expression experiment showing simple haploinsufficiency.</strong> This would replace the 3.20-fold per-cell figure with 2.18-fold and weaken the therapeutic case without eliminating it.</li>
 <li><strong>Bystander editing detected at the on-target locus despite zero adenines in the window.</strong> This would indicate the editing window is wider than the positions 3 to 9 assumed here, which would invalidate the bystander analysis for all seven guides.</li>
 </ol>
 <h3>6.5 The negative result, stated plainly</h3>
-<p><strong>No guide at this locus is clean in an absolute sense.</strong> The lead guide has 655 predicted editable off-target sites in the genome at up to 4 mismatches, 16 of which change a protein, one of them in a cancer-predisposition gene. Standard SpCas9, the best-characterised and most specific option, cannot reach the site at all. &quot;The lead guide survives&quot; means &quot;best of the available options, with a specific and testable mitigation list&quot;, not &quot;safe&quot;.</p>
+<p><strong>No guide at this locus is clean in an absolute sense.</strong> The lead guide has 655 predicted editable off-target sites in the genome at up to 4 mismatches, <strong>22</strong> of which change a protein, one of them in a cancer-predisposition gene. <em>(Corrected 6 August 2026: this sentence read &quot;16 of which change a protein&quot;. 16 is the retired count from before the consequence recheck of section 3.4.6, and section 3.4.4 of this same paper already states that the missense count is 22 and not 16. The paper contradicted itself, and the number in the section headed &quot;the negative result, stated plainly&quot; was the wrong one. The correction makes the negative result larger, not smaller. The record deposited on 5 August 2026 prints 16 here.)</em> Standard SpCas9, the best-characterised and most specific option, cannot reach the site at all. &quot;The lead guide survives&quot; means &quot;best of the available options, with a specific and testable mitigation list&quot;, not &quot;safe&quot;.</p>
 <p>The honest headline is that this site is workable with SpG and would be difficult to defend with SpRY.</p>
 <hr>
+<h2>Corrections, 6 August 2026</h2>
+<p><del>Three corrections were made to this paper on 6 August 2026.</del> <strong>Four, as of 6 August 2026 23:35. The
+fourth is structural rather than numerical and is described in its own row below and, at greater length,
+at the point in the document where the displaced sections used to sit.</strong> Two of them are the same defect twice: a
+count that the consequence recheck of section 3.4.6 had already superseded, left standing in a table and
+in a sentence that were never revisited when the rest of the paper was.** The third is a new finding.
+None changes a conclusion or the recommendation. Every superseded figure is left visible at its site with
+its replacement rather than removed.</p>
+<table>
+<thead>
+<tr>
+<th>Where</th>
+<th>Was</th>
+<th>Is</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Table 2a, protein-changing column</td>
+<td>3, 16, 23, 55</td>
+<td><strong>5, 22, 34, 71</strong></td>
+<td>Pre-recheck counts. Table 2b and section 3.4.4 were recomputed from <code>ABE_CONSEQUENCE_RECHECK.csv</code> and this table was not, so the paper printed 16 and 22 for the same route in two places. Reconciles with the unchanged coding-exon column: 5+1, 22+4, 34+6, 71+8 give 6, 26, 40, 79</td>
+</tr>
+<tr>
+<td>Section 6.5, protein-changing sites on the lead guide</td>
+<td>16</td>
+<td><strong>22</strong></td>
+<td>Same cause. The wrong number was in the section headed &quot;the negative result, stated plainly&quot;</td>
+</tr>
+<tr>
+<td>New section 3.4.8</td>
+<td>absent</td>
+<td><strong>a fourth wrong consequence call, and a truncation in a deposited table</strong></td>
+<td>The junction-straddling exposure was never counted, only the three caught instances were known. Counting it found <em>KCNQ2</em> wrong at three residue numbers across twelve transcript records, and found that the deposited <code>ABE_CONSEQUENCE_RECHECK.csv</code> is missing 19.3 percent of its consequence calls</td>
+</tr>
+<tr>
+<td><strong>Section order, and one line that was never text</strong> <em>(added 23:35)</em></td>
+<td>3.4.1–3.4.4, then <strong>3.4.6 before 3.4.5</strong>; 3.4.7 printed <strong>after section 5.4</strong>, under a heading reading <code>## Insert into PUBLISH_2_BASE_EDITOR_SPECIFICITY.md as section 3.4.7, immediately after 3.4.6</code></td>
+<td><strong>3.4.1 through 3.4.8 in numerical order, and the instruction line removed</strong></td>
+<td>The instruction was an editorial note to whoever assembled the paper. It was pasted in with the section it introduces, never removed, and <strong>deposited</strong>. Following it also fixes 3.4.5, which was displaced by the same insertion. <strong>No word of any section was rewritten; the blocks were moved.</strong> Figure 1 stays at the end of section 3.4, because its caption reports section 3.4.6&#39;s bulge-aware results. Full account, including the deposited order and the removed line quoted verbatim, at the point in this document where those sections used to sit</td>
+</tr>
+</tbody></table>
+<p><strong>The direction of the first three is unfavourable to this paper</strong>: more predicted protein-changing
+off-targets on every route, one more wrong call in its own table, and a published data file that is a fifth
+incomplete. That is the reason to state them at the front of the correction rather than at the back. <strong>The
+fourth is unfavourable in a different currency</strong>: it says that a paper this project deposited under a
+permanent identifier carried a build instruction in its section headings for a day and nobody noticed.</p>
+<p><strong>None of the four moves a consequence class, a risk tier, an editor route, an amplicon-panel entry, the
+6.2-fold PAM-relaxation cost, the 34.7-fold route ratio, the rescue arithmetic of Table 4, or the
+recommendation in section 4.</strong> The fourth moves no number at all. <strong>It does move page layout throughout,
+which is why it is an editorial decision on a published record rather than a typographical fix, and why it
+is recorded in <code>SUBMIT_THESE/V2_STAGING/05_paper_2/VERSION_NOTE.md</code> as well as here.</strong></p>
 <h2>7. Data availability</h2>
 <p>All inputs are public and every derived file accompanies this paper.</p>
 <p><strong>Public inputs.</strong></p>
@@ -1086,7 +1359,7 @@ recorded in DATA_DOI.txt alongside this manuscript and should be cited as the da
 </tr>
 <tr>
 <td><code>ABE_CONSEQUENCE_RECHECK.csv</code></td>
-<td>Recomputed region, genes and amino-acid consequence for all 22,717 editable rows, flagging every disagreement with the original scan table. Every consequence figure in this paper comes from this file</td>
+<td>Recomputed region, genes and amino-acid consequence for all 22,717 editable rows, flagging every disagreement with the original scan table. Every consequence figure in this paper comes from this file. <strong>Defective as deposited: its <code>recomputed_aa</code> field is truncated at 1,500 characters and 1,706 of 8,843 transcript-level calls, 19.3 percent, are missing. See the third reconciliation below and section 3.4.8 before reusing it</strong></td>
 </tr>
 <tr>
 <td><code>ABE_BULGE_LOWMM_SITES.csv</code></td>
@@ -1109,7 +1382,16 @@ recorded in DATA_DOI.txt alongside this manuscript and should be cited as the da
 <td>Figure 1</td>
 </tr>
 </tbody></table>
-<p><strong>Two reconciliations, so that a discrepancy does not look like an error.</strong> First, the consequence columns of <code>ABE_OFFTARGET_SCAN.csv</code> disagree with this paper: they are the uncorrected calls, wrong on 133 rows, and are retained in the archive only so the correction can be audited row by row against <code>ABE_CONSEQUENCE_RECHECK.csv</code>. Read consequences from the recheck file. Second, summing the <code>spry_route_editable</code> column of <code>ABE_OFFTARGET_SCAN.csv</code> gives 22,712, while this paper reports 22,710 editable off-target sites for the SpRY route. The difference is exactly 2, and those two rows are on-target: the SpRY guides at positions 3 and 4 each carry a known bystander adenine inside the editing window, at window positions 8 and 9 respectively. Filter on <code>is_on_target == False</code> to reproduce every count in this paper. The SpG figure of 655 is identical either way, because the lead guide has no bystander adenine in its window. This is a useful independent confirmation: the genome scan rediscovered from sequence alone the bystanders that the guide enumeration had recorded separately.</p>
+<p><strong>Three reconciliations, so that a discrepancy does not look like an error.</strong> <em>(The third was added 6 August 2026 and, unlike the first two, it is a defect rather than a reconciliation. It is placed here because this is where a reader decides which file to open.)</em> First, the consequence columns of <code>ABE_OFFTARGET_SCAN.csv</code> disagree with this paper: they are the uncorrected calls, wrong on 133 rows, and are retained in the archive only so the correction can be audited row by row against <code>ABE_CONSEQUENCE_RECHECK.csv</code>. Read consequences from the recheck file. Second, summing the <code>spry_route_editable</code> column of <code>ABE_OFFTARGET_SCAN.csv</code> gives 22,712, while this paper reports 22,710 editable off-target sites for the SpRY route. The difference is exactly 2, and those two rows are on-target: the SpRY guides at positions 3 and 4 each carry a known bystander adenine inside the editing window, at window positions 8 and 9 respectively. Filter on <code>is_on_target == False</code> to reproduce every count in this paper. The SpG figure of 655 is identical either way, because the lead guide has no bystander adenine in its window. This is a useful independent confirmation: the genome scan rediscovered from sequence alone the bystanders that the guide enumeration had recorded separately.</p>
+<p><strong>Third, and it is a defect rather than a discrepancy: <code>ABE_CONSEQUENCE_RECHECK.csv</code> as deposited is
+truncated.</strong> Its <code>recomputed_aa</code> field is cut at exactly 1,500 characters, 58 of the 668 call-carrying rows
+end mid-token, and the file prints 7,137 of the 8,843 transcript-level consequence calls it should carry.
+The truncated rows are not marked and do not look truncated. <strong>Anyone reusing this file for consequence
+prediction must read section 3.4.8 first</strong>, and anyone counting calls in it will count 7,137 and should not
+report that number as the size of the table — that is the exact mistake the first version of the census
+made. The full measurement, the reconstruction of which calls are missing, and the limits of that
+reconstruction are in section 3.4.8. The census tables themselves are not in this archive, which was built
+before the census was run.</p>
 <hr>
 <h2>8. Competing interests, and the role of the author</h2>
 <p>I carry the variant used as the worked example in this paper. I have no financial interest in any editor, vector or reagent named. No funding was received. I performed the design, the scan, the analysis and the writing.</p>

@@ -197,6 +197,100 @@ for f in public/papers/*.md; do
 done
 if [ $prov_fail -eq 0 ]; then echo "  ok"; else fail=1; fi
 
+# --- Rule: the rendered manuscript pages are current with their markdown. ---
+# Added 2026-08-06. public/m/<slug>.html is what "Read the manuscript" opens and
+# it is a committed build artifact, so a manuscript can be corrected, committed
+# and deployed with the reader-facing copy still stale. That happened to paper 5.
+report "Checking rendered manuscripts match public/papers"
+if node scripts/build-manuscripts.mjs --check; then :; else
+  echo "FAIL: run node scripts/build-manuscripts.mjs"
+  fail=1
+fi
+
+# --- Rule: the served data tables do not carry the retired rescaling. ---
+# Added 2026-08-06, and it is the third instance of the same blind spot. Every
+# rule above was scoped to app/ or to public/papers/, and public/tables/ was
+# reachable by none of them, so two CSVs served from /data held the retired 34.1
+# baseline against the retired 50 comparator for two days after the papers they
+# belong to were corrected. A string rule is right here and would be wrong on a
+# manuscript: a paper legitimately names a retired figure inside its own dated
+# correction table, a CSV of derived values never does. The correction note
+# filed beside the tables is exempt, because saying what was withdrawn is its
+# entire purpose.
+#
+# The retired baseline 34.1 is checked in every served CSV, because there is no
+# innocent reason for it to appear in one. The retired comparator 50.0 is NOT
+# checked everywhere: 50.0 is an ordinary percentage and ABE_ACCESSIBILITY_
+# TOPGENES.csv carries a genuine 50.0 in a chromatin-openness column. It is
+# checked only in the tables whose headers name a column measured against that
+# comparator, which is the narrowest form of the rule that still has teeth.
+report "Checking served data tables for the retired rescaling"
+tbl_fail=0
+if hits=$(grep -rn '34\.1' public/tables/*.csv 2>/dev/null); then
+  echo "$hits"
+  echo "  FAIL: a served table carries the retired 34.1 baseline"
+  tbl_fail=1
+fi
+for f in public/tables/*.csv; do
+  head -1 "$f" | grep -qE 'haploinsufficiency_pct|predicted_percent_of_normal' || continue
+  if hits=$(grep -nE '(^|,)50\.0(,|$)' "$f"); then
+    echo "$f:"; echo "$hits"
+    echo "  FAIL: a table measured against the one-allele comparator carries the retired 50.0"
+    tbl_fail=1
+  fi
+done
+[ $tbl_fail -eq 0 ] && echo "  ok"
+[ $tbl_fail -eq 1 ] && fail=1
+
+# --- Rule: the served tables are what their generator produces. ---
+report "Checking regenerated tables match their generator"
+if node scripts/regen-served-tables.mjs --check; then :; else
+  echo "FAIL: run node scripts/regen-served-tables.mjs"
+  fail=1
+fi
+
+# --- Rule: the site and the manuscript headers agree on which papers diverge. ---
+# Added 2026-08-06. content.ts marked four papers as diverging from their
+# deposit while scripts/manuscript-provenance.mjs marked seven, so /papers told
+# a reader "four of the ten" over a list in which seven manuscripts each carried
+# a header saying they were not the text at their identifier. Two files
+# describing the same fact is exactly the defect this whole checker exists for.
+report "Checking divergence status agrees between content.ts and the manuscript headers"
+if node - <<'DIVEOF'
+import { readFileSync } from "node:fs";
+import { MANUSCRIPTS } from "./scripts/manuscript-provenance.mjs";
+
+const ts = readFileSync("app/content.ts", "utf8");
+const block = ts.slice(ts.indexOf("export const PAPERS"));
+const entries = block.split(/\n  \{\n/).slice(1);
+const site = new Map();
+for (const e of entries) {
+  const n = e.match(/^\s*n: (\d+),/m);
+  if (!n) continue;
+  const pd = e.match(/^\s*postDeposit: "(\w+)",/m);
+  site.set(Number(n[1]), pd ? pd[1] : "in-sync");
+}
+
+let bad = 0;
+for (const m of MANUSCRIPTS) {
+  const got = site.get(m.n);
+  if (got === undefined) {
+    console.log(`  MISSING: paper ${m.n} is in manuscript-provenance.mjs and not in PAPERS`);
+    bad = 1;
+  } else if (got !== m.status) {
+    console.log(`  MISMATCH: paper ${m.n} is "${m.status}" in manuscript-provenance.mjs and "${got}" in content.ts`);
+    bad = 1;
+  }
+}
+if (!bad) {
+  const c = MANUSCRIPTS.filter((m) => m.status === "corrective").length;
+  const a = MANUSCRIPTS.filter((m) => m.status === "additive").length;
+  console.log(`  ok, ${MANUSCRIPTS.length} papers agree: ${c} corrective, ${a} additive, ${MANUSCRIPTS.length - c - a} in sync`);
+}
+process.exit(bad);
+DIVEOF
+then :; else echo "FAIL: content.ts and manuscript-provenance.mjs disagree"; fail=1; fi
+
 # --- Rule: no page says an identifier is pending that already exists. ---
 # Ten DOIs went live on /papers while the same page still said "DOI pending".
 report "Checking no live identifier is described as pending"

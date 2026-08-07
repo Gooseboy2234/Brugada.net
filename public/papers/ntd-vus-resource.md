@@ -7,7 +7,9 @@
 >
 > **This text matches the version of record, on the evidence available here.** The authoritative markdown was last written on 4 August 2026, before the submission PDFs were built that evening and before the deposit the following day, so nothing in it postdates the identifier above.
 >
-> **The limit of that claim, stated rather than hidden.** It is an argument from timestamps. The published PDFs have never been downloaded and compared against the local build, so no published text has been read back. `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md` records what was and was not checked.
+> **The limit of that claim, stated rather than hidden.** It is an argument from timestamps, and for this paper it is still only that. *(This paragraph used to say that no published PDF had ever been downloaded and no published text read back. That was true when it was written and stopped being true on 6 August 2026, so it is corrected here rather than left standing.)* The published files of the divergent papers **were** downloaded from the Zenodo API on 6 August 2026 and diffed against the local text, which is what turned that divergence from an inference into a measurement. **This paper was not among them.** It is one of the copies believed unchanged on the strength of local modification times, which is the same class of inference the download exercise was run to replace. `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md` records what was checked, and `SUBMIT_THESE/V2_STAGING/evidence/DIVERGENCE_VERIFIED_20260806.md` records what was not.
+>
+> **A separate limit, and it is not about this text.** Six of the ten papers name deposited tables that the archive does not hold, in whole or in part. Paper 10's case was the worst and has been dealt with; the others have not. Do not assume this paper's data availability statement is true of the archive without checking it. The audit is `SUBMIT_THESE/PAPER_10_DATA_STATEMENT_FIX.md`.
 >
 > **None of this is peer reviewed, and none of it has been through a wet lab.** No cell has been edited and no current has been recorded for this variant by this project. Every therapeutic statement in the manuscript below is a prediction.
 >

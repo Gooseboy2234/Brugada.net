@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DEPOSIT, SITE } from "../content";
+import { DEPOSIT, MEASUREMENT, SITE } from "../content";
 
 export const metadata: Metadata = {
   title: "Data",
@@ -138,6 +138,47 @@ export default function Data() {
           </div>
         </section>
       ))}
+
+      <div className="notice">
+        <b>
+          Corrected since: two of the tables above were wrong until 6 August
+          2026.
+        </b>{" "}
+        <span className="mono">UPREGULATION_HEADROOM.csv</span> and{" "}
+        <span className="mono">ABE_RESCUE_MODEL.csv</span> had every derived
+        number computed from a retired rescaling, a baseline of 34.1 percent
+        against a one-allele comparator of 50 percent. The correct pair is{" "}
+        {MEASUREMENT.rescaled} against {MEASUREMENT.simpleLoss}, because
+        O&rsquo;Neill 2022 measured the two-copy case directly and got 218.4
+        percent of one copy rather than 200. The two papers those tables belong
+        to were corrected on 6 August 2026 and the tables were not corrected
+        with them, so for part of that day this site served, as downloadable
+        data, arithmetic its own papers had already withdrawn.
+        <p style={{ margin: "0.7rem 0 0" }}>
+          Both files are now recomputed from the formulas printed in those
+          papers&rsquo; own correction tables. Nine values the papers print were
+          used as anchors and all nine reproduce exactly. Nothing was
+          re-modelled and no row was invented. Every withdrawn value is listed
+          beside its replacement, with the reason and the date, in{" "}
+          <a href="/tables/CORRECTIONS_20260806.md">
+            the correction note filed with the tables
+          </a>
+          .
+        </p>
+        <p style={{ margin: "0.7rem 0 0" }}>
+          <b>This fixes the copies on this site and not the archive.</b> The
+          same two tables inside the deposit at the identifier above still hold
+          the withdrawn values. Nothing has been re-uploaded to Zenodo. Anyone
+          checking a paper against deposited data rather than against this site
+          will still meet the retired arithmetic.
+        </p>
+        <p style={{ margin: "0.7rem 0 0" }}>
+          Nothing caught this, and that is worth stating plainly. The site
+          rule checker read the pages and the manuscripts and had no rule that
+          reached this directory at all. A rule covering it was added the same
+          day.
+        </p>
+      </div>
 
       <h2>One table is withheld, and why</h2>
 

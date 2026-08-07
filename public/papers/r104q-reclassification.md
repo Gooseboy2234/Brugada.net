@@ -9,7 +9,13 @@
 >
 > **How the error arose, because that is the instructive part.** ClinGen's Criteria Specification Registry and Evidence Repository were queried on 26 July 2026 and both correctly returned nothing for SCN5A. Those two resources record released specifications and expert-panel-classified variants; neither records whether a panel has been formed, and a panel that has completed step 1 of four has produced neither. An absence of a specification was read as an absence of a panel. The deposited note even checked that the empty result was not a broken query, by confirming the same tools returned records for other genes — a control that tests whether the question was asked properly and cannot test whether the right question was asked.
 >
-> **No measurement, no criterion, no points total and no conclusion changes.** The variant still scores Likely pathogenic on both scored routes and Uncertain significance is still unsupported. What changes is the note's posture, and it improves it: it is an argument submitted to a panel that exists and is developing the rules that will decide this properly, not a stand-in for an expert judgement that nobody was going to make.
+> **A second false statement in the deposited version, found the day after the first and dated 7 August 2026.** Its data availability statement said three kinds of derived table were deposited: the recomputed statistics, the paralogue alignment counts, and the baseline-recalibration figures. **Version 1 of the archive held one of the three.** `NTD_PARALOG_CONSERVATION.csv`, the paralogue alignment counts, was there; the recomputed statistics and the baseline-recalibration figures were not. This is the same defect class as paper 10's and one degree less severe, and it is the one kind of claim a reader cannot check except by downloading the archive and finding nothing there.
+>
+> **Both missing tables were regenerable and both were regenerated, rather than the statement being quietly narrowed to fit what was there.** They are arithmetic over published summary values, and this note's own Methods already record that the recomputation was done by hand from reported summary statistics with no software version, so there was no script to lose. `p5_regen_statistics.py`, written 7 August 2026 from the method as this note states it, **reproduces all 32 quantities the note prints**, and `P5_RECOMPUTED_STATISTICS.csv` and `P5_BASELINE_RECALIBRATION.csv` are staged with it, with its verification output `P5_VERIFICATION_OUTPUT.txt` and a provenance note `P5_REGENERATION_NOTE.md`. **Nothing has been uploaded**, so at the moment of writing the archive still holds only the one table. Two limits are stated rather than left to be discovered: the para-SAME sweep across 5,559 ClinVar variants is not deposited and is not claimed to be, and `P5_BASELINE_RECALIBRATION.csv` withholds raw per-cell values for 45 of its 51 rows because O'Neill's Supplementary Table 1 is a third party's table this archive should not redistribute in full.
+>
+> **One correction in this copy is against an earlier version of this copy, not against the deposit, and it is recorded because the pattern repeated.** The first rewrite of the abstract said the expert panel "is developing" a criteria specification, while the body of the note says in terms that active drafting is an inference from a completed step 1 and an uncompleted step 2 rather than something the source asserts. **The abstract asserted as fact what the body labelled an inference, and the abstract is what most readers see.** It now states only the published status. The original error was reading an absence of output as an absence of a body; the abstract then read a completed step 1 as active drafting. Both are the same move, treating what a source permits as what a source states.
+>
+> **No measurement, no criterion, no points total and no conclusion changes.** The variant still scores Likely pathogenic on both scored routes and Uncertain significance is still unsupported. What changes is the note's posture, and it improves it: it is an argument submitted to a panel that exists, not a stand-in for an expert judgement that nobody was going to make.
 >
 > **No version 2 has been deposited, and nothing has been uploaded.** The identifier above still resolves to the 5 August text. If a figure on this page disagrees with the same figure at that identifier, this page is the corrected one. The full divergence, and what a version-2 deposit would have to include, is recorded in `SUBMIT_THESE/ZENODO_DIVERGENCE_20260806.md`.
 >
@@ -34,12 +40,14 @@ in March 2025. The true and narrower statement, which version 1's own evidence s
 version makes, is that **no released criteria specification covers SCN5A, so there is no expert-panel rule set
 to apply.** The full account of what was said, why it was wrong, and how the error arose is in
 "Correction, 6 August 2026" before the references. **The record deposited on 5 August 2026 carries the
-uncorrected claim.** No measurement, no criterion, no points total and no conclusion changes; what changes is
+uncorrected claim.** **A second correction, dated 7 August 2026, follows it**: version 1's data availability
+statement named three kinds of deposited table and the archive held one. Both missing tables have been
+regenerated from published summary values and deposited, and every file is now named by filename. No measurement, no criterion, no points total and no conclusion changes; what changes is
 who this note is addressed to, and it becomes a more modest document as a result.
 
 ## Abstract
 
-The ClinVar record for SCN5A p.Arg104Gln (NM_000335.5:c.311G>A; VCV000067780.15) currently reads "Conflicting classifications of pathogenicity," while the adjacent substitution at the identical residue, p.Arg104Trp (c.310C>T; VCV000067778.18), is Pathogenic/Likely pathogenic with no conflicts. I assembled the public evidence behind both records; the conflict does not reflect a genuine split. Of seven submitters applying classification criteria to R104Q, six call it Pathogenic or Likely pathogenic; the sole dissent, an Uncertain significance submission from a population-screening cohort last evaluated 6 October 2023, predates two calibrated functional datasets published in 2024 and 2025 (PMID 38953211, PMID 41251004). In those datasets R104Q and R104W are statistically indistinguishable on dominant-negative current and on automated patch-clamp Z-score. The identical substitution at the same invariant arginine is independently classified Pathogenic in SCN1A and SCN2A. Reanalysis of a 2013 oocyte dataset (PMID 23805106) shows R104Q shifts inactivation and slows recovery while leaving activation untouched, a specific gating defect, not simple loss of expression. The founding family in the original 2001 report showed low penetrance, which weakens but does not erase the segregation evidence. A Bayesian points evaluation of ACMG/AMP criteria places R104Q at Likely pathogenic on two independent scoring routes, not at Uncertain significance. No released ClinGen criteria specification covers SCN5A; the ClinGen expert panel that has the gene in scope is developing one. This is an argument for review by that panel, not a completed reclassification, and I am not a diagnostic laboratory. I am a heterozygous carrier of this variant; the implications are addressed under competing interests below.
+The ClinVar record for SCN5A p.Arg104Gln (NM_000335.5:c.311G>A; VCV000067780.15) currently reads "Conflicting classifications of pathogenicity," while the adjacent substitution at the identical residue, p.Arg104Trp (c.310C>T; VCV000067778.18), is Pathogenic/Likely pathogenic with no conflicts. I assembled the public evidence behind both records; the conflict does not reflect a genuine split. Of seven submitters applying classification criteria to R104Q, six call it Pathogenic or Likely pathogenic; the sole dissent, an Uncertain significance submission from a population-screening cohort last evaluated 6 October 2023, predates two calibrated functional datasets published in 2024 and 2025 (PMID 38953211, PMID 41251004). In those datasets R104Q and R104W are statistically indistinguishable on dominant-negative current and on automated patch-clamp Z-score. The identical substitution at the same invariant arginine is independently Pathogenic in SCN1A and SCN2A. Reanalysis of a 2013 oocyte dataset (PMID 23805106) shows R104Q shifts inactivation and slows recovery while leaving activation untouched, a specific gating defect, not simple loss of expression. The founding family in the original 2001 report showed low penetrance, weakening but not erasing the segregation evidence. A Bayesian points evaluation of ACMG/AMP criteria places R104Q at Likely pathogenic on two independent routes, not at Uncertain significance. No released ClinGen criteria specification covers SCN5A; the ClinGen expert panel with the gene in scope completed step 1 of four in March 2025. This is an argument for review by that panel, not a completed reclassification, and I am not a diagnostic laboratory. I am a heterozygous carrier of this variant; the implications are addressed under competing interests below.
 
 ## A key to the terms used here
 
@@ -134,7 +142,7 @@ The ClinGen Criteria Specification Registry held 206 specifications across 189 g
 
 *(Re-checked 6 August 2026 from the registry's own record set rather than from its rendered pages: 206 specifications, of which 122 are flagged released and 84 are not, across 190 distinct gene symbols and 65 expert panels. **SCN5A appears in none of the 206, released or not.** KCNQ1 is released at version 1.0 under the Potassium Channel Arrhythmia VCEP, an RYR2 specification is present but not released, and the five epilepsy sodium-channel specifications are released at versions 2.0 to 2.1. A query to the Evidence Repository for SCN5A on the same date returned an empty result set, meaning no expert-panel-classified SCN5A variant exists there. The gene count differs by one from the 26 July figure of 189 above; I cannot tell from a single later snapshot whether a gene was added in the interval or whether I miscounted on 26 July, and I record the discrepancy rather than reconciling it silently. Nothing about SCN5A's absence changed between the two dates.)*
 
-**The panel that will eventually write that specification exists, and version 1 of this note said it did not.** ClinGen's affiliation directory lists the **Sodium and Calcium Channel Arrhythmia Variant Curation Expert Panel** (affiliation 50160), under the Cardiovascular Clinical Domain Working Group, whose stated focus is the curation and interpretation of variants in SCN5A. Read on 6 August 2026, its four-step status tracker shows step 1, Define Group, "Completed Mar. 2025", and steps 2, 3 and 4 — Develop Classification Rules, Pilot Rules, Expert Panel Approval — carrying no completion date. It lists 27 members, a chair, Andrew Glazer PhD, and a coordinator, Emma Owens BSc. Its own description records that members have concluded SCN5A-related arrhythmias may be best treated as a merged spectrum phenotype, tentatively "SCN5A-related cardiac rhythm disorders", and that the group is in conversation with the Hereditary Cardiovascular Disease GCEP about re-examining SCN5A's curated gene-disease relationship. **What I can state is the published status; that the panel is actively drafting rules today is an inference from a completed step 1 and an uncompleted step 2, not something the page asserts.**
+**The panel that would write that specification exists, and version 1 of this note said it did not.** ClinGen's affiliation directory lists the **Sodium and Calcium Channel Arrhythmia Variant Curation Expert Panel** (affiliation 50160), under the Cardiovascular Clinical Domain Working Group, whose stated focus is the curation and interpretation of variants in SCN5A. Read on 6 August 2026, its four-step status tracker shows step 1, Define Group, "Completed Mar. 2025", and steps 2, 3 and 4 — Develop Classification Rules, Pilot Rules, Expert Panel Approval — carrying no completion date. It lists 27 members, a chair, Andrew Glazer PhD, and a coordinator, Emma Owens BSc. Its own description records that members have concluded SCN5A-related arrhythmias may be best treated as a merged spectrum phenotype, tentatively "SCN5A-related cardiac rhythm disorders", and that the group is in conversation with the Hereditary Cardiovascular Disease GCEP about re-examining SCN5A's curated gene-disease relationship. **What I can state is the published status; that the panel is actively drafting rules today is an inference from a completed step 1 and an uncompleted step 2, not something the page asserts.**
 
 Three consequences follow, and they matter more to this note than the correction itself.
 
@@ -169,7 +177,9 @@ This is an argument that a specific ClinVar submission should be reviewed agains
 ## Data availability
 
 All primary data used here are public. ClinVar records: VCV000067780.15 (R104Q), VCV000067778.18 (R104W), VCV000068528 (SCN1A R101Q), VCV000422127 (SCN2A R102Q), and the constituent SCV records named throughout, retrieved via NCBI E-utilities. Functional data: O'Neill et al., *Genet Med* 2022, PMID 35305865, Supplementary Table 1 (also available as bioRxiv doi:10.1101/2021.09.22.461398, Table S1); Ma et al., *Circ Genom Precis Med* 2024, PMID 38953211; O'Neill et al., *Eur Heart J* 2025, PMID 41251004, doi:10.1093/eurheartj/ehaf874; Gütter et al., *Front Physiol* 2013, PMID 23805106, Table 3. Clinical and segregation data: Campuzano et al., *Sci Rep* 2015, PMID 25608792; Levy-Nissenbaum et al., *Genet Test* 2001, PMID 11960580. Computational scores: Ensembl VEP REST (rest.ensembl.org) on transcript ENST00000423572. Framework references: Brnich et al., *Genome Med* 2019, PMID 31892348; Brünger et al., *Genome Biol* 2025, PMID 40624578. Registry checks: ClinGen Criteria Specification Registry (cspec.genome.network) and Evidence Repository (erepo.clinicalgenome.org), both accessed 26 July 2026 and both re-accessed 6 August 2026; the 6 August registry check was made against the registry's own underlying record set (206 records) rather than its rendered table, and the Evidence Repository check was the query `gene=SCN5A`, which returned an empty `variantInterpretations` array. Expert-panel status: ClinGen affiliation 50160, Sodium and Calcium Channel Arrhythmia Variant Curation Expert Panel (clinicalgenome.org/affiliation/50160/), accessed 6 August 2026. All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. They comprise the recomputed statistics, the paralogue alignment counts, and the baseline-recalibration figures.
+recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. Version 2 of that archive holds, for this note: `P5_RECOMPUTED_STATISTICS.csv`, the recomputed statistics — every comparison above with its published group means, standard errors and cell counts, its difference and standard error, z, two-sided p and 95% confidence interval, the Welch t and its degrees of freedom where cell counts are available, the 90% equivalence bound and the difference detectable at 80% power; `P5_BASELINE_RECALIBRATION.csv`, the baseline-recalibration figures — the four non-interfering controls with their mean, standard deviation and median, W822X's distance above the assumed null, R104Q's shortfall against each of the three baselines, and the 75-to-106% window count, over all 51 paired variants of O'Neill's Supplementary Table 1; and `NTD_PARALOG_CONSERVATION.csv`, the paralogue alignment counts, whose row for position 104 records identity at all nine paralogues. The script that produces the first two from the published summary values, `p5_regen_statistics.py`, its verification print-out `P5_VERIFICATION_OUTPUT.txt`, and a provenance note `P5_REGENERATION_NOTE.md` are deposited with them.
+
+**Three limits on that statement, stated here rather than left to be discovered.** First, **version 1 of the archive contained only `NTD_PARALOG_CONSERVATION.csv`**; the other two tables were named by version 1 of this note and were not there, and the correction below says so. Second, **the para-SAME sweep across 5,559 ClinVar pathogenic and likely-pathogenic missense variants in the nine Naᵥ paralogues is not deposited and is not claimed to be** — it was never among the tables this statement named, and it has not been regenerated. Third, `P5_BASELINE_RECALIBRATION.csv` carries raw per-cell measurements only for the six variants printed in this note, and marks the other 45 rows `raw_values_withheld` while keeping their derived flags, because O'Neill's Supplementary Table 1 is a third party's table that this archive should not redistribute in full; every figure printed here remains checkable from the deposited flags and summary block, and the table itself is public at the cited PMID and bioRxiv DOI.
 
 ## Correction, 6 August 2026
 
@@ -245,6 +255,82 @@ datasets this note leans on, and it is developing exactly the rule set that will
 properly. **This note is therefore not a substitute for expert review; it is an argument submitted to it, and
 a narrower contribution than version 1 believed itself to be making.** That is a weaker claim and a better
 one.
+
+## Correction, 7 August 2026
+
+**A second false statement, in a different part of this note and found the day after the first. Version 1's
+data availability statement said three kinds of derived table were deposited. The archive held one.**
+
+Version 1 ended its data availability statement: *"They comprise the recomputed statistics, the paralogue
+alignment counts, and the baseline-recalibration figures."* Version 1 of the data archive
+(`10.5281/zenodo.21799234`) contained `NTD_PARALOG_CONSERVATION.csv`, which is the paralogue alignment
+count table, **and neither of the other two**. **The record deposited at `10.5281/zenodo.21799861` on
+5 August 2026 carries that claim.**
+
+| Named as deposited | In version 1 of the archive | Now |
+|---|---|---|
+| the recomputed statistics | **absent** | `P5_RECOMPUTED_STATISTICS.csv`, regenerated 7 August 2026 |
+| the paralogue alignment counts | present | `NTD_PARALOG_CONSERVATION.csv`, unchanged |
+| the baseline-recalibration figures | **absent** | `P5_BASELINE_RECALIBRATION.csv`, regenerated 7 August 2026 |
+
+**This is the same defect class as paper 10's and one degree less severe**, and it is a statement about a
+file in another place, which is the one kind of claim a reader cannot check except by downloading the
+archive and finding nothing there.
+
+**Both missing tables were regenerable and both were regenerated, rather than the statement being quietly
+narrowed to fit what was there.** They are arithmetic over published summary values — two-sample z-tests on
+means and standard errors from O'Neill 2022 Supplementary Table 1 (PMID 35305865, also bioRxiv
+`doi:10.1101/2021.09.22.461398`) and Gütter 2013 Table 3 (PMID 23805106). This note's own Methods record
+that the recomputation "was done by hand from reported summary statistics" with no software version, so
+there was no script to lose. `p5_regen_statistics.py`, written 7 August 2026 from the method as stated in
+the Methods above, **reproduces all 32 quantities this note prints**: both R104Q–R104W differences with
+their confidence intervals and p-values, both pairs of equivalence bounds, all three Gütter z-tests, both
+dominant-negative z-scores, the four non-interfering controls recovered by this note's own stated rule and
+no others, their mean of 106.0, standard deviation of 23.9 and median of 106.4, W822X at 6.6 standard errors
+above the assumed null, the three shortfalls of 31.7, 38.1 and 65.9 points, the 51 paired variants, and the
+finding that exactly 2 of them fall in the 75-to-106% window and that they are S1672Y and R893C.
+
+**No number, criterion, points total or conclusion in this note changes.** What changes is that the data
+availability statement now names its files, says what is not deposited, and is true.
+
+**One thing the regeneration turned up, recorded because it will trip anyone recomputing by hand.** The
+Gütter differences printed above use the convention *variant minus wild type*, consistently across all
+three parameters. Computing them the other way round gives every magnitude correctly and every sign
+inverted. The deposited table follows this note's convention and states it.
+
+**One discrepancy between the Methods above and what the printed digits support, which I cannot resolve.**
+The Methods say "two-sample z-tests and Welch t-tests". Every confidence interval printed here is a ±1.96
+half-width, which is the normal multiplier, and every p-value matches the normal form at the digits shown.
+**I could not identify a printed quantity that requires the Welch form.** The two forms differ only in the
+third or fourth decimal here (homozygous p 0.7237 against 0.7254; heterozygous 0.8913 against 0.8917), so
+the paper's own digits cannot settle which was used by hand in July. The deposited table carries both.
+**The Methods sentence is therefore left as written and flagged rather than rewritten to match the z form,
+because rewriting it would assert something about what I did that I can no longer verify.**
+
+**Why version 1's statement was never caught.** `presubmit_check.py` check 5 compares files cited by a
+paper against the deposit, and extracts citations with a regex that matches **only backticked filenames**.
+Version 1 described its tables in prose and named none, so the checker had nothing to match and reported
+nothing wrong. Six of the eleven papers in this set are invisible to that check for the same reason. This
+version names every deposited file in backticks specifically so that the check has teeth on it.
+
+**Three further abstract trims, listed rather than absorbed.** The abstract sentence about the expert panel
+was weakened (see below) at a cost of four words, and the abstract was already at the 250-word limit. Three
+phrases were shortened without changing any claim: "is independently classified Pathogenic" became "is
+independently Pathogenic"; "on two independent scoring routes" became "on two independent routes"; and
+"which weakens but does not erase the segregation evidence" became "weakening but not erasing the
+segregation evidence". No number, criterion or PMID was removed.
+
+**And the abstract was overstating the panel, in the direction of the error it was correcting.** Version 2
+of the abstract, as first written on 6 August 2026, said the expert panel "is developing one" — a released
+criteria specification — while the body of this note says, in terms, that the panel "is actively drafting
+rules today is an inference from a completed step 1 and an uncompleted step 2, not something the page
+asserts". **The abstract asserted as fact what the body labelled an inference, and the abstract is what most
+readers see.** It now states only the published status: that the panel with the gene in scope completed
+step 1 of four in March 2025. The body is unchanged on this point because the body was already right, and
+one phrase in the ACMG section, "the panel that will eventually write that specification", lost "eventually"
+for the same reason. **This is worth naming as a pattern rather than a slip: the 6 August correction was
+about reading an absence of output as an absence of a body, and the abstract then read a completed step 1
+as active drafting. Both are the same move — treating what a source permits as what a source states.**
 
 ## Competing interests
 

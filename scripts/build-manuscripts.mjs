@@ -58,16 +58,48 @@ ${body}
 `;
 }
 
+// --check re-renders in memory and compares, exit 1 on any drift.
+//
+// Added 6 August 2026, and the defect it guards is one this file caused. The
+// rendered pages under public/m/ are build artifacts that are also committed,
+// so correcting a manuscript under public/papers/ and committing it without
+// running a build ships a corrected .md beside a stale .html. That happened:
+// the paper 5 correction was committed with its markdown and without its
+// rendered page, and /m/<slug>.html is the link a reader actually opens, while
+// the .md is the raw source almost nobody fetches. So the visible copy was the
+// stale one and every check passed, because scripts/check-site-rules.sh
+// verified public/papers/ against SUBMIT_THESE and nothing verified public/m/
+// against public/papers/.
+const check = process.argv.includes("--check");
+
 await mkdir(out, { recursive: true });
 
 const files = (await readdir(src)).filter((f) => f.endsWith(".md")).sort();
+let drift = 0;
 for (const file of files) {
   const slug = file.replace(/\.md$/, "");
   const md = await readFile(join(src, file), "utf8");
   const heading = md.match(/^#\s+(.+)$/m);
   const title = heading ? heading[1].trim() : slug;
   const body = marked.parse(md, { gfm: true });
-  await writeFile(join(out, `${slug}.html`), page({ slug, title, body }));
+  const wanted = page({ slug, title, body });
+  if (check) {
+    const current = await readFile(join(out, `${slug}.html`), "utf8").catch(() => null);
+    if (current !== wanted) {
+      console.log(`  DRIFT: public/m/${slug}.html is not the render of public/papers/${file}`);
+      drift++;
+    }
+    continue;
+  }
+  await writeFile(join(out, `${slug}.html`), wanted);
 }
 
-console.log(`rendered ${files.length} manuscripts to public/m/`);
+if (check) {
+  if (drift) {
+    console.log(`  FAIL: ${drift} rendered manuscript(s) are stale, run node scripts/build-manuscripts.mjs`);
+    process.exit(1);
+  }
+  console.log(`  ok, all ${files.length} rendered manuscripts match public/papers/`);
+} else {
+  console.log(`rendered ${files.length} manuscripts to public/m/`);
+}
