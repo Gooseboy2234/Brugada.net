@@ -291,11 +291,15 @@ export const ROUTES: Route[] = [
   {
     rank: 9,
     name: "Gene replacement",
-    state: "not applicable",
+    state: "conditional",
     blocker:
-      "The gene is 6,048 letters of coding sequence against roughly 4,700 that the standard delivery vehicle carries.",
+      "Not the size of the gene, which was the reason given until 6 August 2026 and was wrong. The dose, and the fact that a quarter of heart cells would be left untreated beside neighbours that were not.",
     detail:
-      "Delivering a whole working copy is standard practice for some conditions. This gene does not fit in the vector. That is a field-level problem, not one this project can move.",
+      "Delivering a whole working copy is standard practice for some conditions, and the gene is 6,048 letters against roughly 4,700 that one delivery vehicle carries. It was recorded here as not applicable for that reason. A 2021 study had already split the gene across two vehicles and delivered it to about three quarters of the heart cells in a mouse, raising the current by 65 percent, so the size problem has a published answer. What replaces it is the dose, which in that study was several times higher than the highest dose of any approved medicine of this kind, and the unevenness: treating three quarters of the cells in a disease driven by differences between neighbouring cells has never been shown to be safe. This route now waits on the same measurement as the leading ones.",
+    falsifier:
+      "If the broken copy turns out to interfere at the surface rather than being held back inside the cell, the added working copies inherit the same interference and the arithmetic above changes.",
+    correction:
+      "This site said this route was not applicable because the gene does not fit in the vehicle. The arithmetic was right and the conclusion was not. A 2021 paper doing exactly the thing the closure said needed doing had been sitting in this project's own literature collection the whole time and was never read. Corrected 6 August 2026. The route is not promising; it is no longer shut, and the reason it is not shut is that the closure was never checked.",
   },
   {
     rank: null,

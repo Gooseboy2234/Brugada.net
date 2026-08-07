@@ -31,9 +31,9 @@ domain. Using PDB 8VYJ chain A (cryo-EM, approximately 3.6 Å, map EMD-43662, re
 computed closest heavy atom and centroid distances for all 5,672 residue pairs at sequence separation
 of two or more. Of 218 pairs in close atom contact (closest heavy atom below 4.0 Å), 20, or 9.2
 percent, fall beyond an 8 Å centroid cutoff and are invisible to that covariate; sensitivity is 0.908
-and precision 0.662. The domain contains exactly two salt bridges, and one of them, R104 to D84
+and precision 0.662. The domain contains four salt bridges, and one of them, R104 to D84
 (3.79 Å between closest heavy atoms, 9.22 Å between centroids), is among the missed contacts. With
-only two present, that is one miss out of two and not a rate. Supplying the real 8VYJ geometry for
+only four present, that is one miss out of four and not a rate. Supplying the real 8VYJ geometry for
 residue 104 in place of the model's sequence-distance fallback, and refitting the full
 expectation-maximization step, changes the R104Q penetrance estimate from 42.64 percent to 41.70
 percent, a shift of 0.9 points that holds across neighbor cutoffs from 12 to 25 Å. That is a null
@@ -96,9 +96,9 @@ The miss rate is not uniform. It rises with sequence separation and with the inv
 | sequence separation 5-11 | 29 | 3 | 10.3% |
 | sequence separation ≥12 | 57 | 10 | 17.5% |
 | ≥12 and side-chain to side-chain | 26 | 6 | 23.1% |
-| salt bridges (acidic O to basic N, <4 Å) | 2 | 1 | 50% |
+| salt bridges (acidic O to basic N, <4 Å) | 4 | 1 | 25% |
 
-The salt bridge row is built on two observations, not a sample. There are exactly two salt bridges in the resolved N-terminal domain, and one of them is missed. That is one miss out of two, and it should be read as exactly that rather than as a 50% rate that would generalize to other salt bridges. The bridge that is missed is R104 to D84: 3.79 Å between the guanidinium nitrogen and the carboxylate oxygen, 9.22 Å between residue centroids. The other salt bridge in the domain, E25 to K91, is captured, at a 6.74 Å centroid distance.
+The salt bridge row is built on four observations, not a sample. There are four salt bridges in the resolved N-terminal domain, and one of them is missed. That is one miss out of four, and it should be read as exactly that rather than as a 25% rate that would generalize to other salt bridges. The bridge that is missed is R104 to D84: 3.79 Å between the guanidinium nitrogen and the carboxylate oxygen, 9.22 Å between residue centroids. The other three are all captured, and comfortably: E25 to K91 at a 6.74 Å centroid distance, R14 to E78 at 6.13 Å, and E30 to R34 at 4.29 Å. *(This row read "2 / 1 / 50%" until 6 August 2026 and was wrong; see the correction section below. One miss out of four is a weaker claim than one out of two, and the direction of the error is against this paper's own argument rather than for it.)*
 
 Six long-range side-chain contacts are missed in total: L21-F117, R27-F86, L67-L83, D84-R104, F93-R121, F105-L128. Two of the positions involved, 104 and 121, carry variants described elsewhere as dominant-negative for channel function; this note does not add a new citation for that claim beyond noting the coincidence of position.
 
@@ -106,7 +106,7 @@ Cross-domain contacts, meaning contacts between an N-terminal-domain residue and
 
 ## Per-residue neighbor counts disagree even where the pairwise picture looks stable
 
-A model does not consume individual pair distances. It consumes a per-residue neighbor count, and that count diverges more than the pairwise miss rate suggests. Recomputed both ways across the domain, contact-based and centroid-based per-residue counts correlate at Pearson r = 0.778 and Spearman ρ = 0.791, with a mean absolute difference of 1.81 neighbors and a maximum difference of 6. Ninety-one of 108 residues, 84%, receive a different neighbor count depending on which definition is used. R104 itself has 6 contact-based neighbors against 8 centroid-based neighbors. The largest disagreements sit elsewhere in the domain: G77 (2 versus 8), I94 (4 versus 9), S106 (5 versus 10), P79 (3 versus 8), and L96 (6 versus 11), all in loop and strand regions where several of the domain's characterized variants are found.
+A model does not consume individual pair distances. It consumes a per-residue neighbor count, and that count diverges more than the pairwise miss rate suggests. These per-residue counts include each domain residue's contacts to the rest of chain A as well as its contacts within the domain; the pairwise table above is domain-internal only. *(That distinction was not stated in the version published 5 August 2026 and is added here on 6 August 2026, because without it none of the correlation figures in this paragraph can be reproduced. Domain-internal counts alone give r = 0.756 and ρ = 0.779, not the values below.)* Recomputed both ways across the domain, contact-based and centroid-based per-residue counts correlate at Pearson r = 0.778 and Spearman ρ = 0.791, with a mean absolute difference of 1.81 neighbors and a maximum difference of 6. Ninety-one of 108 residues, 84%, receive a different neighbor count depending on which definition is used. R104 itself has 6 contact-based neighbors against 8 centroid-based neighbors. The largest disagreements sit elsewhere in the domain: G77 (2 versus 8), I94 (4 versus 9), S106 (5 versus 10), P79 (3 versus 8), and L96 (6 versus 11), all in loop and strand regions where several of the domain's characterized variants are found.
 
 ## Swapping in a different single-point summary does not fix this
 
@@ -143,14 +143,61 @@ This is a null, and the salt bridge analysis above explains why. D84 sits at 9.2
 
 ## What would overturn this
 
-A few specific observations would change the conclusions here, and it is worth naming them rather than leaving the claim unfalsifiable. If a larger set of salt bridges, drawn from other SCN5A domains or other resolved structures, showed that most salt bridges are in fact captured by an 8 Å centroid cutoff, the one-of-two result here would be revealed as noise from a domain that happens to have only two such bridges, rather than a systematic property of the covariate. If refitting the full EM with closest-heavy-atom distances in place of centroid distances across the whole domain, not just residue 104, left the per-residue influence pattern unchanged, the covariate-definition explanation offered for the null would be wrong and some other factor would need to be found. If removing the pipeline's built-in 10-iteration cap produced a materially different R104Q estimate under the 8VYJ geometry, the stability reported above would not hold as stated. Finally, this analysis uses a single static cryo-EM conformer; if the R104-D84 bridge is not maintained across the channel's accessible conformational range, a comparison across multiple structures or models could change the geometric picture the covariate is being asked to summarize. No such comparison was attempted here.
+A few specific observations would change the conclusions here, and it is worth naming them rather than leaving the claim unfalsifiable. If a larger set of salt bridges, drawn from other SCN5A domains or other resolved structures, showed that most salt bridges are in fact captured by an 8 Å centroid cutoff, the one-of-four result here would be revealed as noise from a domain that happens to have only four such bridges, rather than a systematic property of the covariate. Three of the four in this domain already are captured, so that overturning is nearer than the version of this paragraph published on 5 August 2026 implied. If refitting the full EM with closest-heavy-atom distances in place of centroid distances across the whole domain, not just residue 104, left the per-residue influence pattern unchanged, the covariate-definition explanation offered for the null would be wrong and some other factor would need to be found. If removing the pipeline's built-in 10-iteration cap produced a materially different R104Q estimate under the 8VYJ geometry, the stability reported above would not hold as stated. Finally, this analysis uses a single static cryo-EM conformer; if the R104-D84 bridge is not maintained across the channel's accessible conformational range, a comparison across multiple structures or models could change the geometric picture the covariate is being asked to summarize. No such comparison was attempted here.
 
 Two further limits apply to the benchmark itself. The 4.0 Å and 8 Å thresholds are conventional, not derived, and while the qualitative pattern (misses concentrating in long-range side-chain contacts) is not sensitive to small changes in either threshold, the exact counts reported here are. And the side-chain-centroid comparison in the table above uses the same 8 Å cutoff as the all-atom centroid measure for comparability, which is not necessarily that measure's own best-performing cutoff.
 
+## Correction, 6 August 2026
+
+**The data availability statement in the version of this note deposited at
+`10.5281/zenodo.21799871` on 5 August 2026 was false.** It told readers that this note's derived tables
+were in the project's data archive (`10.5281/zenodo.21799234`) and named four of them: the pairwise
+geometry table, the per-residue neighbor count table, the per-residue sigmoid weight table, and the
+recompute output. **None of the four were in that archive.** Of the ten papers the archive supported, this
+one was the only one with no file in it at all. Anyone who downloaded version 1 of the deposit to check
+the numbers in this note found nothing to check, and nothing to tell them why.
+
+**It was not a filename error and it could not be fixed by locating the files.** The code that produced
+the original tables is not in the project's file tree and is not on its compute host; both were searched
+on 6 August 2026 for geometry, neighbour, sigmoid and recompute artefacts and returned only third-party
+library files. There is no `.R` file and no R installation on either machine. This note's own Methods
+already record that the software used "is not recorded in the source material", and that gap turned out to
+be larger than it read.
+
+**What was done about it.** Three of the four named tables are geometry over a public structure and were
+regenerated on 6 August 2026 by a script written from the method stated above, deposited with that script
+and with its verification output in version 2 of the data archive, together with a fourth table of
+cross-domain contacts that this note's per-residue counts require and did not name. **Thirty-five of the
+thirty-seven quantities printed in this note reproduce exactly** from the regenerated tables, including
+every distance, every AUC, every correlation and every per-residue count named in the text. **The fourth
+named table, the recompute output, is still not deposited and is not reconstructible**: it needs the
+kroncke-lab/Bayes_BrS1_Penetrance pipeline and a refit of its expectation-maximization step, and no copy of
+that pipeline and no R installation exists in this project. The files added are
+`P10_PAIRWISE_GEOMETRY_8VYJ.csv`, `P10_PER_RESIDUE_NEIGHBOR_COUNTS.csv`,
+`P10_PER_RESIDUE_SIGMOID_WEIGHTS.csv` and `P10_CROSS_DOMAIN_CONTACTS.csv`, with the script, its
+verification output and a provenance note beside them. The structural density, α_g, β_g and penetrance
+values in this note exist only as printed here. The data availability statement below says so.
+
+**Two defects in the note itself were found by that reproduction, and both are corrected above.**
+
+| Where | Was | Is | Why |
+|---|---|---|---|
+| Abstract, and the salt-bridge row of the miss-rate table | "exactly two salt bridges", 2 / 1 / 50% | four salt bridges, 4 / 1 / 25% | Under the definition this note states in its own table — acidic oxygen to basic nitrogen below 4 Å — the resolved domain holds four: R14-E78 (3.18 Å), E25-K91 (3.01 Å), E30-R34 (2.79 Å) and D84-R104 (3.79 Å). The two that were not counted are both captured by the 8 Å centroid cutoff |
+| Per-residue neighbor counts | method not stated | states that the counts include cross-domain contacts | Domain-internal counts alone give r = 0.756, ρ = 0.779, mean absolute difference 1.65 and 85 of 108 residues differing, not the 0.778, 0.791, 1.81 and 91 printed. Adding cross-domain contacts reproduces all four exactly, and R104's 6-versus-8 and S106's 5-versus-10 with them |
+
+**Neither changes a conclusion, and the first weakens this note's own argument rather than strengthening
+it.** The missed bridge is still missed, it is still the one that matters for R104, and the null result is
+untouched — but a miss rate of one in four is a smaller signal than one in two, and the sentence warning
+against reading that row as a rate now has to carry less weight, not more. One further deviation is
+recorded and is trivial: side-chain-centroid precision at 8 Å reproduces as 0.606 against the 0.608 printed
+here, one borderline pair, with three non-contact pairs sitting between 8.00 and 8.02 Å by that measure.
+
+**None of this section is in the record deposited on 5 August 2026,** which carries the false data
+availability statement, the two-salt-bridge count and the unstated per-residue method.
+
 ## Data availability
 
-The structure used is PDB 8VYJ, chain A, with electron microscopy map EMD-43662, both public accessions. The penetrance model and its code are the public repository kroncke-lab/Bayes_BrS1_Penetrance on GitHub, specifically the files func_dist_seq.R, distance_file, and BrS1_data.RData; no access date is recorded for that repository in the source material used to prepare this note. All derived tables are deposited as a single archive with a permanent identifier. The identifier is
-recorded in DATA_DOI.txt alongside this manuscript and should be cited as the data source. They comprise the pairwise geometry table, the per-residue neighbor count table, the per-residue sigmoid weight table, and the recompute output, which holds structural density and penetrance values under both the baseline and 8VYJ geometries.
+This statement was rewritten on 6 August 2026 because the version published on 5 August 2026 named four deposited tables of which none were in the archive; see the correction section above. The structure used is PDB 8VYJ, chain A, with electron microscopy map EMD-43662, both public accessions. The penetrance model and its code are the public repository kroncke-lab/Bayes_BrS1_Penetrance on GitHub, specifically the files func_dist_seq.R, distance_file, and BrS1_data.RData; no access date is recorded for that repository in the source material used to prepare this note. The derived tables are deposited as a single archive with a permanent identifier, recorded in DATA_DOI.txt alongside this manuscript and to be cited as the data source, and from version 2 of that archive onward they comprise seven files: P10_PAIRWISE_GEOMETRY_8VYJ.csv, the pairwise geometry table, all 5,672 residue pairs at sequence separation two or more with closest-heavy-atom, all-atom centroid, side-chain centroid, Cα-Cα and Cβ-Cβ distances, the contact and neighbour flags, both sigmoid weights and a salt-bridge flag carrying its acidic-oxygen-to-basic-nitrogen distance; P10_PER_RESIDUE_NEIGHBOR_COUNTS.csv, the per-residue neighbour count table over 108 residues with within-domain, cross-domain and total columns kept separate; P10_PER_RESIDUE_SIGMOID_WEIGHTS.csv, the per-residue sigmoid weight table over the same residues at logistic midpoint 7 Å and scale 1 Å; P10_CROSS_DOMAIN_CONTACTS.csv, the 21 close atom contacts between the domain and the rest of chain A, which the per-residue counts require and which the published version did not name; p10_regen_geometry.py, the script that produces all four from the public 8VYJ coordinates; P10_VERIFICATION_OUTPUT.txt, that script's own print-out setting each reproduced quantity beside the value printed here; and P10_REGENERATION_NOTE.md, which states that these tables are a 6 August 2026 reconstruction rather than the 4 August originals and why the originals are unrecoverable. The recompute output is not deposited and is not reconstructible: it would hold the structural density and penetrance values under the baseline and 8VYJ geometries, and producing it requires the kroncke-lab pipeline and a refit of its expectation-maximization step, which this project can no longer run, so those values are available only as printed in this note and should be treated accordingly.
 
 ## Competing interests
 

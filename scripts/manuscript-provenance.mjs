@@ -82,7 +82,12 @@ export const MANUSCRIPTS = [
     source: "PUBLISH_5_R104Q_RECLASSIFICATION.md",
     doi: "10.5281/zenodo.21799861",
     forked: false,
-    status: "in-sync",
+    status: "corrective",
+    corrective: [
+      "**Warning, and it points at the published record rather than at this page.** The version deposited on 5 August 2026 states, in two places, that no SCN5A expert panel exists to arbitrate this classification. **That is false.** The ClinGen Sodium and Calcium Channel Arrhythmia Variant Curation Expert Panel has SCN5A as its scope, completed the first of ClinGen's four expert-panel steps in March 2025, lists 27 members and is chaired by Andrew Glazer PhD. It was corrected here on 6 August 2026, after the deposit. The true and narrower statement, which the deposited note's own registry evidence supported, is that no released criteria specification covers SCN5A, so there is no expert-panel rule set to apply.",
+      "**How the error arose, because that is the instructive part.** ClinGen's Criteria Specification Registry and Evidence Repository were queried on 26 July 2026 and both correctly returned nothing for SCN5A. Those two resources record released specifications and expert-panel-classified variants; neither records whether a panel has been formed, and a panel that has completed step 1 of four has produced neither. An absence of a specification was read as an absence of a panel. The deposited note even checked that the empty result was not a broken query, by confirming the same tools returned records for other genes — a control that tests whether the question was asked properly and cannot test whether the right question was asked.",
+      "**No measurement, no criterion, no points total and no conclusion changes.** The variant still scores Likely pathogenic on both scored routes and Uncertain significance is still unsupported. What changes is the note's posture, and it improves it: it is an argument submitted to a panel that exists and is developing the rules that will decide this properly, not a stand-in for an expert judgement that nobody was going to make.",
+    ],
   },
   {
     n: 6,
