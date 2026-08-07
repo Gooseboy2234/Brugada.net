@@ -10,7 +10,7 @@ import {
 export const metadata: Metadata = {
   title: "Therapeutic routes",
   description:
-    "The nine therapeutic routes considered for SCN5A R104Q, ranked, plus current care, with the measurement that closed each dead one and why Brugada syndrome has no cheap animal test.",
+    "The eleven therapeutic routes considered for SCN5A R104Q, ranked, plus current care, with the reason that closed each dead one and why Brugada syndrome has no cheap animal test.",
   alternates: { canonical: "/routes" },
 };
 
@@ -30,15 +30,26 @@ export default function Routes() {
 
       <h1 className="page-title">
         {ROUTE_INVENTORY.therapeutic} therapeutic routes, ranked, including the
-        two that are closed.
+        three that are closed.
       </h1>
 
       <p className="standfirst">
-        Two of these are dead and one does not apply. They are listed anyway,
-        each with the measurement that closed it. A page showing only the live
+        Three of these are dead. They are listed anyway,
+        each with the reason that closed it. A page showing only the live
         options would be advocacy rather than a record. Current care is listed
         last, unranked, so that the comparison is on the page rather than
         assumed.
+      </p>
+
+      <p className="standfirst">
+        Two entries were added and three were rewritten on 6 August 2026, after
+        a pass over all 14,035 papers in this project&rsquo;s collection asked
+        each of them, for the first time, whether it described a route to a
+        treatment. <b>A longer list is not better news.</b> One of the entries
+        that changed was closed the moment it was written down properly, one is
+        a candidate that has not been assessed, and one had been sitting on this
+        page for weeks while the project&rsquo;s own inventory had no record of
+        it at all. Each carries a dated note saying what changed and why.
       </p>
 
       <div className="notice">
@@ -161,27 +172,66 @@ export default function Routes() {
         that reason as much as for its own.
       </p>
 
+      <p>
+        <b>
+          Two days later the same thing happened again, three times over, and it
+          was worse.
+        </b>{" "}
+        On 6 August 2026 every one of the 14,035 papers in this project&rsquo;s
+        collection was finally asked the question the filter had never asked:
+        does this describe a route to a treatment? The list gained two entries
+        and a third was rewritten. What makes it worse rather than better is
+        where two of the three came from.{" "}
+        <b>They were not hidden in anyone&rsquo;s literature.</b> The interaction
+        drug at rank 5 had been on this page since the site was built and in a
+        27 July working table, and the project&rsquo;s route inventory had
+        quietly stopped listing it. The heading at rank 6 had been closed on a
+        measurement that only covered one method of doing it, so everything else
+        at that level was ruled out by a form of words rather than by evidence.
+        A screen hid the first missed route. Nothing at all hid these two.
+      </p>
+
       <h2>
-        Ten on this page, ten in the project record, and not the same ten
+        {ROUTE_INVENTORY.listed} on this page, {ROUTE_INVENTORY.wallTotal} in
+        the project record, and the difference is fully accounted for
       </h2>
 
       <p>
         This page lists {ROUTE_INVENTORY.listed} entries:{" "}
         {ROUTE_INVENTORY.therapeutic} routes to a therapy, ranked, and current
         care at the end. The project&rsquo;s own inventory of what stands in the
-        way, in the file called THE WALL, also counts{" "}
-        {ROUTE_INVENTORY.wallTotal}. Until 6 August 2026 both said ten and
-        neither said which ten, and the two sets were not identical. The
-        disagreement was about membership, not about counting, and it is written
-        out here rather than quietly aligned.
+        way, in the file called THE WALL, counts {ROUTE_INVENTORY.wallTotal}{" "}
+        lines. Until 6 August 2026 both said ten and neither said which ten, and
+        they were not the same ten. The disagreement was about membership, not
+        about counting, and it was written out here rather than quietly aligned,
+        which turned out to matter, because one of the entries it named as a
+        difference was a route the project had lost.
       </p>
 
       <p>
-        {ROUTE_INVENTORY.shared} entries are common to both lists: base editing,
-        prime editing, RNA editing, chaperone upregulation, raising output from
-        the healthy copy, silencing the broken copy, the folding corrector, and
-        gene replacement.
+        {ROUTE_INVENTORY.shared} entries are now common to both lists: base
+        editing, prime editing, RNA editing, chaperone and interacting-partner
+        upregulation, redirecting the healthy copy&rsquo;s discarded messages,
+        raising the healthy copy&rsquo;s output by other means, silencing the
+        broken copy, the folding corrector, gene replacement, a different and
+        smaller sodium channel, and the interaction drug.
       </p>
+
+      <div className="notice">
+        <b>
+          The interaction drug is why this section is written out rather than
+          tidied away.
+        </b>{" "}
+        Until 6 August 2026 it was on this page and nowhere in the project&rsquo;s
+        route inventory, and this section said so in plain words and treated it
+        as a harmless difference of scope. It was not. A 27 July working table
+        had recorded it as a live branch, this page had carried it since it was
+        built, and every route list written in between had simply stopped
+        including it. Nobody dropped it and nobody wrote down a reason. It is now
+        back in the project inventory, and it is recorded there as closed rather
+        than live, because it has no target, no assay, and a ceiling it cannot
+        pass. <b>Being restored is not the same as being revived.</b>
+      </div>
 
       <p>
         {ROUTE_INVENTORY.wallNonTherapeutic} entries in the project inventory
@@ -197,14 +247,14 @@ export default function Routes() {
       </p>
 
       <p>
-        {ROUTE_INVENTORY.hereOnly} entries here are absent from that inventory.
-        One is the interaction drug at rank 5, which the route comparison table
-        carries and the inventory has no entry for. The other is current care,
-        which the inventory excludes from its count on purpose. So the
-        arithmetic runs {ROUTE_INVENTORY.shared} shared plus{" "}
-        {ROUTE_INVENTORY.hereOnly} here alone on this side, and{" "}
-        {ROUTE_INVENTORY.shared} shared plus{" "}
-        {ROUTE_INVENTORY.wallNonTherapeutic} non-therapeutic on that side.
+        {ROUTE_INVENTORY.hereOnly} entry here is absent from that inventory:
+        current care, which the inventory excludes from its count on purpose.
+        The other one used to be the interaction drug, and that gap is now
+        closed. So the arithmetic runs {ROUTE_INVENTORY.shared} shared plus{" "}
+        {ROUTE_INVENTORY.hereOnly} here alone on this side, which is{" "}
+        {ROUTE_INVENTORY.listed}, and {ROUTE_INVENTORY.shared} shared plus{" "}
+        {ROUTE_INVENTORY.wallNonTherapeutic} non-therapeutic on that side, which
+        is {ROUTE_INVENTORY.wallTotal}.
       </p>
 
       <p>
@@ -215,14 +265,14 @@ export default function Routes() {
         10 there, and it is the same route.
       </p>
 
-      <h2>The route that died on a measurement</h2>
+      <h2>The route that died on a measurement, and how wide the death was</h2>
 
       <p>
-        Raising output from the healthy copy was the most attractive route on
-        this list, because it was the only one that did not depend on resolving
-        the mechanism first. It needed a reserve of non-productive message to
-        redirect, and the analysis said in advance that the route would die if
-        that reserve turned out to be a few percent.
+        Redirecting the healthy copy&rsquo;s discarded messages, at rank 6, was
+        the most attractive route on this list, because it did not depend on
+        resolving the mechanism first. It needed a reserve of discarded message
+        to redirect, and the analysis said in advance that the route would die
+        if that reserve turned out to be a few percent.
       </p>
 
       <figure style={{ margin: "2rem 0" }}>
@@ -246,6 +296,36 @@ export default function Routes() {
         It was attractive because it was mechanism-independent. It is dead
         because the substrate is not there. Those are independent reasons, and a
         measurement rather than an assumption settled it.
+      </p>
+
+      <div className="notice">
+        <b>
+          This entry used to be called raising output from the healthy copy, and
+          that heading claimed more than the measurement closed.
+        </b>{" "}
+        The reserve measured here is the pool of discarded message, and
+        redirecting it is one method of raising output. Every other method needs
+        no such pool, and this project&rsquo;s own collection held a result
+        doing exactly that in heart cells grown from Brugada patients, which
+        nobody had read. The heading was narrowed on 6 August 2026 and what it
+        had been covering by wording rather than by evidence is now a separate
+        entry at rank 11, recorded as conditional. The measurement above is
+        unchanged and still correct. It killed one method, not a level.
+      </div>
+
+      <p>
+        <b>
+          One more sentence that stopped being true on 6 August 2026, corrected
+          here rather than removed.
+        </b>{" "}
+        This section used to say this was the only route on the list that did
+        not depend on resolving the mechanism first. That was true when it was
+        written and it is not true now. It is dead, and the entry at rank 10,
+        the bacterial sodium channel, does not interact with the human one at
+        all, so it is the one entry on this page that does not wait on the
+        mechanism question. That is a fact about what it is made of, not a
+        recommendation: rank 10 is a candidate, it is conditional, and it is not
+        promising.
       </p>
 
       <h2>Why nobody has done this already</h2>

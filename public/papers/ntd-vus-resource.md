@@ -3,7 +3,7 @@
 >
 > **Version of record: 10.5281/zenodo.21799869, published 5 August 2026.** That identifier is the citable address for this paper and it resolves at https://doi.org/10.5281/zenodo.21799869. It is a version identifier; Zenodo minted a second one that resolves to all versions, and the version identifier is the one to cite.
 >
-> **What this file is.** This project's authoritative copy of the manuscript, `SUBMIT_THESE/papers/PUBLISH_9_NTD_VUS_RESOURCE.md`, which is the file the deposited PDF was built from. Synced 6 August 2026 by `scripts/sync-manuscripts.mjs`, which copies the source byte for byte and prepends this note. Nothing in the manuscript below has been rewritten for the website.
+> **What this file is.** This project's authoritative copy of the manuscript, `SUBMIT_THESE/papers/PUBLISH_9_NTD_VUS_RESOURCE.md`, which is the file the deposited PDF was built from. Synced 7 August 2026 by `scripts/sync-manuscripts.mjs`, which copies the source byte for byte and prepends this note. Nothing in the manuscript below has been rewritten for the website.
 >
 > **This text matches the version of record, on the evidence available here.** The authoritative markdown was last written on 4 August 2026, before the submission PDFs were built that evening and before the deposit the following day, so nothing in it postdates the identifier above.
 >

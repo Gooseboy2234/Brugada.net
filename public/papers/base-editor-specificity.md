@@ -3,15 +3,19 @@
 >
 > **Version of record: 10.5281/zenodo.21799850, published 5 August 2026.** That identifier is the citable address for this paper and it resolves at https://doi.org/10.5281/zenodo.21799850. It is a version identifier; Zenodo minted a second one that resolves to all versions, and the version identifier is the one to cite.
 >
-> **What this file is.** This project's authoritative copy of the manuscript, `SUBMIT_THESE/papers/PUBLISH_2_BASE_EDITOR_SPECIFICITY.md`, which is the file the deposited PDF was built from. Synced 6 August 2026 by `scripts/sync-manuscripts.mjs`, which copies the source byte for byte and prepends this note. Nothing in the manuscript below has been rewritten for the website.
+> **What this file is.** This project's authoritative copy of the manuscript, `SUBMIT_THESE/papers/PUBLISH_2_BASE_EDITOR_SPECIFICITY.md`, which is the file the deposited PDF was built from. Synced 7 August 2026 by `scripts/sync-manuscripts.mjs`, which copies the source byte for byte and prepends this note. Nothing in the manuscript below has been rewritten for the website.
 >
 > **What was here before, because nothing on this site is deleted quietly.** Until 6 August 2026 this file was a copy taken before the corrections of 4 August 2026 evening and never resynced, so it served the retired 34.1 percent rescaling of the measured current. Earlier on 6 August 2026 it was given a banner reading "superseded revision, do not cite any figure in it". That banner was an accurate description of a stale file and a poor thing to serve on a research site, so the stale file has been replaced with the authoritative text rather than annotated. The retired rescaling divided the measured 68.3 percent by two; O'Neill 2022's own two-allele control reads 218.4 percent of a single allele rather than 200, so the divisor is 2.184, the baseline is 31.3 percent and the comparator for simple loss of one allele is 45.8 percent.
 >
-> **Warning, and it points at the published record rather than at this page.** The version deposited on 5 August 2026 carries four defects, corrected here on 6 August 2026, after the deposit. Two are the same count twice: Table 2a's protein-changing column read 3, 16, 23, 55 and now reads 5, 22, 34, 71, and section 6.5 read "16 of which change a protein" and now reads 22. The deposited paper therefore prints **16 protein-changing sites for the SpG route in Table 2a and 22 for the same route two subsections later**, which is an internal contradiction rather than a divergence from the archive. The corrected column reconciles exactly with the coding-exon column, which never changed. The editable-site columns were always right, so the 6.2-fold PAM-relaxation cost, which is what that section exists to report, does not move.
+> **Warning, and it points at the published record rather than at this page.** The version deposited on 5 August 2026 carries five defects, corrected here on 6 and 7 August 2026, after the deposit. *(This header said four until 7 August 2026. A fifth correction was added to the manuscript that day and is described at the end of this note; the count is corrected here rather than left standing.)* Two are the same count twice: Table 2a's protein-changing column read 3, 16, 23, 55 and now reads 5, 22, 34, 71, and section 6.5 read "16 of which change a protein" and now reads 22. The deposited paper therefore prints **16 protein-changing sites for the SpG route in Table 2a and 22 for the same route two subsections later**, which is an internal contradiction rather than a divergence from the archive. The corrected column reconciles exactly with the coding-exon column, which never changed. The editable-site columns were always right, so the 6.2-fold PAM-relaxation cost, which is what that section exists to report, does not move.
 >
 > **The third correction is a new section 3.4.8, and half of it is a defect in a published data file.** `ABE_CONSEQUENCE_RECHECK.csv`, as deposited in `10.5281/zenodo.21799234`, truncates its `recomputed_aa` field at exactly 1,500 characters. Fifty-eight of its 668 call-carrying rows end mid-token, and **1,706 of 8,843 consequence calls, 19.3 percent, are missing from a published file.** The truncated rows are not marked and do not look truncated. Every consequence figure in the deposited paper is therefore a statement about the 7,137 calls the table still prints, and the deposited paper does not say so. This copy says so, in section 3.4.8, in limitation 6.1.11 and in its data availability section. What the table printed for the missing 1,706 is unrecoverable; the producing script is not in the project tree. The same section reports a fourth wrong consequence call, at *KCNQ2* chr20:63,424,178, where p.Arg416Gly, p.Arg406Gly and p.Arg393Gly are really p.Ser416Gly, p.Ser406Gly and p.Ser393Gly. The call is missense under both readings and nothing downstream of the residue label changes.
 >
 > **The fourth correction is structural, it moves no number, and it is the one a reader can see without opening a data file.** The deposited version prints, as a section heading of a published scientific paper, the line `## Insert into PUBLISH_2_BASE_EDITOR_SPECIFICITY.md as section 3.4.7, immediately after 3.4.6`. That is a build instruction to whoever assembled the manuscript. It was pasted in with the section it introduces, never removed, and deposited; its presence in the deposited PDF was confirmed by downloading that PDF from the Zenodo API on 6 August 2026. The instruction was also never followed, so the deposited version prints section 3.4 in the order 3.4.1, 3.4.2, 3.4.3, 3.4.4, 3.4.6, 3.4.5, and then prints section 3.4.7 twenty-five pages later, after the Discussion has ended. In this copy sections 3.4.5 through 3.4.8 are in numerical order and the instruction line is removed. **Not one word of any section was rewritten**, and the removed line is quoted verbatim in a dated note at the position the displaced sections occupied.
+>
+> **The fifth correction was added on 7 August 2026, it is the only favourable one, and that is the reason to be most sceptical of it.** New section 3.4.9 answers the question section 3.4.8 raised and stopped at: this paper is deposited under a permanent identifier and rests on a file that cannot be repaired, so what does the truncation actually cost? The truncation is confined to `recomputed_aa`, the per-transcript audit column, and every count in this paper is a site-level count read from `recomputed_worst` and `recomputed_region`, which are separate and untruncated. Every consequence figure was regenerated from those columns and **102 of 102 reproduce**, with the two truncated rows at which a destroyed call could in principle have changed a count adjudicated one by one and shown that it cannot have. **Nothing is repaired**: the deposited file is republished in version 2 byte for byte unchanged, 1,706 consequence calls stay destroyed, and a reader auditing any single call still has nothing to audit. The counts survive and the audit trail does not, and only the first half of that is good news.
+>
+> **A sixth change in this copy is not a correction and is recorded so it is not mistaken for one.** The four junction-straddling census tables that section 3.4.8 rests on were named as absent from the archive when this copy said the archive did not hold them; they are staged for version 2 and this copy now says so, with the struck sentence left visible. **Version 2 has not been uploaded**, so a reader holding version 1 of `10.5281/zenodo.21799234` will not find them.
 >
 > **One further defect in the deposited data, recorded here because this paper describes it.** The paper says its lead guide has 22 protein-changing predicted off-targets and its Table 3 lists 22. The summary file in the data deposit, `MS_TABLE3_LEAD_PROTEIN_CHANGING.csv`, still holds the 16 rows of the superseded count, because the paper was corrected and the file was not regenerated. That defect is in the deposited summary table, not in this text. *(This paragraph previously ended by calling `ABE_CONSEQUENCE_RECHECK.csv` complete at 22,717 rows. The row count is right and the word complete was wrong, and it was corrected here on 6 August 2026: the file has 22,717 rows and is missing 19.3 percent of its consequence calls, as set out above. A sentence that states a true row count and infers completeness from it is exactly the failure mode this project keeps finding, so it is corrected in place rather than deleted.)*
 >
@@ -38,8 +42,12 @@ Correspondence: the author
 Preprint. Version 1, 2026-08-04. **Corrected 6 August 2026** in three places: a fourth wrong consequence
 call in my own recheck table and a 1,500-character truncation in that table as deposited (section 3.4.8,
 carried into 6.1 and 7); a stale protein-changing column in Table 2a; and a stale protein-changing count
-in section 6.5. The three are collected in "Corrections, 6 August 2026" before section 7. **The record
-deposited at `10.5281/zenodo.21799850` on 5 August 2026 carries none of them.** No conclusion, no
+in section 6.5. **Corrected again 7 August 2026** with a new section 3.4.9, which establishes what that
+truncation actually costs: every consequence figure in this paper was regenerated from the broken file's
+untruncated columns and **102 of 102 reproduce**, while the audit trail for 1,706 destroyed calls stays
+permanently gone. The corrections are collected in "Corrections, 6 and 7 August 2026" before section 7.
+**The record deposited at `10.5281/zenodo.21799850` on 5 August 2026 carries none of them, and it is the
+record that states this paper's figures come from a file it never says is defective.** No conclusion, no
 recommendation, no risk tier, no editor route and no sequencing-panel entry changes.
 
 **Keywords:** adenine base editing, off-target prediction, PAM relaxation, SpG, Cas9-NG, SpRY, guide RNA design, SCN5A, Brugada syndrome, dominant negative
@@ -729,12 +737,100 @@ produces rather than observing the code that produced the original calls, and th
 destroyed calls. **What is not established at all**: what the published table said about those 1,706, and
 in particular about the 37 exposed *UBR4* records among them.
 
-**Where the census tables are.** The four census tables — the per-row exposure determination, the 8,843
+**Where the census tables are.** ~~The four census tables — the per-row exposure determination, the 8,843
 reconstructed calls flagged for whether the published file still prints them, the 5,099 adenine-transcript
 pairs, and the record of what the truncated file actually contains — together with the full method and
 limitations, are in the project record as `JUNCTION_STRADDLING_CENSUS.md` and its CSVs. **They are not in
 the version-1 data archive `10.5281/zenodo.21799234`**, which was built before the census was run, and
-adding them is listed as an open item against the next version of that deposit.
+adding them is listed as an open item against the next version of that deposit.~~
+*(**Corrected 7 August 2026.** The struck sentence was true of version 1 and is no longer the whole
+truth, so it is left visible rather than rewritten.)* The four census tables are
+`JUNCTION_STRADDLING_PER_ROW.csv`, `JUNCTION_STRADDLING_RECONSTRUCTED_CALLS.csv`,
+`JUNCTION_STRADDLING_ALL_ADENINES.csv` and `JUNCTION_STRADDLING_RECHECK_CALLS.csv`, with the method and
+limitations in `JUNCTION_STRADDLING_CENSUS.md`. **They are not in version 1 of the data archive
+`10.5281/zenodo.21799234`, which was built before the census was run, and they are in version 2.** If you
+are holding version 1, they are not there.
+
+#### 3.4.9 The figures in this paper were regenerated from the broken file, and they all reproduce — which is a narrower result than it sounds
+
+**Added 7 August 2026. This section exists because section 3.4.8 reports a defect in a file this paper
+sends every reader to, and reporting a defect is not the same as establishing what it costs. This
+establishes what it costs. The answer has two halves and the second is the one to carry away: the counts
+survive, and the audit trail does not.**
+
+**The escalation this answers, stated as it was put to me.** A paper published under a permanent
+identifier depends on a file that cannot be repaired, and version 1 of the paper does not say so. That is
+the same defect class as paper 10's false data availability statement in this project's own set, and it is
+worse in kind, because paper 10's missing tables could be regenerated and this file cannot be. **The
+question is therefore not whether the file can be fixed — it cannot — but whether anything published on
+top of it can be checked.**
+
+**The structural fact that decides it.** The truncation is confined to **one column**, and it is not the
+column the figures come from. `recomputed_aa` is the per-transcript detail column: the thing a reader uses
+to audit a single call. Every count in this paper is a **site-level** count, and a site's consequence
+class lives in `recomputed_worst` and its region in `recomputed_region`, which are separate columns of the
+same file. Measured across all twelve columns of `ABE_CONSEQUENCE_RECHECK.csv`, only `recomputed_aa` shows
+the pile-up at a round width that is the signature of a fixed-width slice — `recomputed_worst` tops out at
+13 characters with 5 rows there, `recomputed_region` at 15 with 13,112 rows there. **So the file is broken
+in its audit trail and intact in its summary, and this paper's numbers are computed from the summary.**
+
+**What was done.** `p2_regen_consequence_figures.py`, deposited in version 2 of the data archive,
+regenerates every consequence figure in this paper from those untruncated columns joined to
+`ABE_OFFTARGET_SCAN.csv`, and compares each against the number printed here. **102 quantities were
+compared. 102 reproduce. None differs.** The full print-out is `P2_VERIFICATION_OUTPUT.txt` and the
+figure-by-figure table is `P2_CONSEQUENCE_FIGURE_REGENERATION.csv`, both in that archive.
+
+| Regenerated | Result |
+|---|---|
+| **Table 2a**, four PAM rules × five columns | 20 of 20 reproduce, including the corrected protein-changing column **5, 22, 34, 71** |
+| Table 2a's own reconciliation, protein-changing + synonymous = coding-exon | holds on all four rows: 5+1, 22+4, 34+6, 71+8 give 6, 26, 40, 79 |
+| **Table 2b**, seven rows × two routes | 14 of 14 reproduce, and so do the 34.7-fold and 27.9-fold ratios |
+| **Section 3.4.4** | 26 coding-exon sites = 22 protein-changing + 4 synonymous; 7 in heart-expressed genes; 4 at ≥ 1 TPM in left ventricle |
+| **Table 3**, all 22 protein-changing off-targets of the lead guide | all 22 genes recovered, none missing, none extra, and every printed residue call is still present in the deposited file |
+| **Section 6.5** | 655 editable off-target sites, 22 protein-changing |
+
+**The one way the truncation could still have moved a count, adjudicated rather than argued.** A site's
+class is the worst class among its calls, so a destroyed call could in principle hide a class outranking
+the one the file records. Protein-changing here means missense or start-lost, which is the top class these
+counts use, so **the only rows at risk are truncated rows recorded as synonymous**. There are exactly two,
+and they are one locus reached by two overlapping SpRY guides: chr11:68,591,644 in *PPP6R3*, 4 mismatches,
+tier `TIER6_other_mm4`, `cardiac_expressed` false, **not reachable by the lead SpG guide at all**. All 148 reconstructed calls across those two rows sit at **one** genomic adenine, at **codon
+position 3**, on the plus strand, with **none** straddling an exon junction, so every call reads the same
+three bases and the same substitution. The 70 that survive are all p.Asp→Asp. The 78 destroyed ones cannot
+be anything else. The per-row adjudication is `P2_TRUNCATION_ADJUDICATION.csv`, one row for each of the 58
+truncated rows.
+
+**A supporting check that makes the whole approach testable rather than assumed.** On the 610 call-carrying
+rows the cap never touched, `recomputed_worst` equals the worst class among that row's own printed calls in
+**610 of 610** cases, zero disagreements. Wherever that column can be checked against the detail it
+summarises, it is faithful.
+
+**A reconciliation this paper did not carry, and a reader would have hit it.** Counting well-formed calls
+in `ABE_CONSEQUENCE_RECHECK.csv` gives **7,496**, and section 3.4.8 says the file prints **7,137**. Both
+are right. The difference is **359 duplicate calls**, a second call on a `(transcript, codon)` pair that
+already has one, and the cause is that a protospacer can put **two** editable adenines inside the same
+codon of the same transcript. Each adenine gets its own call, so the pair shares a key and differs in
+consequence — which is why every one of the 359 disagrees with its partner rather than repeating it: 208
+are missense-against-synonymous and 151 are missense-against-missense at different residues. *LIPK* codon
+239 is the clearest case, where one adenine gives p.Gln239Arg and the other p.Gln239Gln. This paper's
+counting rule is one call per row, transcript and codon, so **7,137 is the distinct-key count and 7,496 is
+the raw call count**, and neither is an error.
+
+**What this does not establish, stated at the same volume as what it does.**
+
+- **Not one of the 1,706 destroyed calls is recovered.** Nothing recovers them. What the published table
+  *said* about each is gone, and the regeneration does not touch that.
+- **The deposited file is republished in version 2 byte for byte unchanged**, because it cannot be
+  repaired: the producing script is on neither machine, there is no second copy, and there is no version
+  control on this project's science tree. A replacement table would be a new computation with its own
+  validation burden and it has not been built.
+- **The 37 exposed *UBR4* records stay unadjudicable** on the one question that needs the missing text.
+- **This is a check of the arithmetic, not of the biology.** It establishes that the counts printed here
+  are the counts the file supports. It does not establish that the file's consequence calls are right;
+  that is what section 3.4.6's recheck and section 3.4.8's census address, and both of those found errors.
+- **A reader auditing an individual per-transcript residue label for one of the 1,706 has nothing to audit
+  and will continue to have nothing.** That is the permanent cost, and it is why this section does not
+  close section 3.4.8's open defect. It bounds it.
 
 *[Figure 1 is supplied as a separate file, `FIG1_OFFTARGET.png`. Upload it with the submission.]*
 
@@ -883,7 +979,7 @@ I have used the phrase "predicted off-target profile" throughout deliberately. T
 8. **Guide-independent deaminase activity is outside any sequence scan.** Base editors produce off-target editing that does not depend on the guide at all. No sequence method can predict it.
 9. **RNA off-target editing is outside the scope of this scan.** Adenine base editors edit RNA as well as DNA. Qi 2024 detected none in treated mouse hearts, which is encouraging but is a measurement of their editor in their system.
 10. **Four residue labels in my corrected consequence table were wrong, and the exposure to that error is now counted rather than assumed.** *(Added 6 August 2026.)* A codon that straddles an exon-exon junction is read incorrectly by a genome-contiguous reader, which is the cause of the three errors in section 3.4.6 and of the fourth, *KCNQ2*, in section 3.4.8. **67 of 8,843 transcript-level calls, 0.758 percent, are exposed to it, at four adenines in four genes**; 17 transcript-level records at three of those adenines carry a wrong reference residue, 13 carry a right one, and 37 cannot be judged. **The consequence class is unchanged in every one of them, so no count, tier or route in this paper moves** — the defect is in residue labels only. What remains a genuine limitation is that the correction was derived by re-deriving the reference residue and not by re-deriving whether an editor would edit any of these adenines at a measurable rate, which is unmeasured here as everywhere in this paper. One of the three *KCNQ2* residue numbers, 393 in `XM_017027843.2`, is computed from the exon model rather than checked against an NCBI translation.
-11. **The deposited `ABE_CONSEQUENCE_RECHECK.csv` is truncated, and 19.3 percent of its consequence calls are not in it.** *(Added 6 August 2026.)* Its `recomputed_aa` field is capped at exactly 1,500 characters; 58 of 668 call-carrying rows sit at the cap ending mid-token; the file prints 7,137 of the 8,843 calls it should carry. This is a defect in a file that has been published, not a caveat about a method. **Every consequence figure in this paper is drawn from that file, so every such figure is a statement about the 7,137 calls it prints.** The reconstruction of *which* calls are missing is validated 5,032 times without a miss on the rows the cap never touched, but the published text for the missing 1,706 is gone and is not recoverable from anything. The producing script is not in my tree. Until the table is regenerated without the cap and redeposited, a reader reusing that file for any purpose other than reproducing this paper's numbers must know that a fifth of it is absent, and that the absence is invisible in the file itself because the truncated rows still look like well-formed rows.
+11. **The deposited `ABE_CONSEQUENCE_RECHECK.csv` is truncated, and 19.3 percent of its consequence calls are not in it.** *(Added 6 August 2026.)* Its `recomputed_aa` field is capped at exactly 1,500 characters; 58 of 668 call-carrying rows sit at the cap ending mid-token; the file prints 7,137 of the 8,843 calls it should carry. This is a defect in a file that has been published, not a caveat about a method. **Every consequence figure in this paper is drawn from that file, so every such figure is a statement about the 7,137 calls it prints.** The reconstruction of *which* calls are missing is validated 5,032 times without a miss on the rows the cap never touched, but the published text for the missing 1,706 is gone and is not recoverable from anything. The producing script is not in my tree. Until the table is regenerated without the cap and redeposited, a reader reusing that file for any purpose other than reproducing this paper's numbers must know that a fifth of it is absent, and that the absence is invisible in the file itself because the truncated rows still look like well-formed rows. *(**Bounded, not closed, 7 August 2026.** The sentence "every consequence figure in this paper is a statement about the 7,137 calls it prints" is now checked rather than assumed: section 3.4.9 regenerates every one of those figures from the file's untruncated `recomputed_worst` and `recomputed_region` columns and all 102 reproduce, and the two truncated rows at which a destroyed call could have moved a count are adjudicated individually and cannot have. **This limitation is not withdrawn.** What it costs is now known to be the audit trail rather than the arithmetic, and the audit trail is still gone. The file is republished unchanged in version 2 of the deposit because it cannot be repaired.)*
 
 **Only an empirical assay can confirm any of this.** GUIDE-seq, CIRCLE-seq, or targeted deep sequencing of the ranked sites in `ABE_OFFTARGET_SCAN.csv`.
 
@@ -925,9 +1021,13 @@ The honest headline is that this site is workable with SpG and would be difficul
 
 ---
 
-## Corrections, 6 August 2026
+## Corrections, 6 and 7 August 2026
 
-~~Three corrections were made to this paper on 6 August 2026.~~ **Four, as of 6 August 2026 23:35. The
+~~Three corrections were made to this paper on 6 August 2026.~~ ~~**Four, as of 6 August 2026 23:35.**~~
+**Five, as of 7 August 2026. The fifth is new section 3.4.9 and it is the only one that was written in
+response to an escalation from outside this paper**, namely that a deposited paper resting on an
+unrepairable file without saying so is the same defect class as paper 10's false data availability
+statement. **The
 fourth is structural rather than numerical and is described in its own row below and, at greater length,
 at the point in the document where the displaced sections used to sit.** Two of them are the same defect twice: a
 count that the consequence recheck of section 3.4.6 had already superseded, left standing in a table and
@@ -941,6 +1041,7 @@ its replacement rather than removed.
 | Section 6.5, protein-changing sites on the lead guide | 16 | **22** | Same cause. The wrong number was in the section headed "the negative result, stated plainly" |
 | New section 3.4.8 | absent | **a fourth wrong consequence call, and a truncation in a deposited table** | The junction-straddling exposure was never counted, only the three caught instances were known. Counting it found *KCNQ2* wrong at three residue numbers across twelve transcript records, and found that the deposited `ABE_CONSEQUENCE_RECHECK.csv` is missing 19.3 percent of its consequence calls |
 | **Section order, and one line that was never text** *(added 23:35)* | 3.4.1–3.4.4, then **3.4.6 before 3.4.5**; 3.4.7 printed **after section 5.4**, under a heading reading `## Insert into PUBLISH_2_BASE_EDITOR_SPECIFICITY.md as section 3.4.7, immediately after 3.4.6` | **3.4.1 through 3.4.8 in numerical order, and the instruction line removed** | The instruction was an editorial note to whoever assembled the paper. It was pasted in with the section it introduces, never removed, and **deposited**. Following it also fixes 3.4.5, which was displaced by the same insertion. **No word of any section was rewritten; the blocks were moved.** Figure 1 stays at the end of section 3.4, because its caption reports section 3.4.6's bulge-aware results. Full account, including the deposited order and the removed line quoted verbatim, at the point in this document where those sections used to sit |
+| **New section 3.4.9** *(added 7 August 2026)* | absent | **the consequence figures regenerated from the truncated file, and what the truncation does and does not cost** | Section 3.4.8 reported a defect in a file this paper directs every consequence figure to, and stopped there. This paper is deposited under a permanent identifier and rests on a file that **cannot be repaired**, which is the same defect class as paper 10's false data availability statement in this project's own set. **102 of 102 figures regenerate and reproduce**, from the file's untruncated columns, by a script deposited with its output; the two truncated rows at which a destroyed call could have changed a count are adjudicated individually and cannot have. **Nothing is repaired and 1,706 calls stay destroyed.** The census tables are added to version 2 of the data archive |
 
 **The direction of the first three is unfavourable to this paper**: more predicted protein-changing
 off-targets on every route, one more wrong call in its own table, and a published data file that is a fifth
@@ -948,7 +1049,15 @@ incomplete. That is the reason to state them at the front of the correction rath
 fourth is unfavourable in a different currency**: it says that a paper this project deposited under a
 permanent identifier carried a build instruction in its section headings for a day and nobody noticed.
 
-**None of the four moves a consequence class, a risk tier, an editor route, an amplicon-panel entry, the
+**The fifth is favourable and is stated last for that reason.** It is the only one that makes this paper
+look better than it did, so it is the one to be most sceptical of. Two things bound it. It checks the
+arithmetic and not the biology: it establishes that the figures printed here are the figures the file
+supports, and says nothing about whether the file's consequence calls are right — sections 3.4.6 and 3.4.8
+address that and both found errors. And it repairs nothing: the deposited
+`ABE_CONSEQUENCE_RECHECK.csv` is republished in version 2 byte for byte unchanged, 1,706 consequence
+calls are still gone, and a reader auditing any one of them still has nothing to audit.
+
+**None of the five moves a consequence class, a risk tier, an editor route, an amplicon-panel entry, the
 6.2-fold PAM-relaxation cost, the 34.7-fold route ratio, the rescue arithmetic of Table 4, or the
 recommendation in section 4.** The fourth moves no number at all. **It does move page layout throughout,
 which is why it is an editorial decision on a published record rather than a typographical fix, and why it
@@ -988,6 +1097,18 @@ recorded in DATA_DOI.txt alongside this manuscript and should be cited as the da
 | `ABE_TAIL_ANNOTATION.csv` | Every editable 5-and-6-mismatch hit overlapping coding sequence, with gene, consequence and cardiac accessibility |
 | `BULGE_VALIDATION_LOCAL.txt` | The 24 validation gates for the bulge scanner with their results, including 152 of 152 DNA-bulge and 144 of 144 RNA-bulge constructed-site recoveries |
 | `FIG1_OFFTARGET.png` | Figure 1 |
+| `JUNCTION_STRADDLING_PER_ROW.csv` | The junction-straddling census, level one: the per-row exposure determination behind section 3.4.8. **Added in version 2 of the archive, 7 August 2026; not in version 1** |
+| `JUNCTION_STRADDLING_ALL_ADENINES.csv` | Level three: every editable adenine in the scan crossed against every RefSeq coding transcript containing it, 5,099 adenine-and-transcript pairs at 577 distinct adenines in 3,160 transcripts. **Added in version 2** |
+| `JUNCTION_STRADDLING_RECHECK_CALLS.csv` | The record of what the truncated file actually contains, call by call. **Added in version 2** |
+| `JUNCTION_STRADDLING_RECONSTRUCTED_CALLS.csv` | All 8,843 reconstructed transcript-level calls, each flagged for whether the deposited `ABE_CONSEQUENCE_RECHECK.csv` still prints it. **This is the file that lets somebody other than me audit the truncation.** Added in version 2 |
+| `P2_CONSEQUENCE_FIGURE_REGENERATION.csv` | Every consequence figure in this paper beside its regenerated value and a verdict, 107 rows. **102 quantities compared, 102 reproduce, none differs.** Section 3.4.9. Added in version 2 |
+| `P2_TRUNCATION_ADJUDICATION.csv` | One row per truncated row of `ABE_CONSEQUENCE_RECHECK.csv`, 58 rows, recording whether a call destroyed by the cap could have changed that site's consequence class. **It could not, at any of the 58.** Added in version 2 |
+
+The archive also carries `p2_regen_consequence_figures.py`, which produces the last two of those from the
+other files in the archive and needs nothing but the Python standard library; `P2_VERIFICATION_OUTPUT.txt`,
+its print-out; `P2_REGENERATION_NOTE.md`, which states what is unrepairable and what was regenerated; and
+`JUNCTION_STRADDLING_CENSUS.md`, the census write-up with its method and limitations. **All of these are in
+version 2 of the archive and none is in version 1.**
 
 **Three reconciliations, so that a discrepancy does not look like an error.** *(The third was added 6 August 2026 and, unlike the first two, it is a defect rather than a reconciliation. It is placed here because this is where a reader decides which file to open.)* First, the consequence columns of `ABE_OFFTARGET_SCAN.csv` disagree with this paper: they are the uncorrected calls, wrong on 133 rows, and are retained in the archive only so the correction can be audited row by row against `ABE_CONSEQUENCE_RECHECK.csv`. Read consequences from the recheck file. Second, summing the `spry_route_editable` column of `ABE_OFFTARGET_SCAN.csv` gives 22,712, while this paper reports 22,710 editable off-target sites for the SpRY route. The difference is exactly 2, and those two rows are on-target: the SpRY guides at positions 3 and 4 each carry a known bystander adenine inside the editing window, at window positions 8 and 9 respectively. Filter on `is_on_target == False` to reproduce every count in this paper. The SpG figure of 655 is identical either way, because the lead guide has no bystander adenine in its window. This is a useful independent confirmation: the genome scan rediscovered from sequence alone the bystanders that the guide enumeration had recorded separately.
 
@@ -995,11 +1116,27 @@ recorded in DATA_DOI.txt alongside this manuscript and should be cited as the da
 truncated.** Its `recomputed_aa` field is cut at exactly 1,500 characters, 58 of the 668 call-carrying rows
 end mid-token, and the file prints 7,137 of the 8,843 transcript-level consequence calls it should carry.
 The truncated rows are not marked and do not look truncated. **Anyone reusing this file for consequence
-prediction must read section 3.4.8 first**, and anyone counting calls in it will count 7,137 and should not
-report that number as the size of the table — that is the exact mistake the first version of the census
-made. The full measurement, the reconstruction of which calls are missing, and the limits of that
-reconstruction are in section 3.4.8. The census tables themselves are not in this archive, which was built
-before the census was run.
+prediction must read section 3.4.8 first**, and anyone counting calls in it should not report their number
+as the size of the table — that is the exact mistake the first version of the census made. The full
+measurement, the reconstruction of which calls are missing, and the limits of that reconstruction are in
+section 3.4.8. ~~The census tables themselves are not in this archive, which was built before the census
+was run.~~ *(**Corrected 7 August 2026: they are in version 2 of the archive and not in version 1.** The
+four named above, plus `JUNCTION_STRADDLING_CENSUS.md`.)*
+
+**Fourth, and this one is genuinely a reconciliation: counting calls in `ABE_CONSEQUENCE_RECHECK.csv` gives
+7,496, and this paper says 7,137.** *(Added 7 August 2026.)* Both are right. The difference is **359
+duplicate calls** — a second call on a `(transcript, codon)` pair that already has one — and the cause is
+that a protospacer can put two editable adenines inside the same codon of the same transcript, each of
+which gets its own call. That is why all 359 disagree with their partner rather than repeating it: 208 are
+missense-against-synonymous and 151 are missense-against-missense at different residues. This paper counts
+one call per row, transcript and codon, so 7,137 is the distinct-key count and 7,496 is the raw one.
+Neither is an error and nothing in the file says so, which is why it is written here.
+
+**Fifth, and it is the reason to trust the numbers in this paper despite the defect above:
+`P2_CONSEQUENCE_FIGURE_REGENERATION.csv` regenerates every consequence figure in it and all 102 reproduce.**
+*(Added 7 August 2026.)* The truncation is confined to `recomputed_aa`; this paper's counts come from
+`recomputed_worst` and `recomputed_region`, which are untruncated. Section 3.4.9 states the method, the
+adjudication and — at the same length — what this does **not** establish.
 
 ---
 

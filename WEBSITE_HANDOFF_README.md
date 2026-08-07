@@ -38,16 +38,30 @@ right source for site prose about mechanism and routes.
 - `WHY_THIS_MATTERS.md` is the framing document. It states who the work is for, and it contains the
   correction that matters most: this is for carriers who do NOT qualify for an implanted device and have
   no protection at all, not for people who already have one.
-- **`THE_WALL.md` is the authority on the route inventory and its tally.** Ten routes: two live (1, 2),
+- **`THE_WALL.md` is the authority on the route inventory and its tally.** ~~Ten routes: two live (1, 2),
   four closed (4, 5, 6, 7), two conditional (3, 10), one answered in a cell line and open for
-  cardiomyocytes (8), and one — publication — done (9). 2 + 4 + 2 + 1 + 1 = 10. If any other file
+  cardiomyocytes (8), and one — publication — done (9). 2 + 4 + 2 + 1 + 1 = 10.~~ **Corrected twice on
+  6 August 2026: route 7's cargo closure was withdrawn at 22:54, and later the same evening a pass over all
+  14,035 corpus records took the enumeration from ten lines to thirteen.** The tally is now **two live
+  (1, 2), four closed (4, 5, 6, 12), five conditional (3, 7, 10, 11, 13), one answered in a cell line and
+  open for cardiomyocytes (8), and one — publication — done (9). 2 + 4 + 5 + 1 + 1 = 13.** If any other file
   disagrees, `THE_WALL.md` section 1 wins.
+- **Anything on the site that states a route count must state thirteen, and must not imply thirteen
+  chances.** One of the three added lines is closed on arrival, one is a candidate the owner has not
+  accepted, and the third waits on the same unfunded experiment as most of the rest. **The count measures
+  how incomplete the enumeration was, not how many ways out there are.** Source:
+  `SESSION_ARCHIVE_20260804/data/FULL_CORPUS_ROUTE_SWEEP_20260806.md`.
+- `ROUTE_7_REDERIVED.md` is the authority for route 7, which is **conditional, not closed**, from
+  6 August 2026. Where `THE_WALL.md` disagrees with it about route 7, it wins.
 - `MODALITY_COMPARISON.md` and `CURE_ROUTE_MAP.md` cover the therapeutic routes with what blocks each.
   **Both carry retired enumerations and both now carry dated correction headers saying so** —
   `MODALITY_COMPARISON.md` is a 4 August ranking with a 6 August correction block, and
   `CURE_ROUTE_MAP.md` is a 27 July snapshot marked SUPERSEDED. Neither is the route inventory.
-- `ROUTE_10_MOG1.md` is the tenth route, chaperone upregulation via AAV9-*MOG1*, added 6 August 2026.
-  **Record it as conditional, never as promising.** Its assessment is `THE_WALL.md` section 1.3.
+- `ROUTE_10_MOG1.md` is route 10, **chaperone and interacting-partner upregulation** (heading widened from
+  "chaperone upregulation via AAV9-*MOG1*" on 6 August 2026 late evening, because the row named one gene
+  where the corpus holds 520 records of the class; **the document still assesses MOG1 only**), added
+  6 August 2026. **Record it as conditional, never as promising.** Its assessment is `THE_WALL.md`
+  sections 1.3 and 1.3.1.
 - `BASE_EDITING_DESIGN.md` (route 1) and `RNA_EDITING_DESIGN.md` (route 2) are the two live routes.
 - `PRIME_EDITING_DESIGN.md` (route 3) is conditional — better designed than base editing and worse
   delivered. `UPREGULATION_ANALYSIS.md` (route 5) is closed on measurement.

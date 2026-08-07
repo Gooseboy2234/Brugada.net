@@ -90,9 +90,71 @@ test("every declared identifier reaches a page", async () => {
 
 // The two lists both said ten and meant different sets. The page has to say so
 // in its own words, not only in a comment in content.ts.
-test("the routes page reconciles its ten against the project inventory", async () => {
+//
+// Rewritten 7 August 2026, and the reason is worth stating because the old
+// form was a trap. It asserted the literal phrase "not the same ten" and the
+// literal phrase "publishing the ten papers". Both are prose that a correct
+// inventory change rewrites, so the test failed the moment the enumeration went
+// from ten lines to thirteen, and it failed for a reason that had nothing to do
+// with the property it exists to protect. A test keyed to a sentence goes red
+// on good work and green on bad. This one is keyed to ROUTE_INVENTORY instead:
+// the page has to print the reconciling arithmetic, and the arithmetic has to
+// close. The literal-phrase assertions that survive are the two non-therapeutic
+// entries, which are named because their identity is the point of the section
+// and does not move when the count does.
+test("the routes page reconciles its own count against the project inventory", async () => {
   const body = await html("/routes");
-  assert.match(body, /not the same ten/i, "no reconciliation section");
+  const num = (field) => {
+    const m = content.match(
+      new RegExp(`export const ROUTE_INVENTORY = \\{[\\s\\S]*?${field}: (\\d+),`),
+    );
+    assert.ok(m, `ROUTE_INVENTORY.${field} is not declared in content.ts`);
+    return Number(m[1]);
+  };
+
+  const inv = {
+    therapeutic: num("therapeutic"),
+    listed: num("listed"),
+    wallTotal: num("wallTotal"),
+    wallNonTherapeutic: num("wallNonTherapeutic"),
+    shared: num("shared"),
+    hereOnly: num("hereOnly"),
+  };
+
+  // The reconciliation is only a reconciliation if it closes on both sides.
+  assert.equal(
+    inv.shared + inv.hereOnly,
+    inv.listed,
+    "ROUTE_INVENTORY does not add up on the site side",
+  );
+  assert.equal(
+    inv.shared + inv.wallNonTherapeutic,
+    inv.wallTotal,
+    "ROUTE_INVENTORY does not add up on the project side",
+  );
+  assert.equal(
+    inv.therapeutic + 1,
+    inv.listed,
+    "listed should be the therapeutic routes plus current care",
+  );
+
+  // The ranked entries actually rendered have to match the count claimed.
+  const ranked = [...body.matchAll(/class="route-name"[^>]*>(\d+)\./g)].length;
+  assert.equal(
+    ranked,
+    inv.therapeutic,
+    `the page renders ${ranked} ranked routes and claims ${inv.therapeutic}`,
+  );
+
+  // Every number in the reconciliation has to reach the page, not only
+  // content.ts. This is the defect the section exists to prevent.
+  for (const [field, value] of Object.entries(inv)) {
+    assert.ok(
+      new RegExp(`\\b${value}\\b`).test(body),
+      `ROUTE_INVENTORY.${field} = ${value} never reaches the rendered page`,
+    );
+  }
+
   assert.match(
     body,
     /resolving the mechanism/i,
@@ -107,6 +169,15 @@ test("the routes page reconciles its ten against the project inventory", async (
     body,
     /therapeutic routes/i,
     "the page does not say what kind of list it is",
+  );
+
+  // A larger count must never read as more chances. The page has to carry the
+  // sentence that says so, because that is the whole risk of the 2026-08-06
+  // inventory change.
+  assert.match(
+    body,
+    /longer list is not better news/i,
+    "the page does not warn that a longer list is not better news",
   );
 });
 

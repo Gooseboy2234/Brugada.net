@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import { EXPERIMENTS, MEASUREMENT, ROUTES, SITE } from "../content";
+import {
+  EXPERIMENTS,
+  MEASUREMENT,
+  ROUTE_INVENTORY,
+  ROUTES,
+  SITE,
+} from "../content";
 
 export const metadata: Metadata = {
   title: "What is open",
@@ -29,7 +35,7 @@ export default function Open() {
         unblocks which route, so this page does.
       </p>
 
-      <h2>The question everything else waits on</h2>
+      <h2>The question almost everything else waits on</h2>
 
       <div className="claim is-unresolved">
         <span className="state state-unresolved">Unresolved</span>
@@ -56,6 +62,20 @@ export default function Open() {
         target is the whole class of changes in this gene that suppress their
         healthy partner. If it simply sits out, that class does not exist and
         several routes below lose their rationale rather than their funding.
+      </p>
+
+      <p>
+        <b>
+          This heading read &ldquo;the question everything else waits on&rdquo;
+          until 6 August 2026, and one entry has since been added that does not.
+        </b>{" "}
+        The bacterial sodium channel at rank 10 on{" "}
+        <a href="/routes">the routes page</a> carries current on its own and does
+        not interact with the human channel, so it does not matter which way the
+        mechanism turns out. It is the only entry with that property, it waits on
+        an immunology question instead, and it is recorded as a candidate,
+        conditional, and not promising. Everything else on this site still waits
+        on the question above.
       </p>
 
       <h2>What is blocked, and by what</h2>
@@ -89,9 +109,10 @@ export default function Open() {
       <h2>What is already closed</h2>
 
       <p>
-        {closed.length} of the nine therapeutic routes are shut, and they are
-        not waiting on anything. Each was closed by a measurement rather than by
-        losing interest, and the measurement is named on{" "}
+        {closed.length} of the {ROUTE_INVENTORY.therapeutic} therapeutic routes
+        are shut, and they are not waiting on anything. Each was closed by a
+        measurement, by a missing target, or by a ceiling too low to be worth
+        reaching, rather than by losing interest, and the reason is named on{" "}
         <a href="/routes">the routes page</a>. A closed route is a result: it is
         one fewer thing for the next person to try.
       </p>

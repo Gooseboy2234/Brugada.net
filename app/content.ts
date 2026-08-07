@@ -187,7 +187,7 @@ export type Route = {
   paper?: number;
 };
 
-// Nine therapeutic routes, ranked, plus current care at rank null. Ranks 1 to 3
+// Eleven therapeutic routes, ranked, plus current care at rank null. Ranks 1 to 3
 // and 5 to 9 are from MODALITY_COMPARISON.md (2026-08-04). Rank 4, chaperone
 // upregulation, was added 2026-08-06 from ROUTE_10_MOG1.md. It was in this
 // project's own literature corpus throughout and was screened out by a filter
@@ -195,9 +195,26 @@ export type Route = {
 // list was never complete, it was bounded by what one person thought to look
 // for. Every rank below 4 moved down by one on that date.
 //
-// This array has ten entries and THE_WALL.md section 1 also counts ten, and
-// they are different tens. See ROUTE_INVENTORY below, which is the reconciliation
+// Ranks 10 and 11 were appended 2026-08-06 late evening from the pass over all
+// 14,035 corpus records, SESSION_ARCHIVE_20260804/data/FULL_CORPUS_ROUTE_SWEEP_20260806.md.
+// Appended, not interleaved: rank here is strength of case, neither has been
+// assessed at that depth, and slotting them higher would be a claim this project
+// has not earned. Three existing entries were edited the same evening and each
+// carries a dated `correction` field saying what changed and why: rank 4's
+// heading widened from one gene to a class, rank 5 moved from conditional to
+// dead and was restored to the project inventory it had gone missing from, and
+// rank 6's heading narrowed to the one method its measurement actually closes.
+//
+// ~~This array has ten entries and THE_WALL.md section 1 also counts ten, and
+// they are different tens.~~ Superseded 2026-08-06 late evening: this array has
+// twelve entries and THE_WALL.md counts thirteen lines, and the difference is
+// now fully accounted for. See ROUTE_INVENTORY below, which is the reconciliation
 // and is the thing to read before changing any route count on any page.
+//
+// The rule for any page that prints a count: never let "eleven routes" read as
+// eleven chances. One of the three lines added on 2026-08-06 is closed on
+// arrival, one is a candidate nobody has accepted, and the third waits on the
+// same unfunded experiment as most of the rest.
 export const ROUTES: Route[] = [
   {
     rank: 1,
@@ -238,7 +255,7 @@ export const ROUTES: Route[] = [
   },
   {
     rank: 4,
-    name: "Chaperone upregulation",
+    name: "Chaperone and interacting-partner upregulation",
     state: "conditional",
     blocker:
       "It has been shown to rescue exactly two variants of this channel, both from one laboratory, and both of them fail to reach the cell surface. No study has tested it on a variant that reaches the surface normally, which is the case that has to be ruled out here.",
@@ -246,26 +263,34 @@ export const ROUTES: Route[] = [
       "A helper protein called MOG1 escorts the sodium channel to the cell surface, and unlike the channel gene it is small enough to fit the standard delivery vehicle. In a mouse carrying a different Brugada variant, delivering extra of it raised the current, abolished the disease signature and blocked the arrhythmia. It never has to tell the two copies apart, which is the difficulty that keeps allele-specific silencing weak. It is recorded as conditional rather than promising, for three reasons. It turns on the same unresolved mechanism as the routes above, and in the case where the broken copy is both held back inside the cell and interfering at the surface, escorting more of it out lowers the current instead of raising it, at a threshold that sits inside the range this approach can reach. The gene behind the helper protein was moved by ClinGen on 31 October 2025 from disputed to refuted as a cause of Brugada syndrome, which leaves the case resting on two laboratory papers with no supporting human genetic evidence at all. And the mouse paper is paywalled with no copy in any repository, so every result attributed to it here is read from its abstract.",
     falsifier:
       "The same mechanism experiment decides it. If the broken copy reaches the cell surface in normal proportion, this helps for any increase it delivers. If it is heavily held back inside the cell, it can be worse than doing nothing.",
+    correction:
+      "This entry was called chaperone upregulation and named one helper protein. A pass over all 14,035 papers in the project's collection on 6 August 2026 found 520 of them about raising some other partner protein of this channel, and one of those is a result this project should not have been ignoring: in heart cells from muscular dystrophy patients, supplying a single scaffolding protein restored the sodium current, the potassium current, the beat and the conduction. Naming one gene where the evidence is a class is what kept the other 520 out of view. The heading is widened; the assessment underneath it still covers only the one helper protein, and widening a heading is not an assessment.",
   },
   {
     rank: 5,
     name: "Interaction drug",
-    state: "conditional",
+    state: "dead",
     blocker:
-      "No target is defined and no assay exists. It waits entirely on the mechanism experiment.",
+      "No molecule exists, no assay exists, and the best it could ever do is take 31.3 percent to 45.8 percent and stop there. One paper in the project's own collection argues in its title that the protein this idea targets is not needed by the channel at all.",
     detail:
-      "If the broken copy interferes with the working one at the cell surface, then the thing to target is the interaction itself rather than the channel. There is no published structure of that interface to build on, so this branch starts closer to zero than it feels.",
+      "If the broken copy interferes with the working one at the cell surface, then the thing to target is the interaction itself rather than the channel. There is no published structure of that interface to build on, so this branch starts closer to zero than it feels. Even at perfect success it only removes the interference and cannot replace the missing copy, so its whole reward is the gap between what this variant measures and what simply losing one copy would cost.",
+    falsifier:
+      "A resolved structure of the interface between the two copies in a heart cell, plus a mechanism result showing the broken copy interferes at the surface rather than being held back inside. Both are somebody else's experiment and neither exists.",
+    correction:
+      "This entry is the reason to read this section rather than trust it. It has been on this page since the site was built and it was in a 27 July working table marked a live branch, and for the whole of that time the project's own route inventory had no entry for it at all. It was not retired, refuted or dropped; it stopped being written down, and this page was one of only two places it survived. It is restored to the project inventory on 6 August 2026 as line 12, and recorded there as closed rather than live, with the contradicting paper named. A route that vanishes between two documents without a reason is the exact failure this project has a paper about.",
   },
   {
     rank: 6,
-    name: "Raising output from the healthy copy",
+    name: "Redirecting the healthy copy's discarded messages",
     state: "dead",
     blocker:
       "The reserve it would redirect measures 0.0045 percent, against roughly the 1.5-fold increase the route needed.",
     detail:
-      "The idea was to make the working copy produce more channel, and it was attractive because it was the only route that did not depend on resolving the mechanism first. It needs a pool of non-productive message to redirect. Across 827 human heart samples that pool is about 300 times smaller than the equivalent pool in brain, where the same strategy is already proven in children. The ceiling is a 1.06-fold increase, taking 31.3 percent to 33.1 percent.",
+      "The idea was to take the messages the working copy already makes and throws away, and turn them into working ones. It was attractive because it was the only route that did not depend on resolving the mechanism first. It needs a pool of discarded message to redirect. Across 827 human heart samples that pool is about 300 times smaller than the equivalent pool in brain, where the same strategy is already proven in children. The ceiling is a 1.06-fold increase, taking 31.3 percent to 33.1 percent.",
     falsifier:
-      "Non-productive copies are destroyed by design, so the amount present understates the amount made. A heart-cell experiment with that destruction blocked would settle it.",
+      "Discarded copies are destroyed by design, so the amount present understates the amount made. A heart-cell experiment with that destruction blocked would settle it.",
+    correction:
+      "This entry was called raising output from the healthy copy, and the measurement beneath it does not close anything that wide. The measurement is about one method: redirecting discarded messages. Every other way of making the working copy produce more needs no discarded pool at all, and the project's own collection holds a result doing exactly that in heart cells grown from Brugada patients. The heading is narrowed to the method that was actually tested, on 6 August 2026, and the rest of it is now a separate entry at rank 11. The measurement below is unchanged and still correct: it killed one method, not a level.",
     paper: 6,
   },
   {
@@ -302,6 +327,32 @@ export const ROUTES: Route[] = [
       "This site said this route was not applicable because the gene does not fit in the vehicle. The arithmetic was right and the conclusion was not. A 2021 paper doing exactly the thing the closure said needed doing had been sitting in this project's own literature collection the whole time and was never read. Corrected 6 August 2026. The route is not promising; it is no longer shut, and the reason it is not shut is that the closure was never checked.",
   },
   {
+    rank: 10,
+    name: "A different, smaller sodium channel",
+    state: "conditional",
+    blocker:
+      "The published rescue was simulated in a version of Brugada syndrome that this variant does not have, and putting a bacterial protein into a human heart for life is an immune question nobody has answered.",
+    detail:
+      "Instead of repairing this gene or delivering another copy of it, deliver a different sodium channel small enough to fit the vehicle easily: a bacterial one, about a seventh the size, or a short human one from a nerve channel. This is the only entry on this page that does not wait on the mechanism question, and the reason is simple: the bacterial channel does not touch the human one at all, so it does not matter which way the mechanism turns out. It carries current in a mouse heart six weeks after a single injection into a vein, and in a simulated heart it restored the disease signature. Against that: the simulation modelled Brugada syndrome by speeding up how fast the channel shuts, and this variant does not do that, it simply makes less current. The bacterial channel also raises calcium stores inside the cell, which is its own way of causing an arrhythmia, so it is not a clean sodium-only fix. Nobody has put it in a Brugada animal. Recorded as a candidate, conditional, and not as promising.",
+    falsifier:
+      "Re-running the published simulation with this variant's own numbers, which costs nothing and has not been done. If the benefit disappears when the substrate is a plain reduction in current rather than a fast-shutting channel, this entry closes.",
+    correction:
+      "This entry did not exist here or in the project inventory until 6 August 2026. Two searches on the same evening found it independently, one asking why the gene-replacement route had been closed and one asking all 14,035 papers in the project's collection whether they described a route to a treatment. Three of the papers behind it had been in that collection all along and none had ever been asked that question.",
+  },
+  {
+    rank: 11,
+    name: "Raising output from the healthy copy by other means",
+    state: "conditional",
+    blocker:
+      "The one measurement in Brugada patient heart cells that clears the bar was made with a laboratory tool rather than a drug, and the drug that was tested was never measured on current at all.",
+    detail:
+      "Make the working copy produce more channel, without touching the discarded-message pool that rank 6 was closed on. In heart cells grown from two Brugada patients, blocking a developmental signalling pathway raised the channel protein 2.1-fold, and switching off one protein in that pathway raised the current itself 4.9-fold. Both are above the 1.46-fold this variant would need to reach the level that simply losing one copy would give. Four things keep it conditional. The small molecule was measured on protein and never on current; the 4.9-fold came from switching a gene off in the laboratory, which is not something anyone can be given; neither patient carried this variant, and one of them carried a copy that makes nothing at all rather than a faulty one; and the pathway being blocked runs the whole body, not the heart. Like most of this list, it raises both copies, so it waits on the mechanism question too.",
+    falsifier:
+      "A current measurement, in Brugada patient heart cells, for something that could actually be given to a person. That single number moves this entry either way.",
+    correction:
+      "This entry is what was left over when rank 6's heading was narrowed on 6 August 2026. Rank 6 was called raising output from the healthy copy and was closed on a measurement about one method of doing it. Everything else at that level was closed by the heading rather than by the evidence, for two days, on this page and in the project record.",
+  },
+  {
     rank: null,
     name: "Implanted defibrillator, and existing drugs",
     state: "current care",
@@ -313,6 +364,9 @@ export const ROUTES: Route[] = [
 ];
 
 // TWO DIFFERENT TENS, reconciled 2026-08-06.
+// SUPERSEDED THE SAME EVENING. The block below is kept because the discrepancy
+// it documented turned out to be the evidence for a real defect, and deleting
+// it would delete the evidence. Read it, then read the block after it.
 //
 // The site said ten routes and THE_WALL.md section 1 said ten routes, and the
 // disagreement was about membership rather than about the count. Nobody had
@@ -344,17 +398,53 @@ export const ROUTES: Route[] = [
 // cosmetic: THE_WALL's number column is a stable inventory index, this list's
 // rank is a ranking by strength of the case. Chaperone upregulation is route 10
 // in project shorthand and rank 4 here, and those are the same route.
+//
+// ---------------------------------------------------------------------------
+// CORRECTED 2026-08-06, later the same evening. ELEVEN AND THIRTEEN.
+//
+// Read the "here and not in THE_WALL" line above again. It says, correctly and
+// in writing, that this site carried the interaction drug and the project's own
+// route inventory had no entry for it at all. That was written up as a
+// harmless difference of scope. It was not. The route was in a 27 July working
+// table (SESSION_ARCHIVE_20260804/data/MODALITY_MAP.csv) marked "live branch,
+// years out", it was on this page, and no route enumeration the project wrote
+// after 27 July contained it. It had been lost between documents, and this file
+// is one of the two places it survived. It is restored to the project inventory
+// on 2026-08-06 as line 12 and recorded there as CLOSED for want of a target.
+//
+// Three other things changed the same evening, from the pass over all 14,035
+// corpus records in SESSION_ARCHIVE_20260804/data/FULL_CORPUS_ROUTE_SWEEP_20260806.md:
+//   - route 5's heading narrowed from "transcriptional upregulation" to splice
+//     redirection, because its closing measurement only closes that method.
+//     What the closure never covered is now line 13 and rank 11 here.
+//   - route 10's heading widened from one gene to "chaperone and
+//     interacting-partner upregulation". Rank 4 here follows.
+//   - a candidate line 11 added, compact surrogate sodium channel, rank 10 here.
+//
+// New membership. This site: 11 therapeutic entries plus current care = 12.
+// THE_WALL: 13 lines, of which 2 are not therapies (mechanism resolution,
+// publication). All 11 of this site's therapeutic entries now map onto a
+// THE_WALL line, because the one that did not is line 12.
+//
+//   11 shared + 1 here alone (current care)     = 12 on this side
+//   11 shared + 2 non-therapeutic               = 13 on that side
+//
+// The two new entries are appended at ranks 10 and 11 rather than interleaved.
+// That is deliberate: rank on this page is strength of the case, neither has
+// been assessed at the depth the ranking assumes, and ranking them higher would
+// be a claim this project has not earned.
 export const ROUTE_INVENTORY = {
   // What this site lists.
-  therapeutic: 9,
-  listed: 10,
+  therapeutic: 11,
+  listed: 12,
   // What THE_WALL lists.
-  wallTotal: 10,
+  wallTotal: 13,
   wallNonTherapeutic: 2,
   // The overlap.
-  shared: 8,
-  hereOnly: 2,
-  source: "THE_WALL.md section 1, revised 6 August 2026",
+  shared: 11,
+  hereOnly: 1,
+  source:
+    "THE_WALL.md section 1, revised 6 August 2026 late evening after the full-corpus route sweep",
 };
 
 export type Experiment = {

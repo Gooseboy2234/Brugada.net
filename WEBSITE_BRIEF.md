@@ -128,7 +128,12 @@ difference between one paper and five years, and it will not change.
 ```
 /                     what the variant is, what is known, who wrote this
 /science              the mechanism, the open question, the structural argument
-/routes               all ten therapeutic routes, ranked, with blockers
+/routes               all eleven therapeutic routes, ranked, with blockers, plus
+                      current care unranked. (Was "all ten" until 6 August 2026;
+                      the enumeration in THE_WALL.md went from ten lines to
+                      thirteen and this page carries eleven of them plus current
+                      care. Read ROUTE_INVENTORY in app/content.ts before
+                      changing any count on any page.)
 /papers               ten preprints with DOIs and one-line plain summaries
 /experiments          the two costed protocols, for anyone who could run them
 /data                 the deposited tables with the archive DOI
@@ -136,11 +141,24 @@ difference between one paper and five years, and it will not change.
 /limitations          what this work cannot tell you
 ```
 
-*Corrected 6 August 2026: the `/routes` line read "all six therapeutic routes". The count is **ten**.
+*Corrected 6 August 2026: the `/routes` line read "all six therapeutic routes". ~~The count is **ten**.~~
 The tenth, chaperone upregulation via AAV9-*MOG1*, was added on 6 August 2026 and is recorded as
-conditional, never as promising. The inventory and tally are `WEBSITE_HANDOFF/science/THE_WALL.md`
+conditional, never as promising. ~~The inventory and tally are `WEBSITE_HANDOFF/science/THE_WALL.md`
 section 1: two live (1, 2), four closed (4, 5, 6, 7), two conditional (3, 10), one answered in a cell
-line and open for cardiomyocytes (8), one — publication — done (9); 2 + 4 + 2 + 1 + 1 = 10.*
+line and open for cardiomyocytes (8), one — publication — done (9); 2 + 4 + 2 + 1 + 1 = 10.*~~*
+
+*(**Corrected again 6 August 2026, late evening, and the count has now moved twice in one day.** Route 7's
+cargo closure was withdrawn at 22:54, and a pass over all 14,035 corpus records
+(`SESSION_ARCHIVE_20260804/data/FULL_CORPUS_ROUTE_SWEEP_20260806.md`) then added three lines to the
+enumeration and re-scoped route 5's and route 10's headings. **The inventory and tally are
+`WEBSITE_HANDOFF/science/THE_WALL.md` section 1: two live (1, 2), four closed (4, 5, 6, 12), five conditional
+(3, 7, 10, 11, 13), one answered in a cell line and open for cardiomyocytes (8), one — publication — done
+(9); 2 + 4 + 5 + 1 + 1 = 13.** The site's `/routes` page lists **eleven** of those thirteen plus current
+care, because two of the thirteen are not therapies: mechanism resolution and publication. **The
+reconciliation lives in `ROUTE_INVENTORY` in `app/content.ts` and must be read before changing any count on
+any page.** And the rule for the prose: **never let a larger count read as more chances.** One of the three
+lines added is closed on arrival, one is a candidate nobody has accepted, and one waits on the same unfunded
+experiment as most of the rest.)*
 
 The `/limitations` page is not a disclaimer page. It is a scientific page listing what each result cannot
 establish. Having it as a top-level link rather than fine print is the point.

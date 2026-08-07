@@ -12,8 +12,13 @@ fail=0
 report() { printf '\n%s\n' "$1"; }
 
 # --- Rule: no em-dashes or en-dashes. Commas, colons, full stops. ---
+# Widened 7 August 2026. This tested the literal characters only, so &mdash;
+# and &#8212; walked straight past it and rendered as an em-dash on the page.
+# One had, on the routes page, for as long as the route-count rewrite sat
+# uncommitted. The rule is about what a reader sees, so it now covers the HTML
+# entity and numeric forms as well.
 report "Checking for em-dashes and en-dashes"
-if hits=$(grep -rn '—\|–' app/ 2>/dev/null | grep -v '\.old-backup'); then
+if hits=$(grep -rn '—\|–\|&mdash;\|&ndash;\|&#8212;\|&#8211;\|&#x201[34];' app/ 2>/dev/null | grep -v '\.old-backup'); then
   echo "$hits"
   echo "FAIL: dashes found"
   fail=1
