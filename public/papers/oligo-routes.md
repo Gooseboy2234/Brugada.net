@@ -618,6 +618,11 @@ recorded in DATA_DOI.txt alongside this manuscript and should be cited as the da
 They comprise the per-adenosine bystander consequence calls, the delivery-evidence classification of
 every record read, the cardiac single-cell expression table, and the editing-versus-current curves.
 
+**Archive versioning.** The concept DOI `10.5281/zenodo.21799233` always resolves to the current version
+of the data archive and is the identifier to follow for access. The version current at the time of this
+revision is version 2, `10.5281/zenodo.21840036`. Version DOIs cited elsewhere in this manuscript name the
+specific version read and are deliberately not rewritten.
+
 ## Competing interests
 
 I am a heterozygous carrier of SCN5A p.Arg104Gln, the variant analysed here, and I have a clinical
@@ -625,6 +630,32 @@ diagnosis of Brugada syndrome. No funding was received.
 
 Nothing in this paper is clinical guidance or a treatment recommendation for any person, including me.
 It reports why a therapeutic route does not currently work.
+
+## Use of AI tools
+
+This work was carried out with AI coding and research assistants (Anthropic Claude, via Claude Code).
+That use is disclosed here rather than left to inference.
+
+**Analysis code.** The great majority of the analysis code in this project -- parsers, genome scans,
+regeneration scripts and verification scripts -- was written by an AI assistant working to my
+specification. I set what each script had to compute, chose the thresholds and the decision rules, and
+checked the output against the claims it is used to support.
+
+**Manuscript text.** The prose of this manuscript was drafted by an AI assistant. I directed the drafting
+and revised the result, and I am responsible for every claim it makes.
+
+**Scientific decisions.** The questions asked, the thresholds set, what was allowed to count as a
+refutation, and what was published were mine.
+
+**Verification, which does not depend on any of the above.** Where a claim in this manuscript is
+regenerable from deposited inputs, the script that regenerates it and that script's own output are in the
+data deposit. Reproduction does not require trusting any account of who wrote what.
+
+**What no AI system did.** No AI system generated, altered or selected any experimental measurement; this
+project contains no wet-lab data of any kind. All primary literature cited was retrieved from PubMed, PMC
+and publisher sources. Every reference in this manuscript has been machine-resolved against its own
+record, including a check that each PMID's first author and year match the author and year printed beside
+it in the text.
 
 ## References
 

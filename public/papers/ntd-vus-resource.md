@@ -67,11 +67,11 @@ A method with that profile cannot rank all 131 uncertain variants and call it a 
 
 ### Structure and predictor
 
-Variants were scored against PDB entry 8VYJ, chain A, a cryo-EM structure at approximately 3.6 Å resolution with associated map EMD-43662. Stability changes were predicted with ThermoMPNN (Kuhlman Lab), using the tool's bundled default checkpoint. No separate version number for the checkpoint is recorded in the source material beyond its default label. Structures were relaxed by two independent protocols, Rosetta and OpenMM, before scoring; specific software version numbers for these relaxation runs are not recorded in the source material.
+Variants were scored against PDB entry 8VYJ, chain A, a cryo-EM structure at approximately 3.6 Å resolution with associated map EMD-43662. Stability changes were predicted with ThermoMPNN (Kuhlman Lab), using the tool's bundled default checkpoint. No separate version number for the checkpoint is recorded in my working notes beyond its default label. Structures were relaxed by two independent protocols, Rosetta and OpenMM, before scoring; specific software version numbers for these relaxation runs are not recorded in my working notes.
 
 ### Variant set and filtering
 
-I started from 172 ClinVar missense records in residues 12 to 130. These were retrieved through NCBI E-utilities; the exact query string and the retrieval date are not recorded in the source material, and I state that plainly rather than guess at either. From the 172, I removed 9 nonsense or stop-gain records, since these are not a missense stability question, and 12 records at positions unmodelled in 8VYJ, an unresolved gap spanning residues 38 to 48. That leaves 151 scorable variants. Every one of the 151 wild-type residues was checked against the 8VYJ sequence directly, and all 151 matched, with zero mismatches. Of the 151, 131 are variants of uncertain significance and 20 already carry a ClinVar classification; the 20 were withheld entirely from the steps below and used only as an independent check, described later.
+I started from 172 ClinVar missense records in residues 12 to 130. These were retrieved through NCBI E-utilities; the exact query string and the retrieval date are not recorded in my working notes, and I state that plainly rather than guess at either. From the 172, I removed 9 nonsense or stop-gain records, since these are not a missense stability question, and 12 records at positions unmodelled in 8VYJ, an unresolved gap spanning residues 38 to 48. That leaves 151 scorable variants. Every one of the 151 wild-type residues was checked against the 8VYJ sequence directly, and all 151 matched, with zero mismatches. Of the 151, 131 are variants of uncertain significance and 20 already carry a ClinVar classification; the 20 were withheld entirely from the steps below and used only as an independent check, described later.
 
 ### Scoring and the calibration gate
 
@@ -108,7 +108,7 @@ The floor was fixed before any uncertain variant was scored. Its effect on the n
 
 Zero benign controls are ever falsely nominated across this range, which is the specificity side of the scope rule holding at every reasonable threshold.
 
-Relative solvent accessibility, reported below for context, was computed with mkdssp (version not recorded in the source material) using the Tien et al. (2013) empirical maximum-accessibility scale. This reproduces prior values for R104 closely, 11.7% against a prior 11.6%, and for D82, 8.6% against a prior 8.5%, but differs for D84, 18.2% against a prior 16.0%. I report that discrepancy rather than harmonize it away. RSA is descriptive context only and was never used as a nomination criterion, so this discrepancy does not change any result below.
+Relative solvent accessibility, reported below for context, was computed with mkdssp (version not recorded in my working notes) using the Tien et al. (2013) empirical maximum-accessibility scale. This reproduces prior values for R104 closely, 11.7% against a prior 11.6%, and for D82, 8.6% against a prior 8.5%, but differs for D84, 18.2% against a prior 16.0%. I report that discrepancy rather than harmonize it away. RSA is descriptive context only and was never used as a nomination criterion, so this discrepancy does not change any result below.
 
 ## Seventeen variants clear the floor in both structure preparations
 
@@ -190,7 +190,7 @@ I want to restate the central limitation plainly, because it is the whole basis 
 
 ## Data availability
 
-Structural data: PDB entry 8VYJ, chain A, with associated cryo-EM map EMD-43662, both from public archives. PDB entry 2OCJ was used for the independent sign-convention check. Variant data: ClinVar accessions are listed by VCV number in the tables above; the domain was queried through NCBI E-utilities, but the exact query string and retrieval date are not recorded in the source material and I do not reconstruct them here. The predictor is ThermoMPNN (Kuhlman Lab), scored with its default bundled checkpoint. **Corrected, 7 August 2026. The sentence this replaces was false, and it is corrected here rather than
+Structural data: PDB entry 8VYJ, chain A, with associated cryo-EM map EMD-43662, both from public archives. PDB entry 2OCJ was used for the independent sign-convention check. Variant data: ClinVar accessions are listed by VCV number in the tables above; the domain was queried through NCBI E-utilities, but the exact query string and retrieval date are not recorded in my working notes and I do not reconstruct them here. The predictor is ThermoMPNN (Kuhlman Lab), scored with its default bundled checkpoint. **Corrected, 7 August 2026. The sentence this replaces was false, and it is corrected here rather than
 left to be discovered.** Version 1 said "All derived tables are deposited as a single archive … They
 comprise the full 151-variant scoring run, the calibration gate, the tiered nomination list and the
 conservation filter." **One of those four is deposited. Three are not, and they are not recoverable.**
@@ -214,18 +214,49 @@ conclusion moves. What a reader loses is the ability to recompute the scoring ru
 material; the conservation filter, which is the part other people are most likely to reuse, is fully
 supported. The identifier is also recorded in DATA_DOI.txt alongside this manuscript.
 
+**Archive versioning.** The concept DOI `10.5281/zenodo.21799233` always resolves to the current version
+of the data archive and is the identifier to follow for access. The version current at the time of this
+revision is version 2, `10.5281/zenodo.21840036`. Version DOIs cited elsewhere in this manuscript name the
+specific version read and are deliberately not rewritten.
+
 ## Competing interests
 
 I disclose that I am a heterozygous carrier of the SCN5A variant p.Arg104Gln (R104Q), which appears as a reference point in the scoring above.
+
+## Use of AI tools
+
+This work was carried out with AI coding and research assistants (Anthropic Claude, via Claude Code).
+That use is disclosed here rather than left to inference.
+
+**Analysis code.** The great majority of the analysis code in this project -- parsers, genome scans,
+regeneration scripts and verification scripts -- was written by an AI assistant working to my
+specification. I set what each script had to compute, chose the thresholds and the decision rules, and
+checked the output against the claims it is used to support.
+
+**Manuscript text.** The prose of this manuscript was drafted by an AI assistant. I directed the drafting
+and revised the result, and I am responsible for every claim it makes.
+
+**Scientific decisions.** The questions asked, the thresholds set, what was allowed to count as a
+refutation, and what was published were mine.
+
+**Verification, which does not depend on any of the above.** Where a claim in this manuscript is
+regenerable from deposited inputs, the script that regenerates it and that script's own output are in the
+data deposit. Reproduction does not require trusting any account of who wrote what.
+
+**What no AI system did.** No AI system generated, altered or selected any experimental measurement; this
+project contains no wet-lab data of any kind. All primary literature cited was retrieved from PubMed, PMC
+and publisher sources. Every reference in this manuscript has been machine-resolved against its own
+record, including a check that each PMID's first author and year match the author and year printed beside
+it in the text.
 
 ## References
 
 1. Moreau A, et al. 2012. PMID 22529811.
 2. Clatot J, et al. 2012. PMID 22739120.
 3. Wang Y, et al. 2020. PMID 32815768.
-4. PMID 11960580 (cited in the source material by accession only, without author or year).
-5. Tien MZ, et al. 2013. Empirical maximum solvent-accessibility scale used for relative solvent accessibility calculations (no PMID recorded in the source material).
+4. Levy-Nissenbaum E, Eldar M, Wang Q, et al. Genetic analysis of Brugada syndrome in Israel: two novel mutations and possible genetic heterogeneity. Genet Test. 2001;5(4):331-334. PMID 11960580. DOI 10.1089/109065701753617480. *(Resolved 10 August 2026.)*
+5. Tien MZ, Meyer AG, Sydykova DK, Spielman SJ, Wilke CO. Maximum allowed solvent accessibilites of residues in proteins. PLoS One. 2013;8(11):e80635. PMID 24278298. DOI 10.1371/journal.pone.0080635. *(Resolved 10 August 2026.)*
 6. Protein Data Bank entry 8VYJ, chain A.
 7. Electron Microscopy Data Bank entry EMD-43662.
 8. Protein Data Bank entry 2OCJ, used for the independent sign-convention check.
-9. ThermoMPNN, Kuhlman Lab (predictor tool, default checkpoint; no publication identifier recorded in the source material).
+9. Dieckhaus H, Brocidiacono M, Randolph NZ, Kuhlman B. Transfer learning to leverage larger datasets for improved prediction of protein stability changes. Proc Natl Acad Sci U S A. 2024;121(6):e2314853121. PMID 38285937. DOI 10.1073/pnas.2314853121. *(ThermoMPNN; the tool's bundled default checkpoint carries no separate version label. Publication resolved 10 August 2026.)*

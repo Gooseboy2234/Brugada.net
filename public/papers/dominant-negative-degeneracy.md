@@ -76,7 +76,7 @@ One paper cited below did not come from those queries. Tano 2026 (PMID 41582807)
 
 This is a bounded search over named queries on a stated date, not an exhaustive one. Clatot 2012's full text was not obtainable: its PubMed Central record is abstract-only and the article itself is paywalled, so statements attributed to it below come from the abstract. Mercier 2015, Pujolas 2026, and a second 2026 paper by Iamshanova and colleagues (PMID 42082654) were likewise read from their abstracts and whatever metadata PubMed E-utilities returns; I did not have full-text access.
 
-**Structural measurements.** Distances were measured on PDB accession 8VYJ, chain A, a cryo-EM structure solved to 3.6 Å resolution (release date not recorded in the source material I worked from), using Biopython's Bio.PDB module with the ShrakeRupley algorithm (module version not recorded), after stripping hydrogens and heteroatoms. These are my own computations, not a value taken from a published table. The Cβ to Cβ distance between residue 96 and residue 104 is 11.0 Å. The dimer interface mapped by Clatot 2017 (PMID 29233994, residues 493-517, first intracellular loop) is unresolved in 8VYJ: the model has a 247-residue gap spanning residues 433 to 681. Measured to the nearest resolved flanking residues, the centroid-to-centroid distance from R104 is 23.4 Å to residue 433 and 32.0 Å to residue 681, but a disordered 247-residue linker could place the true interface almost anywhere relative to R104. Structure, at the current resolution of the available model, cannot place the N-terminal domain at or away from the dimer interface.
+**Structural measurements.** Distances were measured on PDB accession 8VYJ, chain A, a cryo-EM structure solved to 3.6 Å resolution (deposited 8 February 2024, released 12 February 2025), using Biopython's Bio.PDB module with the ShrakeRupley algorithm (module version not recorded), after stripping hydrogens and heteroatoms. These are my own computations, not a value taken from a published table. The Cβ to Cβ distance between residue 96 and residue 104 is 11.0 Å. The dimer interface mapped by Clatot 2017 (PMID 29233994, residues 493-517, first intracellular loop) is unresolved in 8VYJ: the model has a 247-residue gap spanning residues 433 to 681. Measured to the nearest resolved flanking residues, the centroid-to-centroid distance from R104 is 23.4 Å to residue 433 and 32.0 Å to residue 681, but a disordered 247-residue linker could place the true interface almost anywhere relative to R104. Structure, at the current resolution of the available model, cannot place the N-terminal domain at or away from the dimer interface.
 
 **Statistics.** Comparisons between studies use a two-sample z-test on reported mean ± SEM values. Power calculations are two-sided at α = 0.05 and use the normal approximation, which version 1 of this paper did not state; the exact non-central t form is reported alongside it in the correction section below, and it is the more conservative of the two.
 
@@ -241,9 +241,40 @@ variant-level measurements — therefore cannot be re-derived. And every figure 
 Mercier 2015, Iamshanova 2026 and Pujolas 2026 is transcribed from an abstract, because those full texts
 were not obtainable; the same applies to the Tano 2026 measurements, which are read from PMC12911491.
 
+**Archive versioning.** The concept DOI `10.5281/zenodo.21799233` always resolves to the current version
+of the data archive and is the identifier to follow for access. The version current at the time of this
+revision is version 2, `10.5281/zenodo.21840036`. Version DOIs cited elsewhere in this manuscript name the
+specific version read and are deliberately not rewritten.
+
 ## Competing interests
 
 The author is a heterozygous carrier of the SCN5A variant discussed as the motivating example in this paper, p.Arg104Gln.
+
+## Use of AI tools
+
+This work was carried out with AI coding and research assistants (Anthropic Claude, via Claude Code).
+That use is disclosed here rather than left to inference.
+
+**Analysis code.** The great majority of the analysis code in this project -- parsers, genome scans,
+regeneration scripts and verification scripts -- was written by an AI assistant working to my
+specification. I set what each script had to compute, chose the thresholds and the decision rules, and
+checked the output against the claims it is used to support.
+
+**Manuscript text.** The prose of this manuscript was drafted by an AI assistant. I directed the drafting
+and revised the result, and I am responsible for every claim it makes.
+
+**Scientific decisions.** The questions asked, the thresholds set, what was allowed to count as a
+refutation, and what was published were mine.
+
+**Verification, which does not depend on any of the above.** Where a claim in this manuscript is
+regenerable from deposited inputs, the script that regenerates it and that script's own output are in the
+data deposit. Reproduction does not require trusting any account of who wrote what.
+
+**What no AI system did.** No AI system generated, altered or selected any experimental measurement; this
+project contains no wet-lab data of any kind. All primary literature cited was retrieved from PubMed, PMC
+and publisher sources. Every reference in this manuscript has been machine-resolved against its own
+record, including a check that each PMID's first author and year match the author and year printed beside
+it in the text.
 
 ## References
 

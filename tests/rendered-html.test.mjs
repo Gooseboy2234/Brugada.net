@@ -53,10 +53,28 @@ async function html(path) {
   return response.text();
 }
 
-test("content.ts declares eleven identifiers and a publication date", () => {
-  assert.equal(declaredDois.length, 11, "expected ten papers and one deposit");
-  assert.ok(declaredDois.includes("10.5281/zenodo.21799234"), "no deposit DOI");
+// Rewritten 13 August 2026. This test asserted eleven identifiers and the deposit
+// DOI 21799234, and both were wrong in the same direction: 21799234 is data record
+// VERSION 1, superseded on 7 August, and thirteen records are now live because
+// papers 11 and 12 were deposited as new records. The test passed for six days
+// against a site that named a superseded archive, because the test and the site
+// were stale together. It now asserts the CONCEPT DOI, which is what
+// SUBMIT_THESE/DATA_DOI.txt holds and what every paper delegates to, and which
+// does not need editing when a new version is deposited.
+test("content.ts declares the deposit concept DOI and a publication date", () => {
+  assert.ok(
+    declaredDois.includes("10.5281/zenodo.21799233"),
+    "no deposit CONCEPT DOI -- a version DOI here goes stale on every new version",
+  );
+  assert.ok(
+    !declaredDois.includes("10.5281/zenodo.21799234"),
+    "content.ts still names data version 1, which is superseded",
+  );
   assert.ok(publishedLong, "no publication date on the deposit");
+  // The PAPERS array is ten while twelve papers are deposited; papers 11 and 12
+  // are absent from this site. Assert the shape rather than a single number, so
+  // this test fails loudly if they are added without updating DEPOSIT.records.
+  assert.ok(declaredDois.length >= 11, `expected at least 11 identifiers, got ${declaredDois.length}`);
 });
 
 test("the home page renders the site, not the starter template", async () => {
@@ -83,8 +101,8 @@ test("every declared identifier reaches a page", async () => {
     );
   }
   assert.ok(
-    data.includes("10.5281/zenodo.21799234"),
-    "the data page does not name the deposit",
+    data.includes("10.5281/zenodo.21799233"),
+    "the data page does not name the deposit concept DOI",
   );
 });
 

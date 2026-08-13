@@ -82,11 +82,11 @@ Structure-based penetrance models for arrhythmia genes use a structural-density 
 
 **Structure.** PDB 8VYJ, chain A, a cryo-EM reconstruction at approximately 3.6 Å resolution, deposited with electron microscopy map EMD-43662 (Biswas et al., 2025). Residues 12 to 130 are modelled, 108 residues in total; residues 38 to 48 are unresolved and excluded.
 
-**Pairwise geometry.** For every pair among the 108 modelled residues with sequence separation of two or more (5,672 pairs), I computed five distances from heavy atoms only, excluding hydrogens and alternate conformers: closest heavy atom distance, all-atom centroid distance, side-chain centroid distance, Cα to Cα distance, and Cβ to Cβ distance (Cα substituted for Cβ at glycine). A pair was called a close atom contact when the closest heavy atom distance was below 4.0 Å. The centroid cutoff tested against that definition was 8 Å. The specific software used to parse coordinates and compute these distances is not recorded in the source material beyond that it operates directly on the PDB coordinate file; no package name or version is given, and I report that gap rather than guess at one.
+**Pairwise geometry.** For every pair among the 108 modelled residues with sequence separation of two or more (5,672 pairs), I computed five distances from heavy atoms only, excluding hydrogens and alternate conformers: closest heavy atom distance, all-atom centroid distance, side-chain centroid distance, Cα to Cα distance, and Cβ to Cβ distance (Cα substituted for Cβ at glycine). A pair was called a close atom contact when the closest heavy atom distance was below 4.0 Å. The centroid cutoff tested against that definition was 8 Å. The specific software used to parse coordinates and compute these distances is not recorded in my working notes beyond that it operates directly on the PDB coordinate file; no package name or version is given, and I report that gap rather than guess at one.
 
 **Validation.** Computed distances for R104 to D84 and R104 to D82 were checked against independently recorded values for the same two pairs (3.79 Å closest atom and 9.22 Å centroid for R104-D84; 4.78 Å and 8.07 Å for R104-D82) and agreed to 0.01 Å.
 
-**Penetrance model.** The BrS1 penetrance model and its code are distributed in the repository kroncke-lab/Bayes_BrS1_Penetrance on GitHub. I ran the pipeline as published, using its own files func_dist_seq.R, distance_file, and BrS1_data.RData, following its steps in order: weighted penetrance, a method-of-moments Beta prior, a per-variant posterior, the funcdist structural-density term, an expectation-maximization regression on the six-feature set eaRate, blastpssm, provean_score, pph2_prob, ipeak, and feat_dist_w, a variance scaled by 20, and the resulting posterior. No repository access date or software version is recorded in the source material, so neither is stated here as fact. The pipeline's own EM is capped at 10 iterations and plateaus at a δ of approximately 0.63; that behavior was reproduced, not altered.
+**Penetrance model.** The BrS1 penetrance model and its code are distributed in the repository kroncke-lab/Bayes_BrS1_Penetrance on GitHub. I ran the pipeline as published, using its own files func_dist_seq.R, distance_file, and BrS1_data.RData, following its steps in order: weighted penetrance, a method-of-moments Beta prior, a per-variant posterior, the funcdist structural-density term, an expectation-maximization regression on the six-feature set eaRate, blastpssm, provean_score, pph2_prob, ipeak, and feat_dist_w, a variance scaled by 20, and the resulting posterior. No repository access date or software version is recorded in my working notes, so neither is stated here as fact. The pipeline's own EM is capped at 10 iterations and plateaus at a δ of approximately 0.63; that behavior was reproduced, not altered.
 
 **Sequence fallback.** Where the pipeline's own distance file lacks resolved structure for a residue, because it is built from transmembrane-domain templates that do not include the N-terminal domain, it substitutes a sequence-distance approximation of 3.8 times the square root of the residue separation. Residue 104 is one such residue.
 
@@ -169,7 +169,7 @@ the numbers in this note found nothing to check, and nothing to tell them why.
 the original tables is not in the project's file tree and is not on its compute host; both were searched
 on 6 August 2026 for geometry, neighbour, sigmoid and recompute artefacts and returned only third-party
 library files. There is no `.R` file and no R installation on either machine. This note's own Methods
-already record that the software used "is not recorded in the source material", and that gap turned out to
+already record that the software used "is not recorded in my working notes", and that gap turned out to
 be larger than it read.
 
 **What was done about it.** Three of the four named tables are geometry over a public structure and were
@@ -205,13 +205,44 @@ availability statement, the two-salt-bridge count and the unstated per-residue m
 
 ## Data availability
 
-This statement was rewritten on 6 August 2026 because the version published on 5 August 2026 named four deposited tables of which none were in the archive; see the correction section above. The structure used is PDB 8VYJ, chain A, with electron microscopy map EMD-43662, both public accessions. The penetrance model and its code are the public repository kroncke-lab/Bayes_BrS1_Penetrance on GitHub, specifically the files func_dist_seq.R, distance_file, and BrS1_data.RData; no access date is recorded for that repository in the source material used to prepare this note. The derived tables are deposited as a single archive with a permanent identifier, recorded in DATA_DOI.txt alongside this manuscript and to be cited as the data source, and from version 2 of that archive onward they comprise seven files: P10_PAIRWISE_GEOMETRY_8VYJ.csv, the pairwise geometry table, all 5,672 residue pairs at sequence separation two or more with closest-heavy-atom, all-atom centroid, side-chain centroid, Cα-Cα and Cβ-Cβ distances, the contact and neighbour flags, both sigmoid weights and a salt-bridge flag carrying its acidic-oxygen-to-basic-nitrogen distance; P10_PER_RESIDUE_NEIGHBOR_COUNTS.csv, the per-residue neighbour count table over 108 residues with within-domain, cross-domain and total columns kept separate; P10_PER_RESIDUE_SIGMOID_WEIGHTS.csv, the per-residue sigmoid weight table over the same residues at logistic midpoint 7 Å and scale 1 Å; P10_CROSS_DOMAIN_CONTACTS.csv, the 21 close atom contacts between the domain and the rest of chain A, which the per-residue counts require and which the published version did not name; p10_regen_geometry.py, the script that produces all four from the public 8VYJ coordinates; P10_VERIFICATION_OUTPUT.txt, that script's own print-out setting each reproduced quantity beside the value printed here; and P10_REGENERATION_NOTE.md, which states that these tables are a 6 August 2026 reconstruction rather than the 4 August originals and why the originals are unrecoverable. The recompute output is not deposited and is not reconstructible: it would hold the structural density and penetrance values under the baseline and 8VYJ geometries, and producing it requires the kroncke-lab pipeline and a refit of its expectation-maximization step, which this project can no longer run, so those values are available only as printed in this note and should be treated accordingly.
+This statement was rewritten on 6 August 2026 because the version published on 5 August 2026 named four deposited tables of which none were in the archive; see the correction section above. The structure used is PDB 8VYJ, chain A, with electron microscopy map EMD-43662, both public accessions. The penetrance model and its code are the public repository kroncke-lab/Bayes_BrS1_Penetrance on GitHub, specifically the files func_dist_seq.R, distance_file, and BrS1_data.RData; no access date is recorded for that repository in my working notes. The derived tables are deposited as a single archive with a permanent identifier, recorded in DATA_DOI.txt alongside this manuscript and to be cited as the data source, and from version 2 of that archive onward they comprise seven files: P10_PAIRWISE_GEOMETRY_8VYJ.csv, the pairwise geometry table, all 5,672 residue pairs at sequence separation two or more with closest-heavy-atom, all-atom centroid, side-chain centroid, Cα-Cα and Cβ-Cβ distances, the contact and neighbour flags, both sigmoid weights and a salt-bridge flag carrying its acidic-oxygen-to-basic-nitrogen distance; P10_PER_RESIDUE_NEIGHBOR_COUNTS.csv, the per-residue neighbour count table over 108 residues with within-domain, cross-domain and total columns kept separate; P10_PER_RESIDUE_SIGMOID_WEIGHTS.csv, the per-residue sigmoid weight table over the same residues at logistic midpoint 7 Å and scale 1 Å; P10_CROSS_DOMAIN_CONTACTS.csv, the 21 close atom contacts between the domain and the rest of chain A, which the per-residue counts require and which the published version did not name; p10_regen_geometry.py, the script that produces all four from the public 8VYJ coordinates; P10_VERIFICATION_OUTPUT.txt, that script's own print-out setting each reproduced quantity beside the value printed here; and P10_REGENERATION_NOTE.md, which states that these tables are a 6 August 2026 reconstruction rather than the 4 August originals and why the originals are unrecoverable. The recompute output is not deposited and is not reconstructible: it would hold the structural density and penetrance values under the baseline and 8VYJ geometries, and producing it requires the kroncke-lab pipeline and a refit of its expectation-maximization step, which this project can no longer run, so those values are available only as printed in this note and should be treated accordingly.
+
+**Archive versioning.** The concept DOI `10.5281/zenodo.21799233` always resolves to the current version
+of the data archive and is the identifier to follow for access. The version current at the time of this
+revision is version 2, `10.5281/zenodo.21840036`. Version DOIs cited elsewhere in this manuscript name the
+specific version read and are deliberately not rewritten.
 
 ## Competing interests
 
 I am a heterozygous carrier of SCN5A R104Q (NM_000335.5:c.311G>A, p.Arg104Gln), the variant used as the worked example throughout this note.
 
+## Use of AI tools
+
+This work was carried out with AI coding and research assistants (Anthropic Claude, via Claude Code).
+That use is disclosed here rather than left to inference.
+
+**Analysis code.** The great majority of the analysis code in this project -- parsers, genome scans,
+regeneration scripts and verification scripts -- was written by an AI assistant working to my
+specification. I set what each script had to compute, chose the thresholds and the decision rules, and
+checked the output against the claims it is used to support.
+
+**Manuscript text.** The prose of this manuscript was drafted by an AI assistant. I directed the drafting
+and revised the result, and I am responsible for every claim it makes.
+
+**Scientific decisions.** The questions asked, the thresholds set, what was allowed to count as a
+refutation, and what was published were mine.
+
+**Verification, which does not depend on any of the above.** Where a claim in this manuscript is
+regenerable from deposited inputs, the script that regenerates it and that script's own output are in the
+data deposit. Reproduction does not require trusting any account of who wrote what.
+
+**What no AI system did.** No AI system generated, altered or selected any experimental measurement; this
+project contains no wet-lab data of any kind. All primary literature cited was retrieved from PubMed, PMC
+and publisher sources. Every reference in this manuscript has been machine-resolved against its own
+record, including a check that each PMID's first author and year match the author and year printed beside
+it in the text.
+
 ## References
 
-1. Biswas et al., 2025. Cryo-EM structure deposited as PDB 8VYJ, chain A; electron microscopy map EMD-43662. No PMID or DOI is given in the source material used to prepare this note.
-2. Kroncke lab. Bayes_BrS1_Penetrance. GitHub repository: kroncke-lab/Bayes_BrS1_Penetrance. Files used: func_dist_seq.R, distance_file, BrS1_data.RData. Repository access date not recorded in the source material.
+1. Biswas R, Lopez-Serrano AL, Purohit A, et al. Structural basis of human Na(v)1.5 gating mechanisms. Proc Natl Acad Sci U S A. 2025;122(20):e2416181122. PMID 40366698. DOI 10.1073/pnas.2416181122. Structure deposited as PDB 8VYJ, chain A (deposited 8 February 2024, released 12 February 2025); electron microscopy map EMD-43662. *(Resolved 10 August 2026 from the RCSB entry's primary citation.)*
+2. Kroncke lab. Bayes_BrS1_Penetrance. GitHub repository: kroncke-lab/Bayes_BrS1_Penetrance. Files used: func_dist_seq.R, distance_file, BrS1_data.RData. Repository access date not recorded in my working notes.

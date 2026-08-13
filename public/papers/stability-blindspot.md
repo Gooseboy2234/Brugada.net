@@ -234,6 +234,11 @@ this manuscript.
 
 One thing failed to reproduce, and it changes how someone should set this up. Rebuilding the scoring pipeline from scratch reproduced the ranking almost exactly (Spearman 0.988) but not the original answer-key value for R104W, because I had kept only the scores from the first run and not the individual relaxed structures that produced them, without which the exact numbers cannot be recomputed. The conclusion survived because R121W failed in every preparation tested, and because the clinical inversion does not depend on absolute values. If you run this, save the relaxed structures, not just the scores.
 
+**Archive versioning.** The concept DOI `10.5281/zenodo.21799233` always resolves to the current version
+of the data archive and is the identifier to follow for access. The version current at the time of this
+revision is version 2, `10.5281/zenodo.21840036`. Version DOIs cited elsewhere in this manuscript name the
+specific version read and are deliberately not rewritten.
+
 ## 9. Competing interests
 
 I am a heterozygous carrier of SCN5A p.Arg104Gln, a variant at one of the positions analysed here, and
@@ -241,6 +246,32 @@ I have a clinical diagnosis of Brugada syndrome. No funding was received for thi
 
 Nothing in this paper is clinical guidance, for me or for anyone else. It is a finding about a
 prediction method.
+
+## Use of AI tools
+
+This work was carried out with AI coding and research assistants (Anthropic Claude, via Claude Code).
+That use is disclosed here rather than left to inference.
+
+**Analysis code.** The great majority of the analysis code in this project -- parsers, genome scans,
+regeneration scripts and verification scripts -- was written by an AI assistant working to my
+specification. I set what each script had to compute, chose the thresholds and the decision rules, and
+checked the output against the claims it is used to support.
+
+**Manuscript text.** The prose of this manuscript was drafted by an AI assistant. I directed the drafting
+and revised the result, and I am responsible for every claim it makes.
+
+**Scientific decisions.** The questions asked, the thresholds set, what was allowed to count as a
+refutation, and what was published were mine.
+
+**Verification, which does not depend on any of the above.** Where a claim in this manuscript is
+regenerable from deposited inputs, the script that regenerates it and that script's own output are in the
+data deposit. Reproduction does not require trusting any account of who wrote what.
+
+**What no AI system did.** No AI system generated, altered or selected any experimental measurement; this
+project contains no wet-lab data of any kind. All primary literature cited was retrieved from PubMed, PMC
+and publisher sources. Every reference in this manuscript has been machine-resolved against its own
+record, including a check that each PMID's first author and year match the author and year printed beside
+it in the text.
 
 ## References
 

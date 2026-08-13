@@ -41,16 +41,32 @@ export const SITE = {
 // 2026-08-04, which is the date the draft was built, not the date it published.
 // The DOI itself is from SUBMIT_THESE/DATA_DOI.txt and resolves 302.
 export const DEPOSIT = {
-  doi: "10.5281/zenodo.21799234",
-  url: "https://doi.org/10.5281/zenodo.21799234",
+  // The CONCEPT DOI, not a version DOI. It resolves to whichever version is current,
+  // so this constant does not need editing when a new version is deposited.
+  // Corrected 13 August 2026: this read 21799234, which is version 1 -- the archive
+  // whose own Zenodo description now opens "Superseded, 6 August 2026", and the one
+  // SUBMIT_THESE/data/README.md documents as defective in seven correction notes.
+  // Matches SUBMIT_THESE/DATA_DOI.txt, which every paper delegates to.
+  doi: "10.5281/zenodo.21799233",
+  url: "https://doi.org/10.5281/zenodo.21799233",
+  // The version this concept DOI currently resolves to, verified against the Zenodo
+  // API on 13 August 2026. Quote the concept DOI; keep this for provenance only.
+  currentVersionDoi: "10.5281/zenodo.21918455",
+  currentVersion: 3,
   title:
     "SCN5A R104Q: guide design, off-target scan, and ClinVar functional-evidence census",
-  published: "2026-08-05",
-  publishedLong: "5 August 2026",
-  files: 50,
+  // Version 3 published 2026-08-13. Version 2 was 2026-08-07, version 1 2026-08-05.
+  published: "2026-08-13",
+  publishedLong: "13 August 2026",
+  firstPublished: "2026-08-05",
+  files: 107,
   licence: "CC BY 4.0",
-  // Eleven Zenodo records in total: this deposit and the ten papers.
-  records: 11,
+  // Thirteen Zenodo records in total: this deposit and the TWELVE papers.
+  // Corrected 13 August 2026 -- this read 11, from a comment reading "this deposit and
+  // the ten papers". Papers 11 and 12 were deposited on 7 August as new records
+  // (10.5281/zenodo.21840577 and 21840579) and are absent from this site entirely.
+  records: 13,
+  papersDeposited: 12,
 };
 
 export const VARIANT = {

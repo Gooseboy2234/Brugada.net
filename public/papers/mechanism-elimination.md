@@ -34,7 +34,7 @@ surface separates R104W from R104Q decisively (p = 1.7e-7), which I first read a
 sticky-surface mechanism, until a cross-position control substituting tryptophan at seven
 N-terminal-domain positions put the benign control R34C first, gaining 2.3 times more apolar area
 than position 104, with the dominant-negative and benign split running the wrong way (Mann-Whitney
-p = 1.000). Two independent protocols reached that refutation and disagreed on absolute magnitude
+p = 1.000). Two protocols reached that refutation and disagreed on absolute magnitude
 while agreeing on the ordering. A linear degradation or endoplasmic-reticulum retention motif is
 ruled out at Arg104 by sequence scan, while the pathogenic control R121W does lie in one. The
 N-terminal domain, residues 1 to 130 of NP_932173.1, contains no N-X-S/T glycosylation sequon, so no
@@ -169,7 +169,7 @@ mean** (SD 26.1 REU across 36 models; coefficient of variation 0.99, the highest
 control included). Cartesian relaxation removes it: R104W's local |ΔE| falls from 26.4 to 12.4 REU
 and its total ΔE from +38.0 to +2.1 REU.
 
-This is the confound the task flagged, and it is quantitatively confirmed: **the apparent
+This is a known confound of fixed-backbone repacking, and it is quantitatively confirmed: **the apparent
 fixed-backbone strain of the bulkiest substitution is dominated by the repacker's failure to place
 a large side chain, not by physical strain.** Any local-strain claim built on fixed-backbone
 repacking alone would have been an error of method, not a finding. Reported here rather than debugged away.
@@ -289,7 +289,7 @@ is third of seven. Splitting the phenotyped positions into dominant-negative (87
 benign (34, 125) gives means of 21.0 vs 32.6 Å², the wrong direction, Mann-Whitney p = 1.000.
 R121W, a demonstrated dominant-negative, gains little.
 
-**Hypothesis B is therefore refuted as an explanation of pathogenicity.** An independent parallel
+**Hypothesis B is therefore refuted as an explanation of pathogenicity.** A second parallel
 analysis in this work (reported below) reached the same verdict via a
 different protocol, Bio.PDB ShrakeRupley, 10 Å shell, repack-plus-minimise, and reported position 34
 first and position 121 last on the same test. Two protocols, same refutation. My §6 numbers differ
@@ -403,7 +403,7 @@ which is measurable in the assay this analysis used.
 
 ---
 
-# Part 2. An independent test of the hydrophobic hypothesis, by a different protocol
+# Part 2. A second test of the hydrophobic hypothesis, by a different protocol
 
 ## Why this was worth testing
 
@@ -551,13 +551,22 @@ steric penalty. This independently supports the negative result rather than unde
 structurally benign substitution at this site, by physical packing as well as by the learned predictor, and it is
 nonetheless the variant with nine concordant pathogenic submissions.
 
-## Independent replication
+## Re-implementation check
 
-This question was worked twice, in parallel and without shared code: once as described above (side-chain carbon
-area, 12 OpenMM frames, 8 Å patch definition), and once by a separate agent using its own protocol, its own patch
-definition, and full apolar surface rather than side-chain carbon only. **The two runs agree on the refutation.**
+This question was worked twice, without shared code: once as described above (side-chain carbon
+area, 12 OpenMM frames, 8 Å patch definition), and once by a second AI agent given the same question and no
+access to the first run's implementation, using its own protocol, its own patch definition, and full apolar
+surface rather than side-chain carbon only. **The two runs agree on the refutation.**
 
-| Position | Phenotype | This run (Å², rank) | Independent run (Å², rank) |
+**This is a re-implementation check and not an independent replication, and the distinction is not
+cosmetic.** Both runs were produced by agents of the same model family. Their agreement demonstrates that
+the refutation does not depend on one implementation of the patch definition. It does **not** demonstrate
+independence from a shared systematic error, because a common architecture can make the same wrong
+assumption twice for the same reason. A genuinely independent replication would require a different
+investigator and a different method, and none has been performed. *(Section retitled 9 August 2026; it read
+"Independent replication" as published. No number changes and the refutation stands. **Extended 13 August 2026: the 9 August retitle changed the section heading and nothing else, so five other places in this paper still asserted independence as fact — the abstract's "two independent protocols", the Part 2 heading "an independent test", two references to "the independent run", and a results-table column header reading "Independent run". All five now read "second" rather than "independent". This is the same defect shape the paper documents elsewhere: a correction applied at one site while the claim it corrects survives everywhere else. The published version 2 record carries the unpropagated form.)*
+
+| Position | Phenotype | This run (Å², rank) | Second run (Å², rank) |
 |---|---|---:|---:|
 | **34** | **benign control** | **+40.5 (1)** | **+84.2 (1)** |
 | 124 | ER-retained answer key | +4.0 (5) | +51.0 (2) |
@@ -569,14 +578,16 @@ definition, and full apolar surface rather than side-chain carbon only. **The tw
 
 Spearman ρ = 0.750 (p = 0.052) between the two rankings. **Both put the benign control at rank 1 and a
 demonstrated dominant-negative variant near the bottom.** The two failure modes that kill the hypothesis are
-reproduced independently.
+reproduced by both runs. *(This read "reproduced independently" until 13 August 2026; both runs were
+produced by agents of the same model family, so agreement shows the refutation does not depend on one
+implementation, not that it survives a shared systematic error. See the re-implementation note in Part 2.)*
 
 The one substantial disagreement is instructive rather than troubling. At position 124 the native residue is
 alanine with a single side-chain carbon, so substituting tryptophan adds nine. A metric counting side-chain
 carbons registers that differently from one measuring total apolar surface. Neither is wrong; they answer
 different questions, and the phenotype mismatch survives either.
 
-The independent run also extended the analysis to the **free N-terminal domain** as well as the assembled channel,
+The second run also extended the analysis to the **free N-terminal domain** as well as the assembled channel,
 which matters because pre-assembly is when inter-subunit association would have to initiate. Position 104's rank
 improves there (2 of 7 rather than 4 of 7), which is the reading least favourable to refutation, and it was
 reported rather than buried. **Even so, the benign control still ranks first in that context too** (+80.9 Å²
@@ -824,7 +835,7 @@ because a silent isoform substitution is exactly the kind of error that propagat
 ---
 
 *Sequences from NCBI (NP_932173.1, NP_000326.2). Sequon definition N-X-S/T, X ≠ P. Companion sources:
-PMID 42082654; Europe PMC PPR1279120 (abstract only, closed access).*
+PMID 42082654; Europe PMC PPR1279120 (abstract only there; the full text is open on bioRxiv under CC BY-NC-ND).*
 
 # Part 5. The empagliflozin site and Arg104 are structurally independent
 
@@ -946,7 +957,7 @@ the same class of defect in six other papers.
 | Named as deposited | State on 5 August 2026 | State now |
 |---|---|---|
 | per-model accessibility measurements | present: `HYDROPHOBIC_PATCH_ANALYSIS.csv`, 2,592 rows | unchanged, and now named by filename |
-| seven-position tryptophan scan | present for the independent run only, inside the same file | unchanged, and the run that is **not** deposited is now named |
+| seven-position tryptophan scan | present for the second run only, inside the same file | unchanged, and the run that is **not** deposited is now named |
 | substitution profiles | present, inside the same file | unchanged, and now named by filename |
 | **shell residue lists** | **absent.** The deposited file carried a `shell_n_res` count and no list | **regenerated from the public 8VYJ coordinates and deposited** as `P8_SHELL_RESIDUES_8VYJ.csv` |
 | `HYDROPHOBIC_EXPOSURE_RELAXED.csv` (Part 2 line) | present, 84 rows | unchanged |
@@ -1050,7 +1061,7 @@ archive rather than take it on trust:**
 - `HYDROPHOBIC_PATCH_ANALYSIS.csv` — the per-model accessibility and energetics table, 2,592 rows and 56
   columns, covering both the position-104 substitution ladder and the seven-position tryptophan scan, in
   both the assembled-channel and free-N-terminal-domain contexts, at all three protocol tiers. This is
-  the run Part 2 calls the **independent run**; its column of that table — position 34 +84.2, 124 +51.0,
+  the run Part 2 calls the **second run**; its column of that table — position 34 +84.2, 124 +51.0,
   87 +29.6, 104 +27.8, 84 +14.1, 121 +9.1, 125 −1.0 Å² — is this file filtered to
   `run = position_specificity_control`, `context = assembled`, `tier = tier2_cart`, column `sc_apolar`.
 - `HYDROPHOBIC_EXPOSURE_RELAXED.csv` — Part 2's own position-104 measurement, 12 frames × 7
@@ -1118,6 +1129,11 @@ The checksums are what make the regeneration reproducible against a fresh downlo
 at every position this paper names before anything is computed, because a silent isoform substitution is
 the error Part 4's methods note records having made once.
 
+**Archive versioning.** The concept DOI `10.5281/zenodo.21799233` always resolves to the current version
+of the data archive and is the identifier to follow for access. The version current at the time of this
+revision is version 2, `10.5281/zenodo.21840036`. Version DOIs cited elsewhere in this manuscript name the
+specific version read and are deliberately not rewritten.
+
 # Competing interests
 
 I am a heterozygous carrier of SCN5A p.Arg104Gln, the variant at the centre of this analysis, and I have
@@ -1126,6 +1142,32 @@ a clinical diagnosis of Brugada syndrome. No funding was received.
 Nothing here is clinical guidance for any person, including me. In particular, the empagliflozin section
 reports a structural relationship and is not a statement about whether any person should or should not
 take that drug. That decision belongs to a treating clinician.
+
+# Use of AI tools
+
+This work was carried out with AI coding and research assistants (Anthropic Claude, via Claude Code).
+That use is disclosed here rather than left to inference.
+
+**Analysis code.** The great majority of the analysis code in this project -- parsers, genome scans,
+regeneration scripts and verification scripts -- was written by an AI assistant working to my
+specification. I set what each script had to compute, chose the thresholds and the decision rules, and
+checked the output against the claims it is used to support.
+
+**Manuscript text.** The prose of this manuscript was drafted by an AI assistant. I directed the drafting
+and revised the result, and I am responsible for every claim it makes.
+
+**Scientific decisions.** The questions asked, the thresholds set, what was allowed to count as a
+refutation, and what was published were mine.
+
+**Verification, which does not depend on any of the above.** Where a claim in this manuscript is
+regenerable from deposited inputs, the script that regenerates it and that script's own output are in the
+data deposit. Reproduction does not require trusting any account of who wrote what.
+
+**What no AI system did.** No AI system generated, altered or selected any experimental measurement; this
+project contains no wet-lab data of any kind. All primary literature cited was retrieved from PubMed, PMC
+and publisher sources. Every reference in this manuscript has been machine-resolved against its own
+record, including a check that each PMID's first author and year match the author and year printed beside
+it in the text.
 
 # References
 

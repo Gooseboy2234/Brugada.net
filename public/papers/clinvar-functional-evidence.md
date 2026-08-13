@@ -654,6 +654,11 @@ claim. **Every count in section 3.2 remains checkable** from `CLINVAR_FUNCTIONAL
 `reconcile_gap_rows.csv`, which carry the per-record data both parser passes produced; what cannot be
 re-derived is the parsing itself.
 
+**Archive versioning.** The concept DOI `10.5281/zenodo.21799233` always resolves to the current version
+of the data archive and is the identifier to follow for access. The version current at the time of this
+revision is version 2, `10.5281/zenodo.21840036`. Version DOIs cited elsewhere in this manuscript name the
+specific version read and are deliberately not rewritten.
+
 ## 8. Supplementary files
 
 | File | Contents |
@@ -690,11 +695,38 @@ in NCBI's index. Higher agreement in (b) means the element is the one indexed.
 ## Competing interests, and who did the work
 
 
-Sole author. I designed the analysis, wrote the parsers, performed the retrieval tests and the tool
-survey, and wrote the manuscript. I am a carrier of a variant in one of the genes discussed
+Sole author. I designed the analysis, specified and directed the parser code, performed the retrieval
+tests and the tool survey, and directed and revised the manuscript. The parser code was written by an
+AI assistant to my specification and the manuscript prose was drafted by one; see the "Use of AI tools" section. I am responsible for every claim made here. I am a carrier of a variant in one of the genes discussed
 (SCN5A), which is what prompted the initial question; the analysis is a measurement of a database
 and makes no claim about any variant, patient or clinical decision. No funding was received. No
 competing financial interests.
+
+## Use of AI tools
+
+This work was carried out with AI coding and research assistants (Anthropic Claude, via Claude Code).
+That use is disclosed here rather than left to inference.
+
+**Analysis code.** The great majority of the analysis code in this project -- parsers, genome scans,
+regeneration scripts and verification scripts -- was written by an AI assistant working to my
+specification. I set what each script had to compute, chose the thresholds and the decision rules, and
+checked the output against the claims it is used to support.
+
+**Manuscript text.** The prose of this manuscript was drafted by an AI assistant. I directed the drafting
+and revised the result, and I am responsible for every claim it makes.
+
+**Scientific decisions.** The questions asked, the thresholds set, what was allowed to count as a
+refutation, and what was published were mine.
+
+**Verification, which does not depend on any of the above.** Where a claim in this manuscript is
+regenerable from deposited inputs, the script that regenerates it and that script's own output are in the
+data deposit. Reproduction does not require trusting any account of who wrote what.
+
+**What no AI system did.** No AI system generated, altered or selected any experimental measurement; this
+project contains no wet-lab data of any kind. All primary literature cited was retrieved from PubMed, PMC
+and publisher sources. Every reference in this manuscript has been machine-resolved against its own
+record, including a check that each PMID's first author and year match the author and year printed beside
+it in the text.
 
 ## References
 
