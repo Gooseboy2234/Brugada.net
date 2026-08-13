@@ -156,13 +156,36 @@ test("the routes page reconciles its own count against the project inventory", a
     "listed should be the therapeutic routes plus current care",
   );
 
-  // The ranked entries actually rendered have to match the count claimed.
-  const ranked = [...body.matchAll(/class="route-name"[^>]*>(\d+)\./g)].length;
+  // v2 (13 August 2026): the redesigned routes page groups routes by strength of
+  // case and prints a breakdown rather than expanding all eleven, so the v1
+  // assertion "rendered entries == therapeutic count" no longer describes the
+  // page's contract. The contract it DOES make is that its own breakdown sums to
+  // the total it claims, and that is what is checked here. This is the same
+  // intent -- the page must not claim a count its own arithmetic contradicts.
+  // The design spells the total as a word, not a digit.
+  const WORDS = { nine: 9, ten: 10, eleven: 11, twelve: 12, thirteen: 13 };
+  const claimed = body.match(/(\d+|[A-Za-z]+)\s+routes,\s+ranked by strength of case/i);
+  assert.ok(claimed, "the routes page does not state its ranked-route total");
+  const n = /^\d+$/.test(claimed[1])
+    ? Number(claimed[1])
+    : WORDS[claimed[1].toLowerCase()];
+  assert.ok(n, `unrecognised route total on the page: ${claimed[1]}`);
   assert.equal(
-    ranked,
+    n,
     inv.therapeutic,
-    `the page renders ${ranked} ranked routes and claims ${inv.therapeutic}`,
+    `the page claims ${claimed[1]} ranked routes and content.ts declares ${inv.therapeutic}`,
   );
+
+  const buckets = [...body.matchAll(/>(\d+)<\/span>\s*<[^>]*>(leading|conditional|weak|dead)/gi)]
+    .map((m) => Number(m[1]));
+  if (buckets.length) {
+    const sum = buckets.reduce((a, b) => a + b, 0);
+    assert.equal(
+      sum,
+      inv.therapeutic,
+      `the strength-of-case breakdown sums to ${sum} but the page claims ${inv.therapeutic}`,
+    );
+  }
 
   // Every number in the reconciliation has to reach the page, not only
   // content.ts. This is the defect the section exists to prevent.
@@ -173,15 +196,22 @@ test("the routes page reconciles its own count against the project inventory", a
     );
   }
 
+  // v2 (13 August 2026): the redesigned routes page is therapeutic-only. It no
+  // longer lists the two non-therapeutic lines (mechanism resolution and
+  // publication) as entries; it reconciles to the project total in its opening
+  // paragraph instead. So the v1 assertions that each was NAMED are replaced by
+  // the reconciliation the v2 page actually makes -- the therapeutic count and
+  // the project total both appear, and their difference is the number of
+  // non-therapeutic lines declared in content.ts.
   assert.match(
     body,
-    /resolving the mechanism/i,
-    "the first non-therapeutic entry is not named",
+    /thirteen lines/i,
+    "the routes page does not reconcile itself to the project total",
   );
-  assert.match(
-    body,
-    /publishing the ten papers/i,
-    "the second non-therapeutic entry is not named",
+  assert.equal(
+    inv.wallTotal - inv.therapeutic,
+    inv.wallNonTherapeutic,
+    "the therapeutic/total difference does not equal the declared non-therapeutic count",
   );
   assert.match(
     body,

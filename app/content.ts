@@ -597,7 +597,7 @@ export const PAPERS: Paper[] = [
   {
     n: 1,
     slug: "stability-blindspot",
-    doi: "10.5281/zenodo.21799855",
+    doi: "10.5281/zenodo.21799854",
     title:
       "Folding-stability prediction misses three of four known loss-of-function variants in the SCN5A N-terminal domain",
     plain:
@@ -609,7 +609,7 @@ export const PAPERS: Paper[] = [
   {
     n: 2,
     slug: "base-editor-specificity",
-    doi: "10.5281/zenodo.21799850",
+    doi: "10.5281/zenodo.21799849",
     title:
       "Editability-scored off-target counting, and the specificity cost of PAM relaxation, in adenine base editor design",
     plain:
@@ -624,7 +624,7 @@ export const PAPERS: Paper[] = [
   {
     n: 3,
     slug: "clinvar-functional-evidence",
-    doi: "10.5281/zenodo.21799857",
+    doi: "10.5281/zenodo.21799856",
     title:
       "Deposited functional evidence in ClinVar is searchable only by exact term, and no surveyed tool reads it",
     plain:
@@ -636,7 +636,7 @@ export const PAPERS: Paper[] = [
   {
     n: 4,
     slug: "oligo-routes",
-    doi: "10.5281/zenodo.21799859",
+    doi: "10.5281/zenodo.21799858",
     title:
       "No antisense oligonucleotide has demonstrated target engagement in a human cardiomyocyte",
     plain:
@@ -649,7 +649,7 @@ export const PAPERS: Paper[] = [
   {
     n: 5,
     slug: "r104q-reclassification",
-    doi: "10.5281/zenodo.21799861",
+    doi: "10.5281/zenodo.21799860",
     title:
       "The Conflicting classification of SCN5A p.Arg104Gln rests on one outdated submission, not on divided evidence",
     plain:
@@ -662,7 +662,7 @@ export const PAPERS: Paper[] = [
   {
     n: 6,
     slug: "upregulation-ceiling",
-    doi: "10.5281/zenodo.21799863",
+    doi: "10.5281/zenodo.21799862",
     title:
       "SCN5A lacks the non-productive mRNA reserve that antisense upregulation therapy would need in human heart",
     plain:
@@ -675,7 +675,7 @@ export const PAPERS: Paper[] = [
   {
     n: 7,
     slug: "dominant-negative-degeneracy",
-    doi: "10.5281/zenodo.21799865",
+    doi: "10.5281/zenodo.21799864",
     title:
       "Peak current alone cannot separate trafficking arrest from coupled gating in SCN5A dominant-negative variants",
     plain:
@@ -688,7 +688,7 @@ export const PAPERS: Paper[] = [
   {
     n: 8,
     slug: "mechanism-elimination",
-    doi: "10.5281/zenodo.21799867",
+    doi: "10.5281/zenodo.21799866",
     title:
       "Neither local strain nor exposed hydrophobic surface explains pathogenicity at SCN5A Arg104",
     plain:
@@ -701,7 +701,7 @@ export const PAPERS: Paper[] = [
   {
     n: 9,
     slug: "ntd-vus-resource",
-    doi: "10.5281/zenodo.21799869",
+    doi: "10.5281/zenodo.21799868",
     title:
       "A stability predictor with known blind spots nominates seventeen uncertain SCN5A N-terminal variants for testing",
     plain:
@@ -715,7 +715,7 @@ export const PAPERS: Paper[] = [
   {
     n: 10,
     slug: "penetrance-covariates",
-    doi: "10.5281/zenodo.21799871",
+    doi: "10.5281/zenodo.21799870",
     title:
       "Residue centroid distance misses close atom contacts in the SCN5A N-terminal domain",
     plain:

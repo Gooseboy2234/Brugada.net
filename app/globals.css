@@ -6,50 +6,73 @@
    case, type is large, and measure is short. Reader 2 wants numbers and sources,
    so evidence state is a visible, consistent object rather than prose hedging. */
 
+/* v2 palette, ported 13 August 2026 from the Claude Design project
+   "Brugada.net website redesign" (3ccae1aa-f825-4f51-a4c1-73d552987e34).
+   The design is dark-first and committed to it, so the media query is inverted
+   relative to v1: dark is the default and light is the opt-in. Reader 1 is
+   frightened and may be reading at 2am, which was always the argument for
+   treating dark as a first-class case rather than an afterthought.
+
+   The evidence-state colours are NOT from the design. They are kept from v1
+   because they carry meaning, are paired with label text so colour is never the
+   only channel, and are re-tuned here for contrast against the new ground. */
+
 :root {
-  --paper: #fbfbf9;
-  --raised: #ffffff;
-  --ink: #16171a;
-  --ink-soft: #4a4d55;
-  --muted: #6d717a;
-  --line: rgba(20, 22, 26, 0.13);
-  --line-soft: rgba(20, 22, 26, 0.07);
+  --paper: #161826;
+  --raised: #1c1f30;
+  --ink: #e9e9ed;
+  --ink-soft: rgba(233, 233, 237, 0.72);
+  --muted: rgba(233, 233, 237, 0.46);
+  --line: rgba(233, 233, 237, 0.14);
+  --line-soft: rgba(233, 233, 237, 0.09);
+
+  /* Accent ramp, from the design. */
+  --accent: #9184d9;
+  --accent-hover: #b5abfc;
+  --accent-bright: #d2cefd;
+  --accent-mid: #796cbf;
+  --accent-deep: #4a4275;
 
   /* Evidence states. Meaning is carried by label text too, never colour alone. */
-  --known: #1d6b45;
-  --known-bg: rgba(29, 107, 69, 0.09);
-  --believed: #8a5a00;
-  --believed-bg: rgba(138, 90, 0, 0.09);
-  --unresolved: #1e5aa8;
-  --unresolved-bg: rgba(30, 90, 168, 0.09);
-  --dead: #8c2f39;
-  --dead-bg: rgba(140, 47, 57, 0.08);
+  --known: #6ed6a0;
+  --known-bg: rgba(110, 214, 160, 0.12);
+  --believed: #f0c05a;
+  --believed-bg: rgba(240, 192, 90, 0.12);
+  --unresolved: #7fb2f0;
+  --unresolved-bg: rgba(127, 178, 240, 0.12);
+  --dead: #f08a95;
+  --dead-bg: rgba(240, 138, 149, 0.12);
 
-  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
-  --sans: -apple-system, BlinkMacSystemFont, "Inter", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Source Serif 4", "Iowan Old Style", Palatino, Georgia, serif;
+  --sans: Inter, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
 
   --measure: 34rem;
   --wide: 60rem;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --paper: #101114;
-    --raised: #16181c;
-    --ink: #eceef2;
-    --ink-soft: #b6bac3;
-    --muted: #8b909b;
-    --line: rgba(236, 238, 242, 0.16);
-    --line-soft: rgba(236, 238, 242, 0.08);
-    --known: #6ed6a0;
-    --known-bg: rgba(110, 214, 160, 0.12);
-    --believed: #f0c05a;
-    --believed-bg: rgba(240, 192, 90, 0.12);
-    --unresolved: #7fb2f0;
-    --unresolved-bg: rgba(127, 178, 240, 0.12);
-    --dead: #f08a95;
-    --dead-bg: rgba(240, 138, 149, 0.12);
+    --paper: #fbfbf9;
+    --raised: #ffffff;
+    --ink: #16171a;
+    --ink-soft: #4a4d55;
+    --muted: #6d717a;
+    --line: rgba(20, 22, 26, 0.13);
+    --line-soft: rgba(20, 22, 26, 0.07);
+    --accent: #5b4fa8;
+    --accent-hover: #40367f;
+    --accent-bright: #2f2760;
+    --accent-mid: #796cbf;
+    --accent-deep: #d2cefd;
+    --known: #1d6b45;
+    --known-bg: rgba(29, 107, 69, 0.09);
+    --believed: #8a5a00;
+    --believed-bg: rgba(138, 90, 0, 0.09);
+    --unresolved: #1e5aa8;
+    --unresolved-bg: rgba(30, 90, 168, 0.09);
+    --dead: #8c2f39;
+    --dead-bg: rgba(140, 47, 57, 0.08);
   }
 }
 
@@ -84,14 +107,18 @@ p {
 p:last-child { margin-bottom: 0; }
 ul, ol { margin: 0 0 1.1rem; }
 
+/* v2: links take the accent. The design uses #9184d9 on #161826, which measures
+   about 5.1:1 against the ground -- above the 4.5:1 floor for body text. The
+   underline is kept rather than replaced by colour alone, so the link is still
+   identifiable without colour vision. */
 a {
-  color: inherit;
+  color: var(--accent);
   text-decoration-color: var(--line);
-  text-underline-offset: 0.22em;
+  text-underline-offset: 3px;
   text-decoration-thickness: 1px;
-  transition: text-decoration-color 0.15s;
+  transition: color 0.15s, text-decoration-color 0.15s;
 }
-a:hover { text-decoration-color: currentColor; }
+a:hover { color: var(--accent-hover); text-decoration-color: currentColor; }
 
 :focus-visible {
   outline: 3px solid var(--unresolved);

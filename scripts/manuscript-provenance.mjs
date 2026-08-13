@@ -60,7 +60,7 @@ export const MANUSCRIPTS = [
     n: 1,
     slug: "stability-blindspot",
     source: "PUBLISH_1_STABILITY_BLINDSPOT.md",
-    doi: "10.5281/zenodo.21799855",
+    doi: "10.5281/zenodo.21799854",
     forked: true,
     status: "in-sync",
   },
@@ -68,7 +68,7 @@ export const MANUSCRIPTS = [
     n: 2,
     slug: "base-editor-specificity",
     source: "PUBLISH_2_BASE_EDITOR_SPECIFICITY.md",
-    doi: "10.5281/zenodo.21799850",
+    doi: "10.5281/zenodo.21799849",
     forked: true,
     status: "corrective",
     corrective: [
@@ -85,7 +85,7 @@ export const MANUSCRIPTS = [
     n: 3,
     slug: "clinvar-functional-evidence",
     source: "PUBLISH_3_CLINVAR_FUNCTIONAL_EVIDENCE.md",
-    doi: "10.5281/zenodo.21799857",
+    doi: "10.5281/zenodo.21799856",
     forked: true,
     status: "in-sync",
   },
@@ -93,7 +93,7 @@ export const MANUSCRIPTS = [
     n: 4,
     slug: "oligo-routes",
     source: "PUBLISH_4_OLIGO_ROUTES.md",
-    doi: "10.5281/zenodo.21799859",
+    doi: "10.5281/zenodo.21799858",
     forked: true,
     status: "corrective",
     corrective: [
@@ -106,7 +106,7 @@ export const MANUSCRIPTS = [
     n: 5,
     slug: "r104q-reclassification",
     source: "PUBLISH_5_R104Q_RECLASSIFICATION.md",
-    doi: "10.5281/zenodo.21799861",
+    doi: "10.5281/zenodo.21799860",
     forked: false,
     status: "corrective",
     corrective: [
@@ -122,7 +122,7 @@ export const MANUSCRIPTS = [
     n: 6,
     slug: "upregulation-ceiling",
     source: "PUBLISH_6_UPREGULATION_CEILING.md",
-    doi: "10.5281/zenodo.21799863",
+    doi: "10.5281/zenodo.21799862",
     forked: true,
     status: "corrective",
     corrective: [
@@ -136,7 +136,7 @@ export const MANUSCRIPTS = [
     n: 7,
     slug: "dominant-negative-degeneracy",
     source: "PUBLISH_7_DOMINANT_NEGATIVE_DEGENERACY.md",
-    doi: "10.5281/zenodo.21799865",
+    doi: "10.5281/zenodo.21799864",
     forked: true,
     // Changed from "additive" to "corrective" on 7 August 2026, and the change
     // matters more than it looks. "additive" asserts that nothing in the
@@ -155,7 +155,7 @@ export const MANUSCRIPTS = [
     n: 8,
     slug: "mechanism-elimination",
     source: "PUBLISH_8_MECHANISM_ELIMINATION.md",
-    doi: "10.5281/zenodo.21799867",
+    doi: "10.5281/zenodo.21799866",
     forked: true,
     status: "additive",
     additive: [
@@ -166,7 +166,7 @@ export const MANUSCRIPTS = [
     n: 9,
     slug: "ntd-vus-resource",
     source: "PUBLISH_9_NTD_VUS_RESOURCE.md",
-    doi: "10.5281/zenodo.21799869",
+    doi: "10.5281/zenodo.21799868",
     forked: false,
     status: "in-sync",
   },
@@ -174,7 +174,7 @@ export const MANUSCRIPTS = [
     n: 10,
     slug: "penetrance-covariates",
     source: "PUBLISH_10_PENETRANCE_COVARIATES.md",
-    doi: "10.5281/zenodo.21799871",
+    doi: "10.5281/zenodo.21799870",
     forked: false,
     status: "corrective",
     corrective: [

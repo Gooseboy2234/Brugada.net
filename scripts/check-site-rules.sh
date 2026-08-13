@@ -72,7 +72,11 @@ check_absent() { # pattern, explanation, [allow-in-correction-notices]
   # explicit "Corrected since" notice has to be able to say what it corrected,
   # so those files are exempt from that rule and only that rule.
   if [ "${3:-}" = "allow-corrections" ]; then
-    for f in $(grep -rl 'Corrected since' app/ 2>/dev/null || true); do
+    # A page whose whole job is the correction log legitimately quotes retired
+    # values. v1 marked those with "Corrected since"; the v2 design states the
+    # same contract in its own words on the history page. Both are accepted, and
+    # the exemption is still per-file rather than global.
+    for f in $(grep -rl 'Corrected since\|Corrections are dated and kept' app/ 2>/dev/null || true); do
       hits=$(printf '%s\n' "$hits" | grep -v "^$f:") || true
     done
   fi
@@ -169,7 +173,7 @@ elif [ -f "$DOI_FILE" ]; then
   elif ! grep -q "$deposited" app/content.ts; then
     echo "  FAIL: deposit $deposited is published but content.ts does not carry it"
     fail=1
-  elif ! grep -q 'DEPOSIT\.' app/data/page.tsx; then
+  elif ! grep -q "DEPOSIT\.\|$deposited" app/data/page.tsx; then
     echo "  FAIL: the data page does not quote the deposit identifier"
     fail=1
   else

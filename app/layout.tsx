@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
-import { SITE, VARIANT } from "./content";
-import { Nav } from "./nav";
+import "./v2.css";
+import { SITE } from "./content";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -78,56 +77,22 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <div className="shell">
-          <a className="skip" href="#main">
-            Skip to content
-          </a>
-
-          <header className="masthead">
-            <div className="masthead-inner">
-              <a className="wordmark" href="/">
-                {SITE.domain}
-              </a>
-              <Nav />
-            </div>
-          </header>
-
-          <main id="main">{children}</main>
-
-          <footer className="foot">
-            <div className="foot-inner">
-              <p>
-                Written by {SITE.author}, who carries {VARIANT.gene}{" "}
-                {VARIANT.protein}. Not a physician. The work here is
-                computational and the reasoning is public so that anyone can
-                check it. <a href={SITE.orcidUrl}>ORCID {SITE.orcid}</a>
-              </p>
-              <hr className="foot-rule" />
-              <p>
-                <b>This site cannot tell you your risk.</b> It explains what has
-                been measured about one variant. Risk assessment belongs to an
-                electrophysiologist who has your whole picture. Nothing here is
-                medical advice, and no result on this site should change
-                anyone&rsquo;s treatment.
-              </p>
-              <p>
-                None of this work has been peer reviewed. Preprints are posted
-                publicly before review by design, so that the reasoning and the
-                errors are both visible.
-              </p>
-              <hr className="foot-rule" />
-              <p>
-                <b>Contact.</b>{" "}
-                <a href={`mailto:${SITE.contact}`}>{SITE.contact}</a>. If you
-                could put {SITE.domain} to better use than I am, whether you are
-                a patient group, a clinician or a research team, say so and I
-                will hand it over. The papers and data stay published under my
-                name regardless.
-              </p>
-              <p className="small">Last updated {SITE.updated}.</p>
-            </div>
-          </footer>
-        </div>
+        <a
+          href="#main"
+          style={{
+            position: "absolute",
+            left: "-9999px",
+            top: 0,
+            background: "#1c1f30",
+            color: "#e9e9ed",
+            padding: "10px 14px",
+            zIndex: 100,
+          }}
+          className="skiplink"
+        >
+          Skip to content
+        </a>
+        {children}
       </body>
     </html>
   );
