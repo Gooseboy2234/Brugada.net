@@ -40,6 +40,12 @@ const EDITS = [
   ["preprints, seven of them negative results",
    "preprints; seven of the first ten are negative", 1],
 
+  // All thirteen records reached version 3 on 13 August 2026. The design was
+  // written when none had been re-uploaded, so this sentence is now false --
+  // and it is false about the record itself, on the page about the record.
+  ["nothing has been re-uploaded, and no record has a version 2.",
+   "all thirteen records are now at version 3, deposited 13 August 2026.", 1],
+
   // Paper 11 has had a DOI since 7 August. The design's standing caveat is now
   // false, and it was the site's most prominent inaccuracy.
   ["An eleventh paper exists and is not here",
