@@ -144,12 +144,24 @@ const LIMITATIONS = `
 <p style="${P}">The correspondence answers specific technical questions and nothing broader. Where a researcher corrected this project, the correction is recorded on the page it affects. None of them has reviewed this work, and none should be read as endorsing it.</p>
 `;
 
+// =====================================================================
+// PAPERS: paper 9's rationale is stronger than it was written
+// =====================================================================
+// Established 13 August 2026 from Dr Andrew Glazer directly. ONLY his emailed
+// sentence is used here. The unpublished slide deck he also sent is confidential
+// and none of its content -- coverage coordinates, QC figures, score
+// distributions -- appears on this site or in any public document. See
+// OUTREACH_20260809/GLAZER_ATTACHMENTS_20260813_CONFIDENTIAL.md.
+const PAPERS = `<p style="${CBODY}">A large scale functional scan of this gene does exist, and has been under construction for about nine years. It now covers roughly 45 percent of the protein, concentrated on the pore-forming regions of the four transmembrane domains, and its author confirms that it does not cover the domain this shortlist addresses (personal communication, 13 August 2026). So the region here is not merely unmeasured. It is the region the field's largest functional effort has left uncovered, because that effort went to the pore. The blind spot below is unchanged by this, and the 114 uninformative scores still mean nothing at all.</p>`;
+
 // ---- apply -----------------------------------------------------------------
 const PLAN = [
   ["experiments.html", `<h2 style="${H2}">What I am asking for</h2>`, EXPERIMENTS],
   ["routes.html", `<h2 style="${H2W}">Why nobody has done this already</h2>`, ROUTES],
   ["open.html", `<h2 style="${H2}">If you can move any of this</h2>`, OPEN],
   ["limitations.html", `<h2 style="margin:40px 0 0;font:500 24px/1.26 Inter,system-ui,sans-serif;letter-spacing:-.016em;color:#e9e9ed">Not peer reviewed</h2>`, LIMITATIONS],
+  ["papers.html", `A usable shortlist, built on top of the measured blind spot that makes a negative score meaningless.</p>`,
+   `A usable shortlist, built on top of the measured blind spot that makes a negative score meaningless.</p>` + PAPERS],
 ];
 
 console.log("AUGUST FINDINGS — inserting, asserting every anchor\n");
@@ -158,7 +170,13 @@ for (const [file, anchor, block] of PLAN) {
   const t = await readFile(p, "utf8");
   const n = t.split(anchor).length - 1;
   if (n !== 1) { console.error(`ABORT: ${file}: expected 1 anchor, found ${n}`); process.exit(1); }
-  await writeFile(p, t.replace(anchor, block.trim() + "\n\n" + anchor), "utf8");
+  // Most blocks are prepended above their anchor heading. The papers entry is
+  // different: its "anchor" is the paragraph the new text follows, and the block
+  // already contains that paragraph, so it replaces rather than prepends.
+  const out = block.trim().startsWith(anchor.slice(0, 40))
+    ? t.replace(anchor, block.trim())
+    : t.replace(anchor, block.trim() + "\n\n" + anchor);
+  await writeFile(p, out, "utf8");
   console.log(`  ok  ${file.padEnd(20)} +${block.length.toLocaleString()} bytes`);
 }
 
