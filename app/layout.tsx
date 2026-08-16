@@ -92,7 +92,42 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        {/* v2 collapsible sidebar. The nav lives inside each page's markup, so the
+            control and the scrim live here instead, shared across all twelve routes.
+            Below the breakpoint in app/v2.css the nav is off-canvas and this button
+            reveals it; above it, both are display:none and nothing changes.
+
+            Each nav link is a full page load, so the sidebar returns to closed on
+            every navigation without any state to carry -- which is the behaviour
+            asked for. No framework, no hydration, one listener. */}
+        <button
+          type="button"
+          id="navtoggle"
+          className="navtoggle"
+          aria-label="Open menu"
+          aria-controls="sidebar"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true">Menu</span>
+        </button>
+        <div id="navscrim" className="navscrim" aria-hidden="true" />
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+  var b=document.getElementById('navtoggle'),s=document.getElementById('navscrim');
+  if(!b)return;
+  function set(open){
+    document.body.classList.toggle('nav-open',open);
+    b.setAttribute('aria-expanded',open?'true':'false');
+    b.setAttribute('aria-label',open?'Close menu':'Open menu');
+  }
+  b.addEventListener('click',function(){set(!document.body.classList.contains('nav-open'));});
+  if(s)s.addEventListener('click',function(){set(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+})();`,
+          }}
+        />
       </body>
     </html>
   );
